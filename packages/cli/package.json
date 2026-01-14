@@ -1,0 +1,38 @@
+{
+  "name": "@nativeui/cli",
+  "version": "0.0.1",
+  "description": "CLI for nativeui - add components to your Expo/React Native project",
+  "bin": {
+    "nativeui": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.0",
+    "prompts": "^2.4.2",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.0",
+    "detect-indent": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.0",
+    "@types/node": "^20.0.0",
+    "@types/prompts": "^2.4.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@nativeui/docs",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Documentation site for nativeui (placeholder)",
+  "scripts": {
+    "dev": "echo 'Docs site not yet implemented'",
+    "build": "echo 'Docs site not yet implemented'"
+  }
+}

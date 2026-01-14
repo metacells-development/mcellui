@@ -1,0 +1,57 @@
+{
+  "$schema": "./registry.schema.json",
+  "name": "nativeui",
+  "version": "0.0.1",
+  "components": [
+    {
+      "name": "button",
+      "type": "ui",
+      "description": "A pressable button component with multiple variants and sizes",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/button.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "card",
+      "type": "ui",
+      "description": "A container component with rounded corners and shadow",
+      "category": "Layout",
+      "status": "beta",
+      "files": ["ui/card.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "input",
+      "type": "ui",
+      "description": "Text input with label, placeholder, and error states",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/input.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "badge",
+      "type": "ui",
+      "description": "Small status indicator for labels and counts",
+      "category": "Data Display",
+      "status": "beta",
+      "files": ["ui/badge.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "avatar",
+      "type": "ui",
+      "description": "User profile picture with fallback initials",
+      "category": "Data Display",
+      "status": "beta",
+      "files": ["ui/avatar.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    }
+  ]
+}
