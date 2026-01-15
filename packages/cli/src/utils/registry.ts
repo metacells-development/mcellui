@@ -109,7 +109,7 @@ async function getRemoteRegistry(): Promise<RegistryItem[]> {
 
   try {
     const response = await fetch(`${REGISTRY_URL}/registry.json`);
-    const registry: Registry = await response.json();
+    const registry = (await response.json()) as Registry;
     return registry.components;
   } catch (error) {
     console.error('Failed to fetch remote registry:', error);

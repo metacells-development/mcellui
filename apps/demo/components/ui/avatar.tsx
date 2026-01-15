@@ -1,41 +1,116 @@
+/**
+ * Avatar
+ *
+ * User profile picture with fallback initials.
+ * Uses design tokens for consistent styling.
+ *
+ * @example
+ * ```tsx
+ * <Avatar source={{ uri: 'https://example.com/avatar.jpg' }} fallback="JD" />
+ * <Avatar fallback="AB" size="lg" />
+ * <Avatar fallback="XY" size="xs" />
+ * ```
+ */
+
 import React, { useState } from 'react';
-import { View, Text, Image, ImageSourcePropType, StyleSheet, ViewStyle, ImageStyle } from 'react-native';
-import { cn } from '@/lib/utils';
+import {
+  View,
+  Text,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  ViewStyle,
+} from 'react-native';
+import { useTheme } from '@nativeui/core';
+
+export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export interface AvatarProps {
+  /** Image source */
   source?: ImageSourcePropType;
+  /** Fallback text (usually initials) */
   fallback?: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Size preset */
+  size?: AvatarSize;
+  /** Additional container styles */
   style?: ViewStyle;
 }
 
-export function Avatar({ source, fallback = '?', size = 'md', style }: AvatarProps) {
+export function Avatar({
+  source,
+  fallback = '?',
+  size = 'md',
+  style,
+}: AvatarProps) {
+  const { colors, components, componentRadius, platformShadow } = useTheme();
+  const tokens = components.avatar[size];
   const [imageError, setImageError] = useState(false);
   const showFallback = !source || imageError;
-  const sizeValue = sizes[size];
 
   return (
-    <View style={cn(styles.container, { width: sizeValue, height: sizeValue, borderRadius: sizeValue / 2 }, style)}>
+    <View
+      style={[
+        styles.container,
+        {
+          width: tokens.size,
+          height: tokens.size,
+          borderRadius: componentRadius.avatar,
+          backgroundColor: colors.backgroundMuted,
+        },
+        platformShadow('sm'),
+        style,
+      ]}
+      accessibilityRole="image"
+      accessibilityLabel={fallback ? `Avatar: ${fallback}` : 'Avatar'}
+    >
       {showFallback ? (
-        <View style={cn(styles.fallback, { borderRadius: sizeValue / 2 })}>
-          <Text style={cn(styles.fallbackText, styles[`${size}Text`])}>{fallback.slice(0, 2).toUpperCase()}</Text>
+        <View
+          style={[
+            styles.fallback,
+            {
+              borderRadius: componentRadius.avatar,
+              backgroundColor: colors.primary,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.fallbackText,
+              {
+                fontSize: tokens.fontSize,
+                fontWeight: tokens.fontWeight,
+                color: colors.primaryForeground,
+              },
+            ]}
+          >
+            {fallback.slice(0, 2).toUpperCase()}
+          </Text>
         </View>
       ) : (
-        <Image source={source} style={cn(styles.image, { borderRadius: sizeValue / 2 }) as ImageStyle} onError={() => setImageError(true)} />
+        <Image
+          source={source}
+          style={[styles.image, { borderRadius: componentRadius.avatar }]}
+          onError={() => setImageError(true)}
+        />
       )}
     </View>
   );
 }
 
-const sizes = { sm: 32, md: 40, lg: 56, xl: 80 };
-
 const styles = StyleSheet.create({
-  container: { overflow: 'hidden', backgroundColor: '#e5e5e5' },
-  image: { width: '100%', height: '100%' },
-  fallback: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#3b82f6' },
-  fallbackText: { color: '#ffffff', fontWeight: '600' },
-  smText: { fontSize: 12 },
-  mdText: { fontSize: 14 },
-  lgText: { fontSize: 20 },
-  xlText: { fontSize: 28 },
+  container: {
+    overflow: 'hidden',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  fallback: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fallbackText: {
+    // Dynamic styles applied inline
+  },
 });

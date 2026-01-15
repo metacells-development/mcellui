@@ -6,6 +6,7 @@
     "target": "ESNext",
     "lib": ["ES2022"],
     "jsx": "react-jsx",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "skipLibCheck": true
   }
 }

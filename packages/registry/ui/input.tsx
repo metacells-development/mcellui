@@ -1,25 +1,18 @@
 /**
  * Input
  *
- * Text input with label, placeholder, and error states.
+ * Text input with label, placeholder, error states, and animated focus.
+ * Uses design tokens for consistent styling.
  *
  * @example
  * ```tsx
- * <Input
- *   label="Email"
- *   placeholder="you@example.com"
- *   keyboardType="email-address"
- * />
- *
- * <Input
- *   label="Password"
- *   secureTextEntry
- *   error="Password must be at least 8 characters"
- * />
+ * <Input label="Email" placeholder="you@example.com" />
+ * <Input label="Password" secureTextEntry error="Invalid password" />
+ * <Input size="lg" label="Name" icon={<Icon name="user" />} />
  * ```
  */
 
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -29,7 +22,18 @@ import {
   TextStyle,
   TextInputProps,
 } from 'react-native';
-import { cn } from '@/lib/utils';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  interpolateColor,
+} from 'react-native-reanimated';
+import { useTheme } from '@nativeui/core';
+import { haptic } from '@nativeui/core';
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+
+export type InputSize = 'sm' | 'md' | 'lg';
 
 export interface InputProps extends Omit<TextInputProps, 'style'> {
   /** Label text above input */
@@ -38,6 +42,12 @@ export interface InputProps extends Omit<TextInputProps, 'style'> {
   error?: string;
   /** Helper text below input (hidden when error is present) */
   helperText?: string;
+  /** Size variant */
+  size?: InputSize;
+  /** Icon element (left side) */
+  icon?: React.ReactNode;
+  /** Icon element (right side) */
+  iconRight?: React.ReactNode;
   /** Container style */
   containerStyle?: ViewStyle;
   /** Input field style */
@@ -52,59 +62,144 @@ export const Input = forwardRef<TextInput, InputProps>(
       label,
       error,
       helperText,
+      size = 'md',
+      icon,
+      iconRight,
       containerStyle,
       style,
       labelStyle,
       editable = true,
+      onFocus,
+      onBlur,
       ...props
     },
     ref
   ) => {
-    const [isFocused, setIsFocused] = useState(false);
+    const { colors, components, timing, spacing } = useTheme();
+    const tokens = components.input[size];
+    const focusProgress = useSharedValue(0);
 
     const hasError = !!error;
     const isDisabled = editable === false;
 
+    const handleFocus = useCallback(
+      (e: any) => {
+        focusProgress.value = withTiming(1, timing.default);
+        haptic('selection');
+        onFocus?.(e);
+      },
+      [onFocus, timing.default]
+    );
+
+    const handleBlur = useCallback(
+      (e: any) => {
+        focusProgress.value = withTiming(0, timing.default);
+        onBlur?.(e);
+      },
+      [onBlur, timing.default]
+    );
+
+    const animatedBorderStyle = useAnimatedStyle(() => {
+      // Error state takes priority
+      if (hasError) {
+        return {
+          borderColor: colors.destructive,
+          borderWidth: 2,
+        };
+      }
+
+      return {
+        borderColor: interpolateColor(
+          focusProgress.value,
+          [0, 1],
+          [colors.border, colors.primary]
+        ),
+        borderWidth: focusProgress.value > 0.5 ? 2 : tokens.borderWidth,
+      };
+    }, [hasError, colors, tokens.borderWidth]);
+
     return (
-      <View style={cn(styles.container, containerStyle)}>
+      <View style={[styles.container, containerStyle]}>
         {label && (
           <Text
-            style={cn(
+            style={[
               styles.label,
-              hasError && styles.labelError,
-              labelStyle
-            )}
+              {
+                fontSize: tokens.labelFontSize,
+                marginBottom: spacing[1.5],
+                color: hasError ? colors.destructive : colors.foreground,
+              },
+              labelStyle,
+            ]}
           >
             {label}
           </Text>
         )}
 
-        <TextInput
-          ref={ref}
-          style={cn(
-            styles.input,
-            isFocused && styles.inputFocused,
-            hasError && styles.inputError,
-            isDisabled && styles.inputDisabled,
-            style
+        <View style={styles.inputWrapper}>
+          {icon && (
+            <View
+              style={[
+                styles.iconContainer,
+                styles.iconLeft,
+                { marginLeft: tokens.paddingHorizontal },
+              ]}
+            >
+              {icon}
+            </View>
           )}
-          placeholderTextColor="#a3a3a3"
-          editable={editable}
-          onFocus={(e) => {
-            setIsFocused(true);
-            props.onFocus?.(e);
-          }}
-          onBlur={(e) => {
-            setIsFocused(false);
-            props.onBlur?.(e);
-          }}
-          accessibilityLabel={label}
-          accessibilityState={{ disabled: isDisabled }}
-          {...props}
-        />
+
+          <AnimatedTextInput
+            ref={ref}
+            style={[
+              styles.input,
+              {
+                minHeight: tokens.height,
+                paddingHorizontal: tokens.paddingHorizontal,
+                paddingVertical: tokens.paddingVertical,
+                borderRadius: tokens.borderRadius,
+                fontSize: tokens.fontSize,
+                backgroundColor: isDisabled ? colors.backgroundMuted : colors.background,
+                color: isDisabled ? colors.foregroundMuted : colors.foreground,
+                paddingLeft: icon ? tokens.paddingHorizontal + tokens.iconSize + spacing[2] : tokens.paddingHorizontal,
+                paddingRight: iconRight ? tokens.paddingHorizontal + tokens.iconSize + spacing[2] : tokens.paddingHorizontal,
+              },
+              animatedBorderStyle,
+              style,
+            ]}
+            placeholderTextColor={colors.foregroundMuted}
+            editable={editable}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            accessibilityLabel={label}
+            accessibilityState={{ disabled: isDisabled }}
+            {...props}
+          />
+
+          {iconRight && (
+            <View
+              style={[
+                styles.iconContainer,
+                styles.iconRight,
+                { marginRight: tokens.paddingHorizontal },
+              ]}
+            >
+              {iconRight}
+            </View>
+          )}
+        </View>
 
         {(error || helperText) && (
-          <Text style={cn(styles.helperText, hasError && styles.errorText)}>
+          <Text
+            style={[
+              styles.helperText,
+              {
+                fontSize: tokens.helperFontSize,
+                marginTop: spacing[1],
+                color: hasError ? colors.destructive : colors.foregroundMuted,
+              },
+            ]}
+          >
             {error || helperText}
           </Text>
         )}
@@ -119,43 +214,29 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
   },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#171717',
-    marginBottom: 6,
+  inputWrapper: {
+    position: 'relative',
+    justifyContent: 'center',
   },
-  labelError: {
-    color: '#ef4444',
+  label: {
+    fontWeight: '500',
   },
   input: {
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#e5e5e5',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16,
-    color: '#171717',
-    minHeight: 44,
+    // Dynamic styles applied inline
   },
-  inputFocused: {
-    borderColor: '#3b82f6',
-    borderWidth: 2,
+  iconContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  inputError: {
-    borderColor: '#ef4444',
+  iconLeft: {
+    left: 0,
   },
-  inputDisabled: {
-    backgroundColor: '#f5f5f5',
-    color: '#a3a3a3',
+  iconRight: {
+    right: 0,
   },
   helperText: {
-    fontSize: 12,
-    color: '#737373',
-    marginTop: 4,
-  },
-  errorText: {
-    color: '#ef4444',
+    // Dynamic styles applied inline
   },
 });

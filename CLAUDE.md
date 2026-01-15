@@ -6,60 +6,131 @@ Eine moderne, copy-paste UI-Komponenten-Bibliothek für Expo/React Native - insp
 
 ## Status
 
-**Vision/Konzept-Phase** - Aktuell existiert nur die Dokumentation. Das Projekt befindet sich in der Planungsphase.
+**Phase 2: Core Components** - Grundgerüst steht, Component Library wird erweitert.
 
-## Projektstruktur (geplant)
+Siehe [PHASES.md](./PHASES.md) für Details.
+
+## Projektstruktur
 
 ```
 nativeui/
-├── docs/                  # Dokumentation (aktuell vorhanden)
-│   ├── VISION.md          # Projekt-Vision und Philosophie
-│   ├── ROADMAP.md         # Entwicklungs-Roadmap
-│   └── features/          # Feature-Spezifikationen
-├── packages/              # (geplant)
+├── docs/                  # Dokumentation
+│   ├── adr/               # Architecture Decision Records
+│   ├── features/          # Feature-Spezifikationen
+│   └── phases/            # Phase-Details
+├── packages/
 │   ├── cli/               # npx nativeui add button
 │   ├── mcp-server/        # Claude Code Integration
-│   ├── core/              # Shared Utilities
-│   └── registry/          # Component Registry Data
-├── apps/                  # (geplant)
-│   ├── playground/        # Web Playground (Next.js)
-│   ├── docs/              # Documentation Site
-│   └── demo/              # Expo Demo App
-├── extensions/            # (geplant)
-│   ├── vscode/            # VS Code Extension
-│   └── figma/             # Figma Plugin
-└── registry/              # (geplant)
-    ├── primitives/        # Building Blocks
-    ├── ui/                # 55+ Components
-    ├── blocks/            # Screen Templates
-    ├── hooks/             # Utility Hooks
-    └── themes/            # Theme Presets
+│   ├── core/              # Design Tokens + Utilities
+│   └── registry/          # Component Source Code
+├── apps/
+│   ├── demo/              # Expo Demo App
+│   └── docs/              # Documentation Site (Placeholder)
+└── PHASES.md              # Development Roadmap
 ```
 
 ## Kernphilosophie
 
 1. **Copy-Paste > npm install** - Der Nutzer besitzt den Code
 2. **Funktioniert oder existiert nicht** - iOS UND Android perfekt
-3. **Docs sind das Produkt** - Live Preview + Code + Copy Button
+3. **Native First** - StyleSheet statt CSS, Platform-Conventions respektieren
 4. **Developer Experience ist alles** - 5 Sekunden Setup
+
+## Tech Stack
+
+- **Framework**: Expo SDK 54+, React Native 0.76+
+- **Styling**: React Native StyleSheet + ThemeProvider
+- **Animations**: Reanimated 3
+- **Gestures**: Gesture Handler 2
+- **CLI**: Node.js mit Commander
+- **Monorepo**: Turborepo
+
+## Styling-Ansatz (StyleSheet + ThemeProvider)
+
+Wir verwenden React Native StyleSheets mit einem ThemeProvider für Theming:
+
+```tsx
+// Theme-aware Component
+import { useTheme } from '@nativeui/core';
+
+function MyComponent() {
+  const { colors, spacing, radius } = useTheme();
+
+  return (
+    <View style={{
+      backgroundColor: colors.primary,
+      padding: spacing[4],
+      borderRadius: radius.lg,
+    }}>
+      <Text style={{ color: colors.primaryForeground }}>
+        Hello
+      </Text>
+    </View>
+  );
+}
+```
+
+**Token Customization:** User nutzt `nativeui.config.ts`:
+
+```ts
+export default defineConfig({
+  theme: 'violet',      // 8 Presets: zinc, slate, stone, blue, green, rose, orange, violet
+  radius: 'md',         // none, sm, md, lg, full
+  colorScheme: 'system', // light, dark, system
+});
+```
+
+## Components (26 aktuell - Phase 2 Complete!)
+
+| Component | Status |
+|-----------|--------|
+| Button | ✅ Ready |
+| Card | ✅ Ready |
+| Input | ✅ Ready |
+| Textarea | ✅ Ready |
+| Select | ✅ Ready |
+| Slider | ✅ Ready |
+| Stepper | ✅ Ready |
+| Badge | ✅ Ready |
+| Avatar | ✅ Ready |
+| Checkbox | ✅ Ready |
+| Switch | ✅ Ready |
+| Radio Group | ✅ Ready |
+| Label | ✅ Ready |
+| Separator | ✅ Ready |
+| Spinner | ✅ Ready |
+| Skeleton | ✅ Ready |
+| Progress | ✅ Ready |
+| Sheet | ✅ Ready |
+| Dialog | ✅ Ready |
+| Alert Dialog | ✅ Ready |
+| Toast | ✅ Ready |
+| Tabs | ✅ Ready |
+| Accordion | ✅ Ready |
+| Segmented Control | ✅ Ready |
+| Pull to Refresh | ✅ Ready |
+| Swipeable Row | ✅ Ready |
+
+### Phase 2 Complete!
+
+Alle 26 Components für Phase 2 sind fertig.
+
+## CLI Commands
+
+```bash
+npx nativeui init          # Setup in Projekt
+npx nativeui add button    # Component hinzufügen
+npx nativeui list          # Alle Components anzeigen
+```
 
 ## Qualitätsstandards
 
 Vor jedem Component-Release:
 - iOS Simulator + Android Emulator getestet
 - VoiceOver + TalkBack zugänglich
-- Dark Mode + Reduce Motion unterstützt
+- Dark Mode unterstützt
 - Vollständig TypeScript typisiert (keine `any`)
 - Dokumentation mit Beispiel + Props vorhanden
-
-## Tech Stack (geplant)
-
-- **Framework**: Expo SDK 50+, React Native 0.73+
-- **Styling**: NativeWind / StyleSheet
-- **Animations**: Reanimated 3
-- **Gestures**: Gesture Handler 2
-- **CLI**: Node.js mit Commander
-- **Monorepo**: Turborepo
 
 ## Platform Support
 
@@ -69,17 +140,9 @@ Vor jedem Component-Release:
 
 ## Wichtige Dokumente
 
-- [Vision](./docs/VISION.md) - Vollständige Projekt-Vision
-- [Roadmap](./docs/ROADMAP.md) - Entwicklungsphasen
-- [Features Index](./docs/features/INDEX.md) - Alle geplanten Features
-
-## Design-Inspirationen
-
-- Arc Browser UI
-- Linear App
-- Raycast
-- Apple iOS 17+ Design Language
-- Stripe Dashboard Mobile
+- [PHASES.md](./PHASES.md) - Development Roadmap
+- [ADRs](./docs/adr/) - Architecture Decisions
+- [Features](./docs/features/) - Feature Specifications
 
 ## Sprache
 

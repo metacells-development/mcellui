@@ -7,15 +7,11 @@ const __filename = fileURLToPath(import.meta.url);
 
 export type ProjectType = 'expo' | 'react-native' | 'unknown';
 
-export type NativeUIConfig = {
-  componentsPath: string;
-  utilsPath: string;
-  style: 'default' | 'ios' | 'material';
-  aliases?: {
-    components?: string;
-    utils?: string;
-  };
-};
+// Re-export config type from @nativeui/core for CLI usage
+// The config is unified - same type for runtime and CLI
+export type { NativeUIConfig, ResolvedNativeUIConfig } from '@nativeui/core';
+import type { NativeUIConfig, ResolvedNativeUIConfig } from '@nativeui/core';
+import { resolveConfig } from '@nativeui/core';
 
 /**
  * Find the project root by looking for package.json
@@ -59,9 +55,10 @@ export async function detectProjectType(projectRoot: string): Promise<ProjectTyp
 }
 
 /**
- * Get nativeui configuration from project
+ * Get nativeui configuration from project.
+ * Returns resolved config with all defaults applied.
  */
-export async function getConfig(projectRoot: string): Promise<NativeUIConfig | null> {
+export async function getConfig(projectRoot: string): Promise<ResolvedNativeUIConfig | null> {
   // Try TypeScript config first
   const tsConfigPath = path.join(projectRoot, 'nativeui.config.ts');
   if (await fs.pathExists(tsConfigPath)) {
@@ -77,7 +74,8 @@ export async function getConfig(projectRoot: string): Promise<NativeUIConfig | n
   // Try JSON config
   const jsonConfigPath = path.join(projectRoot, 'nativeui.config.json');
   if (await fs.pathExists(jsonConfigPath)) {
-    return fs.readJson(jsonConfigPath);
+    const rawConfig = await fs.readJson(jsonConfigPath);
+    return resolveConfig(rawConfig);
   }
 
   return null;
@@ -86,14 +84,15 @@ export async function getConfig(projectRoot: string): Promise<NativeUIConfig | n
 /**
  * Load TypeScript configuration file using jiti
  */
-async function loadTsConfig(configPath: string): Promise<NativeUIConfig> {
+async function loadTsConfig(configPath: string): Promise<ResolvedNativeUIConfig> {
   try {
     const jiti = createJiti(__filename, {
       interopDefault: true,
     });
 
-    const config = jiti(configPath);
-    return (config.default || config) as NativeUIConfig;
+    const rawConfig = jiti(configPath);
+    const config = (rawConfig.default || rawConfig) as NativeUIConfig;
+    return resolveConfig(config);
   } catch (error) {
     console.error('Failed to load config:', error);
     // Return defaults on error
@@ -104,10 +103,11 @@ async function loadTsConfig(configPath: string): Promise<NativeUIConfig> {
 /**
  * Load JavaScript configuration file
  */
-async function loadJsConfig(configPath: string): Promise<NativeUIConfig> {
+async function loadJsConfig(configPath: string): Promise<ResolvedNativeUIConfig> {
   try {
-    const config = await import(configPath);
-    return config.default || config;
+    const rawConfig = await import(configPath);
+    const config = rawConfig.default || rawConfig;
+    return resolveConfig(config);
   } catch (error) {
     console.error('Failed to load config:', error);
     return getDefaultConfig();
@@ -115,18 +115,10 @@ async function loadJsConfig(configPath: string): Promise<NativeUIConfig> {
 }
 
 /**
- * Get default configuration
+ * Get default configuration (resolved with all defaults)
  */
-export function getDefaultConfig(): NativeUIConfig {
-  return {
-    componentsPath: './components/ui',
-    utilsPath: './lib/utils',
-    style: 'default',
-    aliases: {
-      components: '@/components',
-      utils: '@/lib/utils',
-    },
-  };
+export function getDefaultConfig(): ResolvedNativeUIConfig {
+  return resolveConfig({});
 }
 
 /**

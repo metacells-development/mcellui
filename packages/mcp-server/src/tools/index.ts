@@ -45,7 +45,9 @@ function loadRegistry(): Registry | null {
 function loadComponentCode(item: RegistryItem): string | null {
   try {
     const registryPath = getRegistryPath();
-    const filePath = path.join(registryPath, item.files[0]);
+    const file = item.files[0];
+    if (!file) return null;
+    const filePath = path.join(registryPath, file);
     return fs.readFileSync(filePath, 'utf-8');
   } catch {
     return null;

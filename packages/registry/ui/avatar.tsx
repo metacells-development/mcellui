@@ -2,15 +2,13 @@
  * Avatar
  *
  * User profile picture with fallback initials.
+ * Uses design tokens for consistent styling.
  *
  * @example
  * ```tsx
- * <Avatar
- *   source={{ uri: 'https://example.com/avatar.jpg' }}
- *   fallback="JD"
- * />
- *
+ * <Avatar source={{ uri: 'https://example.com/avatar.jpg' }} fallback="JD" />
  * <Avatar fallback="AB" size="lg" />
+ * <Avatar fallback="XY" size="xs" />
  * ```
  */
 
@@ -23,7 +21,9 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import { cn } from '@/lib/utils';
+import { useTheme } from '@nativeui/core';
+
+export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export interface AvatarProps {
   /** Image source */
@@ -31,7 +31,7 @@ export interface AvatarProps {
   /** Fallback text (usually initials) */
   fallback?: string;
   /** Size preset */
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: AvatarSize;
   /** Additional container styles */
   style?: ViewStyle;
 }
@@ -42,35 +42,54 @@ export function Avatar({
   size = 'md',
   style,
 }: AvatarProps) {
+  const { colors, components, platformShadow } = useTheme();
+  const tokens = components.avatar[size];
   const [imageError, setImageError] = useState(false);
   const showFallback = !source || imageError;
 
-  const sizeValue = sizes[size];
-
   return (
     <View
-      style={cn(
+      style={[
         styles.container,
         {
-          width: sizeValue,
-          height: sizeValue,
-          borderRadius: sizeValue / 2,
+          width: tokens.size,
+          height: tokens.size,
+          borderRadius: tokens.borderRadius,
+          backgroundColor: colors.backgroundMuted,
         },
-        style
-      )}
+        platformShadow('sm'),
+        style,
+      ]}
       accessibilityRole="image"
       accessibilityLabel={fallback ? `Avatar: ${fallback}` : 'Avatar'}
     >
       {showFallback ? (
-        <View style={cn(styles.fallback, { borderRadius: sizeValue / 2 })}>
-          <Text style={cn(styles.fallbackText, styles[`${size}Text`])}>
+        <View
+          style={[
+            styles.fallback,
+            {
+              borderRadius: tokens.borderRadius,
+              backgroundColor: colors.primary,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.fallbackText,
+              {
+                fontSize: tokens.fontSize,
+                fontWeight: tokens.fontWeight,
+                color: colors.primaryForeground,
+              },
+            ]}
+          >
             {fallback.slice(0, 2).toUpperCase()}
           </Text>
         </View>
       ) : (
         <Image
           source={source}
-          style={cn(styles.image, { borderRadius: sizeValue / 2 })}
+          style={[styles.image, { borderRadius: tokens.borderRadius }]}
           onError={() => setImageError(true)}
         />
       )}
@@ -78,17 +97,9 @@ export function Avatar({
   );
 }
 
-const sizes = {
-  sm: 32,
-  md: 40,
-  lg: 56,
-  xl: 80,
-};
-
 const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
-    backgroundColor: '#e5e5e5',
   },
   image: {
     width: '100%',
@@ -98,22 +109,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#3b82f6',
   },
   fallbackText: {
-    color: '#ffffff',
-    fontWeight: '600',
-  },
-  smText: {
-    fontSize: 12,
-  },
-  mdText: {
-    fontSize: 14,
-  },
-  lgText: {
-    fontSize: 20,
-  },
-  xlText: {
-    fontSize: 28,
+    // Dynamic styles applied inline
   },
 });

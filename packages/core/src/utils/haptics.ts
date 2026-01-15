@@ -3,9 +3,32 @@
  *
  * Unified haptic feedback interface.
  * Falls back gracefully when expo-haptics is not available.
+ *
+ * Design Philosophy:
+ * - Every interactive element should provide tactile feedback
+ * - Haptics should be subtle and purposeful
+ * - Respect user's haptic preferences
  */
 
-type HapticStyle = 'light' | 'medium' | 'heavy' | 'success' | 'warning' | 'error' | 'selection';
+export type HapticStyle = 'light' | 'medium' | 'heavy' | 'success' | 'warning' | 'error' | 'selection';
+
+/**
+ * Haptic presets for common interactions
+ */
+export const hapticPresets = {
+  /** For button presses, checkbox toggles */
+  buttonPress: 'light' as HapticStyle,
+  /** For switch toggles */
+  toggle: 'medium' as HapticStyle,
+  /** For successful actions */
+  success: 'success' as HapticStyle,
+  /** For errors */
+  error: 'error' as HapticStyle,
+  /** For selection changes (radio, picker) */
+  selection: 'selection' as HapticStyle,
+  /** For destructive actions */
+  destructive: 'warning' as HapticStyle,
+} as const;
 
 let Haptics: typeof import('expo-haptics') | null = null;
 

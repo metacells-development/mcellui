@@ -77,27 +77,59 @@ export const initCommand = new Command()
 
       spinner.start('Creating configuration...');
 
-      // Create config file
-      const configContent = `import type { NativeUIConfig } from '@nativeui/cli';
+      // Create config file using defineConfig from @nativeui/core
+      const configContent = `/**
+ * NativeUI Configuration
+ *
+ * This file defines your app's design system.
+ * All components will automatically use these values.
+ */
 
-const config: NativeUIConfig = {
+import { defineConfig } from '@nativeui/core';
+
+export default defineConfig({
+  // ============================================
+  // Theme Configuration (runtime)
+  // ============================================
+
+  // Color theme preset: 'zinc' | 'slate' | 'stone' | 'blue' | 'green' | 'rose' | 'orange' | 'violet'
+  theme: 'blue',
+
+  // Border radius preset: 'none' | 'sm' | 'md' | 'lg' | 'full'
+  radius: 'md',
+
+  // Default color scheme: 'light' | 'dark' | 'system'
+  colorScheme: 'system',
+
+  // Custom color overrides (optional)
+  // colors: {
+  //   primary: '#6366F1',
+  // },
+
+  // Component defaults (optional)
+  // components: {
+  //   button: { defaultVariant: 'default', defaultSize: 'md' },
+  // },
+
+  // ============================================
+  // CLI Configuration (used by npx nativeui add)
+  // ============================================
+
   // Path where components will be installed
   componentsPath: '${config.componentsPath}',
 
   // Path where utilities (cn, etc.) will be installed
   utilsPath: '${config.utilsPath}',
 
-  // Style preset
+  // Style preset: 'default' | 'ios' | 'material'
   style: '${config.style}',
 
-  // Aliases (optional, auto-detected from tsconfig)
+  // Path aliases for imports
   aliases: {
     components: '@/components',
     utils: '@/lib/utils',
   },
-};
-
-export default config;
+});
 `;
 
       await fs.writeFile(configPath, configContent);
@@ -173,12 +205,5 @@ export function cn(...inputs: StyleInput[]): Style {
     }
   });
 
-export type NativeUIConfig = {
-  componentsPath: string;
-  utilsPath: string;
-  style: 'default' | 'ios' | 'material';
-  aliases?: {
-    components?: string;
-    utils?: string;
-  };
-};
+// Config type is exported from @nativeui/core
+export type { NativeUIConfig } from '@nativeui/core';

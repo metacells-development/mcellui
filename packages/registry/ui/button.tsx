@@ -2,37 +2,56 @@
  * Button
  *
  * A pressable button component with multiple variants and sizes.
- * Includes haptic feedback and accessibility support.
+ * Uses design tokens for consistent styling across the app.
  *
  * @example
  * ```tsx
  * <Button onPress={() => {}}>Click me</Button>
  * <Button variant="secondary" size="sm">Small</Button>
  * <Button variant="destructive" disabled>Disabled</Button>
+ * <Button variant="outline" icon={<Icon name="plus" />}>With Icon</Button>
  * ```
  */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
-  Pressable,
   Text,
+  View,
   StyleSheet,
   ViewStyle,
   TextStyle,
   ActivityIndicator,
   PressableProps,
+  Pressable,
 } from 'react-native';
-import { cn } from '@/lib/utils';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
+import { useTheme } from '@nativeui/core';
+import { haptic } from '@nativeui/core';
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+export type ButtonVariant = 'default' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends Omit<PressableProps, 'style'> {
   /** Button content */
   children: React.ReactNode;
   /** Visual style variant */
-  variant?: 'default' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+  variant?: ButtonVariant;
   /** Size preset */
-  size?: 'sm' | 'md' | 'lg';
+  size?: ButtonSize;
   /** Show loading spinner */
   loading?: boolean;
+  /** Icon element (left side) */
+  icon?: React.ReactNode;
+  /** Icon element (right side) */
+  iconRight?: React.ReactNode;
+  /** Full width button */
+  fullWidth?: boolean;
   /** Additional container styles */
   style?: ViewStyle;
   /** Additional text styles */
@@ -44,49 +63,156 @@ export function Button({
   variant = 'default',
   size = 'md',
   loading = false,
+  icon,
+  iconRight,
+  fullWidth = false,
   disabled,
   style,
   textStyle,
+  onPressIn,
+  onPressOut,
+  onPress,
   ...props
 }: ButtonProps) {
+  const { colors, components, platformShadow, springs } = useTheme();
+  const tokens = components.button[size];
   const isDisabled = disabled || loading;
+  const scale = useSharedValue(1);
+
+  const handlePressIn = useCallback(
+    (e: any) => {
+      scale.value = withSpring(0.97, springs.snappy);
+      onPressIn?.(e);
+    },
+    [onPressIn, springs.snappy]
+  );
+
+  const handlePressOut = useCallback(
+    (e: any) => {
+      scale.value = withSpring(1, springs.snappy);
+      onPressOut?.(e);
+    },
+    [onPressOut, springs.snappy]
+  );
+
+  const handlePress = useCallback(
+    (e: any) => {
+      haptic('light');
+      onPress?.(e);
+    },
+    [onPress]
+  );
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  // Get variant-specific styles
+  const variantStyles = getVariantStyles(variant, colors);
+
+  // Add shadow for solid buttons
+  const shadowStyle =
+    variant !== 'ghost' && variant !== 'outline' && !isDisabled
+      ? platformShadow('sm')
+      : {};
 
   return (
-    <Pressable
-      style={({ pressed }) =>
-        cn(
-          styles.base,
-          styles[variant],
-          styles[size],
-          pressed && styles.pressed,
-          isDisabled && styles.disabled,
-          style
-        )
-      }
+    <AnimatedPressable
+      style={[
+        styles.base,
+        {
+          minHeight: tokens.height,
+          paddingHorizontal: tokens.paddingHorizontal,
+          paddingVertical: tokens.paddingVertical,
+          borderRadius: tokens.borderRadius,
+          gap: tokens.gap,
+        },
+        variantStyles.container,
+        shadowStyle,
+        isDisabled && styles.disabled,
+        fullWidth && styles.fullWidth,
+        animatedStyle,
+        style,
+      ]}
       disabled={isDisabled}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      onPress={handlePress}
       accessibilityRole="button"
       accessibilityState={{ disabled: isDisabled }}
       {...props}
     >
       {loading ? (
-        <ActivityIndicator
-          size="small"
-          color={variant === 'default' ? '#fff' : '#3b82f6'}
-        />
+        <ActivityIndicator size="small" color={variantStyles.spinnerColor} />
       ) : (
-        <Text
-          style={cn(
-            styles.text,
-            styles[`${variant}Text`],
-            styles[`${size}Text`],
-            textStyle
-          )}
-        >
-          {children}
-        </Text>
+        <>
+          {icon && <View style={styles.icon}>{icon}</View>}
+          <Text
+            style={[
+              styles.text,
+              {
+                fontSize: tokens.fontSize,
+                fontWeight: tokens.fontWeight,
+              },
+              variantStyles.text,
+              textStyle,
+            ]}
+          >
+            {children}
+          </Text>
+          {iconRight && <View style={styles.icon}>{iconRight}</View>}
+        </>
       )}
-    </Pressable>
+    </AnimatedPressable>
   );
+}
+
+function getVariantStyles(
+  variant: ButtonVariant,
+  colors: ReturnType<typeof useTheme>['colors']
+) {
+  switch (variant) {
+    case 'default':
+      return {
+        container: { backgroundColor: colors.primary } as ViewStyle,
+        text: { color: colors.primaryForeground } as TextStyle,
+        spinnerColor: colors.primaryForeground,
+      };
+    case 'secondary':
+      return {
+        container: { backgroundColor: colors.secondary } as ViewStyle,
+        text: { color: colors.secondaryForeground } as TextStyle,
+        spinnerColor: colors.secondaryForeground,
+      };
+    case 'outline':
+      return {
+        container: {
+          backgroundColor: 'transparent',
+          borderWidth: 1,
+          borderColor: colors.border,
+        } as ViewStyle,
+        text: { color: colors.foreground } as TextStyle,
+        spinnerColor: colors.foreground,
+      };
+    case 'ghost':
+      return {
+        container: { backgroundColor: 'transparent' } as ViewStyle,
+        text: { color: colors.foreground } as TextStyle,
+        spinnerColor: colors.foreground,
+      };
+    case 'destructive':
+      return {
+        container: { backgroundColor: colors.destructive } as ViewStyle,
+        text: { color: colors.destructiveForeground } as TextStyle,
+        spinnerColor: colors.destructiveForeground,
+      };
+    default:
+      return {
+        container: { backgroundColor: colors.primary } as ViewStyle,
+        text: { color: colors.primaryForeground } as TextStyle,
+        spinnerColor: colors.primaryForeground,
+      };
+  }
 }
 
 const styles = StyleSheet.create({
@@ -94,83 +220,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
-  },
-
-  // Variants
-  default: {
-    backgroundColor: '#3b82f6',
-  },
-  secondary: {
-    backgroundColor: '#f5f5f5',
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: '#e5e5e5',
-  },
-  ghost: {
-    backgroundColor: 'transparent',
-  },
-  destructive: {
-    backgroundColor: '#ef4444',
-  },
-
-  // Sizes
-  sm: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    minHeight: 32,
-  },
-  md: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    minHeight: 40,
-  },
-  lg: {
-    paddingHorizontal: 24,
-    paddingVertical: 14,
-    minHeight: 48,
-  },
-
-  // States
-  pressed: {
-    opacity: 0.8,
   },
   disabled: {
     opacity: 0.5,
   },
-
-  // Text base
+  fullWidth: {
+    width: '100%',
+  },
   text: {
-    fontWeight: '600',
+    textAlign: 'center',
   },
-
-  // Text variants
-  defaultText: {
-    color: '#ffffff',
-  },
-  secondaryText: {
-    color: '#171717',
-  },
-  outlineText: {
-    color: '#171717',
-  },
-  ghostText: {
-    color: '#3b82f6',
-  },
-  destructiveText: {
-    color: '#ffffff',
-  },
-
-  // Text sizes
-  smText: {
-    fontSize: 14,
-  },
-  mdText: {
-    fontSize: 16,
-  },
-  lgText: {
-    fontSize: 18,
+  icon: {
+    flexShrink: 0,
   },
 });

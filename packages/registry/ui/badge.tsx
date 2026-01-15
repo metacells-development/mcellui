@@ -2,25 +2,31 @@
  * Badge
  *
  * Small status indicator for labels and counts.
+ * Uses design tokens for consistent styling.
  *
  * @example
  * ```tsx
  * <Badge>New</Badge>
  * <Badge variant="secondary">12</Badge>
- * <Badge variant="destructive">Error</Badge>
+ * <Badge variant="destructive" size="lg">Error</Badge>
  * <Badge variant="outline">Draft</Badge>
  * ```
  */
 
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
-import { cn } from '@/lib/utils';
+import { useTheme, ThemeColors } from '@nativeui/core';
+
+export type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline';
+export type BadgeSize = 'sm' | 'md' | 'lg';
 
 export interface BadgeProps {
   /** Badge content */
   children: React.ReactNode;
   /** Visual style variant */
-  variant?: 'default' | 'secondary' | 'destructive' | 'outline';
+  variant?: BadgeVariant;
+  /** Size variant */
+  size?: BadgeSize;
   /** Additional container styles */
   style?: ViewStyle;
   /** Additional text styles */
@@ -30,57 +36,90 @@ export interface BadgeProps {
 export function Badge({
   children,
   variant = 'default',
+  size = 'md',
   style,
   textStyle,
 }: BadgeProps) {
+  const { colors, components, platformShadow } = useTheme();
+  const tokens = components.badge[size];
+  const variantStyles = getVariantStyles(variant, colors);
+
+  // Add subtle shadow for solid badges
+  const shadowStyle = variant !== 'outline' ? platformShadow('sm') : {};
+
   return (
-    <View style={cn(styles.base, styles[variant], style)}>
-      <Text style={cn(styles.text, styles[`${variant}Text`], textStyle)}>
+    <View
+      style={[
+        styles.base,
+        {
+          paddingHorizontal: tokens.paddingHorizontal,
+          paddingVertical: tokens.paddingVertical,
+          borderRadius: tokens.borderRadius,
+        },
+        variantStyles.container,
+        shadowStyle,
+        style,
+      ]}
+    >
+      <Text
+        style={[
+          styles.text,
+          {
+            fontSize: tokens.fontSize,
+            fontWeight: tokens.fontWeight,
+          },
+          variantStyles.text,
+          textStyle,
+        ]}
+      >
         {children}
       </Text>
     </View>
   );
 }
 
+function getVariantStyles(
+  variant: BadgeVariant,
+  colors: ThemeColors
+) {
+  switch (variant) {
+    case 'default':
+      return {
+        container: { backgroundColor: colors.primary } as ViewStyle,
+        text: { color: colors.primaryForeground } as TextStyle,
+      };
+    case 'secondary':
+      return {
+        container: { backgroundColor: colors.secondary } as ViewStyle,
+        text: { color: colors.secondaryForeground } as TextStyle,
+      };
+    case 'destructive':
+      return {
+        container: { backgroundColor: colors.destructive } as ViewStyle,
+        text: { color: colors.destructiveForeground } as TextStyle,
+      };
+    case 'outline':
+      return {
+        container: {
+          backgroundColor: 'transparent',
+          borderWidth: 1,
+          borderColor: colors.border,
+        } as ViewStyle,
+        text: { color: colors.foreground } as TextStyle,
+      };
+    default:
+      return {
+        container: { backgroundColor: colors.primary } as ViewStyle,
+        text: { color: colors.primaryForeground } as TextStyle,
+      };
+  }
+}
+
 const styles = StyleSheet.create({
   base: {
     alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 9999,
   },
-
-  // Variants
-  default: {
-    backgroundColor: '#3b82f6',
-  },
-  secondary: {
-    backgroundColor: '#f5f5f5',
-  },
-  destructive: {
-    backgroundColor: '#ef4444',
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: '#e5e5e5',
-  },
-
-  // Text
   text: {
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  defaultText: {
-    color: '#ffffff',
-  },
-  secondaryText: {
-    color: '#171717',
-  },
-  destructiveText: {
-    color: '#ffffff',
-  },
-  outlineText: {
-    color: '#171717',
+    textAlign: 'center',
   },
 });

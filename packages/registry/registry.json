@@ -52,6 +52,216 @@
       "files": ["ui/avatar.tsx"],
       "dependencies": [],
       "registryDependencies": []
+    },
+    {
+      "name": "checkbox",
+      "type": "ui",
+      "description": "Accessible checkbox with animated checkmark and indeterminate state",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/checkbox.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "switch",
+      "type": "ui",
+      "description": "iOS-style toggle switch with animated thumb",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/switch.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "radio-group",
+      "type": "ui",
+      "description": "Radio button group for single selection with animated indicator",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/radio-group.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "label",
+      "type": "ui",
+      "description": "Form label with required indicator and size variants",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/label.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "separator",
+      "type": "ui",
+      "description": "Visual divider for horizontal or vertical content separation",
+      "category": "Layout",
+      "status": "beta",
+      "files": ["ui/separator.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "spinner",
+      "type": "ui",
+      "description": "Loading indicator with size and color variants",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["ui/spinner.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "skeleton",
+      "type": "ui",
+      "description": "Loading placeholder with shimmer animation",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["ui/skeleton.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "progress",
+      "type": "ui",
+      "description": "Progress bar with animated fill and indeterminate state",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["ui/progress.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "sheet",
+      "type": "ui",
+      "description": "Bottom sheet with snap points and swipe gestures",
+      "category": "Overlay",
+      "status": "beta",
+      "files": ["ui/sheet.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
+      "registryDependencies": []
+    },
+    {
+      "name": "dialog",
+      "type": "ui",
+      "description": "Centered modal dialog with backdrop",
+      "category": "Overlay",
+      "status": "beta",
+      "files": ["ui/dialog.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "alert-dialog",
+      "type": "ui",
+      "description": "Confirmation dialog for destructive actions",
+      "category": "Overlay",
+      "status": "beta",
+      "files": ["ui/alert-dialog.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "toast",
+      "type": "ui",
+      "description": "Notification system with variants and auto-dismiss",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["ui/toast.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-safe-area-context"],
+      "registryDependencies": []
+    },
+    {
+      "name": "textarea",
+      "type": "ui",
+      "description": "Multiline text input with auto-grow and character count",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/textarea.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "select",
+      "type": "ui",
+      "description": "Bottom sheet picker for selection from options",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/select.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": ["sheet"]
+    },
+    {
+      "name": "slider",
+      "type": "ui",
+      "description": "Value slider with gesture support and step increments",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/slider.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
+      "registryDependencies": []
+    },
+    {
+      "name": "stepper",
+      "type": "ui",
+      "description": "Quantity input with increment/decrement buttons",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/stepper.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "tabs",
+      "type": "ui",
+      "description": "Tabbed navigation with animated indicator",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["ui/tabs.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "accordion",
+      "type": "ui",
+      "description": "Expandable content panels with single or multiple mode",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["ui/accordion.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "segmented-control",
+      "type": "ui",
+      "description": "iOS-style segmented control for switching views",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["ui/segmented-control.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "pull-to-refresh",
+      "type": "ui",
+      "description": "Pull-to-refresh wrapper with custom animated indicator",
+      "category": "Mobile",
+      "status": "beta",
+      "files": ["ui/pull-to-refresh.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "swipeable-row",
+      "type": "ui",
+      "description": "Swipeable list row with left and right actions",
+      "category": "Mobile",
+      "status": "beta",
+      "files": ["ui/swipeable-row.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
+      "registryDependencies": []
     }
   ]
 }

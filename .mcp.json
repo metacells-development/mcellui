@@ -6,19 +6,17 @@
       "args": ["shadcn@latest", "mcp"]
     },
     "expo": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.expo.dev/sse"]
+      "type": "http",
+      "url": "https://mcp.expo.dev/mcp"
     },
     "react-native": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic-ai/claude-code-mcp-server"]
+      "args": ["-y", "@divagnz/mcp-react-native-expo"]
     },
     "figma": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://figma.com/mcp"]
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp"
     },
     "context7": {
       "type": "stdio",
