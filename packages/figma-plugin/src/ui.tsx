@@ -36,8 +36,12 @@ function App() {
 
   // Nachrichten vom Main-Thread empfangen
   useEffect(() => {
-    const handleMessage = (event: MessageEvent<UIMessage>) => {
-      const msg = event.data;
+    const handleMessage = (event: MessageEvent) => {
+      // Figma sendet Nachrichten als event.data.pluginMessage
+      const msg = event.data?.pluginMessage as UIMessage;
+      if (!msg) return;
+
+      console.log('[nativeui UI] Nachricht empfangen:', msg);
 
       switch (msg.type) {
         case 'collections':

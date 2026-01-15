@@ -53,15 +53,20 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
 // ============================================================================
 
 async function handleGetCollections(): Promise<void> {
+  console.log('[nativeui] handleGetCollections aufgerufen');
   const collections = await figma.variables.getLocalVariableCollectionsAsync();
+  console.log('[nativeui] Collections von API:', collections.length);
+
   const collectionInfos = await Promise.all(
     collections.map((collection) => getCollectionInfo(collection))
   );
+  console.log('[nativeui] CollectionInfos:', collectionInfos);
 
   sendToUI({
     type: 'collections',
     collections: collectionInfos,
   });
+  console.log('[nativeui] Nachricht an UI gesendet');
 }
 
 async function handleExtractTokens(
@@ -105,7 +110,17 @@ function sendToUI(message: UIMessage): void {
 // Plugin Initialization
 // ============================================================================
 
-// Initiale Collection-Liste laden
-handleGetCollections().catch((error) => {
-  console.error('Fehler beim Laden der Collections:', error);
-});
+// Debug: Log beim Start
+console.log('[nativeui] Plugin gestartet');
+
+// Warte kurz bis UI bereit ist, dann lade Collections
+setTimeout(async () => {
+  try {
+    console.log('[nativeui] Lade Collections...');
+    const collections = await figma.variables.getLocalVariableCollectionsAsync();
+    console.log('[nativeui] Gefundene Collections:', collections.length, collections);
+    await handleGetCollections();
+  } catch (error) {
+    console.error('[nativeui] Fehler beim Laden der Collections:', error);
+  }
+}, 100);
