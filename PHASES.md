@@ -150,7 +150,28 @@ We stay with React Native StyleSheet + ThemeProvider. Reasons:
 
 ---
 
-## Phase 3: Forms & Blocks
+## Phase 3: Figma Plugin
+
+**Status: NOT STARTED**
+
+Design-to-code workflow mit Figma Integration.
+
+### Core Features
+- [ ] Figma Plugin Setup (manifest, UI)
+- [ ] Design Token Sync (Colors, Spacing, Typography)
+- [ ] Component Export (Figma → nativeui Code)
+- [ ] Theme Generation aus Figma Styles
+- [ ] Asset Export (Icons, Images)
+
+### Nice-to-Have
+- [ ] Live Preview in Figma
+- [ ] Bidirectional Sync (Code → Figma)
+- [ ] Figma Variables Support
+- [ ] Team Library Integration
+
+---
+
+## Phase 4: Forms & Blocks
 
 **Status: NOT STARTED**
 
@@ -172,7 +193,7 @@ Form integration and screen templates.
 
 ---
 
-## Phase 4: Tooling Polish
+## Phase 5: Tooling Polish
 
 **Status: NOT STARTED**
 
@@ -193,7 +214,7 @@ CLI and MCP server fully functional.
 
 ---
 
-## Phase 5: Documentation
+## Phase 6: Documentation
 
 **Status: NOT STARTED**
 
@@ -209,31 +230,30 @@ Public documentation site.
 
 ---
 
-## Phase 6: Advanced Components
+## Phase 7: Advanced Components & Screens
 
 **Status: NOT STARTED**
 
-Complex components for power users.
+Complex components and complete screens for power users.
 
-### Components
+### Advanced Components
 - [ ] Command Palette
 - [ ] Calendar / Date Picker
 - [ ] Data Table
 - [ ] Charts (victory-native)
-- [ ] Tabs (animated)
 - [ ] Navigation Bar
 - [ ] Tab Bar
+- [ ] Image Picker
+- [ ] Camera Integration
 
----
+### Complete Screens
+- [ ] Onboarding Flow
+- [ ] E-Commerce Product Detail
+- [ ] Chat/Messaging
+- [ ] Social Feed
+- [ ] Dashboard
 
-## Phase 7: Ecosystem
-
-**Status: NOT STARTED**
-
-Integrations and extensions.
-
-### Tasks
-- [ ] Figma plugin (design to code)
+### Ecosystem
 - [ ] VS Code extension (snippets)
 - [ ] Theme gallery
 - [ ] Community components registry
