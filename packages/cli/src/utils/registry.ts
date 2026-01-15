@@ -2,165 +2,218 @@
  * Registry utilities
  *
  * Fetches component data from the registry.
- * In development, reads from local registry.
- * In production, would fetch from CDN/API.
+ * Supports local development (file system) and production (CDN).
  */
+
+import fs from 'fs-extra';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// --- Types ---
 
 export interface RegistryItem {
   name: string;
+  type: 'ui' | 'primitive' | 'hook' | 'block';
   description: string;
   category: string;
   status: 'stable' | 'beta' | 'experimental';
+  files: string[];
   dependencies?: string[];
   devDependencies?: string[];
   registryDependencies?: string[];
-  files: string[];
+}
+
+export interface Registry {
+  $schema?: string;
+  name: string;
+  version: string;
+  components: RegistryItem[];
 }
 
 export interface ComponentData {
   name: string;
-  code: string;
+  files: Array<{
+    name: string;
+    content: string;
+  }>;
   dependencies?: string[];
   devDependencies?: string[];
   registryDependencies?: string[];
 }
 
-// Placeholder registry data
-// In production, this would be fetched from CDN or generated from registry/
-const REGISTRY: RegistryItem[] = [
-  {
-    name: 'button',
-    description: 'A pressable button component with variants',
-    category: 'Inputs',
-    status: 'beta',
-    dependencies: [],
-    files: ['button.tsx'],
-  },
-  {
-    name: 'input',
-    description: 'Text input with label and error states',
-    category: 'Inputs',
-    status: 'beta',
-    dependencies: [],
-    files: ['input.tsx'],
-  },
-  {
-    name: 'card',
-    description: 'A container with rounded corners and shadow',
-    category: 'Layout',
-    status: 'beta',
-    dependencies: [],
-    files: ['card.tsx'],
-  },
-  {
-    name: 'badge',
-    description: 'Small status indicator',
-    category: 'Data Display',
-    status: 'beta',
-    dependencies: [],
-    files: ['badge.tsx'],
-  },
-  {
-    name: 'avatar',
-    description: 'User profile picture with fallback',
-    category: 'Data Display',
-    status: 'beta',
-    dependencies: [],
-    files: ['avatar.tsx'],
-  },
-  {
-    name: 'switch',
-    description: 'Toggle switch for boolean settings',
-    category: 'Inputs',
-    status: 'experimental',
-    dependencies: ['react-native-reanimated'],
-    files: ['switch.tsx'],
-  },
-  {
-    name: 'checkbox',
-    description: 'Selectable checkbox with animation',
-    category: 'Inputs',
-    status: 'experimental',
-    dependencies: ['react-native-reanimated'],
-    files: ['checkbox.tsx'],
-  },
-  {
-    name: 'skeleton',
-    description: 'Loading placeholder with shimmer animation',
-    category: 'Feedback',
-    status: 'experimental',
-    dependencies: ['react-native-reanimated'],
-    files: ['skeleton.tsx'],
-  },
-];
+// --- Configuration ---
+
+/**
+ * Base URL for production registry (when published)
+ * For now, we use local file system
+ */
+const REGISTRY_URL = process.env.NATIVEUI_REGISTRY_URL;
+
+/**
+ * Path to local registry (for development)
+ */
+function getLocalRegistryPath(): string {
+  // In development, registry is sibling package
+  // packages/cli/dist -> packages/registry
+  return path.resolve(__dirname, '..', '..', 'registry');
+}
+
+// --- Registry Functions ---
+
+/**
+ * Check if we should use local registry (development mode)
+ */
+function isLocalMode(): boolean {
+  // Use local if no registry URL configured or in development
+  if (REGISTRY_URL) return false;
+
+  const localPath = getLocalRegistryPath();
+  return fs.pathExistsSync(path.join(localPath, 'registry.json'));
+}
 
 /**
  * Get all available components in the registry
  */
 export async function getRegistry(): Promise<RegistryItem[]> {
-  // In production: fetch from CDN
-  return REGISTRY;
+  if (isLocalMode()) {
+    return getLocalRegistry();
+  }
+  return getRemoteRegistry();
+}
+
+/**
+ * Load registry from local file system
+ */
+async function getLocalRegistry(): Promise<RegistryItem[]> {
+  const registryPath = path.join(getLocalRegistryPath(), 'registry.json');
+
+  try {
+    const registry: Registry = await fs.readJson(registryPath);
+    return registry.components;
+  } catch (error) {
+    console.error('Failed to load local registry:', error);
+    return [];
+  }
+}
+
+/**
+ * Fetch registry from remote CDN
+ */
+async function getRemoteRegistry(): Promise<RegistryItem[]> {
+  if (!REGISTRY_URL) {
+    throw new Error('NATIVEUI_REGISTRY_URL not configured');
+  }
+
+  try {
+    const response = await fetch(`${REGISTRY_URL}/registry.json`);
+    const registry: Registry = await response.json();
+    return registry.components;
+  } catch (error) {
+    console.error('Failed to fetch remote registry:', error);
+    return [];
+  }
 }
 
 /**
  * Fetch a single component's code and metadata
  */
 export async function fetchComponent(name: string): Promise<ComponentData | null> {
-  const item = REGISTRY.find((i) => i.name === name);
+  const registry = await getRegistry();
+  const item = registry.find((i) => i.name === name);
 
   if (!item) {
     return null;
   }
 
-  // In production: fetch actual component code from CDN
-  // For now, return placeholder code
-  const code = generatePlaceholderComponent(name, item.description);
+  if (isLocalMode()) {
+    return fetchLocalComponent(item);
+  }
+  return fetchRemoteComponent(item);
+}
+
+/**
+ * Fetch component from local file system
+ */
+async function fetchLocalComponent(item: RegistryItem): Promise<ComponentData> {
+  const registryPath = getLocalRegistryPath();
+
+  const files = await Promise.all(
+    item.files.map(async (filePath) => {
+      const fullPath = path.join(registryPath, filePath);
+      const content = await fs.readFile(fullPath, 'utf-8');
+      const name = path.basename(filePath);
+
+      return { name, content };
+    })
+  );
 
   return {
     name: item.name,
-    code,
+    files,
     dependencies: item.dependencies,
     devDependencies: item.devDependencies,
     registryDependencies: item.registryDependencies,
   };
 }
 
-function generatePlaceholderComponent(name: string, description: string): string {
-  const componentName = name.charAt(0).toUpperCase() + name.slice(1);
-
-  return `/**
- * ${componentName}
- *
- * ${description}
- *
- * @example
- * \`\`\`tsx
- * <${componentName} />
- * \`\`\`
+/**
+ * Fetch component from remote CDN
  */
+async function fetchRemoteComponent(item: RegistryItem): Promise<ComponentData> {
+  if (!REGISTRY_URL) {
+    throw new Error('NATIVEUI_REGISTRY_URL not configured');
+  }
 
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+  const files = await Promise.all(
+    item.files.map(async (filePath) => {
+      const response = await fetch(`${REGISTRY_URL}/${filePath}`);
+      const content = await response.text();
+      const name = path.basename(filePath);
 
-export interface ${componentName}Props {
-  children?: React.ReactNode;
-}
-
-export function ${componentName}({ children }: ${componentName}Props) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{children ?? '${componentName}'}</Text>
-    </View>
+      return { name, content };
+    })
   );
+
+  return {
+    name: item.name,
+    files,
+    dependencies: item.dependencies,
+    devDependencies: item.devDependencies,
+    registryDependencies: item.registryDependencies,
+  };
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-  text: {
-    fontSize: 16,
-  },
-});
-`;
+/**
+ * Get components by category
+ */
+export async function getComponentsByCategory(): Promise<Map<string, RegistryItem[]>> {
+  const registry = await getRegistry();
+  const byCategory = new Map<string, RegistryItem[]>();
+
+  for (const item of registry) {
+    const category = item.category || 'Other';
+    if (!byCategory.has(category)) {
+      byCategory.set(category, []);
+    }
+    byCategory.get(category)!.push(item);
+  }
+
+  return byCategory;
+}
+
+/**
+ * Search components by name or description
+ */
+export async function searchComponents(query: string): Promise<RegistryItem[]> {
+  const registry = await getRegistry();
+  const lowerQuery = query.toLowerCase();
+
+  return registry.filter(
+    (item) =>
+      item.name.toLowerCase().includes(lowerQuery) ||
+      item.description.toLowerCase().includes(lowerQuery)
+  );
 }

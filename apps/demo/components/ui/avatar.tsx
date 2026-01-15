@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ImageSourcePropType, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text, Image, ImageSourcePropType, StyleSheet, ViewStyle, ImageStyle } from 'react-native';
 import { cn } from '@/lib/utils';
 
 export interface AvatarProps {
@@ -21,7 +21,7 @@ export function Avatar({ source, fallback = '?', size = 'md', style }: AvatarPro
           <Text style={cn(styles.fallbackText, styles[`${size}Text`])}>{fallback.slice(0, 2).toUpperCase()}</Text>
         </View>
       ) : (
-        <Image source={source} style={cn(styles.image, { borderRadius: sizeValue / 2 })} onError={() => setImageError(true)} />
+        <Image source={source} style={cn(styles.image, { borderRadius: sizeValue / 2 }) as ImageStyle} onError={() => setImageError(true)} />
       )}
     </View>
   );

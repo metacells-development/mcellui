@@ -5,7 +5,7 @@ import prompts from 'prompts';
 import fs from 'fs-extra';
 import path from 'path';
 import { getConfig, getProjectRoot } from '../utils/project';
-import { fetchComponent, getRegistry } from '../utils/registry';
+import { fetchComponent, getRegistry, RegistryItem } from '../utils/registry';
 
 export const addCommand = new Command()
   .name('add')
@@ -38,15 +38,22 @@ export const addCommand = new Command()
       // If no components specified, show picker
       if (!components.length) {
         const registry = await getRegistry();
+
+        if (!registry.length) {
+          console.log(chalk.red('No components found in registry.'));
+          process.exit(1);
+        }
+
         const { selected } = await prompts({
           type: 'multiselect',
           name: 'selected',
           message: 'Which components would you like to add?',
-          choices: registry.map((item) => ({
-            title: item.name,
+          choices: registry.map((item: RegistryItem) => ({
+            title: `${item.name} ${chalk.dim(`(${item.status})`)}`,
             value: item.name,
             description: item.description,
           })),
+          hint: '- Space to select, Enter to confirm',
         });
 
         if (!selected?.length) {
@@ -62,6 +69,9 @@ export const addCommand = new Command()
       components.forEach((c) => console.log(chalk.dim(`  - ${c}`)));
       console.log();
 
+      const allDependencies: string[] = [];
+      const allDevDependencies: string[] = [];
+
       for (const componentName of components) {
         spinner.start(`Fetching ${componentName}...`);
 
@@ -74,28 +84,59 @@ export const addCommand = new Command()
           }
 
           const targetDir = path.join(projectRoot, config.componentsPath);
-          const targetPath = path.join(targetDir, `${componentName}.tsx`);
 
-          // Check if exists
-          if ((await fs.pathExists(targetPath)) && !options.overwrite) {
-            spinner.warn(`${componentName} already exists (use --overwrite)`);
-            continue;
+          // Write each file
+          for (const file of component.files) {
+            const targetPath = path.join(targetDir, file.name);
+
+            // Check if exists
+            if ((await fs.pathExists(targetPath)) && !options.overwrite) {
+              spinner.warn(`${file.name} already exists (use --overwrite)`);
+              continue;
+            }
+
+            await fs.ensureDir(targetDir);
+
+            // Transform import paths based on config
+            const transformedContent = transformImports(file.content, config);
+            await fs.writeFile(targetPath, transformedContent);
           }
-
-          await fs.ensureDir(targetDir);
-          await fs.writeFile(targetPath, component.code);
 
           spinner.succeed(`Added ${componentName}`);
 
-          // Show dependencies if any
+          // Collect dependencies
           if (component.dependencies?.length) {
+            allDependencies.push(...component.dependencies);
+          }
+          if (component.devDependencies?.length) {
+            allDevDependencies.push(...component.devDependencies);
+          }
+
+          // Handle registry dependencies (other components)
+          if (component.registryDependencies?.length) {
             console.log(
-              chalk.dim(`     Dependencies: ${component.dependencies.join(', ')}`)
+              chalk.dim(`     Requires: ${component.registryDependencies.join(', ')}`)
             );
           }
         } catch (error) {
           spinner.fail(`Failed to add ${componentName}`);
           console.error(chalk.dim(String(error)));
+        }
+      }
+
+      // Show dependency install commands if needed
+      const uniqueDeps = [...new Set(allDependencies)];
+      const uniqueDevDeps = [...new Set(allDevDependencies)];
+
+      if (uniqueDeps.length || uniqueDevDeps.length) {
+        console.log();
+        console.log(chalk.bold('Install dependencies:'));
+
+        if (uniqueDeps.length) {
+          console.log(chalk.cyan(`  npx expo install ${uniqueDeps.join(' ')}`));
+        }
+        if (uniqueDevDeps.length) {
+          console.log(chalk.cyan(`  npm install -D ${uniqueDevDeps.join(' ')}`));
         }
       }
 
@@ -107,3 +148,29 @@ export const addCommand = new Command()
       process.exit(1);
     }
   });
+
+/**
+ * Transform import paths in component code based on project config
+ */
+function transformImports(
+  code: string,
+  config: { componentsPath: string; utilsPath: string; aliases?: { utils?: string } }
+): string {
+  let transformed = code;
+
+  // Transform @/lib/utils to configured utils alias or relative path
+  const utilsAlias = config.aliases?.utils || '@/lib/utils';
+
+  // If using default alias, keep as is
+  if (utilsAlias === '@/lib/utils') {
+    return transformed;
+  }
+
+  // Otherwise transform the import
+  transformed = transformed.replace(
+    /from ['"]@\/lib\/utils['"]/g,
+    `from '${utilsAlias}'`
+  );
+
+  return transformed;
+}

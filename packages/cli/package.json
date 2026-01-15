@@ -2,6 +2,7 @@
   "name": "@nativeui/cli",
   "version": "0.0.1",
   "description": "CLI for nativeui - add components to your Expo/React Native project",
+  "type": "module",
   "bin": {
     "nativeui": "./dist/index.js"
   },
@@ -23,7 +24,8 @@
     "prompts": "^2.4.2",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.0",
-    "detect-indent": "^7.0.1"
+    "detect-indent": "^7.0.1",
+    "jiti": "^1.21.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.0",

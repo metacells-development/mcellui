@@ -1,86 +1,55 @@
 # Roadmap
 
-## Phase 1: Foundation
-
-- [ ] Project Setup (Monorepo mit Turborepo)
-- [ ] Design Token System
-- [ ] Utils Library (`cn()`, `mergeStyles()`)
-- [ ] Primitives (Pressable, Portal, Slot)
-- [ ] Core Components (Button, Input, Card, Badge)
-- [ ] CLI Grundstruktur (`init`, `add`)
-- [ ] MCP Server Grundstruktur
-
-## Phase 2: Core Components
-
-- [ ] Forms (Checkbox, Switch, Radio, Select, Slider)
-- [ ] Form Integration (react-hook-form + zod)
-- [ ] Field Component (Label + Input + Error)
-- [ ] Feedback (Toast, Dialog, Alert, Bottom Sheet)
-- [ ] Navigation (Tabs, Tab Bar, Navigation Bar)
-- [ ] Data Display (Avatar, List Item, Skeleton, Empty)
-- [ ] MCP Server: Registry & Validation Tools
-- [ ] Platform Testing Setup (iOS + Android)
-
-## Phase 3: Advanced
-
-- [ ] Complex Components (Command Palette, Calendar)
-- [ ] Blocks (Auth Screens, Settings, Lists)
-- [ ] Form Blocks (Login, Signup, Contact, Payment)
-- [ ] Theming System (Dark Mode, Custom Themes)
-- [ ] Playground MVP (Web)
-- [ ] Documentation Site
-- [ ] Expo Go Compatibility Testing
-
-## Phase 4: Ecosystem
-
-- [ ] Tablet/iPad Layouts (Split View, Sidebar)
-- [ ] Chart Components (victory-native)
-- [ ] Dashboard Blocks
-- [ ] Playground: Full Features
-- [ ] Theme Gallery
-- [ ] Figma Plugin
-
-## Phase 5: Polish & Scale
-
-- [ ] Animation Refinement
-- [ ] Performance Optimization (Bundle Size, FlatList)
-- [ ] Accessibility Audit (VoiceOver + TalkBack)
-- [ ] Platform-spezifische Optimierungen
-- [ ] New Architecture Testing
-- [ ] AI Component Generator
-- [ ] Visual Regression Testing
+> Detaillierte Phase-Dokumentation: [docs/phases/](./phases/INDEX.md)
 
 ---
 
-## Prioritäten
+## Current Status
 
-### Must Have (MVP)
-- CLI mit `init` und `add`
-- Utils Library (`cn()`)
-- 20 Core Components
-- Basic Theme System
-- MCP Server Basics
-- Platform Testing (iOS 17+, Android 13+)
+**Phase 1: Foundation** - Complete ✅
+
+---
+
+## Phases Overview
+
+| Phase | Focus | Status |
+|-------|-------|--------|
+| [Phase 1](./phases/PHASE-1-FOUNDATION.md) | Foundation | ✅ 100% |
+| [Phase 2](./phases/PHASE-2-CORE-COMPONENTS.md) | Core Components | ⏳ 0% |
+| [Phase 3](./phases/PHASE-3-ADVANCED.md) | Advanced | ⏳ 0% |
+| [Phase 4](./phases/PHASE-4-ECOSYSTEM.md) | Ecosystem | ⏳ 0% |
+| [Phase 5](./phases/PHASE-5-POLISH.md) | Polish & Scale | ⏳ 0% |
+
+---
+
+## MVP Requirements
+
+### Must Have
+- [x] CLI mit `init` und `add`
+- [x] Utils Library (`cn()`)
+- [ ] 20 Core Components (aktuell: 5)
+- [ ] Basic Theme System
+- [x] MCP Server Basics (4 Tools)
+- [x] Platform Testing iOS (Expo SDK 54)
+- [ ] Platform Testing Android
 
 ### Should Have
-- Playground
-- 40+ Components
-- Blocks (Auth, Forms, Settings)
-- Form Integration
-- Tablet Support
-- Expo SDK Compatibility
+- [ ] Playground
+- [ ] 40+ Components
+- [ ] Blocks (Auth, Forms, Settings)
+- [ ] Form Integration
+- [ ] Tablet Support
 
 ### Nice to Have
-- Figma Plugin
-- AI Generator
-- Theme Marketplace
-- Charts & Dashboard
+- [ ] Figma Plugin
+- [ ] AI Generator
+- [ ] Theme Marketplace
 
 ---
 
-## Platform Requirements
+## Platform Support
 
-### Minimum Supported
+### Minimum
 - iOS 15+
 - Android 10+ (API 29)
 - Expo SDK 50+
@@ -96,10 +65,8 @@
 
 ## Quality Gates
 
-Vor jedem Release:
-
 ```bash
-# Alle müssen passen:
+# Vor jedem Release:
 npx nativeui test:all      # Unit + Visual
 npx nativeui a11y check    # Accessibility
 npx nativeui doctor        # SDK Compatibility

@@ -1,5 +1,58 @@
-import { z } from 'zod';
 import type { Tool } from '@modelcontextprotocol/sdk/types.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// --- Types ---
+
+interface RegistryItem {
+  name: string;
+  type: string;
+  description: string;
+  category: string;
+  status: 'stable' | 'beta' | 'experimental';
+  files: string[];
+  dependencies?: string[];
+  registryDependencies?: string[];
+}
+
+interface Registry {
+  name: string;
+  version: string;
+  components: RegistryItem[];
+}
+
+// --- Registry Access ---
+
+function getRegistryPath(): string {
+  // packages/mcp-server/dist -> packages/registry
+  return path.resolve(__dirname, '..', '..', 'registry');
+}
+
+function loadRegistry(): Registry | null {
+  try {
+    const registryPath = path.join(getRegistryPath(), 'registry.json');
+    const data = fs.readFileSync(registryPath, 'utf-8');
+    return JSON.parse(data);
+  } catch {
+    return null;
+  }
+}
+
+function loadComponentCode(item: RegistryItem): string | null {
+  try {
+    const registryPath = getRegistryPath();
+    const filePath = path.join(registryPath, item.files[0]);
+    return fs.readFileSync(filePath, 'utf-8');
+  } catch {
+    return null;
+  }
+}
+
+// --- Tools Definition ---
 
 export const tools: Tool[] = [
   {
@@ -10,20 +63,20 @@ export const tools: Tool[] = [
       properties: {
         category: {
           type: 'string',
-          description: 'Filter by category (optional)',
+          description: 'Filter by category (optional): Inputs, Layout, Data Display, Feedback',
         },
       },
     },
   },
   {
     name: 'nativeui_get_component',
-    description: 'Get the source code and documentation for a specific component',
+    description: 'Get the full source code for a specific component',
     inputSchema: {
       type: 'object',
       properties: {
         name: {
           type: 'string',
-          description: 'Component name (e.g., "button", "card")',
+          description: 'Component name (e.g., "button", "card", "input")',
         },
       },
       required: ['name'],
@@ -31,7 +84,7 @@ export const tools: Tool[] = [
   },
   {
     name: 'nativeui_add_component',
-    description: 'Add a component to the current project',
+    description: 'Get instructions to add a component to a project',
     inputSchema: {
       type: 'object',
       properties: {
@@ -39,37 +92,19 @@ export const tools: Tool[] = [
           type: 'string',
           description: 'Component name to add',
         },
-        path: {
-          type: 'string',
-          description: 'Target path (optional, uses config default)',
-        },
       },
       required: ['name'],
     },
   },
   {
-    name: 'nativeui_validate_component',
-    description: 'Validate a component for platform compatibility and accessibility',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        code: {
-          type: 'string',
-          description: 'Component source code to validate',
-        },
-      },
-      required: ['code'],
-    },
-  },
-  {
     name: 'nativeui_suggest_component',
-    description: 'Get component suggestions based on a description',
+    description: 'Get component suggestions based on a description of what you want to build',
     inputSchema: {
       type: 'object',
       properties: {
         description: {
           type: 'string',
-          description: 'Description of what you want to build',
+          description: 'Description of what you want to build (e.g., "a form with email and password")',
         },
       },
       required: ['description'],
@@ -77,26 +112,29 @@ export const tools: Tool[] = [
   },
 ];
 
-// Placeholder registry data
-const REGISTRY = [
-  { name: 'button', category: 'Inputs', description: 'Pressable button with variants' },
-  { name: 'input', category: 'Inputs', description: 'Text input with validation' },
-  { name: 'card', category: 'Layout', description: 'Container with shadow' },
-  { name: 'badge', category: 'Data Display', description: 'Small status indicator' },
-  { name: 'avatar', category: 'Data Display', description: 'Profile picture' },
-  { name: 'switch', category: 'Inputs', description: 'Toggle switch' },
-  { name: 'checkbox', category: 'Inputs', description: 'Selectable checkbox' },
-  { name: 'skeleton', category: 'Feedback', description: 'Loading placeholder' },
-];
+// --- Tool Handlers ---
 
 export async function handleToolCall(
   name: string,
   args: Record<string, unknown> | undefined
 ): Promise<{ content: Array<{ type: string; text: string }> }> {
+  const registry = loadRegistry();
+
+  if (!registry) {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: 'Error: Could not load component registry.',
+        },
+      ],
+    };
+  }
+
   switch (name) {
     case 'nativeui_list_components': {
       const category = args?.category as string | undefined;
-      let components = REGISTRY;
+      let components = registry.components;
 
       if (category) {
         components = components.filter(
@@ -104,49 +142,85 @@ export async function handleToolCall(
         );
       }
 
-      const list = components
-        .map((c) => `- ${c.name}: ${c.description} [${c.category}]`)
-        .join('\n');
+      // Group by category
+      const byCategory = new Map<string, RegistryItem[]>();
+      for (const c of components) {
+        if (!byCategory.has(c.category)) {
+          byCategory.set(c.category, []);
+        }
+        byCategory.get(c.category)!.push(c);
+      }
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Available components:\n\n${list}`,
-          },
-        ],
-      };
+      let output = `# Available nativeui Components\n\n`;
+      for (const [cat, items] of byCategory) {
+        output += `## ${cat}\n\n`;
+        for (const item of items) {
+          output += `- **${item.name}** (${item.status}): ${item.description}\n`;
+        }
+        output += '\n';
+      }
+
+      output += `\nTotal: ${components.length} components`;
+
+      return { content: [{ type: 'text', text: output }] };
     }
 
     case 'nativeui_get_component': {
       const componentName = args?.name as string;
-      const component = REGISTRY.find((c) => c.name === componentName);
+      const component = registry.components.find((c) => c.name === componentName);
 
       if (!component) {
         return {
           content: [
             {
               type: 'text',
-              text: `Component "${componentName}" not found. Use nativeui_list_components to see available components.`,
+              text: `Component "${componentName}" not found.\n\nAvailable: ${registry.components.map((c) => c.name).join(', ')}`,
             },
           ],
         };
       }
 
-      // In production, would return actual component code
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `# ${component.name}\n\n${component.description}\n\nCategory: ${component.category}\n\n## Usage\n\n\`\`\`tsx\nimport { ${component.name.charAt(0).toUpperCase() + component.name.slice(1)} } from '@/components/ui/${component.name}';\n\n<${component.name.charAt(0).toUpperCase() + component.name.slice(1)} />\n\`\`\``,
-          },
-        ],
-      };
+      const code = loadComponentCode(component);
+      if (!code) {
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Error: Could not load source code for "${componentName}".`,
+            },
+          ],
+        };
+      }
+
+      const output = `# ${component.name}
+
+${component.description}
+
+**Category:** ${component.category}
+**Status:** ${component.status}
+${component.dependencies?.length ? `**Dependencies:** ${component.dependencies.join(', ')}` : ''}
+
+## Source Code
+
+\`\`\`tsx
+${code}
+\`\`\`
+
+## Usage
+
+\`\`\`tsx
+import { ${capitalize(component.name)} } from '@/components/ui/${component.name}';
+
+<${capitalize(component.name)} />
+\`\`\`
+`;
+
+      return { content: [{ type: 'text', text: output }] };
     }
 
     case 'nativeui_add_component': {
       const componentName = args?.name as string;
-      const component = REGISTRY.find((c) => c.name === componentName);
+      const component = registry.components.find((c) => c.name === componentName);
 
       if (!component) {
         return {
@@ -159,80 +233,57 @@ export async function handleToolCall(
         };
       }
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `To add ${component.name}, run:\n\nnpx nativeui add ${component.name}\n\nOr use the CLI to add it to your project.`,
-          },
-        ],
-      };
-    }
+      let output = `# Add ${component.name}
 
-    case 'nativeui_validate_component': {
-      const code = args?.code as string;
+Run this command:
 
-      // Basic validation checks
-      const issues: string[] = [];
+\`\`\`bash
+npx nativeui add ${component.name}
+\`\`\`
+`;
 
-      if (!code.includes('accessible')) {
-        issues.push('- Consider adding accessibility props (accessible, accessibilityLabel)');
+      if (component.dependencies?.length) {
+        output += `
+## Required Dependencies
+
+\`\`\`bash
+npx expo install ${component.dependencies.join(' ')}
+\`\`\`
+`;
       }
 
-      if (code.includes('any')) {
-        issues.push('- Avoid using `any` type, use proper TypeScript types');
+      if (component.registryDependencies?.length) {
+        output += `
+## Required Components
+
+This component depends on: ${component.registryDependencies.join(', ')}
+
+\`\`\`bash
+npx nativeui add ${component.registryDependencies.join(' ')}
+\`\`\`
+`;
       }
 
-      if (!code.includes('StyleSheet')) {
-        issues.push('- Consider using StyleSheet.create for better performance');
-      }
-
-      if (code.includes('color:') && !code.includes('Platform')) {
-        issues.push('- Consider checking platform-specific color support');
-      }
-
-      if (issues.length === 0) {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: 'Component looks good! No issues found.',
-            },
-          ],
-        };
-      }
-
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Validation complete. Suggestions:\n\n${issues.join('\n')}`,
-          },
-        ],
-      };
+      return { content: [{ type: 'text', text: output }] };
     }
 
     case 'nativeui_suggest_component': {
       const description = (args?.description as string).toLowerCase();
-      const suggestions: string[] = [];
+      const suggestions: RegistryItem[] = [];
 
-      if (description.includes('button') || description.includes('click') || description.includes('tap')) {
-        suggestions.push('button');
-      }
-      if (description.includes('input') || description.includes('text') || description.includes('form')) {
-        suggestions.push('input');
-      }
-      if (description.includes('card') || description.includes('container') || description.includes('box')) {
-        suggestions.push('card');
-      }
-      if (description.includes('avatar') || description.includes('profile') || description.includes('user')) {
-        suggestions.push('avatar');
-      }
-      if (description.includes('switch') || description.includes('toggle')) {
-        suggestions.push('switch');
-      }
-      if (description.includes('loading') || description.includes('skeleton')) {
-        suggestions.push('skeleton');
+      const keywords: Record<string, string[]> = {
+        button: ['button', 'click', 'tap', 'press', 'action', 'submit'],
+        input: ['input', 'text', 'field', 'form', 'email', 'password', 'type'],
+        card: ['card', 'container', 'box', 'panel', 'wrapper'],
+        badge: ['badge', 'tag', 'label', 'status', 'indicator', 'count'],
+        avatar: ['avatar', 'profile', 'user', 'photo', 'image', 'picture'],
+      };
+
+      for (const component of registry.components) {
+        const componentKeywords = keywords[component.name] || [component.name];
+        if (componentKeywords.some((kw) => description.includes(kw))) {
+          suggestions.push(component);
+        }
       }
 
       if (suggestions.length === 0) {
@@ -240,30 +291,29 @@ export async function handleToolCall(
           content: [
             {
               type: 'text',
-              text: 'No specific component suggestions. Try describing your use case more specifically, or use nativeui_list_components to browse all available components.',
+              text: `No specific component suggestions for "${description}".\n\nUse \`nativeui_list_components\` to see all available components.`,
             },
           ],
         };
       }
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Based on your description, consider these components:\n\n${suggestions.map((s) => `- ${s}`).join('\n')}\n\nUse nativeui_get_component to see details for any of these.`,
-          },
-        ],
-      };
+      let output = `# Suggested Components\n\nBased on: "${description}"\n\n`;
+      for (const s of suggestions) {
+        output += `## ${s.name}\n\n${s.description}\n\n`;
+      }
+
+      output += `\nAdd with: \`npx nativeui add ${suggestions.map((s) => s.name).join(' ')}\``;
+
+      return { content: [{ type: 'text', text: output }] };
     }
 
     default:
       return {
-        content: [
-          {
-            type: 'text',
-            text: `Unknown tool: ${name}`,
-          },
-        ],
+        content: [{ type: 'text', text: `Unknown tool: ${name}` }],
       };
   }
+}
+
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
