@@ -152,13 +152,15 @@ We stay with React Native StyleSheet + ThemeProvider. Reasons:
 
 ## Phase 3: Figma Plugin
 
-**Status: NOT STARTED**
+**Status: IN PROGRESS** (Milestone 1 Complete)
 
 Design-to-code workflow mit Figma Integration.
 
 ### Core Features
-- [ ] Figma Plugin Setup (manifest, UI)
-- [ ] Design Token Sync (Colors, Spacing, Typography)
+- [x] Figma Plugin Setup (manifest, UI, esbuild)
+- [x] Design Token Sync (Colors, Spacing, Radius)
+- [x] Light/Dark Mode Support
+- [x] nativeui.config.ts Generator
 - [ ] Component Export (Figma → nativeui Code)
 - [ ] Theme Generation aus Figma Styles
 - [ ] Asset Export (Icons, Images)

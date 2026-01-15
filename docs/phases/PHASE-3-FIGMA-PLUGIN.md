@@ -1,6 +1,6 @@
 # Phase 3: Figma Plugin
 
-> Status: **NOT STARTED**
+> Status: **IN PROGRESS** (Milestone 1 Complete)
 > Estimated: **2-3 Wochen**
 
 ## Übersicht
@@ -19,14 +19,22 @@ Design-to-Code Workflow mit einem Figma Plugin, das Design Tokens synchronisiert
 
 ## Milestones
 
-### Milestone 1: Setup & Token Sync (Woche 1)
+### Milestone 1: Setup & Token Sync ✅
 
-- [ ] Figma Plugin Boilerplate
-- [ ] Plugin UI mit React
-- [ ] Figma Variables API Integration
-- [ ] Token Extraction (Colors, Spacing, Radius)
-- [ ] `nativeui.config.ts` Generator
-- [ ] Light/Dark Mode Support
+- [x] Figma Plugin Boilerplate (manifest.json, package.json, tsconfig.json, esbuild.config.js)
+- [x] Plugin UI mit React (ui.tsx mit Token-Selektor)
+- [x] Figma Variables API Integration (extractor.ts)
+- [x] Token Extraction (Colors, Spacing, Radius)
+- [x] `nativeui.config.ts` Generator (transformer.ts, emitter.ts)
+- [x] Light/Dark Mode Support (automatische Mode-Erkennung)
+
+**Implementierte Dateien:**
+- `packages/figma-plugin/src/main.ts` - Figma Sandbox Entry
+- `packages/figma-plugin/src/ui.tsx` - React UI mit Collection-Selektor
+- `packages/figma-plugin/src/lib/types.ts` - TypeScript Interfaces
+- `packages/figma-plugin/src/lib/tokens/extractor.ts` - Figma Variables → Tokens
+- `packages/figma-plugin/src/lib/tokens/transformer.ts` - Tokens → nativeui Format
+- `packages/figma-plugin/src/lib/tokens/emitter.ts` - Config File Generator
 
 ### Milestone 2: Component Export (Woche 2)
 
