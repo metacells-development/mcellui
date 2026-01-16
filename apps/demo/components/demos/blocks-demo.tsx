@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Alert, ScrollView, Image, TextInput, Pressable } from 'react-native';
 import { useTheme } from '@nativeui/core';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Avatar } from '@/components/ui/avatar';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
-import Svg, { Circle, Path } from 'react-native-svg';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
 // ============================================================================
 // Demo Component
@@ -37,6 +38,34 @@ export function BlocksDemo() {
 
       <Section title="Error State Block">
         <ErrorStateBlockPreview />
+      </Section>
+
+      <Section title="Notification Item">
+        <NotificationItemPreview />
+      </Section>
+
+      <Section title="Content Card">
+        <ContentCardPreview />
+      </Section>
+
+      <Section title="Feature Card">
+        <FeatureCardPreview />
+      </Section>
+
+      <Section title="Stats Card">
+        <StatsCardPreview />
+      </Section>
+
+      <Section title="Hero Block">
+        <HeroBlockPreview />
+      </Section>
+
+      <Section title="Social Proof Bar">
+        <SocialProofBarPreview />
+      </Section>
+
+      <Section title="Search Header">
+        <SearchHeaderPreview />
       </Section>
     </View>
   );
@@ -396,6 +425,360 @@ function ErrorStateBlockPreview() {
 }
 
 // ============================================================================
+// Notification Item Preview
+// ============================================================================
+
+function NotificationItemPreview() {
+  const { colors, spacing, radius } = useTheme();
+
+  const notifications = [
+    {
+      avatar: 'https://i.pravatar.cc/100?img=1',
+      title: 'Sarah liked your post',
+      message: '"Great photo from the weekend!"',
+      time: '2m ago',
+      unread: true,
+    },
+    {
+      avatar: 'https://i.pravatar.cc/100?img=2',
+      title: 'New follower',
+      message: 'Mike started following you',
+      time: '1h ago',
+      unread: true,
+    },
+    {
+      avatar: 'https://i.pravatar.cc/100?img=3',
+      title: 'Comment on your post',
+      message: 'This looks amazing!',
+      time: '3h ago',
+      unread: false,
+    },
+  ];
+
+  return (
+    <Card style={{ overflow: 'hidden' }}>
+      {/* No padding wrapper - backgrounds extend to card edges */}
+      {notifications.map((item, index) => (
+        <View key={index}>
+          <Pressable
+            style={[
+              styles.notificationItem,
+              { padding: spacing[4], backgroundColor: item.unread ? colors.primary + '10' : 'transparent' },
+            ]}
+              onPress={() => Alert.alert(item.title)}
+            >
+              <Avatar size="md" source={{ uri: item.avatar }} fallback={item.title[0]} />
+              <View style={[styles.notificationContent, { marginLeft: spacing[3] }]}>
+                <View style={styles.notificationHeader}>
+                  <Text style={[styles.notificationTitle, { color: colors.foreground }]} numberOfLines={1}>
+                    {item.title}
+                  </Text>
+                  <Text style={[styles.notificationTime, { color: colors.foregroundMuted }]}>
+                    {item.time}
+                  </Text>
+                </View>
+                <Text style={[styles.notificationMessage, { color: colors.foregroundMuted }]} numberOfLines={1}>
+                  {item.message}
+                </Text>
+              </View>
+              {item.unread && (
+                <View style={[styles.unreadDot, { backgroundColor: colors.primary }]} />
+              )}
+            </Pressable>
+            {index < notifications.length - 1 && <Separator style={{ marginLeft: 56 + spacing[4] }} />}
+          </View>
+        ))}
+    </Card>
+  );
+}
+
+// ============================================================================
+// Content Card Preview
+// ============================================================================
+
+function ContentCardPreview() {
+  const { colors, spacing, radius } = useTheme();
+
+  return (
+    <Card>
+      <View style={[styles.contentCardImage, { backgroundColor: colors.secondary, height: 160 }]}>
+        <Svg width={48} height={48} viewBox="0 0 24 24" fill="none">
+          <Rect x="3" y="3" width="18" height="18" rx="2" stroke={colors.foregroundMuted} strokeWidth="2" />
+          <Circle cx="8.5" cy="8.5" r="1.5" fill={colors.foregroundMuted} />
+          <Path d="M21 15l-5-5L5 21" stroke={colors.foregroundMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </Svg>
+      </View>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <Text style={[styles.contentCardTitle, { color: colors.foreground, marginBottom: spacing[1] }]}>
+          Discover Amazing Places
+        </Text>
+        <Text style={[styles.contentCardSubtitle, { color: colors.foregroundMuted, marginBottom: spacing[3] }]}>
+          Explore the world's most beautiful destinations with our curated travel guides.
+        </Text>
+        <Button onPress={() => Alert.alert('Explore')}>Explore Now</Button>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Feature Card Preview
+// ============================================================================
+
+function FeatureCardPreview() {
+  const { colors, spacing, radius } = useTheme();
+
+  const features = [
+    { icon: '⚡', title: 'Lightning Fast', description: 'Optimized for speed and performance' },
+    { icon: '🔒', title: 'Secure', description: 'Enterprise-grade security built in' },
+    { icon: '🎨', title: 'Beautiful', description: 'Stunning UI that users love' },
+  ];
+
+  return (
+    <View style={{ gap: spacing[3] }}>
+      {features.map((feature, index) => (
+        <Card key={index}>
+          <CardContent style={{ paddingTop: spacing[4] }}>
+            <View style={[styles.featureCard, { gap: spacing[3] }]}>
+              <View
+                style={[
+                  styles.featureIcon,
+                  {
+                    backgroundColor: colors.primary + '15',
+                    width: 48,
+                    height: 48,
+                    borderRadius: radius.lg,
+                  },
+                ]}
+              >
+                <Text style={{ fontSize: 24 }}>{feature.icon}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.featureTitle, { color: colors.foreground }]}>{feature.title}</Text>
+                <Text style={[styles.featureDescription, { color: colors.foregroundMuted }]}>
+                  {feature.description}
+                </Text>
+              </View>
+            </View>
+          </CardContent>
+        </Card>
+      ))}
+    </View>
+  );
+}
+
+// ============================================================================
+// Stats Card Preview
+// ============================================================================
+
+function StatsCardPreview() {
+  const { colors, spacing, radius } = useTheme();
+
+  const stats = [
+    { value: '$12,450', label: 'Revenue', trend: 12.5, trendLabel: 'vs last month' },
+    { value: '1,234', label: 'Users', trend: -2.3, trendLabel: 'vs last week' },
+  ];
+
+  return (
+    <View style={{ gap: spacing[3] }}>
+      {stats.map((stat, index) => {
+        const isPositive = stat.trend >= 0;
+        const trendColor = isPositive ? colors.success : colors.destructive;
+
+        return (
+          <Card key={index}>
+            <CardContent style={{ paddingTop: spacing[4] }}>
+              <Text style={[styles.statsLabel, { color: colors.foregroundMuted }]}>{stat.label}</Text>
+              <Text style={[styles.statsValue, { color: colors.foreground, marginTop: spacing[1] }]}>
+                {stat.value}
+              </Text>
+              <View style={[styles.statsTrend, { marginTop: spacing[2] }]}>
+                <Text style={[styles.statsTrendValue, { color: trendColor }]}>
+                  {isPositive ? '+' : ''}{stat.trend.toFixed(1)}%
+                </Text>
+                <Text style={[styles.statsTrendLabel, { color: colors.foregroundMuted, marginLeft: spacing[1] }]}>
+                  {stat.trendLabel}
+                </Text>
+              </View>
+            </CardContent>
+          </Card>
+        );
+      })}
+    </View>
+  );
+}
+
+// ============================================================================
+// Hero Block Preview
+// ============================================================================
+
+function HeroBlockPreview() {
+  const { colors, spacing, radius } = useTheme();
+
+  return (
+    <View
+      style={[
+        styles.heroBlock,
+        {
+          borderRadius: radius.lg,
+          height: 200,
+          overflow: 'hidden',
+        },
+      ]}
+    >
+      {/* Mesh gradient simulation with overlapping gradients */}
+      <View style={StyleSheet.absoluteFill}>
+        <View style={[StyleSheet.absoluteFill, { backgroundColor: '#667eea' }]} />
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              backgroundColor: 'transparent',
+              // Simulate gradient with opacity overlay
+              opacity: 0.8,
+            },
+          ]}
+        >
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: '#764ba2',
+              opacity: 0.7,
+              transform: [{ skewY: '-10deg' }, { scale: 1.5 }],
+            }}
+          />
+        </View>
+      </View>
+      {/* Content */}
+      <View style={{ flex: 1, justifyContent: 'flex-end', padding: spacing[6] }}>
+        <Text style={[styles.heroTitle, { color: '#FFFFFF', marginBottom: spacing[2] }]}>
+          Welcome Back!
+        </Text>
+        <Text style={[styles.heroSubtitle, { color: 'rgba(255,255,255,0.9)', marginBottom: spacing[4] }]}>
+          Mesh gradient background option
+        </Text>
+        <Button
+          variant="secondary"
+          onPress={() => Alert.alert('Get Started')}
+        >
+          Get Started
+        </Button>
+      </View>
+    </View>
+  );
+}
+
+// ============================================================================
+// Social Proof Bar Preview
+// ============================================================================
+
+function SocialProofBarPreview() {
+  const { colors, spacing } = useTheme();
+
+  const avatars = [
+    'https://i.pravatar.cc/100?img=10',
+    'https://i.pravatar.cc/100?img=11',
+    'https://i.pravatar.cc/100?img=12',
+  ];
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <Pressable
+          style={[styles.socialProofBar, { gap: spacing[3] }]}
+          onPress={() => Alert.alert('View all')}
+        >
+          {/* Avatar Stack */}
+          <View style={styles.avatarStack}>
+            {avatars.map((url, index) => (
+              <Image
+                key={index}
+                source={{ uri: url }}
+                style={[
+                  styles.stackedAvatar,
+                  {
+                    left: index * 20,
+                    zIndex: avatars.length - index,
+                    borderColor: colors.background,
+                  },
+                ]}
+              />
+            ))}
+          </View>
+          <Text style={[styles.socialProofText, { color: colors.foregroundMuted, marginLeft: 40 }]}>
+            Sarah, Mike, and 42 others liked this
+          </Text>
+        </Pressable>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Search Header Preview
+// ============================================================================
+
+function SearchHeaderPreview() {
+  const { colors, spacing, radius } = useTheme();
+  const [searchValue, setSearchValue] = useState('');
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={[styles.searchHeader, { gap: spacing[3] }]}>
+          {/* Search Input */}
+          <View
+            style={[
+              styles.searchInput,
+              {
+                flex: 1,
+                backgroundColor: colors.secondary,
+                borderRadius: radius.lg,
+                paddingHorizontal: spacing[3],
+                height: 44,
+              },
+            ]}
+          >
+            <Svg width={18} height={18} viewBox="0 0 24 24" fill="none">
+              <Circle cx="11" cy="11" r="7" stroke={colors.foregroundMuted} strokeWidth="2" />
+              <Path d="M20 20L16.5 16.5" stroke={colors.foregroundMuted} strokeWidth="2" strokeLinecap="round" />
+            </Svg>
+            <TextInput
+              style={[styles.searchTextInput, { color: colors.foreground, marginLeft: spacing[2] }]}
+              placeholder="Search..."
+              placeholderTextColor={colors.foregroundMuted}
+              value={searchValue}
+              onChangeText={setSearchValue}
+            />
+          </View>
+
+          {/* Filter Button */}
+          <Pressable
+            style={[
+              styles.filterButton,
+              {
+                backgroundColor: colors.secondary,
+                borderRadius: radius.lg,
+                width: 44,
+                height: 44,
+              },
+            ]}
+            onPress={() => Alert.alert('Filters')}
+          >
+            <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
+              <Path d="M4 6h16M6 12h12M8 18h8" stroke={colors.foreground} strokeWidth="2" strokeLinecap="round" />
+            </Svg>
+          </Pressable>
+
+          {/* Avatar */}
+          <Avatar size="md" fallback="U" />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
 // Helper Components
 // ============================================================================
 
@@ -536,5 +919,137 @@ const styles = StyleSheet.create({
   errorCode: {
     fontSize: 11,
     fontFamily: 'monospace',
+  },
+  // Notification Item
+  notificationItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  notificationContent: {
+    flex: 1,
+  },
+  notificationHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  notificationTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+    flex: 1,
+  },
+  notificationTime: {
+    fontSize: 12,
+    marginLeft: 8,
+  },
+  notificationMessage: {
+    fontSize: 14,
+    marginTop: 2,
+  },
+  unreadDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginLeft: 8,
+  },
+  // Content Card
+  contentCardImage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  contentCardTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  contentCardSubtitle: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  // Feature Card
+  featureCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  featureIcon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  featureTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  featureDescription: {
+    fontSize: 14,
+    marginTop: 2,
+  },
+  // Stats Card
+  statsLabel: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  statsValue: {
+    fontSize: 32,
+    fontWeight: '700',
+  },
+  statsTrend: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  statsTrendValue: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  statsTrendLabel: {
+    fontSize: 13,
+  },
+  // Hero Block
+  heroBlock: {
+    justifyContent: 'flex-end',
+  },
+  heroTitle: {
+    fontSize: 28,
+    fontWeight: '800',
+  },
+  heroSubtitle: {
+    fontSize: 16,
+  },
+  // Social Proof Bar
+  socialProofBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  avatarStack: {
+    width: 68,
+    height: 28,
+    position: 'relative',
+  },
+  stackedAvatar: {
+    position: 'absolute',
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 2,
+  },
+  socialProofText: {
+    flex: 1,
+    fontSize: 14,
+  },
+  // Search Header
+  searchHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchTextInput: {
+    flex: 1,
+    fontSize: 16,
+    height: '100%',
+  },
+  filterButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

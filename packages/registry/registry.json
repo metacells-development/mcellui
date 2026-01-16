@@ -452,6 +452,116 @@
       "files": ["ui/carousel.tsx"],
       "dependencies": ["react-native-reanimated"],
       "registryDependencies": []
+    },
+    {
+      "name": "stories",
+      "type": "ui",
+      "description": "Instagram-style story avatars with gradient ring and add button",
+      "category": "Social",
+      "status": "beta",
+      "files": ["ui/stories.tsx"],
+      "dependencies": ["react-native-reanimated", "expo-linear-gradient"],
+      "registryDependencies": []
+    },
+    {
+      "name": "datetime-picker",
+      "type": "ui",
+      "description": "Date and time picker with native platform UI via bottom sheet",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/datetime-picker.tsx"],
+      "dependencies": ["react-native-reanimated", "@react-native-community/datetimepicker"],
+      "registryDependencies": []
+    },
+    {
+      "name": "tooltip",
+      "type": "ui",
+      "description": "Long-press popup for showing contextual information",
+      "category": "Overlay",
+      "status": "beta",
+      "files": ["ui/tooltip.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "image-gallery",
+      "type": "ui",
+      "description": "Grid gallery with fullscreen viewer, pinch-to-zoom, and swipe navigation",
+      "category": "Media",
+      "status": "beta",
+      "files": ["ui/image-gallery.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
+      "registryDependencies": []
+    },
+    {
+      "name": "notification-item",
+      "type": "block",
+      "description": "Notification list item with avatar, message, time, and unread indicator",
+      "category": "Social",
+      "status": "beta",
+      "files": ["blocks/notification-item.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "content-card",
+      "type": "block",
+      "description": "Large content card with image, title, subtitle, and action button",
+      "category": "Content",
+      "status": "beta",
+      "files": ["blocks/content-card.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": ["button"]
+    },
+    {
+      "name": "feature-card",
+      "type": "block",
+      "description": "Feature highlight card with icon, title, and description",
+      "category": "Marketing",
+      "status": "beta",
+      "files": ["blocks/feature-card.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "stats-card",
+      "type": "block",
+      "description": "Metric display card with value, label, and trend indicator",
+      "category": "Dashboard",
+      "status": "beta",
+      "files": ["blocks/stats-card.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "hero-block",
+      "type": "block",
+      "description": "Full-width hero section with image/gradient, title, and CTA buttons",
+      "category": "Marketing",
+      "status": "beta",
+      "files": ["blocks/hero-block.tsx"],
+      "dependencies": ["expo-linear-gradient"],
+      "registryDependencies": ["button"]
+    },
+    {
+      "name": "social-proof-bar",
+      "type": "block",
+      "description": "Avatar stack with engagement text for social proof",
+      "category": "Social",
+      "status": "beta",
+      "files": ["blocks/social-proof-bar.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "search-header",
+      "type": "block",
+      "description": "Header with search input, filter button, and user avatar",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["blocks/search-header.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
     }
   ]
 }
