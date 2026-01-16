@@ -73,6 +73,12 @@ export interface NativeUIConfig {
   fonts?: Partial<Fonts>;
 
   /**
+   * Enable or disable haptic feedback globally.
+   * @default true
+   */
+  haptics?: boolean;
+
+  /**
    * Component-specific overrides.
    * Override default sizes, padding, etc.
    */
@@ -132,11 +138,12 @@ export interface NativeUIConfig {
 /**
  * Resolved configuration with all defaults applied.
  */
-export interface ResolvedNativeUIConfig extends Required<Omit<NativeUIConfig, 'colors' | 'lightColors' | 'darkColors' | 'fonts' | 'components' | 'aliases'>> {
+export interface ResolvedNativeUIConfig extends Required<Omit<NativeUIConfig, 'colors' | 'lightColors' | 'darkColors' | 'fonts' | 'components' | 'aliases' | 'haptics'>> {
   colors: Partial<ThemeColors>;
   lightColors: Partial<ThemeColors>;
   darkColors: Partial<ThemeColors>;
   fonts: Partial<Fonts>;
+  haptics: boolean;
   components: NonNullable<NativeUIConfig['components']>;
   aliases: NonNullable<NativeUIConfig['aliases']>;
 }
@@ -153,6 +160,7 @@ export const defaultConfig: ResolvedNativeUIConfig = {
   lightColors: {},
   darkColors: {},
   fonts: {},
+  haptics: true,
   components: {},
   // CLI defaults
   componentsPath: './components/ui',

@@ -29,7 +29,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
+import { useTheme, BUTTON_CONSTANTS } from '@nativeui/core';
 import { haptic } from '@nativeui/core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -81,7 +81,7 @@ export function Button({
 
   const handlePressIn = useCallback(
     (e: any) => {
-      scale.value = withSpring(0.97, springs.snappy);
+      scale.value = withSpring(BUTTON_CONSTANTS.pressScale, springs.snappy);
       onPressIn?.(e);
     },
     [onPressIn, springs.snappy]
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   disabled: {
-    opacity: 0.5,
+    opacity: BUTTON_CONSTANTS.disabledOpacity,
   },
   fullWidth: {
     width: '100%',

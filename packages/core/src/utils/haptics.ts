@@ -39,8 +39,43 @@ try {
   // expo-haptics not available, haptics will be no-ops
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Global Haptics State
+// ─────────────────────────────────────────────────────────────────────────────
+
+let hapticsEnabled = true;
+
+/**
+ * Enable or disable haptic feedback globally.
+ * Use this to respect user preferences or accessibility settings.
+ *
+ * @example
+ * ```tsx
+ * // In ThemeProvider or app setup
+ * setHapticsEnabled(false);
+ *
+ * // Or via config
+ * <ThemeProvider haptics={false}>
+ * ```
+ */
+export function setHapticsEnabled(enabled: boolean): void {
+  hapticsEnabled = enabled;
+}
+
+/**
+ * Check if haptics are currently enabled
+ */
+export function isHapticsEnabled(): boolean {
+  return hapticsEnabled && Haptics !== null;
+}
+
 /**
  * Trigger haptic feedback
+ *
+ * Respects the global haptics enabled state. Disabled via:
+ * - `setHapticsEnabled(false)`
+ * - `<ThemeProvider haptics={false}>`
+ * - `nativeui.config.ts` with `haptics: false`
  *
  * @example
  * ```tsx
@@ -51,7 +86,7 @@ try {
  * ```
  */
 export async function haptic(style: HapticStyle = 'light'): Promise<void> {
-  if (!Haptics) return;
+  if (!hapticsEnabled || !Haptics) return;
 
   try {
     switch (style) {

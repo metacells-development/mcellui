@@ -29,6 +29,8 @@ import { AccordionDemo } from '@/components/demos/accordion-demo';
 import { SegmentedControlDemo } from '@/components/demos/segmented-control-demo';
 import { PullToRefreshDemo } from '@/components/demos/pull-to-refresh-demo';
 import { SwipeableRowDemo } from '@/components/demos/swipeable-row-demo';
+import { FormDemo } from '@/components/demos/form-demo';
+import { BlocksDemo } from '@/components/demos/blocks-demo';
 
 const demos: Record<string, React.ComponentType> = {
   button: ButtonDemo,
@@ -57,6 +59,8 @@ const demos: Record<string, React.ComponentType> = {
   'segmented-control': SegmentedControlDemo,
   'pull-to-refresh': PullToRefreshDemo,
   'swipeable-row': SwipeableRowDemo,
+  form: FormDemo,
+  blocks: BlocksDemo,
 };
 
 const titles: Record<string, string> = {
@@ -86,6 +90,8 @@ const titles: Record<string, string> = {
   'segmented-control': 'Segmented Control',
   'pull-to-refresh': 'Pull to Refresh',
   'swipeable-row': 'Swipeable Row',
+  form: 'Form',
+  blocks: 'Blocks',
 };
 
 export default function ComponentPage() {

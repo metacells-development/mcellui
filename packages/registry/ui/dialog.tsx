@@ -46,7 +46,7 @@ import Animated, {
   runOnJS,
   interpolate,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
+import { useTheme, DIALOG_CONSTANTS } from '@nativeui/core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -103,7 +103,7 @@ export interface DialogContentProps {
 
 export function DialogContent({
   children,
-  maxWidth = SCREEN_WIDTH - 48,
+  maxWidth = SCREEN_WIDTH - DIALOG_CONSTANTS.screenMargin,
   style,
 }: DialogContentProps) {
   const { colors, radius, platformShadow, springs } = useTheme();
@@ -119,7 +119,7 @@ export function DialogContent({
   const closeDialog = useCallback(() => {
     if (isClosing.value) return;
     isClosing.value = true;
-    progress.value = withTiming(0, { duration: 150 }, (finished) => {
+    progress.value = withTiming(0, { duration: DIALOG_CONSTANTS.closeAnimationDuration }, (finished) => {
       if (finished) {
         runOnJS(onClose)();
       }
@@ -127,13 +127,13 @@ export function DialogContent({
   }, [onClose]);
 
   const animatedBackdropStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(progress.value, [0, 1], [0, 0.5]),
+    opacity: interpolate(progress.value, [0, 1], [0, DIALOG_CONSTANTS.backdropMaxOpacity]),
   }));
 
   const animatedDialogStyle = useAnimatedStyle(() => ({
     opacity: progress.value,
     transform: [
-      { scale: interpolate(progress.value, [0, 1], [0.95, 1]) },
+      { scale: interpolate(progress.value, [0, 1], [DIALOG_CONSTANTS.enterStartScale, 1]) },
     ],
   }));
 
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   },
   dialog: {
     width: '100%',
-    padding: 24,
+    padding: DIALOG_CONSTANTS.contentPadding,
   },
   header: {},
   title: {

@@ -29,6 +29,8 @@ const components = [
   { name: 'segmented-control', title: 'Segmented Control', description: 'iOS-style segment picker' },
   { name: 'pull-to-refresh', title: 'Pull to Refresh', description: 'Refresh indicator for lists' },
   { name: 'swipeable-row', title: 'Swipeable Row', description: 'Swipe-to-reveal actions' },
+  { name: 'form', title: 'Form', description: 'Form system with react-hook-form + Zod' },
+  { name: 'blocks', title: 'Blocks', description: 'Complete screen templates (Login, Profile, etc.)' },
 ];
 
 export default function Home() {

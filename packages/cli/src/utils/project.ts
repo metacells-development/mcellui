@@ -2,6 +2,8 @@ import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import createJiti from 'jiti';
+import chalk from 'chalk';
+import { validateConfigOrThrow } from './config-schema.js';
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -74,8 +76,17 @@ export async function getConfig(projectRoot: string): Promise<ResolvedNativeUICo
   // Try JSON config
   const jsonConfigPath = path.join(projectRoot, 'nativeui.config.json');
   if (await fs.pathExists(jsonConfigPath)) {
-    const rawConfig = await fs.readJson(jsonConfigPath);
-    return resolveConfig(rawConfig);
+    try {
+      const rawConfig = await fs.readJson(jsonConfigPath);
+      const validatedConfig = validateConfigOrThrow(rawConfig, jsonConfigPath);
+      return resolveConfig(validatedConfig);
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('Invalid configuration')) {
+        console.error(chalk.red(error.message));
+        throw error;
+      }
+      throw error;
+    }
   }
 
   return null;
@@ -91,10 +102,19 @@ async function loadTsConfig(configPath: string): Promise<ResolvedNativeUIConfig>
     });
 
     const rawConfig = jiti(configPath);
-    const config = (rawConfig.default || rawConfig) as NativeUIConfig;
-    return resolveConfig(config);
+    const config = rawConfig.default || rawConfig;
+
+    // Validate config with Zod schema
+    const validatedConfig = validateConfigOrThrow(config, configPath);
+
+    return resolveConfig(validatedConfig);
   } catch (error) {
-    console.error('Failed to load config:', error);
+    if (error instanceof Error && error.message.includes('Invalid configuration')) {
+      // Re-throw validation errors with full message
+      console.error(chalk.red(error.message));
+      throw error;
+    }
+    console.error(chalk.red('Failed to load config:'), error);
     // Return defaults on error
     return getDefaultConfig();
   }
@@ -107,9 +127,18 @@ async function loadJsConfig(configPath: string): Promise<ResolvedNativeUIConfig>
   try {
     const rawConfig = await import(configPath);
     const config = rawConfig.default || rawConfig;
-    return resolveConfig(config);
+
+    // Validate config with Zod schema
+    const validatedConfig = validateConfigOrThrow(config, configPath);
+
+    return resolveConfig(validatedConfig);
   } catch (error) {
-    console.error('Failed to load config:', error);
+    if (error instanceof Error && error.message.includes('Invalid configuration')) {
+      // Re-throw validation errors with full message
+      console.error(chalk.red(error.message));
+      throw error;
+    }
+    console.error(chalk.red('Failed to load config:'), error);
     return getDefaultConfig();
   }
 }

@@ -262,6 +262,76 @@
       "files": ["ui/swipeable-row.tsx"],
       "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
       "registryDependencies": []
+    },
+    {
+      "name": "form",
+      "type": "ui",
+      "description": "Form components with react-hook-form and Zod validation",
+      "category": "Forms",
+      "status": "beta",
+      "files": ["ui/form.tsx"],
+      "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
+      "registryDependencies": []
+    },
+    {
+      "name": "login-block",
+      "type": "block",
+      "description": "Complete login screen with email/password form and social login",
+      "category": "Authentication",
+      "status": "beta",
+      "files": ["blocks/login-block.tsx"],
+      "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
+      "registryDependencies": ["button", "input", "form"]
+    },
+    {
+      "name": "signup-block",
+      "type": "block",
+      "description": "Complete signup screen with form validation and terms checkbox",
+      "category": "Authentication",
+      "status": "beta",
+      "files": ["blocks/signup-block.tsx"],
+      "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
+      "registryDependencies": ["button", "input", "checkbox", "form"]
+    },
+    {
+      "name": "settings-list-block",
+      "type": "block",
+      "description": "Grouped settings list with switches and navigation items",
+      "category": "Settings",
+      "status": "beta",
+      "files": ["blocks/settings-list-block.tsx"],
+      "dependencies": [],
+      "registryDependencies": ["switch", "separator"]
+    },
+    {
+      "name": "profile-block",
+      "type": "block",
+      "description": "User profile header with avatar, stats, and action buttons",
+      "category": "Profile",
+      "status": "beta",
+      "files": ["blocks/profile-block.tsx"],
+      "dependencies": [],
+      "registryDependencies": ["avatar", "button"]
+    },
+    {
+      "name": "empty-state-block",
+      "type": "block",
+      "description": "Empty state placeholder with icon, title, and CTA button",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["blocks/empty-state-block.tsx"],
+      "dependencies": [],
+      "registryDependencies": ["button"]
+    },
+    {
+      "name": "error-state-block",
+      "type": "block",
+      "description": "Error state display with icon, message, and retry button",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["blocks/error-state-block.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["button"]
     }
   ]
 }

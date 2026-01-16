@@ -6,7 +6,7 @@ Eine moderne, copy-paste UI-Komponenten-Bibliothek für Expo/React Native - insp
 
 ## Status
 
-**Phase 2: Core Components** - Grundgerüst steht, Component Library wird erweitert.
+**Phase 4: Forms & Blocks** - Complete! Form System und Screen Templates fertig.
 
 Siehe [PHASES.md](./PHASES.md) für Details.
 
@@ -80,8 +80,9 @@ export default defineConfig({
 });
 ```
 
-## Components (26 aktuell - Phase 2 Complete!)
+## Components (27 UI Components + 6 Blocks)
 
+### UI Components
 | Component | Status |
 |-----------|--------|
 | Button | ✅ Ready |
@@ -110,10 +111,27 @@ export default defineConfig({
 | Segmented Control | ✅ Ready |
 | Pull to Refresh | ✅ Ready |
 | Swipeable Row | ✅ Ready |
+| Form | ✅ Ready |
 
-### Phase 2 Complete!
+### Screen Blocks (Phase 4)
+| Block | Status |
+|-------|--------|
+| LoginBlock | ✅ Ready |
+| SignupBlock | ✅ Ready |
+| SettingsListBlock | ✅ Ready |
+| ProfileBlock | ✅ Ready |
+| EmptyStateBlock | ✅ Ready |
+| ErrorStateBlock | ✅ Ready |
 
-Alle 26 Components für Phase 2 sind fertig.
+### Form System
+- `Form` - FormProvider wrapper
+- `FormField` - Controller integration
+- `FormItem` - Layout container
+- `FormLabel` - Label with error state
+- `FormMessage` - Validation error display
+- `FormDescription` - Helper text
+
+Dependencies: `react-hook-form`, `@hookform/resolvers`, `zod`
 
 ## CLI Commands
 

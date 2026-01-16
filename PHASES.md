@@ -175,23 +175,39 @@ Design-to-code workflow mit Figma Integration.
 
 ## Phase 4: Forms & Blocks
 
-**Status: NOT STARTED**
+**Status: COMPLETE**
 
 Form integration and screen templates.
 
 ### Forms
-- [ ] react-hook-form integration
-- [ ] zod validation
-- [ ] Field wrapper component
-- [ ] Form component (context provider)
+- [x] react-hook-form integration
+- [x] zod validation
+- [x] FormField with Controller integration
+- [x] Form component (FormProvider wrapper)
+- [x] FormItem, FormLabel, FormMessage, FormDescription
+- [x] useFormField hook for field state access
 
 ### Blocks (Screen Templates)
-- [ ] Login screen
-- [ ] Signup screen
-- [ ] Settings list
-- [ ] Profile page
-- [ ] Empty state
-- [ ] Error state
+- [x] LoginBlock - Email/Password + Social Login
+- [x] SignupBlock - Name/Email/Password + Terms Checkbox
+- [x] SettingsListBlock - Grouped settings with Switch/Navigation
+- [x] ProfileBlock - Avatar, Name, Stats, Action Buttons
+- [x] EmptyStateBlock - Icon, Title, Description, CTA
+- [x] ErrorStateBlock - Error Icon, Message, Retry Button
+
+### Files Created
+- `packages/registry/ui/form.tsx` - Form system components
+- `packages/registry/blocks/login-block.tsx`
+- `packages/registry/blocks/signup-block.tsx`
+- `packages/registry/blocks/settings-list-block.tsx`
+- `packages/registry/blocks/profile-block.tsx`
+- `packages/registry/blocks/empty-state-block.tsx`
+- `packages/registry/blocks/error-state-block.tsx`
+
+### Demo App Updates
+- Form demo with Login/Signup examples
+- Blocks demo with all block previews
+- Dependencies: react-hook-form, @hookform/resolvers, zod
 
 ---
 
@@ -216,19 +232,32 @@ CLI and MCP server fully functional.
 
 ---
 
-## Phase 6: Documentation
+## Phase 6: Documentation & Playground
 
 **Status: NOT STARTED**
 
-Public documentation site.
+Public documentation site mit interaktivem Playground (shadcn-Niveau).
 
-### Tasks
-- [ ] Next.js docs site setup
-- [ ] Component API docs (auto-generated)
-- [ ] Getting started guide
-- [ ] Theme customization guide
-- [ ] Accessibility guidelines
-- [ ] Interactive playground (web)
+### Documentation Site (Next.js)
+- [ ] Next.js 14+ App Router Setup
+- [ ] MDX für Component Docs
+- [ ] Automatische API-Docs aus TypeScript
+- [ ] Getting Started Guide
+- [ ] Theme Customization Guide
+- [ ] Accessibility Guidelines
+- [ ] Copy-to-Clipboard für alle Code-Snippets
+
+### Interactive Playground
+- [ ] Live Component Preview (React Native Web)
+- [ ] Prop-Editor (Variant, Size, etc. live ändern)
+- [ ] Code-Editor mit Syntax Highlighting
+- [ ] Share-Links für Playground States
+- [ ] Mobile Preview Frame (iPhone/Android mockup)
+
+### Search & Navigation
+- [ ] Algolia/Pagefind Suche
+- [ ] Sidebar mit Component-Kategorien
+- [ ] Keyboard Navigation (⌘K)
 
 ---
 
@@ -260,6 +289,41 @@ Complex components and complete screens for power users.
 - [ ] Theme gallery
 - [ ] Community components registry
 - [ ] Expo Go compatibility report
+
+---
+
+## Phase 8: CI/CD & Release
+
+**Status: NOT STARTED**
+
+Finale Phase - Automatisierte Qualitätssicherung und erster npm Release.
+
+### GitHub Actions Workflows
+- [ ] `ci.yml` - Lint, TypeCheck, Build bei jedem PR
+- [ ] `release.yml` - npm Publish bei Git Tag (v*)
+- [ ] `demo.yml` - Expo Preview Build für PRs (optional)
+
+### Quality Gates
+- [ ] ESLint muss bestehen
+- [ ] TypeScript strict muss bestehen
+- [ ] Build muss erfolgreich sein
+- [ ] Bundle Size Check (Warnung bei >10% Anstieg)
+
+### Testing Infrastructure
+- [ ] Jest Setup (Config, Mocks für RN)
+- [ ] Mindestens 1 Smoke Test pro Component
+- [ ] Detox/Maestro E2E Setup (optional)
+
+### Release Vorbereitung
+- [ ] package.json Versionen finalisieren (1.0.0)
+- [ ] README.md für npm optimieren
+- [ ] CHANGELOG.md anlegen
+- [ ] npm publish dry-run testen
+
+### Bonus
+- [ ] Dependabot für Dependency Updates
+- [ ] CodeQL Security Scanning
+- [ ] Automatische Changelog-Generierung
 
 ---
 

@@ -47,7 +47,7 @@ import {
   GestureDetector,
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
-import { useTheme } from '@nativeui/core';
+import { useTheme, SHEET_CONSTANTS } from '@nativeui/core';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -102,6 +102,10 @@ export interface SheetContentProps {
   height?: number | string;
   /** Show drag handle */
   showHandle?: boolean;
+  /** Threshold (0-1) für automatisches Schließen beim Ziehen */
+  closeThreshold?: number;
+  /** Geschwindigkeit (px/s) für Swipe-to-Close */
+  velocityThreshold?: number;
   /** Additional styles */
   style?: ViewStyle;
 }
@@ -110,6 +114,8 @@ export function SheetContent({
   children,
   height = '50%',
   showHandle = true,
+  closeThreshold = SHEET_CONSTANTS.closeThreshold,
+  velocityThreshold = SHEET_CONSTANTS.velocityThreshold,
   style,
 }: SheetContentProps) {
   const { colors, radius, springs } = useTheme();
@@ -126,13 +132,13 @@ export function SheetContent({
 
   useEffect(() => {
     translateY.value = withSpring(0, springs.snappy);
-    backdropOpacity.value = withTiming(1, { duration: 200 });
+    backdropOpacity.value = withTiming(1, { duration: SHEET_CONSTANTS.backdropFadeInDuration });
   }, []);
 
   const closeSheet = useCallback(() => {
     if (isClosing.value) return;
     isClosing.value = true;
-    backdropOpacity.value = withTiming(0, { duration: 150 });
+    backdropOpacity.value = withTiming(0, { duration: SHEET_CONSTANTS.backdropFadeOutDuration });
     translateY.value = withSpring(
       SCREEN_HEIGHT,
       springs.snappy,
@@ -151,7 +157,7 @@ export function SheetContent({
       }
     })
     .onEnd((event) => {
-      if (event.translationY > sheetHeight * 0.3 || event.velocityY > 500) {
+      if (event.translationY > sheetHeight * closeThreshold || event.velocityY > velocityThreshold) {
         runOnJS(closeSheet)();
       } else {
         translateY.value = withSpring(0, springs.snappy);
@@ -166,7 +172,7 @@ export function SheetContent({
     opacity: interpolate(
       backdropOpacity.value,
       [0, 1],
-      [0, 0.5],
+      [0, SHEET_CONSTANTS.backdropMaxOpacity],
       Extrapolation.CLAMP
     ),
   }));
@@ -324,17 +330,17 @@ const styles = StyleSheet.create({
   },
   handleContainer: {
     alignItems: 'center',
-    paddingTop: 12,
-    paddingBottom: 8,
+    paddingTop: SHEET_CONSTANTS.handlePaddingTop,
+    paddingBottom: SHEET_CONSTANTS.handlePaddingBottom,
   },
   handle: {
-    width: 36,
-    height: 4,
-    borderRadius: 2,
+    width: SHEET_CONSTANTS.handleWidth,
+    height: SHEET_CONSTANTS.handleHeight,
+    borderRadius: SHEET_CONSTANTS.handleHeight / 2,
   },
   content: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: SHEET_CONSTANTS.contentPaddingHorizontal,
   },
   header: {
     alignItems: 'center',

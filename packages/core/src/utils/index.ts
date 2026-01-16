@@ -18,4 +18,11 @@ export {
   headingA11y,
   type A11yProps,
 } from './accessibility';
-export { haptic, hapticsAvailable } from './haptics';
+export {
+  haptic,
+  hapticsAvailable,
+  setHapticsEnabled,
+  isHapticsEnabled,
+  hapticPresets,
+  type HapticStyle,
+} from './haptics';

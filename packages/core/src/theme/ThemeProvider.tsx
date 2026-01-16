@@ -20,9 +20,10 @@
  * ```
  */
 
-import React, { createContext, useContext, useMemo, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useMemo, useState, useCallback, useEffect, ReactNode } from 'react';
 import { useColorScheme, ViewStyle } from 'react-native';
 import { lightColors, darkColors, ThemeColors } from './colors';
+import { setHapticsEnabled } from '../utils/haptics';
 import { spacing } from './spacing';
 import {
   createRadius,
@@ -205,6 +206,19 @@ export interface ThemeProviderProps {
    */
   darkColors?: Partial<ThemeColors>;
 
+  /**
+   * Enable or disable haptic feedback globally.
+   * When false, all `haptic()` calls become no-ops.
+   * @default true
+   *
+   * @example
+   * ```tsx
+   * // Disable haptics for accessibility or user preference
+   * <ThemeProvider haptics={false}>
+   * ```
+   */
+  haptics?: boolean;
+
   /** Children components */
   children: ReactNode;
 }
@@ -217,10 +231,16 @@ export function ThemeProvider({
   colors: colorOverrides,
   lightColors: lightColorOverrides,
   darkColors: darkColorOverrides,
+  haptics = true,
   children,
 }: ThemeProviderProps) {
   const systemColorScheme = useColorScheme();
   const [preference, setPreference] = useState<ColorSchemePreference>(defaultColorScheme);
+
+  // Set global haptics enabled state
+  useEffect(() => {
+    setHapticsEnabled(haptics);
+  }, [haptics]);
 
   const setColorScheme = useCallback((newPreference: ColorSchemePreference) => {
     setPreference(newPreference);

@@ -159,15 +159,28 @@ export function SwipeableRow({
       if (rightActions.length === 0 && newX < 0) newX = 0;
       if (leftActions.length === 0 && newX > 0) newX = 0;
 
-      // Add resistance at edges
-      const maxRight = fullSwipeEnabled ? SCREEN_WIDTH : rightActionsWidth;
-      const maxLeft = fullSwipeEnabled ? SCREEN_WIDTH : leftActionsWidth;
+      // Determine max swipe distances
+      const maxSwipeLeft = fullSwipeEnabled ? SCREEN_WIDTH * 0.75 : rightActionsWidth;
+      const maxSwipeRight = fullSwipeEnabled ? SCREEN_WIDTH * 0.75 : leftActionsWidth;
 
-      if (newX < -maxRight) {
-        newX = -maxRight - (newX + maxRight) * 0.2;
-      }
-      if (newX > maxLeft) {
-        newX = maxLeft + (newX - maxLeft) * 0.2;
+      // Clamp the swipe to prevent seeing both sides at once
+      // Add rubber band resistance when going past the action buttons
+      if (newX < 0) {
+        // Swiping left (revealing right actions)
+        if (newX < -rightActionsWidth) {
+          // Add resistance past the buttons
+          const overshoot = -newX - rightActionsWidth;
+          const resistance = Math.min(overshoot * 0.3, maxSwipeLeft - rightActionsWidth);
+          newX = -rightActionsWidth - resistance;
+        }
+      } else if (newX > 0) {
+        // Swiping right (revealing left actions)
+        if (newX > leftActionsWidth) {
+          // Add resistance past the buttons
+          const overshoot = newX - leftActionsWidth;
+          const resistance = Math.min(overshoot * 0.3, maxSwipeRight - leftActionsWidth);
+          newX = leftActionsWidth + resistance;
+        }
       }
 
       translateX.value = newX;
@@ -213,23 +226,27 @@ export function SwipeableRow({
     transform: [{ translateX: translateX.value }],
   }));
 
-  const rightActionsStyle = useAnimatedStyle(() => ({
-    width: interpolate(
-      -translateX.value,
-      [0, rightActionsWidth],
-      [0, rightActionsWidth],
-      Extrapolation.EXTEND
-    ),
-  }));
+  const rightActionsStyle = useAnimatedStyle(() => {
+    // Only show when swiping left (negative translateX)
+    const isSwipingLeft = translateX.value < 0;
+    return {
+      width: isSwipingLeft
+        ? Math.min(-translateX.value, rightActionsWidth + 50) // Allow slight overshoot for full swipe
+        : 0,
+      opacity: isSwipingLeft ? 1 : 0,
+    };
+  });
 
-  const leftActionsStyle = useAnimatedStyle(() => ({
-    width: interpolate(
-      translateX.value,
-      [0, leftActionsWidth],
-      [0, leftActionsWidth],
-      Extrapolation.EXTEND
-    ),
-  }));
+  const leftActionsStyle = useAnimatedStyle(() => {
+    // Only show when swiping right (positive translateX)
+    const isSwipingRight = translateX.value > 0;
+    return {
+      width: isSwipingRight
+        ? Math.min(translateX.value, leftActionsWidth + 50) // Allow slight overshoot for full swipe
+        : 0,
+      opacity: isSwipingRight ? 1 : 0,
+    };
+  });
 
   return (
     <View style={[styles.container, style]}>

@@ -49,7 +49,7 @@ import Animated, {
   Layout,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '@nativeui/core';
+import { useTheme, TOAST_CONSTANTS } from '@nativeui/core';
 import { haptic } from '@nativeui/core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -105,8 +105,8 @@ export interface ToastProviderProps {
 
 export function ToastProvider({
   children,
-  maxToasts = 3,
-  defaultDuration = 4000,
+  maxToasts = TOAST_CONSTANTS.maxToasts,
+  defaultDuration = TOAST_CONSTANTS.defaultDuration,
 }: ToastProviderProps) {
   const [toasts, setToasts] = React.useState<ToastData[]>([]);
   const insets = useSafeAreaInsets();
@@ -155,7 +155,7 @@ export function ToastProvider({
       <View
         style={[
           styles.container,
-          { top: insets.top + 8 },
+          { top: insets.top + TOAST_CONSTANTS.containerTopOffset },
         ]}
         pointerEvents="box-none"
       >
@@ -193,8 +193,8 @@ function ToastItem({ data, onDismiss }: ToastItemProps) {
     switch (data.variant) {
       case 'success':
         return {
-          backgroundColor: colors.success ?? '#22c55e',
-          textColor: '#ffffff',
+          backgroundColor: colors.success ?? TOAST_CONSTANTS.fallbackColors.success,
+          textColor: TOAST_CONSTANTS.fallbackColors.successForeground,
         };
       case 'error':
         return {
@@ -203,8 +203,8 @@ function ToastItem({ data, onDismiss }: ToastItemProps) {
         };
       case 'warning':
         return {
-          backgroundColor: colors.warning ?? '#f59e0b',
-          textColor: '#000000',
+          backgroundColor: colors.warning ?? TOAST_CONSTANTS.fallbackColors.warning,
+          textColor: TOAST_CONSTANTS.fallbackColors.warningForeground,
         };
       default:
         return {
@@ -219,7 +219,7 @@ function ToastItem({ data, onDismiss }: ToastItemProps) {
   return (
     <Animated.View
       entering={SlideInUp.springify().damping(20).stiffness(200)}
-      exiting={FadeOut.duration(150)}
+      exiting={FadeOut.duration(TOAST_CONSTANTS.fadeOutDuration)}
       layout={Layout.springify().damping(20)}
       style={[
         styles.toast,
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
   },
   toast: {
-    width: SCREEN_WIDTH - 32,
+    width: SCREEN_WIDTH - TOAST_CONSTANTS.widthMargin,
     alignSelf: 'center',
   },
   toastContent: {
