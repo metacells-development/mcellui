@@ -392,6 +392,66 @@
       "files": ["ui/section-header.tsx"],
       "dependencies": ["react-native-reanimated", "react-native-svg"],
       "registryDependencies": []
+    },
+    {
+      "name": "chip",
+      "type": "ui",
+      "description": "Selectable filter pills for filtering content or making selections",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/chip.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "fab",
+      "type": "ui",
+      "description": "Floating action button for primary actions",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/fab.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "action-sheet",
+      "type": "ui",
+      "description": "iOS-style bottom action menu for presenting choices",
+      "category": "Overlay",
+      "status": "beta",
+      "files": ["ui/action-sheet.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
+      "registryDependencies": []
+    },
+    {
+      "name": "avatar-stack",
+      "type": "ui",
+      "description": "Overlapping avatar group for displaying multiple users",
+      "category": "Data Display",
+      "status": "beta",
+      "files": ["ui/avatar-stack.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "rating",
+      "type": "ui",
+      "description": "Interactive star rating for reviews and feedback",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/rating.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "carousel",
+      "type": "ui",
+      "description": "Auto-playing image/content slideshow with pagination indicators",
+      "category": "Media",
+      "status": "beta",
+      "files": ["ui/carousel.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
     }
   ]
 }

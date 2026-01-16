@@ -36,6 +36,12 @@ const components = [
   { name: 'pull-to-refresh', title: 'Pull to Refresh', description: 'Refresh indicator for lists' },
   { name: 'swipeable-row', title: 'Swipeable Row', description: 'Swipe-to-reveal actions' },
   { name: 'form', title: 'Form', description: 'Form system with react-hook-form + Zod' },
+  { name: 'chip', title: 'Chip', description: 'Selectable filter pills' },
+  { name: 'fab', title: 'FAB', description: 'Floating action button' },
+  { name: 'action-sheet', title: 'Action Sheet', description: 'iOS-style bottom action menu' },
+  { name: 'avatar-stack', title: 'Avatar Stack', description: 'Overlapping avatar group' },
+  { name: 'rating', title: 'Rating', description: 'Interactive star rating' },
+  { name: 'carousel', title: 'Carousel', description: 'Auto-playing slideshow with indicators' },
   { name: 'blocks', title: 'Blocks', description: 'Complete screen templates (Login, Profile, etc.)' },
 ];
 

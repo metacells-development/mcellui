@@ -109,6 +109,7 @@ export function HorizontalList({
           if (index === 0) return 0;
           // Snap so previous item is completely off-screen
           const prevItem = itemPositions.current[index - 1];
+          if (!prevItem) return 0;
           return prevItem.x + prevItem.width;
         });
         setSnapOffsets(offsets);

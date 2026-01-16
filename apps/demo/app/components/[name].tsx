@@ -38,6 +38,13 @@ import { ListDemo } from '@/components/demos/list-demo';
 import { ImageDemo } from '@/components/demos/image-demo';
 import { HorizontalListDemo } from '@/components/demos/horizontal-list-demo';
 import { SectionHeaderDemo } from '@/components/demos/section-header-demo';
+// Phase 5 - Batch 2
+import { ChipDemo } from '@/components/demos/chip-demo';
+import { FABDemo } from '@/components/demos/fab-demo';
+import { ActionSheetDemo } from '@/components/demos/action-sheet-demo';
+import { AvatarStackDemo } from '@/components/demos/avatar-stack-demo';
+import { RatingDemo } from '@/components/demos/rating-demo';
+import { CarouselDemo } from '@/components/demos/carousel-demo';
 
 const demos: Record<string, React.ComponentType> = {
   button: ButtonDemo,
@@ -75,6 +82,13 @@ const demos: Record<string, React.ComponentType> = {
   image: ImageDemo,
   'horizontal-list': HorizontalListDemo,
   'section-header': SectionHeaderDemo,
+  // Phase 5 - Batch 2
+  chip: ChipDemo,
+  fab: FABDemo,
+  'action-sheet': ActionSheetDemo,
+  'avatar-stack': AvatarStackDemo,
+  rating: RatingDemo,
+  carousel: CarouselDemo,
 };
 
 const titles: Record<string, string> = {
@@ -113,6 +127,13 @@ const titles: Record<string, string> = {
   image: 'Image',
   'horizontal-list': 'Horizontal List',
   'section-header': 'Section Header',
+  // Phase 5 - Batch 2
+  chip: 'Chip',
+  fab: 'FAB',
+  'action-sheet': 'Action Sheet',
+  'avatar-stack': 'Avatar Stack',
+  rating: 'Rating',
+  carousel: 'Carousel',
 };
 
 export default function ComponentPage() {

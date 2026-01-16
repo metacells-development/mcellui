@@ -106,7 +106,7 @@ export function ProfileBlock({
       <View style={[styles.header, { marginBottom: spacing[4] }]}>
         <Avatar
           size="xl"
-          src={avatarUrl}
+          source={avatarUrl ? { uri: avatarUrl } : undefined}
           fallback={initials}
         />
         <Text
