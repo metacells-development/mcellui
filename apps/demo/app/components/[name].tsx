@@ -31,6 +31,13 @@ import { PullToRefreshDemo } from '@/components/demos/pull-to-refresh-demo';
 import { SwipeableRowDemo } from '@/components/demos/swipeable-row-demo';
 import { FormDemo } from '@/components/demos/form-demo';
 import { BlocksDemo } from '@/components/demos/blocks-demo';
+// Phase 5 - Batch 1
+import { SearchInputDemo } from '@/components/demos/search-input-demo';
+import { IconButtonDemo } from '@/components/demos/icon-button-demo';
+import { ListDemo } from '@/components/demos/list-demo';
+import { ImageDemo } from '@/components/demos/image-demo';
+import { HorizontalListDemo } from '@/components/demos/horizontal-list-demo';
+import { SectionHeaderDemo } from '@/components/demos/section-header-demo';
 
 const demos: Record<string, React.ComponentType> = {
   button: ButtonDemo,
@@ -61,6 +68,13 @@ const demos: Record<string, React.ComponentType> = {
   'swipeable-row': SwipeableRowDemo,
   form: FormDemo,
   blocks: BlocksDemo,
+  // Phase 5 - Batch 1
+  'search-input': SearchInputDemo,
+  'icon-button': IconButtonDemo,
+  list: ListDemo,
+  image: ImageDemo,
+  'horizontal-list': HorizontalListDemo,
+  'section-header': SectionHeaderDemo,
 };
 
 const titles: Record<string, string> = {
@@ -92,6 +106,13 @@ const titles: Record<string, string> = {
   'swipeable-row': 'Swipeable Row',
   form: 'Form',
   blocks: 'Blocks',
+  // Phase 5 - Batch 1
+  'search-input': 'Search Input',
+  'icon-button': 'Icon Button',
+  list: 'List',
+  image: 'Image',
+  'horizontal-list': 'Horizontal List',
+  'section-header': 'Section Header',
 };
 
 export default function ComponentPage() {

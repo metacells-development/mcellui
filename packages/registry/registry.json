@@ -332,6 +332,66 @@
       "files": ["blocks/error-state-block.tsx"],
       "dependencies": ["react-native-svg"],
       "registryDependencies": ["button"]
+    },
+    {
+      "name": "search-input",
+      "type": "ui",
+      "description": "Search input with icon, clear button, and loading state",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/search-input.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "icon-button",
+      "type": "ui",
+      "description": "Square or circular icon-only button with multiple variants",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/icon-button.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "list",
+      "type": "ui",
+      "description": "List component with items, left/right slots, chevron, and dividers",
+      "category": "Data Display",
+      "status": "beta",
+      "files": ["ui/list.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "image",
+      "type": "ui",
+      "description": "Enhanced image with loading skeleton, error fallback, and fade-in",
+      "category": "Media",
+      "status": "beta",
+      "files": ["ui/image.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "horizontal-list",
+      "type": "ui",
+      "description": "Horizontal scrolling container with snap-to-item behavior",
+      "category": "Layout",
+      "status": "beta",
+      "files": ["ui/horizontal-list.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "section-header",
+      "type": "ui",
+      "description": "Section header with title, subtitle, and 'See All' action",
+      "category": "Layout",
+      "status": "beta",
+      "files": ["ui/section-header.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
     }
   ]
 }

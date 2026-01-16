@@ -213,7 +213,7 @@ Form integration and screen templates.
 
 ## Phase 5: B2C Expansion
 
-**Status: PLANNED**
+**Status: IN PROGRESS** (Batch 1 Complete)
 
 Expand from 33 items to 62 - optimized for consumer apps.
 
@@ -222,25 +222,25 @@ See [docs/phases/phase-5-b2c-expansion.md](./docs/phases/phase-5-b2c-expansion.m
 ### New Components (18)
 
 **Core Inputs & Actions (8)**
-- [ ] `search-input` - Search icon, clear button, loading state
+- [x] `search-input` - Search icon, clear button, loading state
 - [ ] `datetime-picker` - Date/time via bottom sheet
-- [ ] `icon-button` - Square/circular icon-only button
+- [x] `icon-button` - Square/circular icon-only button
 - [ ] `fab` - Floating Action Button (bottom-right)
 - [ ] `action-sheet` - iOS-style bottom menu
-- [ ] `list` - ListItem with slots, chevron, dividers
+- [x] `list` - ListItem with slots, chevron, dividers
 - [ ] `tooltip` - Long-press popup
 - [ ] `chip` - Selectable filter pills
 
 **Media (5)**
-- [ ] `image` - Loading skeleton, error fallback, blur-up
+- [x] `image` - Loading skeleton, error fallback, blur-up
 - [ ] `carousel` - Horizontal swipe with dots
 - [ ] `stories` - Avatar with gradient ring (Instagram-style)
 - [ ] `avatar-stack` - Overlapping avatars
 - [ ] `image-gallery` - Grid with fullscreen tap
 
 **Layout & Navigation (5)**
-- [ ] `horizontal-list` - Snap-scroll container
-- [ ] `section-header` - Title + "See All"
+- [x] `horizontal-list` - Snap-scroll container
+- [x] `section-header` - Title + "See All"
 - [ ] `bottom-nav` - Tab bar with icons + badge
 - [ ] `header` - Top nav with back, title, actions
 - [ ] `rating` - Star display/input
@@ -265,12 +265,12 @@ See [docs/phases/phase-5-b2c-expansion.md](./docs/phases/phase-5-b2c-expansion.m
 - [ ] Spring config variants per preset
 
 ### Summary
-| Category | Before | After |
-|----------|--------|-------|
-| Components | 27 | 45 |
-| Blocks | 6 | 14 |
-| Screens | 0 | 3 |
-| **Total** | **33** | **62** |
+| Category | Before | Current | Target |
+|----------|--------|---------|--------|
+| Components | 27 | 33 | 45 |
+| Blocks | 6 | 6 | 14 |
+| Screens | 0 | 0 | 3 |
+| **Total** | **33** | **39** | **62** |
 
 ---
 
