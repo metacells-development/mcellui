@@ -45,6 +45,7 @@ import { Avatar } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { IconButton } from '../ui/icon-button';
 import { Badge } from '../ui/badge';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/tabs';
 
 // ============================================================================
 // Types
@@ -289,48 +290,35 @@ export function ProfileScreen({
           </View>
         </View>
 
-        {/* Tabs - Underline style (keeping manual for this UI pattern) */}
+        {/* Tabs - Using Tabs primitive with underline variant */}
         {tabs.length > 0 && (
-          <>
-            <View style={[styles.tabBar, { marginTop: spacing[6], borderBottomColor: colors.border }]}>
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            style={{ marginTop: spacing[6] }}
+          >
+            <TabsList variant="underline">
               {tabs.map((tab) => (
-                <Pressable
-                  key={tab.key}
-                  onPress={() => setActiveTab(tab.key)}
-                  style={[
-                    styles.tabItem,
-                    {
-                      borderBottomColor: activeTab === tab.key ? colors.primary : 'transparent',
-                      paddingVertical: spacing[3],
-                      paddingHorizontal: spacing[4],
-                    },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.tabTitle,
-                      {
-                        color: activeTab === tab.key ? colors.primary : colors.foregroundMuted,
-                      },
-                    ]}
-                  >
-                    {tab.title}
-                  </Text>
-                  {/* Tab badge using Badge primitive */}
-                  {tab.badge !== undefined && tab.badge > 0 && (
-                    <Badge size="sm" style={{ marginLeft: spacing[2] }}>
-                      {tab.badge}
-                    </Badge>
-                  )}
-                </Pressable>
+                <TabsTrigger key={tab.key} value={tab.key}>
+                  <View style={styles.tabTriggerContent}>
+                    <Text>{tab.title}</Text>
+                    {tab.badge !== undefined && tab.badge > 0 && (
+                      <Badge size="sm" style={{ marginLeft: spacing[2] }}>
+                        {tab.badge}
+                      </Badge>
+                    )}
+                  </View>
+                </TabsTrigger>
               ))}
-            </View>
-
-            {/* Tab Content */}
-            <View style={[styles.tabContent, { paddingHorizontal: spacing[4], paddingTop: spacing[4] }]}>
-              {tabs.find((t) => t.key === activeTab)?.content}
-            </View>
-          </>
+            </TabsList>
+            {tabs.map((tab) => (
+              <TabsContent key={tab.key} value={tab.key}>
+                <View style={{ paddingHorizontal: spacing[4] }}>
+                  {tab.content}
+                </View>
+              </TabsContent>
+            ))}
+          </Tabs>
         )}
       </ScrollView>
     </View>
@@ -390,20 +378,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
   },
-  tabBar: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-  },
-  tabItem: {
-    flex: 1,
+  tabTriggerContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 2,
   },
-  tabTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  tabContent: {},
 });

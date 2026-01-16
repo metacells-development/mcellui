@@ -3,9 +3,11 @@
  *
  * A tabbed navigation component with animated indicator.
  * Supports both controlled and uncontrolled modes.
+ * Two visual variants: "pill" (segmented control) and "underline" (bottom border).
  *
  * @example
  * ```tsx
+ * // Pill variant (default) - segmented control style
  * <Tabs defaultValue="tab1">
  *   <TabsList>
  *     <TabsTrigger value="tab1">Account</TabsTrigger>
@@ -17,6 +19,16 @@
  *   <TabsContent value="tab2">
  *     <Text>Settings content</Text>
  *   </TabsContent>
+ * </Tabs>
+ *
+ * // Underline variant - bottom border style (great for profiles)
+ * <Tabs defaultValue="posts">
+ *   <TabsList variant="underline">
+ *     <TabsTrigger value="posts">Posts</TabsTrigger>
+ *     <TabsTrigger value="media">Media</TabsTrigger>
+ *     <TabsTrigger value="about">About</TabsTrigger>
+ *   </TabsList>
+ *   <TabsContent value="posts">...</TabsContent>
  * </Tabs>
  * ```
  */
@@ -106,9 +118,12 @@ export function Tabs({
 }
 
 // TabsList Context for indicator
+export type TabsVariant = 'pill' | 'underline';
+
 interface TabsListContextValue {
   registerTab: (value: string, layout: LayoutRectangle) => void;
   tabLayouts: Map<string, LayoutRectangle>;
+  variant: TabsVariant;
 }
 
 const TabsListContext = createContext<TabsListContextValue | null>(null);
@@ -116,10 +131,12 @@ const TabsListContext = createContext<TabsListContextValue | null>(null);
 // TabsList
 export interface TabsListProps {
   children: React.ReactNode;
+  /** Visual variant: "pill" (segmented control) or "underline" (bottom border) */
+  variant?: TabsVariant;
   style?: ViewStyle;
 }
 
-export function TabsList({ children, style }: TabsListProps) {
+export function TabsList({ children, variant = 'pill', style }: TabsListProps) {
   const { colors, radius } = useTheme();
   const { value } = useTabsContext();
   const tabLayouts = useRef(new Map<string, LayoutRectangle>()).current;
@@ -160,28 +177,39 @@ export function TabsList({ children, style }: TabsListProps) {
     width: indicatorWidth.value,
   }));
 
+  const isPill = variant === 'pill';
+
   return (
-    <TabsListContext.Provider value={{ registerTab, tabLayouts }}>
+    <TabsListContext.Provider value={{ registerTab, tabLayouts, variant }}>
       <View
         style={[
           styles.list,
-          {
-            backgroundColor: colors.backgroundMuted,
-            borderRadius: radius.lg,
-            padding: 4,
-          },
+          isPill
+            ? {
+                backgroundColor: colors.backgroundMuted,
+                borderRadius: radius.lg,
+                padding: 4,
+              }
+            : {
+                backgroundColor: 'transparent',
+                borderBottomWidth: 1,
+                borderBottomColor: colors.border,
+              },
           style,
         ]}
       >
         {children}
         <Animated.View
           style={[
-            styles.indicator,
-            {
-              backgroundColor: colors.background,
-              borderRadius: radius.md,
-              height: '100%',
-            },
+            isPill ? styles.indicatorPill : styles.indicatorUnderline,
+            isPill
+              ? {
+                  backgroundColor: colors.background,
+                  borderRadius: radius.md,
+                }
+              : {
+                  backgroundColor: colors.primary,
+                },
             indicatorStyle,
           ]}
         />
@@ -210,6 +238,8 @@ export function TabsTrigger({
   const { value, onValueChange } = useTabsContext();
   const listContext = useContext(TabsListContext);
   const isActive = value === tabValue;
+  const variant = listContext?.variant ?? 'pill';
+  const isUnderline = variant === 'underline';
 
   const handleLayout = (event: LayoutChangeEvent) => {
     listContext?.registerTab(tabValue, event.nativeEvent.layout);
@@ -226,8 +256,8 @@ export function TabsTrigger({
       style={[
         styles.trigger,
         {
-          paddingVertical: spacing[2],
-          paddingHorizontal: spacing[3],
+          paddingVertical: isUnderline ? spacing[3] : spacing[2],
+          paddingHorizontal: isUnderline ? spacing[4] : spacing[3],
           opacity: disabled ? 0.5 : 1,
         },
         style,
@@ -242,7 +272,11 @@ export function TabsTrigger({
         style={[
           styles.triggerText,
           {
-            color: isActive ? colors.foreground : colors.foregroundMuted,
+            color: isActive
+              ? isUnderline
+                ? colors.primary
+                : colors.foreground
+              : colors.foregroundMuted,
             fontWeight: isActive ? '600' : '500',
           },
           textStyle,
@@ -284,7 +318,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'relative',
   },
-  indicator: {
+  indicatorPill: {
     position: 'absolute',
     top: 4,
     bottom: 4,
@@ -294,6 +328,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
+  },
+  indicatorUnderline: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    height: 2,
   },
   trigger: {
     flex: 1,

@@ -10,10 +10,10 @@ export function TabsDemo() {
 
   return (
     <View style={styles.container}>
-      {/* Basic Tabs */}
+      {/* Pill Variant (Default) */}
       <View style={[styles.section, { marginBottom: spacing[6] }]}>
         <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
-          Basic Tabs
+          Pill Variant (Default)
         </Text>
         <Tabs defaultValue="account">
           <TabsList>
@@ -72,6 +72,44 @@ export function TabsDemo() {
             <Card>
               <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
                 Generated reports list.
+              </Text>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </View>
+
+      {/* Underline Variant */}
+      <View style={[styles.section, { marginBottom: spacing[6] }]}>
+        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+          Underline Variant
+        </Text>
+        <Text style={[styles.sectionSubtitle, { color: colors.foregroundMuted, marginBottom: spacing[3] }]}>
+          Perfect for profile pages and content tabs
+        </Text>
+        <Tabs defaultValue="posts">
+          <TabsList variant="underline">
+            <TabsTrigger value="posts">Posts</TabsTrigger>
+            <TabsTrigger value="media">Media</TabsTrigger>
+            <TabsTrigger value="likes">Likes</TabsTrigger>
+          </TabsList>
+          <TabsContent value="posts">
+            <Card>
+              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
+                User posts and activity feed.
+              </Text>
+            </Card>
+          </TabsContent>
+          <TabsContent value="media">
+            <Card>
+              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
+                Photos and videos gallery.
+              </Text>
+            </Card>
+          </TabsContent>
+          <TabsContent value="likes">
+            <Card>
+              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
+                Liked posts and content.
               </Text>
             </Card>
           </TabsContent>

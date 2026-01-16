@@ -621,7 +621,7 @@
       "status": "beta",
       "files": ["screens/profile-screen.tsx"],
       "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["avatar", "button", "icon-button", "badge"]
+      "registryDependencies": ["avatar", "button", "icon-button", "badge", "tabs"]
     },
     {
       "name": "settings-screen",
