@@ -562,6 +562,26 @@
       "files": ["blocks/search-header.tsx"],
       "dependencies": ["react-native-reanimated", "react-native-svg"],
       "registryDependencies": []
+    },
+    {
+      "name": "onboarding-slide",
+      "type": "block",
+      "description": "Full-screen onboarding slide with illustration, title, and pagination",
+      "category": "Onboarding",
+      "status": "beta",
+      "files": ["blocks/onboarding-slide.tsx"],
+      "dependencies": ["react-native-safe-area-context"],
+      "registryDependencies": ["button"]
+    },
+    {
+      "name": "media-item",
+      "type": "block",
+      "description": "Thumbnail grid item for photos, videos, and files with selection support",
+      "category": "Media",
+      "status": "beta",
+      "files": ["blocks/media-item.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["badge"]
     }
   ]
 }

@@ -67,6 +67,14 @@ export function BlocksDemo() {
       <Section title="Search Header">
         <SearchHeaderPreview />
       </Section>
+
+      <Section title="Onboarding Slide">
+        <OnboardingSlidePreview />
+      </Section>
+
+      <Section title="Media Item">
+        <MediaItemPreview />
+      </Section>
     </View>
   );
 }
@@ -779,6 +787,173 @@ function SearchHeaderPreview() {
 }
 
 // ============================================================================
+// Onboarding Slide Preview
+// ============================================================================
+
+function OnboardingSlidePreview() {
+  const { colors, spacing, radius } = useTheme();
+  const [currentStep, setCurrentStep] = useState(0);
+  const totalSteps = 3;
+
+  const slides = [
+    {
+      title: 'Welcome to MyApp',
+      description: 'Discover amazing features that will change how you work and connect.',
+    },
+    {
+      title: 'Stay Organized',
+      description: 'Keep all your important tasks and notes in one beautiful place.',
+    },
+    {
+      title: 'Connect & Share',
+      description: 'Share your moments with friends and family instantly.',
+    },
+  ];
+
+  const current = slides[currentStep];
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        {/* Mini Onboarding Preview */}
+        <View style={[styles.onboardingPreview, { backgroundColor: colors.secondary, borderRadius: radius.lg }]}>
+          {/* Illustration placeholder */}
+          <View
+            style={[
+              styles.onboardingIllustration,
+              { backgroundColor: colors.primary + '20', borderRadius: radius.md },
+            ]}
+          >
+            <Svg width={48} height={48} viewBox="0 0 24 24" fill="none">
+              <Circle cx="12" cy="8" r="4" fill={colors.primary} />
+              <Path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill={colors.primary} />
+            </Svg>
+          </View>
+
+          {/* Content */}
+          <Text style={[styles.onboardingTitle, { color: colors.foreground }]}>
+            {current.title}
+          </Text>
+          <Text style={[styles.onboardingDescription, { color: colors.foregroundMuted }]}>
+            {current.description}
+          </Text>
+
+          {/* Pagination */}
+          <View style={[styles.onboardingPagination, { marginTop: spacing[4], marginBottom: spacing[3] }]}>
+            {Array.from({ length: totalSteps }).map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.onboardingDot,
+                  {
+                    backgroundColor: index === currentStep ? colors.primary : colors.border,
+                    width: index === currentStep ? 20 : 8,
+                    borderRadius: radius.full,
+                    marginHorizontal: spacing[1],
+                  },
+                ]}
+              />
+            ))}
+          </View>
+
+          {/* Button */}
+          <Button
+            size="sm"
+            onPress={() => setCurrentStep((currentStep + 1) % totalSteps)}
+          >
+            {currentStep === totalSteps - 1 ? 'Get Started' : 'Next'}
+          </Button>
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Media Item Preview
+// ============================================================================
+
+function MediaItemPreview() {
+  const { colors, spacing, radius } = useTheme();
+  const [selectedIds, setSelectedIds] = useState<number[]>([1]);
+
+  const mediaItems = [
+    { id: 0, type: 'image' as const, uri: 'https://picsum.photos/200/200?random=1' },
+    { id: 1, type: 'image' as const, uri: 'https://picsum.photos/200/200?random=2' },
+    { id: 2, type: 'video' as const, uri: 'https://picsum.photos/200/200?random=3', duration: 45 },
+    { id: 3, type: 'image' as const, uri: 'https://picsum.photos/200/200?random=4' },
+    { id: 4, type: 'video' as const, uri: 'https://picsum.photos/200/200?random=5', duration: 125 },
+    { id: 5, type: 'image' as const, uri: 'https://picsum.photos/200/200?random=6' },
+  ];
+
+  const toggleSelect = (id: number) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const formatDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <Text style={[styles.mediaLabel, { color: colors.foregroundMuted, marginBottom: spacing[3] }]}>
+          Tap to select • {selectedIds.length} selected
+        </Text>
+        <View style={styles.mediaGrid}>
+          {mediaItems.map((item) => (
+            <Pressable
+              key={item.id}
+              onPress={() => toggleSelect(item.id)}
+              style={[
+                styles.mediaItem,
+                {
+                  borderRadius: radius.md,
+                  borderWidth: selectedIds.includes(item.id) ? 3 : 0,
+                  borderColor: colors.primary,
+                },
+              ]}
+            >
+              <Image
+                source={{ uri: item.uri }}
+                style={[styles.mediaThumbnail, { borderRadius: radius.md - 2 }]}
+              />
+              {/* Video duration badge */}
+              {item.type === 'video' && item.duration && (
+                <View style={[styles.durationBadge, { backgroundColor: 'rgba(0,0,0,0.7)', borderRadius: radius.sm }]}>
+                  <Text style={styles.durationText}>{formatDuration(item.duration)}</Text>
+                </View>
+              )}
+              {/* Selection checkbox */}
+              <View
+                style={[
+                  styles.mediaCheckbox,
+                  {
+                    backgroundColor: selectedIds.includes(item.id) ? colors.primary : 'rgba(255,255,255,0.8)',
+                    borderRadius: radius.full,
+                    borderColor: selectedIds.includes(item.id) ? colors.primary : colors.border,
+                  },
+                ]}
+              >
+                {selectedIds.includes(item.id) && (
+                  <Svg width={12} height={12} viewBox="0 0 24 24" fill="none">
+                    <Path d="M20 6L9 17l-5-5" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                  </Svg>
+                )}
+              </View>
+            </Pressable>
+          ))}
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
 // Helper Components
 // ============================================================================
 
@@ -1049,6 +1224,78 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   filterButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // Onboarding Slide
+  onboardingPreview: {
+    padding: 24,
+    alignItems: 'center',
+  },
+  onboardingIllustration: {
+    width: 100,
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  onboardingTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  onboardingDescription: {
+    fontSize: 14,
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  onboardingPagination: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  onboardingDot: {
+    height: 8,
+  },
+  // Media Item
+  mediaLabel: {
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  mediaGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  mediaItem: {
+    width: 100,
+    height: 100,
+    overflow: 'hidden',
+  },
+  mediaThumbnail: {
+    width: '100%',
+    height: '100%',
+  },
+  durationBadge: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  durationText: {
+    color: '#FFFFFF',
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  mediaCheckbox: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 22,
+    height: 22,
+    borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
