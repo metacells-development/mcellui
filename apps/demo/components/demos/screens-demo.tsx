@@ -13,7 +13,6 @@ import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { List, ListItem } from '@/components/ui/list';
 import { IconButton } from '@/components/ui/icon-button';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 // ============================================================================
 // Demo Component
@@ -394,12 +393,15 @@ function SettingsIcon({ size = 24, color = '#000' }: { size?: number; color?: st
 function ProfileScreenPreview({ onClose }: { onClose: () => void }) {
   const { colors, spacing, radius } = useTheme();
   const insets = useSafeAreaInsets();
+  const [activeTab, setActiveTab] = useState('posts');
 
   const stats = [
     { label: 'Posts', value: '42' },
     { label: 'Followers', value: '1.2K' },
     { label: 'Following', value: '350' },
   ];
+
+  const tabs = ['Posts', 'Media', 'About'];
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
@@ -457,29 +459,33 @@ function ProfileScreenPreview({ onClose }: { onClose: () => void }) {
           </View>
         </View>
 
-        {/* Tabs - Using underline variant */}
-        <Tabs defaultValue="posts" style={{ marginTop: spacing[6] }}>
-          <TabsList variant="underline">
-            <TabsTrigger value="posts">Posts</TabsTrigger>
-            <TabsTrigger value="media">Media</TabsTrigger>
-            <TabsTrigger value="about">About</TabsTrigger>
-          </TabsList>
-          <TabsContent value="posts">
-            <View style={{ padding: spacing[6], alignItems: 'center' }}>
-              <Text style={{ color: colors.foregroundMuted }}>Posts content would go here</Text>
-            </View>
-          </TabsContent>
-          <TabsContent value="media">
-            <View style={{ padding: spacing[6], alignItems: 'center' }}>
-              <Text style={{ color: colors.foregroundMuted }}>Media content would go here</Text>
-            </View>
-          </TabsContent>
-          <TabsContent value="about">
-            <View style={{ padding: spacing[6], alignItems: 'center' }}>
-              <Text style={{ color: colors.foregroundMuted }}>About content would go here</Text>
-            </View>
-          </TabsContent>
-        </Tabs>
+        {/* Tabs */}
+        <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: colors.border, marginTop: spacing[6] }}>
+          {tabs.map((tab) => (
+            <Pressable
+              key={tab}
+              onPress={() => setActiveTab(tab.toLowerCase())}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                paddingVertical: spacing[3],
+                borderBottomWidth: 2,
+                borderBottomColor: activeTab === tab.toLowerCase() ? colors.primary : 'transparent',
+              }}
+            >
+              <Text style={{ fontSize: 15, fontWeight: '600', color: activeTab === tab.toLowerCase() ? colors.primary : colors.foregroundMuted }}>
+                {tab}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+
+        {/* Tab Content Placeholder */}
+        <View style={{ padding: spacing[6], alignItems: 'center' }}>
+          <Text style={{ color: colors.foregroundMuted }}>
+            {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} content would go here
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );
