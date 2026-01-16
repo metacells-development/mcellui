@@ -269,16 +269,16 @@ function isColorValue(value: unknown): value is ColorValue {
 }
 
 function rgbaToHex(color: ColorValue): string {
-  const r = Math.round(color.r * 255);
-  const g = Math.round(color.g * 255);
-  const b = Math.round(color.b * 255);
+  var r = Math.round(color.r * 255);
+  var g = Math.round(color.g * 255);
+  var b = Math.round(color.b * 255);
 
-  const hex = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+  var hex = '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
 
   // Alpha nur hinzufügen wenn nicht 1
   if (color.a !== undefined && color.a < 1) {
-    const a = Math.round(color.a * 255);
-    return `${hex}${a.toString(16).padStart(2, '0')}`;
+    var a = Math.round(color.a * 255);
+    return hex + a.toString(16).padStart(2, '0');
   }
 
   return hex.toUpperCase();

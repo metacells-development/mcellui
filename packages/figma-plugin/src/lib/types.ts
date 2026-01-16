@@ -102,13 +102,62 @@ export type PluginMessage =
   | { type: 'get-collections' }
   | { type: 'extract-tokens'; collectionId: string; options: ExtractOptions }
   | { type: 'copy-config'; config: string }
-  | { type: 'notify'; message: string; error?: boolean };
+  | { type: 'notify'; message: string; error?: boolean }
+  // Import (Code → Figma)
+  | { type: 'check-existing-collections' }
+  | { type: 'import-tokens'; options: ImportOptions }
+  | { type: 'delete-collections' }
+  // Component Generation (Code → Figma)
+  | { type: 'get-available-components' }
+  | { type: 'check-existing-components' }
+  | { type: 'generate-components'; componentNames: string[] }
+  | { type: 'generate-all-components' }
+  | { type: 'delete-components' };
 
 export type UIMessage =
   | { type: 'collections'; collections: CollectionInfo[] }
   | { type: 'tokens-extracted'; tokens: TokenCollection; config: string }
   | { type: 'error'; message: string }
-  | { type: 'success'; message: string };
+  | { type: 'success'; message: string }
+  // Import (Code → Figma)
+  | { type: 'existing-collections'; existing: ExistingCollections }
+  | { type: 'import-complete'; result: ImportResult }
+  // Component Generation (Code → Figma)
+  | { type: 'available-components'; components: string[] }
+  | { type: 'existing-components'; existing: ExistingComponents }
+  | { type: 'components-generated'; result: ComponentGenerateResult };
+
+export interface ExistingCollections {
+  hasColors: boolean;
+  hasSpacing: boolean;
+  hasRadius: boolean;
+}
+
+export interface ImportOptions {
+  includeColors: boolean;
+  includeSpacing: boolean;
+  includeRadius: boolean;
+  overwrite: boolean;
+}
+
+export interface ImportResult {
+  success: boolean;
+  collectionsCreated: number;
+  variablesCreated: number;
+  errors: string[];
+}
+
+export interface ExistingComponents {
+  exists: boolean;
+  componentNames: string[];
+}
+
+export interface ComponentGenerateResult {
+  success: boolean;
+  componentsCreated: number;
+  variantsCreated: number;
+  errors: string[];
+}
 
 export interface CollectionInfo {
   id: string;

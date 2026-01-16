@@ -8,7 +8,22 @@
 import { extractTokensFromCollection, getCollectionInfo } from './lib/tokens/extractor';
 import { transformToNativeUIConfig } from './lib/tokens/transformer';
 import { generateConfigFile } from './lib/tokens/emitter';
-import type { PluginMessage, UIMessage, ExtractOptions } from './lib/types';
+import {
+  importAllTokens,
+  importColorTokens,
+  importSpacingTokens,
+  importRadiusTokens,
+  checkExistingCollections,
+  deleteExistingCollections,
+} from './lib/tokens/importer';
+import {
+  generateAllComponents,
+  generateComponent,
+  checkExistingComponents,
+  deleteExistingComponents,
+  getAvailableComponents,
+} from './lib/components/generator';
+import type { PluginMessage, UIMessage, ExtractOptions, ImportOptions } from './lib/types';
 
 // Plugin-Größe
 figma.showUI(__html__, {
@@ -38,6 +53,40 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
         figma.notify(msg.message, { error: msg.error });
         break;
 
+      // Import (Code → Figma)
+      case 'check-existing-collections':
+        await handleCheckExisting();
+        break;
+
+      case 'import-tokens':
+        await handleImportTokens(msg.options);
+        break;
+
+      case 'delete-collections':
+        await handleDeleteCollections();
+        break;
+
+      // Component Generation (Code → Figma)
+      case 'get-available-components':
+        handleGetAvailableComponents();
+        break;
+
+      case 'check-existing-components':
+        await handleCheckExistingComponents();
+        break;
+
+      case 'generate-all-components':
+        await handleGenerateAllComponents();
+        break;
+
+      case 'generate-components':
+        await handleGenerateComponents(msg.componentNames);
+        break;
+
+      case 'delete-components':
+        await handleDeleteComponents();
+        break;
+
       default:
         console.warn('Unknown message type:', msg);
     }
@@ -53,20 +102,16 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
 // ============================================================================
 
 async function handleGetCollections(): Promise<void> {
-  console.log('[nativeui] handleGetCollections aufgerufen');
   const collections = await figma.variables.getLocalVariableCollectionsAsync();
-  console.log('[nativeui] Collections von API:', collections.length);
 
   const collectionInfos = await Promise.all(
     collections.map((collection) => getCollectionInfo(collection))
   );
-  console.log('[nativeui] CollectionInfos:', collectionInfos);
 
   sendToUI({
     type: 'collections',
     collections: collectionInfos,
   });
-  console.log('[nativeui] Nachricht an UI gesendet');
 }
 
 async function handleExtractTokens(
@@ -77,7 +122,7 @@ async function handleExtractTokens(
   const collection = await figma.variables.getVariableCollectionByIdAsync(collectionId);
 
   if (!collection) {
-    throw new Error(`Collection mit ID "${collectionId}" nicht gefunden`);
+    throw new Error('Collection mit ID "' + collectionId + '" nicht gefunden');
   }
 
   // Tokens extrahieren
@@ -99,6 +144,145 @@ async function handleExtractTokens(
 }
 
 // ============================================================================
+// Import Handler Functions (Code → Figma)
+// ============================================================================
+
+async function handleCheckExisting(): Promise<void> {
+  const existing = await checkExistingCollections();
+  sendToUI({ type: 'existing-collections', existing });
+}
+
+async function handleImportTokens(options: ImportOptions): Promise<void> {
+  // Wenn überschreiben aktiviert, erst löschen
+  if (options.overwrite) {
+    await deleteExistingCollections();
+  }
+
+  let collectionsCreated = 0;
+  let variablesCreated = 0;
+  const errors: string[] = [];
+
+  try {
+    // Colors importieren
+    if (options.includeColors) {
+      const colorResult = await importColorTokens();
+      collectionsCreated++;
+      variablesCreated += colorResult.variables.length;
+    }
+
+    // Spacing importieren
+    if (options.includeSpacing) {
+      const spacingResult = await importSpacingTokens();
+      collectionsCreated++;
+      variablesCreated += spacingResult.variables.length;
+    }
+
+    // Radius importieren
+    if (options.includeRadius) {
+      const radiusResult = await importRadiusTokens();
+      collectionsCreated++;
+      variablesCreated += radiusResult.variables.length;
+    }
+
+    sendToUI({
+      type: 'import-complete',
+      result: {
+        success: true,
+        collectionsCreated,
+        variablesCreated,
+        errors,
+      },
+    });
+
+    figma.notify(variablesCreated + ' Variables in ' + collectionsCreated + ' Collections importiert!');
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Import fehlgeschlagen';
+    errors.push(message);
+    sendToUI({
+      type: 'import-complete',
+      result: {
+        success: false,
+        collectionsCreated,
+        variablesCreated,
+        errors,
+      },
+    });
+  }
+}
+
+async function handleDeleteCollections(): Promise<void> {
+  await deleteExistingCollections();
+  sendToUI({ type: 'success', message: 'nativeui Collections gelöscht' });
+  figma.notify('nativeui Collections gelöscht');
+
+  // Collections-Liste aktualisieren
+  await handleGetCollections();
+}
+
+// ============================================================================
+// Component Generation Handler Functions (Code → Figma)
+// ============================================================================
+
+function handleGetAvailableComponents(): void {
+  const components = getAvailableComponents();
+  sendToUI({ type: 'available-components', components });
+}
+
+async function handleCheckExistingComponents(): Promise<void> {
+  const existing = await checkExistingComponents();
+  sendToUI({ type: 'existing-components', existing });
+}
+
+async function handleGenerateAllComponents(): Promise<void> {
+  const result = await generateAllComponents();
+
+  sendToUI({ type: 'components-generated', result });
+
+  if (result.success) {
+    figma.notify(
+      result.componentsCreated + ' Components mit ' + result.variantsCreated + ' Variants erstellt!'
+    );
+  } else {
+    figma.notify('Fehler: ' + result.errors.join(', '), { error: true });
+  }
+}
+
+async function handleGenerateComponents(componentNames: string[]): Promise<void> {
+  let totalComponents = 0;
+  let totalVariants = 0;
+  const errors: string[] = [];
+
+  for (const name of componentNames) {
+    const result = await generateComponent(name);
+    totalComponents += result.componentsCreated;
+    totalVariants += result.variantsCreated;
+    for (const err of result.errors) {
+      errors.push(err);
+    }
+  }
+
+  sendToUI({
+    type: 'components-generated',
+    result: {
+      success: errors.length === 0,
+      componentsCreated: totalComponents,
+      variantsCreated: totalVariants,
+      errors,
+    },
+  });
+
+  if (errors.length === 0) {
+    figma.notify(totalComponents + ' Components mit ' + totalVariants + ' Variants erstellt!');
+  }
+}
+
+async function handleDeleteComponents(): Promise<void> {
+  await deleteExistingComponents();
+  sendToUI({ type: 'success', message: 'nativeui Components gelöscht' });
+  figma.notify('nativeui Components gelöscht');
+}
+
+// ============================================================================
 // Utility Functions
 // ============================================================================
 
@@ -110,15 +294,9 @@ function sendToUI(message: UIMessage): void {
 // Plugin Initialization
 // ============================================================================
 
-// Debug: Log beim Start
-console.log('[nativeui] Plugin gestartet');
-
 // Warte kurz bis UI bereit ist, dann lade Collections
 setTimeout(async () => {
   try {
-    console.log('[nativeui] Lade Collections...');
-    const collections = await figma.variables.getLocalVariableCollectionsAsync();
-    console.log('[nativeui] Gefundene Collections:', collections.length, collections);
     await handleGetCollections();
   } catch (error) {
     console.error('[nativeui] Fehler beim Laden der Collections:', error);

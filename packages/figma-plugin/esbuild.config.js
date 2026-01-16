@@ -7,12 +7,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isWatch = process.argv.includes('--watch');
 
 // Build main.ts (Figma sandbox)
+// WICHTIG: target: 'es2017' - Figma's Sandbox unterstützt kein Optional Chaining (?.)
 const mainConfig = {
   entryPoints: ['src/main.ts'],
   bundle: true,
   outfile: 'dist/main.js',
   format: 'iife',
-  target: 'es2020',
+  target: 'es2017',
   platform: 'browser',
   sourcemap: false,
   minify: !isWatch,
@@ -191,6 +192,41 @@ async function buildHTML() {
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--figma-color-border);
+    }
+
+    .tab {
+      flex: 1;
+      padding: var(--spacing-sm) var(--spacing-md);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--figma-color-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab:hover {
+      color: var(--figma-color-text);
+      background: var(--figma-color-bg-hover);
+    }
+
+    .tab-active {
+      color: var(--figma-color-text);
+      border-bottom-color: var(--figma-color-bg-brand);
+    }
+
+    /* Disabled button */
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   </style>
 </head>

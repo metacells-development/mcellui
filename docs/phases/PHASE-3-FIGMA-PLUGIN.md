@@ -1,6 +1,6 @@
 # Phase 3: Figma Plugin
 
-> Status: **IN PROGRESS** (Milestone 1 Complete)
+> Status: **IN PROGRESS** (Milestone 2 In Progress)
 > Estimated: **2-3 Wochen**
 
 ## Übersicht
@@ -36,23 +36,48 @@ Design-to-Code Workflow mit einem Figma Plugin, das Design Tokens synchronisiert
 - `packages/figma-plugin/src/lib/tokens/transformer.ts` - Tokens → nativeui Format
 - `packages/figma-plugin/src/lib/tokens/emitter.ts` - Config File Generator
 
-### Milestone 2: Component Export (Woche 2)
+### Milestone 2: Code → Figma Sync (Woche 2) 🔄
 
-- [ ] Component Analysis Engine
-- [ ] Mapping Configuration (Button, Input, Card, etc.)
-- [ ] Code Generator
-- [ ] Preview Panel
-- [ ] Copy to Clipboard
-- [ ] Export to File System
+- [x] Token Importer (nativeui Tokens → Figma Variables)
+  - [x] Colors (Light/Dark Mode als Modes)
+  - [x] Spacing Scale
+  - [x] Radius Scale
+- [x] Component Generator (Registry → Figma Components)
+  - [x] Button (sm/md/lg × default/secondary/outline/destructive/ghost × default/hover/pressed/disabled)
+  - [x] Checkbox (sm/md/lg × unchecked/checked × default/hover/pressed/disabled)
+  - [x] Switch (sm/md/lg × off/on × default/hover/pressed/disabled)
+  - [x] Badge (sm/md/lg × default/secondary/outline/destructive)
+  - [x] Avatar (sm/md/lg/xl × image/fallback)
+  - [x] Input (sm/md/lg × default × default/focus/error/disabled)
+  - [x] Card, Progress, Spinner, Separator, Label
+- [x] Auto Layout Mapping
+- [x] Variant Properties Setup (Component Sets)
+- [x] UI für Component Generation (Generate / Delete Buttons)
+- [ ] **NEEDS POLISH**: Visuelle Genauigkeit (Farben, Abstände, Details)
+  - Checkbox: Checkmark SVG sichtbar machen
+  - Switch: Thumb-Position, Track-Farben
+  - Button: Text-Zentrierung, Font-Weight
+  - Allgemein: Pixel-perfekte Übereinstimmung mit Demo App
 
-### Milestone 3: Assets & Polish (Woche 3)
+**Implementierte Dateien:**
+- `packages/figma-plugin/src/lib/tokens/importer.ts` - nativeui Tokens → Figma Variables
+- `packages/figma-plugin/src/lib/data/tokens.ts` - Token Definitionen (spacing, radius, colors)
+- `packages/figma-plugin/src/lib/data/components.ts` - Pixel-perfekte Component Definitions
+- `packages/figma-plugin/src/lib/components/generator.ts` - Figma Component Generator
 
-- [ ] Icon Export (SVG → React Native SVG)
-- [ ] Image Export (@1x, @2x, @3x)
-- [ ] Settings Panel
-- [ ] Error Handling
+**Bekannte Issues:**
+- Components funktionieren, sehen aber nicht 1:1 wie Demo App aus
+- Feintuning der Farben, Abstände und visuellen Details erforderlich
+- SVG-Inhalte (Checkmark) werden nicht korrekt angezeigt
+
+### Milestone 3: Polish & Bidirectional (Woche 3)
+
+- [ ] Settings Panel (Theme Selection)
+- [ ] Selective Component Import
+- [ ] Update Detection (nur geänderte Components)
+- [ ] Typography Styles
+- [ ] Icon Library Import
 - [ ] Documentation
-- [ ] Testing
 
 ---
 
@@ -70,16 +95,17 @@ packages/figma-plugin/
 │   ├── ui.html
 │   └── lib/
 │       ├── tokens/
-│       │   ├── extractor.ts
+│       │   ├── extractor.ts    # Figma → Code (Milestone 1)
 │       │   ├── transformer.ts
-│       │   └── emitter.ts
+│       │   ├── emitter.ts
+│       │   └── importer.ts     # Code → Figma (Milestone 2)
 │       ├── components/
-│       │   ├── analyzer.ts
-│       │   ├── mapper.ts
-│       │   └── codegen.ts
-│       ├── assets/
-│       │   ├── icons.ts
-│       │   └── images.ts
+│       │   ├── generator.ts    # Registry → Figma Components
+│       │   ├── variants.ts     # Variant Property Setup
+│       │   └── layout.ts       # Auto Layout Mapping
+│       ├── data/
+│       │   ├── tokens.ts       # nativeui Token Definitions
+│       │   └── components.ts   # Component Structure Definitions
 │       └── types.ts
 └── README.md
 ```

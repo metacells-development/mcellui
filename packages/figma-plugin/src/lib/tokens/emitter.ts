@@ -2,23 +2,35 @@
  * nativeui Figma Plugin - Config Emitter
  *
  * Generiert die nativeui.config.ts Datei aus transformierten Tokens.
+ * WICHTIG: Keine Template Literals verwenden - Figma Sandbox unterstützt diese nicht!
  */
 
 import type { NativeUIThemeConfig } from '../types';
+
+// ============================================================================
+// Helper Functions (Template Literal Replacement)
+// ============================================================================
+
+function spaces(count: number): string {
+  var result = '';
+  for (var i = 0; i < count; i++) {
+    result += ' ';
+  }
+  return result;
+}
+
+function quote(str: string): string {
+  return "'" + str + "'";
+}
 
 // ============================================================================
 // Main Emit Function
 // ============================================================================
 
 export function generateConfigFile(config: NativeUIThemeConfig): string {
-  const configContent = formatConfigObject(config, 2);
+  var configContent = formatConfigObject(config, 2);
 
-  return `import { defineConfig } from '@nativeui/core';
-
-export default defineConfig({
-  theme: ${configContent},
-});
-`;
+  return "import { defineConfig } from '@nativeui/core';\n\nexport default defineConfig({\n  theme: " + configContent + ",\n});\n";
 }
 
 // ============================================================================
@@ -31,7 +43,7 @@ function formatConfigObject(obj: unknown, indent: number): string {
   }
 
   if (typeof obj === 'string') {
-    return `'${obj}'`;
+    return quote(obj);
   }
 
   if (typeof obj === 'number' || typeof obj === 'boolean') {
@@ -42,24 +54,27 @@ function formatConfigObject(obj: unknown, indent: number): string {
     if (obj.length === 0) {
       return '[]';
     }
-    const items = obj.map((item) => formatConfigObject(item, indent + 2));
-    return `[\n${' '.repeat(indent + 2)}${items.join(`,\n${' '.repeat(indent + 2)}`)}\n${' '.repeat(indent)}]`;
+    var items = obj.map(function(item) { return formatConfigObject(item, indent + 2); });
+    return '[\n' + spaces(indent + 2) + items.join(',\n' + spaces(indent + 2)) + '\n' + spaces(indent) + ']';
   }
 
   if (typeof obj === 'object') {
-    const entries = Object.entries(obj as Record<string, unknown>);
+    var entries = Object.entries(obj as Record<string, unknown>);
 
     if (entries.length === 0) {
       return '{}';
     }
 
-    const lines = entries.map(([key, value]) => {
-      const formattedKey = isValidIdentifier(key) ? key : `'${key}'`;
-      const formattedValue = formatConfigObject(value, indent + 2);
-      return `${' '.repeat(indent + 2)}${formattedKey}: ${formattedValue}`;
-    });
+    var lines: string[] = [];
+    for (var i = 0; i < entries.length; i++) {
+      var key = entries[i][0];
+      var value = entries[i][1];
+      var formattedKey = isValidIdentifier(key) ? key : quote(key);
+      var formattedValue = formatConfigObject(value, indent + 2);
+      lines.push(spaces(indent + 2) + formattedKey + ': ' + formattedValue);
+    }
 
-    return `{\n${lines.join(',\n')},\n${' '.repeat(indent)}}`;
+    return '{\n' + lines.join(',\n') + ',\n' + spaces(indent) + '}';
   }
 
   return String(obj);
@@ -92,13 +107,16 @@ export function generateJSON(config: NativeUIThemeConfig): string {
  * Generiert CSS Custom Properties (für Referenz)
  */
 export function generateCSSVariables(config: NativeUIThemeConfig): string {
-  const lines: string[] = [':root {'];
+  var lines: string[] = [':root {'];
 
   // Colors
   if (config.colors?.light) {
     lines.push('  /* Light Mode Colors */');
-    for (const [key, value] of Object.entries(config.colors.light)) {
-      lines.push(`  --color-${toKebabCase(key)}: ${value};`);
+    var lightColors = Object.entries(config.colors.light);
+    for (var i = 0; i < lightColors.length; i++) {
+      var key = lightColors[i][0];
+      var value = lightColors[i][1];
+      lines.push('  --color-' + toKebabCase(key) + ': ' + value + ';');
     }
   }
 
@@ -106,8 +124,11 @@ export function generateCSSVariables(config: NativeUIThemeConfig): string {
   if (config.spacing) {
     lines.push('');
     lines.push('  /* Spacing */');
-    for (const [key, value] of Object.entries(config.spacing)) {
-      lines.push(`  --spacing-${key}: ${value}px;`);
+    var spacingEntries = Object.entries(config.spacing);
+    for (var j = 0; j < spacingEntries.length; j++) {
+      var sKey = spacingEntries[j][0];
+      var sValue = spacingEntries[j][1];
+      lines.push('  --spacing-' + sKey + ': ' + sValue + 'px;');
     }
   }
 
@@ -115,8 +136,11 @@ export function generateCSSVariables(config: NativeUIThemeConfig): string {
   if (config.radius) {
     lines.push('');
     lines.push('  /* Border Radius */');
-    for (const [key, value] of Object.entries(config.radius)) {
-      lines.push(`  --radius-${key}: ${value}px;`);
+    var radiusEntries = Object.entries(config.radius);
+    for (var k = 0; k < radiusEntries.length; k++) {
+      var rKey = radiusEntries[k][0];
+      var rValue = radiusEntries[k][1];
+      lines.push('  --radius-' + rKey + ': ' + rValue + 'px;');
     }
   }
 
@@ -128,8 +152,11 @@ export function generateCSSVariables(config: NativeUIThemeConfig): string {
     lines.push('@media (prefers-color-scheme: dark) {');
     lines.push('  :root {');
     lines.push('    /* Dark Mode Colors */');
-    for (const [key, value] of Object.entries(config.colors.dark)) {
-      lines.push(`    --color-${toKebabCase(key)}: ${value};`);
+    var darkColors = Object.entries(config.colors.dark);
+    for (var m = 0; m < darkColors.length; m++) {
+      var dKey = darkColors[m][0];
+      var dValue = darkColors[m][1];
+      lines.push('    --color-' + toKebabCase(dKey) + ': ' + dValue + ';');
     }
     lines.push('  }');
     lines.push('}');
