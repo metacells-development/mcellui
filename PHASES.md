@@ -211,84 +211,108 @@ Form integration and screen templates.
 
 ---
 
-## Phase 5: Tooling Polish
+## Phase 5: B2C Expansion
+
+**Status: PLANNED**
+
+Expand from 33 items to 62 - optimized for consumer apps.
+
+See [docs/phases/phase-5-b2c-expansion.md](./docs/phases/phase-5-b2c-expansion.md) for full details.
+
+### New Components (18)
+
+**Core Inputs & Actions (8)**
+- [ ] `search-input` - Search icon, clear button, loading state
+- [ ] `datetime-picker` - Date/time via bottom sheet
+- [ ] `icon-button` - Square/circular icon-only button
+- [ ] `fab` - Floating Action Button (bottom-right)
+- [ ] `action-sheet` - iOS-style bottom menu
+- [ ] `list` - ListItem with slots, chevron, dividers
+- [ ] `tooltip` - Long-press popup
+- [ ] `chip` - Selectable filter pills
+
+**Media (5)**
+- [ ] `image` - Loading skeleton, error fallback, blur-up
+- [ ] `carousel` - Horizontal swipe with dots
+- [ ] `stories` - Avatar with gradient ring (Instagram-style)
+- [ ] `avatar-stack` - Overlapping avatars
+- [ ] `image-gallery` - Grid with fullscreen tap
+
+**Layout & Navigation (5)**
+- [ ] `horizontal-list` - Snap-scroll container
+- [ ] `section-header` - Title + "See All"
+- [ ] `bottom-nav` - Tab bar with icons + badge
+- [ ] `header` - Top nav with back, title, actions
+- [ ] `rating` - Star display/input
+
+### New Blocks (8)
+- [ ] `notification-item` - Avatar, message, time, unread dot
+- [ ] `content-card` - Large image + title + action
+- [ ] `feature-card` - Icon + title + description
+- [ ] `stats-card` - Big number + trend indicator
+- [ ] `quick-actions-grid` - Grid of icon buttons
+- [ ] `hero-block` - Full-width image + title + CTA
+- [ ] `social-proof-bar` - Avatar stack + engagement text
+- [ ] `search-header` - Search + filter + avatar
+
+### New Screens (3)
+- [ ] `onboarding-screen` - Swipe carousel + skip/start
+- [ ] `forgot-password-screen` - Email + submit
+- [ ] `otp-verification-screen` - Code input + resend
+
+### Theme Enhancements
+- [ ] Animation presets: `subtle` vs `playful`
+- [ ] Spring config variants per preset
+
+### Summary
+| Category | Before | After |
+|----------|--------|-------|
+| Components | 27 | 45 |
+| Blocks | 6 | 14 |
+| Screens | 0 | 3 |
+| **Total** | **33** | **62** |
+
+---
+
+## Phase 6: Tooling & MCP
 
 **Status: NOT STARTED**
 
-CLI and MCP server fully functional.
+CLI polish and MCP-guided component creation.
 
 ### CLI
 - [ ] `nativeui diff` - Show component updates
 - [ ] `nativeui doctor` - Check compatibility
 - [ ] `nativeui update` - Update components
-- [ ] Better error messages
+- [ ] `nativeui create` - Scaffold new component
 - [ ] Interactive component picker
 
 ### MCP Server
 - [ ] Live registry data (not hardcoded)
-- [ ] Component validation (real checks)
+- [ ] Component creation guide for Claude
 - [ ] AI suggestions based on context
 - [ ] Theme customization support
 
 ---
 
-## Phase 6: Documentation & Playground
+## Phase 7: Documentation & Playground
 
 **Status: NOT STARTED**
 
-Public documentation site mit interaktivem Playground (shadcn-Niveau).
+Public documentation site with interactive playground.
 
 ### Documentation Site (Next.js)
 - [ ] Next.js 14+ App Router Setup
-- [ ] MDX für Component Docs
-- [ ] Automatische API-Docs aus TypeScript
+- [ ] MDX for Component Docs
+- [ ] Auto-generated API docs from TypeScript
 - [ ] Getting Started Guide
 - [ ] Theme Customization Guide
-- [ ] Accessibility Guidelines
-- [ ] Copy-to-Clipboard für alle Code-Snippets
 
 ### Interactive Playground
 - [ ] Live Component Preview (React Native Web)
-- [ ] Prop-Editor (Variant, Size, etc. live ändern)
-- [ ] Code-Editor mit Syntax Highlighting
-- [ ] Share-Links für Playground States
-- [ ] Mobile Preview Frame (iPhone/Android mockup)
-
-### Search & Navigation
-- [ ] Algolia/Pagefind Suche
-- [ ] Sidebar mit Component-Kategorien
-- [ ] Keyboard Navigation (⌘K)
-
----
-
-## Phase 7: Advanced Components & Screens
-
-**Status: NOT STARTED**
-
-Complex components and complete screens for power users.
-
-### Advanced Components
-- [ ] Command Palette
-- [ ] Calendar / Date Picker
-- [ ] Data Table
-- [ ] Charts (victory-native)
-- [ ] Navigation Bar
-- [ ] Tab Bar
-- [ ] Image Picker
-- [ ] Camera Integration
-
-### Complete Screens
-- [ ] Onboarding Flow
-- [ ] E-Commerce Product Detail
-- [ ] Chat/Messaging
-- [ ] Social Feed
-- [ ] Dashboard
-
-### Ecosystem
-- [ ] VS Code extension (snippets)
-- [ ] Theme gallery
-- [ ] Community components registry
-- [ ] Expo Go compatibility report
+- [ ] Prop Editor (variants, sizes live)
+- [ ] Code Editor with syntax highlighting
+- [ ] Share links for playground states
 
 ---
 
