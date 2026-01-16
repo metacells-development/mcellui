@@ -1,6 +1,6 @@
 # Phase 5: B2C Expansion
 
-**Status: PLANNED**
+**Status: IN PROGRESS** (All 17 Components Complete)
 
 Expand nativeui from 27 components to a full B2C-ready library with 56+ items.
 
@@ -13,7 +13,7 @@ Expand nativeui from 27 components to a full B2C-ready library with 56+ items.
 
 ---
 
-## New Components (17)
+## New Components (16)
 
 ### Core Inputs & Actions (8)
 
@@ -38,13 +38,12 @@ Expand nativeui from 27 components to a full B2C-ready library with 56+ items.
 | `avatar-stack` | Overlapping avatars ("5 people liked this") | Medium |
 | `image-gallery` | Grid of images, tap to fullscreen | Medium |
 
-### Layout & Navigation (4)
+### Layout & Navigation (3)
 
 | Component | Description | Priority |
 |-----------|-------------|----------|
 | `horizontal-list` | Snap-scroll horizontal container | High |
 | `section-header` | Title + "See All" link for sections | High |
-| `header` | Top nav with back button, title, actions | High |
 | `rating` | Star rating display and input | Medium |
 
 ---
@@ -106,26 +105,27 @@ export default defineConfig({
 
 ## Implementation Order
 
-### Batch 1: Core (Week 1)
-1. `search-input`
-2. `icon-button`
-3. `list`
-4. `image`
-5. `horizontal-list`
-6. `section-header`
+### Batch 1: Core (COMPLETE)
+1. ✅ `search-input`
+2. ✅ `icon-button`
+3. ✅ `list`
+4. ✅ `image`
+5. ✅ `horizontal-list`
+6. ✅ `section-header`
 
-### Batch 2: Navigation & Actions (Week 2)
-1. `header`
-2. `fab`
-3. `action-sheet`
-4. `chip`
+### Batch 2: Navigation & Actions (COMPLETE)
+1. ✅ `fab`
+2. ✅ `action-sheet`
+3. ✅ `chip`
+4. ✅ `carousel`
+5. ✅ `avatar-stack`
+6. ✅ `rating`
 
-### Batch 3: Media (Week 3)
-1. `carousel`
-2. `stories`
-3. `avatar-stack`
-4. `rating`
-5. `datetime-picker`
+### Batch 3: Media & Remaining (COMPLETE)
+1. ✅ `stories`
+2. ✅ `datetime-picker`
+3. ✅ `tooltip`
+4. ✅ `image-gallery`
 
 ### Batch 4: Blocks (Week 4)
 1. `content-card`
@@ -153,10 +153,10 @@ export default defineConfig({
 
 | Category | Existing | New | Total |
 |----------|----------|-----|-------|
-| UI Components | 27 | 17 | 44 |
+| UI Components | 27 | 16 | 43 |
 | Blocks | 6 | 8 | 14 |
 | Screens | 0 | 3 | 3 |
-| **Total** | **33** | **28** | **61** |
+| **Total** | **33** | **27** | **60** |
 
 ---
 

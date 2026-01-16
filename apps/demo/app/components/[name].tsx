@@ -45,6 +45,13 @@ import { ActionSheetDemo } from '@/components/demos/action-sheet-demo';
 import { AvatarStackDemo } from '@/components/demos/avatar-stack-demo';
 import { RatingDemo } from '@/components/demos/rating-demo';
 import { CarouselDemo } from '@/components/demos/carousel-demo';
+// Phase 5 - Batch 3
+import { StoriesDemo } from '@/components/demos/stories-demo';
+import { DateTimePickerDemo } from '@/components/demos/datetime-picker-demo';
+import { TooltipDemo } from '@/components/demos/tooltip-demo';
+import { ImageGalleryDemo } from '@/components/demos/image-gallery-demo';
+// Phase 5 - Screens
+import { ScreensDemo } from '@/components/demos/screens-demo';
 
 const demos: Record<string, React.ComponentType> = {
   button: ButtonDemo,
@@ -89,6 +96,13 @@ const demos: Record<string, React.ComponentType> = {
   'avatar-stack': AvatarStackDemo,
   rating: RatingDemo,
   carousel: CarouselDemo,
+  // Phase 5 - Batch 3
+  stories: StoriesDemo,
+  'datetime-picker': DateTimePickerDemo,
+  tooltip: TooltipDemo,
+  'image-gallery': ImageGalleryDemo,
+  // Phase 5 - Screens
+  screens: ScreensDemo,
 };
 
 const titles: Record<string, string> = {
@@ -134,6 +148,13 @@ const titles: Record<string, string> = {
   'avatar-stack': 'Avatar Stack',
   rating: 'Rating',
   carousel: 'Carousel',
+  // Phase 5 - Batch 3
+  stories: 'Stories',
+  'datetime-picker': 'DateTime Picker',
+  tooltip: 'Tooltip',
+  'image-gallery': 'Image Gallery',
+  // Phase 5 - Screens
+  screens: 'Screens',
 };
 
 export default function ComponentPage() {

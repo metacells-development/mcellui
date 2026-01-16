@@ -13,7 +13,7 @@
  * ```
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, forwardRef } from 'react';
 import {
   Text,
   View,
@@ -58,22 +58,25 @@ export interface ButtonProps extends Omit<PressableProps, 'style'> {
   textStyle?: TextStyle;
 }
 
-export function Button({
-  children,
-  variant = 'default',
-  size = 'md',
-  loading = false,
-  icon,
-  iconRight,
-  fullWidth = false,
-  disabled,
-  style,
-  textStyle,
-  onPressIn,
-  onPressOut,
-  onPress,
-  ...props
-}: ButtonProps) {
+export const Button = forwardRef(function Button(
+  {
+    children,
+    variant = 'default',
+    size = 'md',
+    loading = false,
+    icon,
+    iconRight,
+    fullWidth = false,
+    disabled,
+    style,
+    textStyle,
+    onPressIn,
+    onPressOut,
+    onPress,
+    ...props
+  }: ButtonProps,
+  ref: React.ForwardedRef<View>
+) {
   const { colors, components, platformShadow, springs } = useTheme();
   const tokens = components.button[size];
   const isDisabled = disabled || loading;
@@ -118,6 +121,7 @@ export function Button({
 
   return (
     <AnimatedPressable
+      ref={ref}
       style={[
         styles.base,
         {
@@ -165,7 +169,7 @@ export function Button({
       )}
     </AnimatedPressable>
   );
-}
+});
 
 function getVariantStyles(
   variant: ButtonVariant,

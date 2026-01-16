@@ -13,7 +13,7 @@
  * ```
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, forwardRef } from 'react';
 import {
   Text,
   View,
@@ -58,22 +58,25 @@ export interface ButtonProps extends Omit<PressableProps, 'style'> {
   textStyle?: TextStyle;
 }
 
-export function Button({
-  children,
-  variant = 'default',
-  size = 'md',
-  loading = false,
-  icon,
-  iconRight,
-  fullWidth = false,
-  disabled,
-  style,
-  textStyle,
-  onPressIn,
-  onPressOut,
-  onPress,
-  ...props
-}: ButtonProps) {
+export const Button = forwardRef(function Button(
+  {
+    children,
+    variant = 'default',
+    size = 'md',
+    loading = false,
+    icon,
+    iconRight,
+    fullWidth = false,
+    disabled,
+    style,
+    textStyle,
+    onPressIn,
+    onPressOut,
+    onPress,
+    ...props
+  }: ButtonProps,
+  ref: React.ForwardedRef<View>
+) {
   const { colors, components, componentRadius, platformShadow, springs } = useTheme();
   const tokens = components.button[size];
   // Use dynamic radius based on size
@@ -120,6 +123,7 @@ export function Button({
 
   return (
     <AnimatedPressable
+      ref={ref}
       style={[
         styles.base,
         {
@@ -167,7 +171,9 @@ export function Button({
       )}
     </AnimatedPressable>
   );
-}
+});
+
+Button.displayName = 'Button';
 
 function getVariantStyles(
   variant: ButtonVariant,

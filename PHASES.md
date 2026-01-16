@@ -213,46 +213,45 @@ Form integration and screen templates.
 
 ## Phase 5: B2C Expansion
 
-**Status: IN PROGRESS** (Batch 1 Complete)
+**Status: IN PROGRESS** (Batch 1, 2, 3, 4 Complete)
 
-Expand from 33 items to 62 - optimized for consumer apps.
+Expand from 33 items to 61 - optimized for consumer apps.
 
 See [docs/phases/phase-5-b2c-expansion.md](./docs/phases/phase-5-b2c-expansion.md) for full details.
 
-### New Components (17)
+### New Components (16)
 
 **Core Inputs & Actions (8)**
 - [x] `search-input` - Search icon, clear button, loading state
-- [ ] `datetime-picker` - Date/time via bottom sheet
+- [x] `datetime-picker` - Date/time via bottom sheet
 - [x] `icon-button` - Square/circular icon-only button
 - [x] `fab` - Floating Action Button (bottom-right)
 - [x] `action-sheet` - iOS-style bottom menu
 - [x] `list` - ListItem with slots, chevron, dividers
-- [ ] `tooltip` - Long-press popup
+- [x] `tooltip` - Long-press popup
 - [x] `chip` - Selectable filter pills
 
 **Media (5)**
 - [x] `image` - Loading skeleton, error fallback, blur-up
 - [x] `carousel` - Horizontal swipe with dots
-- [ ] `stories` - Avatar with gradient ring (Instagram-style)
+- [x] `stories` - Avatar with gradient ring (Instagram-style)
 - [x] `avatar-stack` - Overlapping avatars
-- [ ] `image-gallery` - Grid with fullscreen tap
+- [x] `image-gallery` - Grid with fullscreen tap
 
-**Layout & Navigation (4)**
+**Layout & Navigation (3)**
 - [x] `horizontal-list` - Snap-scroll container
 - [x] `section-header` - Title + "See All"
-- [ ] `header` - Top nav with back, title, actions
 - [x] `rating` - Star display/input
 
 ### New Blocks (8)
-- [ ] `notification-item` - Avatar, message, time, unread dot
-- [ ] `content-card` - Large image + title + action
-- [ ] `feature-card` - Icon + title + description
-- [ ] `stats-card` - Big number + trend indicator
-- [ ] `quick-actions-grid` - Grid of icon buttons
-- [ ] `hero-block` - Full-width image + title + CTA
-- [ ] `social-proof-bar` - Avatar stack + engagement text
-- [ ] `search-header` - Search + filter + avatar
+- [x] `notification-item` - Avatar, message, time, unread dot
+- [x] `content-card` - Large image + title + action
+- [x] `feature-card` - Icon + title + description
+- [x] `stats-card` - Big number + trend indicator
+- [x] `quick-actions-grid` - Grid of icon buttons
+- [x] `hero-block` - Full-width image + title + CTA
+- [x] `social-proof-bar` - Avatar stack + engagement text
+- [x] `search-header` - Search + filter + avatar
 
 ### New Screens (3)
 - [ ] `onboarding-screen` - Swipe carousel + skip/start
@@ -266,10 +265,10 @@ See [docs/phases/phase-5-b2c-expansion.md](./docs/phases/phase-5-b2c-expansion.m
 ### Summary
 | Category | Before | Current | Target |
 |----------|--------|---------|--------|
-| Components | 27 | 33 | 45 |
-| Blocks | 6 | 6 | 14 |
+| Components | 27 | 43 | 43 |
+| Blocks | 6 | 14 | 14 |
 | Screens | 0 | 0 | 3 |
-| **Total** | **33** | **39** | **62** |
+| **Total** | **33** | **57** | **60** |
 
 ---
 

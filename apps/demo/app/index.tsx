@@ -42,7 +42,12 @@ const components = [
   { name: 'avatar-stack', title: 'Avatar Stack', description: 'Overlapping avatar group' },
   { name: 'rating', title: 'Rating', description: 'Interactive star rating' },
   { name: 'carousel', title: 'Carousel', description: 'Auto-playing slideshow with indicators' },
-  { name: 'blocks', title: 'Blocks', description: 'Complete screen templates (Login, Profile, etc.)' },
+  { name: 'stories', title: 'Stories', description: 'Instagram-style story avatars' },
+  { name: 'datetime-picker', title: 'DateTime Picker', description: 'Native date and time selection' },
+  { name: 'tooltip', title: 'Tooltip', description: 'Long-press contextual popup' },
+  { name: 'image-gallery', title: 'Image Gallery', description: 'Grid gallery with fullscreen viewer' },
+  { name: 'blocks', title: 'Blocks', description: 'Reusable sections (Hero, Stats, Feature cards, etc.)' },
+  { name: 'screens', title: 'Screens', description: 'Full-page templates (Login, Profile, Settings, etc.)' },
 ];
 
 export default function Home() {

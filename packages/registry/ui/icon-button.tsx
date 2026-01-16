@@ -19,11 +19,12 @@
  * ```
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, forwardRef } from 'react';
 import {
   Pressable,
   StyleSheet,
   ViewStyle,
+  View,
   PressableProps,
   ActivityIndicator,
 } from 'react-native';
@@ -78,20 +79,23 @@ const sizeConfig = {
 // Component
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function IconButton({
-  icon,
-  variant = 'default',
-  size = 'md',
-  rounded = false,
-  loading = false,
-  disabled,
-  style,
-  accessibilityLabel,
-  onPressIn,
-  onPressOut,
-  onPress,
-  ...props
-}: IconButtonProps) {
+export const IconButton = forwardRef(function IconButton(
+  {
+    icon,
+    variant = 'default',
+    size = 'md',
+    rounded = false,
+    loading = false,
+    disabled,
+    style,
+    accessibilityLabel,
+    onPressIn,
+    onPressOut,
+    onPress,
+    ...props
+  }: IconButtonProps,
+  ref: React.ForwardedRef<View>
+) {
   const { colors, radius, springs, platformShadow } = useTheme();
   const config = sizeConfig[size];
   const isDisabled = disabled || loading;
@@ -140,6 +144,7 @@ export function IconButton({
 
   return (
     <AnimatedPressable
+      ref={ref}
       style={[
         styles.base,
         {
@@ -176,7 +181,7 @@ export function IconButton({
       )}
     </AnimatedPressable>
   );
-}
+});
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
