@@ -93,7 +93,7 @@ export function CarouselDemo() {
 
       <Section title="Product Showcase">
         <View style={{ marginHorizontal: -spacing[4] }}>
-          <Carousel height={220}>
+          <Carousel height={280}>
             {[
               { name: 'Wireless Earbuds', price: '$79', color: '#F8F9FA' },
               { name: 'Smart Watch', price: '$199', color: '#F1F3F4' },
