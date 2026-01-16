@@ -219,31 +219,30 @@ Expand from 33 items to 62 - optimized for consumer apps.
 
 See [docs/phases/phase-5-b2c-expansion.md](./docs/phases/phase-5-b2c-expansion.md) for full details.
 
-### New Components (18)
+### New Components (17)
 
 **Core Inputs & Actions (8)**
 - [x] `search-input` - Search icon, clear button, loading state
 - [ ] `datetime-picker` - Date/time via bottom sheet
 - [x] `icon-button` - Square/circular icon-only button
-- [ ] `fab` - Floating Action Button (bottom-right)
-- [ ] `action-sheet` - iOS-style bottom menu
+- [x] `fab` - Floating Action Button (bottom-right)
+- [x] `action-sheet` - iOS-style bottom menu
 - [x] `list` - ListItem with slots, chevron, dividers
 - [ ] `tooltip` - Long-press popup
-- [ ] `chip` - Selectable filter pills
+- [x] `chip` - Selectable filter pills
 
 **Media (5)**
 - [x] `image` - Loading skeleton, error fallback, blur-up
-- [ ] `carousel` - Horizontal swipe with dots
+- [x] `carousel` - Horizontal swipe with dots
 - [ ] `stories` - Avatar with gradient ring (Instagram-style)
-- [ ] `avatar-stack` - Overlapping avatars
+- [x] `avatar-stack` - Overlapping avatars
 - [ ] `image-gallery` - Grid with fullscreen tap
 
-**Layout & Navigation (5)**
+**Layout & Navigation (4)**
 - [x] `horizontal-list` - Snap-scroll container
 - [x] `section-header` - Title + "See All"
-- [ ] `bottom-nav` - Tab bar with icons + badge
 - [ ] `header` - Top nav with back, title, actions
-- [ ] `rating` - Star display/input
+- [x] `rating` - Star display/input
 
 ### New Blocks (8)
 - [ ] `notification-item` - Avatar, message, time, unread dot

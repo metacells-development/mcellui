@@ -13,7 +13,7 @@ Expand nativeui from 27 components to a full B2C-ready library with 56+ items.
 
 ---
 
-## New Components (18)
+## New Components (17)
 
 ### Core Inputs & Actions (8)
 
@@ -38,13 +38,12 @@ Expand nativeui from 27 components to a full B2C-ready library with 56+ items.
 | `avatar-stack` | Overlapping avatars ("5 people liked this") | Medium |
 | `image-gallery` | Grid of images, tap to fullscreen | Medium |
 
-### Layout & Navigation (5)
+### Layout & Navigation (4)
 
 | Component | Description | Priority |
 |-----------|-------------|----------|
 | `horizontal-list` | Snap-scroll horizontal container | High |
 | `section-header` | Title + "See All" link for sections | High |
-| `bottom-nav` | Tab bar with icons + labels + badge | High |
 | `header` | Top nav with back button, title, actions | High |
 | `rating` | Star rating display and input | Medium |
 
@@ -117,10 +116,9 @@ export default defineConfig({
 
 ### Batch 2: Navigation & Actions (Week 2)
 1. `header`
-2. `bottom-nav`
-3. `fab`
-4. `action-sheet`
-5. `chip`
+2. `fab`
+3. `action-sheet`
+4. `chip`
 
 ### Batch 3: Media (Week 3)
 1. `carousel`
@@ -155,10 +153,10 @@ export default defineConfig({
 
 | Category | Existing | New | Total |
 |----------|----------|-----|-------|
-| UI Components | 27 | 18 | 45 |
+| UI Components | 27 | 17 | 44 |
 | Blocks | 6 | 8 | 14 |
 | Screens | 0 | 3 | 3 |
-| **Total** | **33** | **29** | **62** |
+| **Total** | **33** | **28** | **61** |
 
 ---
 
