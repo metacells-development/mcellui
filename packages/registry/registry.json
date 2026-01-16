@@ -582,6 +582,56 @@
       "files": ["blocks/media-item.tsx"],
       "dependencies": ["react-native-svg"],
       "registryDependencies": ["badge"]
+    },
+    {
+      "name": "login-screen",
+      "type": "screen",
+      "description": "Complete login screen with email/password form, social login, and forgot password",
+      "category": "Authentication",
+      "status": "beta",
+      "files": ["screens/login-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["button", "input", "separator"]
+    },
+    {
+      "name": "signup-screen",
+      "type": "screen",
+      "description": "Complete sign up screen with form validation, terms checkbox, and social signup",
+      "category": "Authentication",
+      "status": "beta",
+      "files": ["screens/signup-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["button", "input", "checkbox", "separator"]
+    },
+    {
+      "name": "onboarding-screen",
+      "type": "screen",
+      "description": "Multi-slide onboarding flow with swipeable pages and animated pagination",
+      "category": "Onboarding",
+      "status": "beta",
+      "files": ["screens/onboarding-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-reanimated"],
+      "registryDependencies": ["button"]
+    },
+    {
+      "name": "profile-screen",
+      "type": "screen",
+      "description": "User profile screen with avatar, stats, action buttons, and content tabs",
+      "category": "Profile",
+      "status": "beta",
+      "files": ["screens/profile-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["avatar", "button", "separator"]
+    },
+    {
+      "name": "settings-screen",
+      "type": "screen",
+      "description": "Complete settings screen with grouped items, toggles, and navigation rows",
+      "category": "Settings",
+      "status": "beta",
+      "files": ["screens/settings-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["switch", "card", "separator"]
     }
   ]
 }
