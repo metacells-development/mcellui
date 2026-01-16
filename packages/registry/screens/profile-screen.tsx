@@ -3,6 +3,7 @@
  *
  * User profile screen with avatar, stats, action buttons, and content tabs.
  * Perfect for social apps, creator profiles, and user dashboards.
+ * Uses Avatar, Button, IconButton, and Badge primitives.
  *
  * @example
  * ```tsx
@@ -42,7 +43,8 @@ import { useTheme } from '@nativeui/core';
 // Import UI primitives
 import { Avatar } from '../ui/avatar';
 import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
+import { IconButton } from '../ui/icon-button';
+import { Badge } from '../ui/badge';
 
 // ============================================================================
 // Types
@@ -124,7 +126,6 @@ function SettingsIcon({ size = 24, color = '#000' }: { size?: number; color?: st
 function VerifiedIcon({ size = 18, color = '#3B82F6' }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
-      <Path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
       <Path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
     </Svg>
   );
@@ -155,7 +156,7 @@ export function ProfileScreen({
   onBackPress,
   headerActions,
 }: ProfileScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing } = useTheme();
   const insets = useSafeAreaInsets();
 
   const [activeTab, setActiveTab] = useState(tabs[0]?.key || '');
@@ -172,7 +173,7 @@ export function ProfileScreen({
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Header */}
+      {/* Header - Using IconButton for navigation */}
       <View
         style={[
           styles.header,
@@ -184,16 +185,24 @@ export function ProfileScreen({
         ]}
       >
         {onBackPress && (
-          <Pressable onPress={onBackPress} style={styles.headerButton}>
-            <BackIcon color={colors.foreground} />
-          </Pressable>
+          <IconButton
+            icon={<BackIcon />}
+            variant="ghost"
+            size="sm"
+            onPress={onBackPress}
+            accessibilityLabel="Go back"
+          />
         )}
         <View style={{ flex: 1 }} />
         {headerActions || (
           isOwnProfile && onSettingsPress && (
-            <Pressable onPress={onSettingsPress} style={styles.headerButton}>
-              <SettingsIcon color={colors.foreground} />
-            </Pressable>
+            <IconButton
+              icon={<SettingsIcon />}
+              variant="ghost"
+              size="sm"
+              onPress={onSettingsPress}
+              accessibilityLabel="Settings"
+            />
           )
         )}
       </View>
@@ -280,7 +289,7 @@ export function ProfileScreen({
           </View>
         </View>
 
-        {/* Tabs */}
+        {/* Tabs - Underline style (keeping manual for this UI pattern) */}
         {tabs.length > 0 && (
           <>
             <View style={[styles.tabBar, { marginTop: spacing[6], borderBottomColor: colors.border }]}>
@@ -307,19 +316,11 @@ export function ProfileScreen({
                   >
                     {tab.title}
                   </Text>
+                  {/* Tab badge using Badge primitive */}
                   {tab.badge !== undefined && tab.badge > 0 && (
-                    <View
-                      style={[
-                        styles.tabBadge,
-                        {
-                          backgroundColor: colors.primary,
-                          borderRadius: radius.full,
-                          marginLeft: spacing[2],
-                        },
-                      ]}
-                    >
-                      <Text style={styles.tabBadgeText}>{tab.badge}</Text>
-                    </View>
+                    <Badge size="sm" style={{ marginLeft: spacing[2] }}>
+                      {tab.badge}
+                    </Badge>
                   )}
                 </Pressable>
               ))}
@@ -347,9 +348,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  headerButton: {
-    padding: 8,
   },
   profileInfo: {
     alignItems: 'center',
@@ -405,18 +403,6 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     fontSize: 15,
-    fontWeight: '600',
-  },
-  tabBadge: {
-    minWidth: 18,
-    height: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 5,
-  },
-  tabBadgeText: {
-    color: '#FFFFFF',
-    fontSize: 11,
     fontWeight: '600',
   },
   tabContent: {},
