@@ -59,13 +59,17 @@ function loadComponentCode(item: RegistryItem): string | null {
 export const tools: Tool[] = [
   {
     name: 'nativeui_list_components',
-    description: 'List all available nativeui components',
+    description: 'List all available nativeui components with filtering options',
     inputSchema: {
       type: 'object',
       properties: {
         category: {
           type: 'string',
-          description: 'Filter by category (optional): Inputs, Layout, Data Display, Feedback',
+          description: 'Filter by category: Inputs, Layout, Data Display, Feedback, Navigation, Mobile Patterns',
+        },
+        type: {
+          type: 'string',
+          description: 'Filter by type: ui, block, screen, primitive, hook',
         },
       },
     },
@@ -100,19 +104,163 @@ export const tools: Tool[] = [
   },
   {
     name: 'nativeui_suggest_component',
-    description: 'Get component suggestions based on a description of what you want to build',
+    description: 'Get intelligent component suggestions based on what you want to build',
     inputSchema: {
       type: 'object',
       properties: {
         description: {
           type: 'string',
-          description: 'Description of what you want to build (e.g., "a form with email and password")',
+          description: 'Describe what you want to build (e.g., "a login form with email and password")',
         },
       },
       required: ['description'],
     },
   },
+  {
+    name: 'nativeui_create_component',
+    description: 'Get a guide and template for creating a new custom component',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+          description: 'Name for the new component (e.g., "MyButton", "custom-card")',
+        },
+        template: {
+          type: 'string',
+          enum: ['basic', 'animated', 'pressable', 'input'],
+          description: 'Template type: basic (simple view), animated (with Reanimated), pressable (touchable), input (form field)',
+        },
+        withForwardRef: {
+          type: 'boolean',
+          description: 'Include forwardRef pattern for ref forwarding',
+        },
+      },
+      required: ['name'],
+    },
+  },
+  {
+    name: 'nativeui_customize_theme',
+    description: 'Get guidance on customizing the nativeui theme (colors, radius, fonts)',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        aspect: {
+          type: 'string',
+          enum: ['colors', 'radius', 'fonts', 'all'],
+          description: 'Which aspect of the theme to customize',
+        },
+        preset: {
+          type: 'string',
+          description: 'Theme preset to use as base: zinc, slate, stone, blue, green, rose, orange, violet',
+        },
+      },
+    },
+  },
+  {
+    name: 'nativeui_doctor',
+    description: 'Check nativeui project setup and diagnose common issues',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        projectPath: {
+          type: 'string',
+          description: 'Path to the project root (optional, defaults to current directory)',
+        },
+      },
+    },
+  },
+  {
+    name: 'nativeui_search',
+    description: 'Search components by name, description, or keywords',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: {
+          type: 'string',
+          description: 'Search query',
+        },
+      },
+      required: ['query'],
+    },
+  },
 ];
+
+// --- Comprehensive Keyword Map ---
+
+const componentKeywords: Record<string, string[]> = {
+  // Inputs
+  button: ['button', 'click', 'tap', 'press', 'action', 'submit', 'cta', 'trigger'],
+  input: ['input', 'text', 'field', 'form', 'email', 'password', 'type', 'textfield', 'textbox'],
+  textarea: ['textarea', 'multiline', 'comment', 'message', 'description', 'notes', 'long text'],
+  checkbox: ['checkbox', 'check', 'toggle', 'select', 'tick', 'agree', 'terms'],
+  switch: ['switch', 'toggle', 'on/off', 'enable', 'disable', 'setting'],
+  'radio-group': ['radio', 'choice', 'option', 'select one', 'single choice'],
+  select: ['select', 'dropdown', 'picker', 'choose', 'menu', 'options'],
+  slider: ['slider', 'range', 'volume', 'brightness', 'progress', 'value'],
+  stepper: ['stepper', 'counter', 'increment', 'decrement', 'quantity', 'number'],
+  form: ['form', 'validation', 'submit', 'react-hook-form', 'zod'],
+
+  // Data Display
+  card: ['card', 'container', 'box', 'panel', 'wrapper', 'tile', 'content'],
+  badge: ['badge', 'tag', 'label', 'status', 'indicator', 'count', 'notification'],
+  avatar: ['avatar', 'profile', 'user', 'photo', 'image', 'picture', 'initials'],
+  'avatar-stack': ['avatar stack', 'multiple users', 'group', 'team'],
+  label: ['label', 'text', 'caption', 'title'],
+  separator: ['separator', 'divider', 'line', 'hr'],
+  skeleton: ['skeleton', 'loading', 'placeholder', 'shimmer'],
+  spinner: ['spinner', 'loading', 'activity', 'progress', 'wait'],
+  progress: ['progress', 'bar', 'loading', 'percentage', 'completion'],
+  list: ['list', 'items', 'rows', 'collection'],
+  chip: ['chip', 'tag', 'filter', 'selection'],
+
+  // Feedback & Overlays
+  dialog: ['dialog', 'modal', 'popup', 'alert', 'confirm', 'overlay'],
+  sheet: ['sheet', 'bottom sheet', 'drawer', 'panel', 'modal'],
+  'alert-dialog': ['alert', 'confirm', 'warning', 'error', 'dialog', 'confirmation'],
+  'action-sheet': ['action sheet', 'actions', 'options', 'menu'],
+  toast: ['toast', 'notification', 'snackbar', 'message', 'alert', 'feedback'],
+  tooltip: ['tooltip', 'hint', 'help', 'info', 'hover'],
+
+  // Navigation
+  tabs: ['tabs', 'navigation', 'sections', 'pages', 'switch'],
+  accordion: ['accordion', 'collapse', 'expand', 'faq', 'sections'],
+  'segmented-control': ['segmented', 'control', 'toggle', 'switch', 'tabs'],
+
+  // Mobile Patterns
+  'pull-to-refresh': ['pull', 'refresh', 'reload', 'update', 'swipe down'],
+  'swipeable-row': ['swipe', 'delete', 'archive', 'actions', 'gesture'],
+  carousel: ['carousel', 'slider', 'gallery', 'swipe', 'images'],
+  stories: ['stories', 'instagram', 'snapchat', 'circles'],
+
+  // Extended
+  'search-input': ['search', 'find', 'query', 'filter'],
+  'datetime-picker': ['date', 'time', 'picker', 'calendar', 'schedule'],
+  rating: ['rating', 'stars', 'review', 'score'],
+  fab: ['fab', 'floating', 'action button', 'plus'],
+  'icon-button': ['icon button', 'icon', 'action'],
+  image: ['image', 'picture', 'photo', 'media'],
+  'image-gallery': ['gallery', 'images', 'photos', 'grid'],
+
+  // Blocks
+  'login-block': ['login', 'sign in', 'authentication', 'auth'],
+  'signup-block': ['signup', 'register', 'sign up', 'create account'],
+  'profile-block': ['profile', 'user info', 'account'],
+  'settings-list-block': ['settings', 'preferences', 'options', 'config'],
+  'empty-state-block': ['empty', 'no data', 'no results', 'placeholder'],
+  'error-state-block': ['error', 'failed', 'something wrong', 'retry'],
+
+  // Screens
+  'login-screen': ['login screen', 'login page', 'sign in screen'],
+  'signup-screen': ['signup screen', 'registration', 'sign up page'],
+  'profile-screen': ['profile screen', 'user profile', 'account page'],
+  'settings-screen': ['settings screen', 'preferences page'],
+  'chat-screen': ['chat', 'messaging', 'conversation'],
+  'notifications-screen': ['notifications', 'alerts', 'inbox'],
+  'feed-screen': ['feed', 'timeline', 'posts', 'social'],
+  'search-screen': ['search screen', 'search page', 'find'],
+  'onboarding-screen': ['onboarding', 'intro', 'welcome', 'tutorial'],
+};
 
 // --- Tool Handlers ---
 
@@ -122,7 +270,7 @@ export async function handleToolCall(
 ): Promise<{ content: Array<{ type: string; text: string }> }> {
   const registry = loadRegistry();
 
-  if (!registry) {
+  if (!registry && !['nativeui_doctor', 'nativeui_create_component', 'nativeui_customize_theme'].includes(name)) {
     return {
       content: [
         {
@@ -136,11 +284,18 @@ export async function handleToolCall(
   switch (name) {
     case 'nativeui_list_components': {
       const category = args?.category as string | undefined;
-      let components = registry.components;
+      const type = args?.type as string | undefined;
+      let components = registry!.components;
 
       if (category) {
         components = components.filter(
           (c) => c.category.toLowerCase() === category.toLowerCase()
+        );
+      }
+
+      if (type) {
+        components = components.filter(
+          (c) => c.type.toLowerCase() === type.toLowerCase()
         );
       }
 
@@ -169,14 +324,14 @@ export async function handleToolCall(
 
     case 'nativeui_get_component': {
       const componentName = args?.name as string;
-      const component = registry.components.find((c) => c.name === componentName);
+      const component = registry!.components.find((c) => c.name === componentName);
 
       if (!component) {
         return {
           content: [
             {
               type: 'text',
-              text: `Component "${componentName}" not found.\n\nAvailable: ${registry.components.map((c) => c.name).join(', ')}`,
+              text: `Component "${componentName}" not found.\n\nAvailable: ${registry!.components.map((c) => c.name).join(', ')}`,
             },
           ],
         };
@@ -211,9 +366,9 @@ ${code}
 ## Usage
 
 \`\`\`tsx
-import { ${capitalize(component.name)} } from '@/components/ui/${component.name}';
+import { ${toPascalCase(component.name)} } from '@/components/ui/${component.name}';
 
-<${capitalize(component.name)} />
+<${toPascalCase(component.name)} />
 \`\`\`
 `;
 
@@ -222,7 +377,7 @@ import { ${capitalize(component.name)} } from '@/components/ui/${component.name}
 
     case 'nativeui_add_component': {
       const componentName = args?.name as string;
-      const component = registry.components.find((c) => c.name === componentName);
+      const component = registry!.components.find((c) => c.name === componentName);
 
       if (!component) {
         return {
@@ -271,40 +426,455 @@ npx nativeui add ${component.registryDependencies.join(' ')}
 
     case 'nativeui_suggest_component': {
       const description = (args?.description as string).toLowerCase();
-      const suggestions: RegistryItem[] = [];
+      const suggestions: Array<{ component: RegistryItem; score: number; matchedKeywords: string[] }> = [];
 
-      const keywords: Record<string, string[]> = {
-        button: ['button', 'click', 'tap', 'press', 'action', 'submit'],
-        input: ['input', 'text', 'field', 'form', 'email', 'password', 'type'],
-        card: ['card', 'container', 'box', 'panel', 'wrapper'],
-        badge: ['badge', 'tag', 'label', 'status', 'indicator', 'count'],
-        avatar: ['avatar', 'profile', 'user', 'photo', 'image', 'picture'],
-      };
+      for (const component of registry!.components) {
+        const keywords = componentKeywords[component.name] || [component.name];
+        const matchedKeywords: string[] = [];
+        let score = 0;
 
-      for (const component of registry.components) {
-        const componentKeywords = keywords[component.name] || [component.name];
-        if (componentKeywords.some((kw) => description.includes(kw))) {
-          suggestions.push(component);
+        // Check keywords
+        for (const kw of keywords) {
+          if (description.includes(kw.toLowerCase())) {
+            matchedKeywords.push(kw);
+            score += 10;
+          }
+        }
+
+        // Check description match
+        const descWords = component.description.toLowerCase().split(/\s+/);
+        for (const word of descWords) {
+          if (word.length > 3 && description.includes(word)) {
+            score += 2;
+          }
+        }
+
+        // Check name match
+        if (description.includes(component.name.replace(/-/g, ' '))) {
+          score += 15;
+        }
+
+        if (score > 0) {
+          suggestions.push({ component, score, matchedKeywords });
         }
       }
 
-      if (suggestions.length === 0) {
+      // Sort by score
+      suggestions.sort((a, b) => b.score - a.score);
+      const topSuggestions = suggestions.slice(0, 8);
+
+      if (topSuggestions.length === 0) {
         return {
           content: [
             {
               type: 'text',
-              text: `No specific component suggestions for "${description}".\n\nUse \`nativeui_list_components\` to see all available components.`,
+              text: `No specific component suggestions for "${description}".\n\nTry being more specific or use \`nativeui_list_components\` to browse all available components.\n\n**Tip:** Mention specific UI elements like "button", "card", "form", "modal", "list", etc.`,
             },
           ],
         };
       }
 
       let output = `# Suggested Components\n\nBased on: "${description}"\n\n`;
-      for (const s of suggestions) {
-        output += `## ${s.name}\n\n${s.description}\n\n`;
+
+      for (const { component, matchedKeywords } of topSuggestions) {
+        output += `## ${component.name}\n\n`;
+        output += `${component.description}\n`;
+        output += `- **Type:** ${component.type}\n`;
+        output += `- **Category:** ${component.category}\n`;
+        if (matchedKeywords.length > 0) {
+          output += `- **Matched:** ${matchedKeywords.join(', ')}\n`;
+        }
+        output += '\n';
       }
 
-      output += `\nAdd with: \`npx nativeui add ${suggestions.map((s) => s.name).join(' ')}\``;
+      const componentNames = topSuggestions.map(s => s.component.name).join(' ');
+      output += `\n---\n\n**Add all suggested components:**\n\n\`\`\`bash\nnpx nativeui add ${componentNames}\n\`\`\``;
+
+      return { content: [{ type: 'text', text: output }] };
+    }
+
+    case 'nativeui_create_component': {
+      const componentName = args?.name as string;
+      const template = (args?.template as string) || 'basic';
+      const withForwardRef = args?.withForwardRef as boolean || false;
+
+      const pascalName = toPascalCase(componentName);
+      const kebabName = toKebabCase(componentName);
+
+      let output = `# Create Custom Component: ${pascalName}
+
+## CLI Command
+
+The easiest way to create a new component:
+
+\`\`\`bash
+npx nativeui create ${kebabName} --template ${template}${withForwardRef ? ' --forward-ref' : ''}
+\`\`\`
+
+This creates \`components/ui/${kebabName}.tsx\` with the ${template} template.
+
+## Available Templates
+
+| Template | Description |
+|----------|-------------|
+| **basic** | Simple View-based component with useTheme |
+| **animated** | Includes Reanimated animations |
+| **pressable** | Touchable with press animations |
+| **input** | Form input with label, error, and focus states |
+
+## Component Structure
+
+Your component should follow this structure:
+
+\`\`\`tsx
+import React${withForwardRef ? ', { forwardRef }' : ''} from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '@nativeui/core';
+
+export interface ${pascalName}Props {
+  // Define your props here
+  title?: string;
+}
+
+${withForwardRef ? `export const ${pascalName} = forwardRef<View, ${pascalName}Props>(
+  ({ title, ...props }, ref) => {` : `export function ${pascalName}({ title, ...props }: ${pascalName}Props) {`}
+    const { colors, spacing, radius } = useTheme();
+
+    return (
+      <View
+        ${withForwardRef ? 'ref={ref}' : ''}
+        style={[
+          styles.container,
+          { backgroundColor: colors.card, borderRadius: radius.md }
+        ]}
+        {...props}
+      >
+        {title && <Text style={{ color: colors.foreground }}>{title}</Text>}
+      </View>
+    );
+${withForwardRef ? `  }
+);
+
+${pascalName}.displayName = '${pascalName}';` : '}'}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+});
+\`\`\`
+
+## Best Practices
+
+1. **Use useTheme()** - Access colors, spacing, radius from theme
+2. **TypeScript Props** - Define a Props interface
+3. **StyleSheet** - Use StyleSheet.create for styles
+4. **Spread props** - Allow customization via \`{...props}\`
+5. **Accessibility** - Add accessibilityLabel, accessibilityRole
+6. **Dark Mode** - Use theme colors, not hardcoded values
+
+## Theme Integration
+
+Available from \`useTheme()\`:
+
+\`\`\`typescript
+const {
+  colors,      // background, foreground, primary, etc.
+  spacing,     // 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24
+  radius,      // none, sm, md, lg, full
+  typography,  // fontSize, lineHeight, fontWeight
+  isDark       // boolean for dark mode detection
+} = useTheme();
+\`\`\`
+`;
+
+      return { content: [{ type: 'text', text: output }] };
+    }
+
+    case 'nativeui_customize_theme': {
+      const aspect = (args?.aspect as string) || 'all';
+      const preset = args?.preset as string;
+
+      let output = `# Customize nativeui Theme\n\n`;
+
+      if (aspect === 'all' || aspect === 'colors') {
+        output += `## Color Customization
+
+### Using Presets
+
+Available presets: \`zinc\`, \`slate\`, \`stone\`, \`blue\`, \`green\`, \`rose\`, \`orange\`, \`violet\`
+
+\`\`\`typescript
+// nativeui.config.ts
+export default defineConfig({
+  theme: '${preset || 'blue'}',
+});
+\`\`\`
+
+### Custom Colors
+
+Override specific colors:
+
+\`\`\`typescript
+export default defineConfig({
+  theme: 'zinc',
+  colors: {
+    primary: '#6366F1',      // Custom primary
+    secondary: '#EC4899',    // Custom secondary
+  },
+  lightColors: {
+    background: '#FFFFFF',   // Light mode only
+    foreground: '#18181B',
+  },
+  darkColors: {
+    background: '#09090B',   // Dark mode only
+    foreground: '#FAFAFA',
+  },
+});
+\`\`\`
+
+### Available Color Tokens
+
+| Token | Light | Dark | Usage |
+|-------|-------|------|-------|
+| \`background\` | White | Near black | App background |
+| \`foreground\` | Near black | White | Primary text |
+| \`card\` | White | Dark gray | Card backgrounds |
+| \`primary\` | Theme color | Theme color | Primary actions |
+| \`secondary\` | Muted | Muted | Secondary actions |
+| \`muted\` | Light gray | Dark gray | Disabled states |
+| \`destructive\` | Red | Red | Delete actions |
+| \`border\` | Light gray | Dark gray | Borders |
+
+`;
+      }
+
+      if (aspect === 'all' || aspect === 'radius') {
+        output += `## Border Radius
+
+### Presets
+
+\`\`\`typescript
+export default defineConfig({
+  radius: 'md',  // none | sm | md | lg | full
+});
+\`\`\`
+
+| Preset | Value | Visual |
+|--------|-------|--------|
+| \`none\` | 0 | Sharp corners |
+| \`sm\` | 4px | Subtle rounding |
+| \`md\` | 8px | Balanced (default) |
+| \`lg\` | 12px | More rounded |
+| \`full\` | 9999px | Pill/circle |
+
+`;
+      }
+
+      if (aspect === 'all' || aspect === 'fonts') {
+        output += `## Typography
+
+### Custom Fonts
+
+\`\`\`typescript
+export default defineConfig({
+  fonts: {
+    sans: 'Inter',           // Body text
+    heading: 'Inter-Bold',   // Headings
+    mono: 'JetBrainsMono',   // Code
+  },
+});
+\`\`\`
+
+### Font Loading with Expo
+
+\`\`\`typescript
+import { useFonts, Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter';
+
+function App() {
+  const [fontsLoaded] = useFonts({
+    Inter: Inter_400Regular,
+    'Inter-Bold': Inter_700Bold,
+  });
+
+  if (!fontsLoaded) return <Splash />;
+
+  return <ThemeProvider><App /></ThemeProvider>;
+}
+\`\`\`
+
+`;
+      }
+
+      output += `## Full Config Example
+
+\`\`\`typescript
+// nativeui.config.ts
+import { defineConfig } from '@nativeui/core';
+
+export default defineConfig({
+  // Theme preset
+  theme: '${preset || 'blue'}',
+
+  // Border radius
+  radius: 'md',
+
+  // Color scheme
+  colorScheme: 'system',  // 'light' | 'dark' | 'system'
+
+  // Custom colors
+  colors: {
+    primary: '#6366F1',
+  },
+
+  // Fonts
+  fonts: {
+    sans: 'Inter',
+    heading: 'Inter-Bold',
+  },
+
+  // Haptic feedback
+  haptics: true,
+
+  // Animation preset
+  animationPreset: 'subtle',  // 'subtle' | 'playful'
+
+  // Component defaults
+  components: {
+    button: { defaultVariant: 'default', defaultSize: 'md' },
+    input: { defaultSize: 'md' },
+    card: { defaultVariant: 'default' },
+  },
+
+  // CLI paths
+  componentsPath: './components/ui',
+  utilsPath: './lib/utils',
+});
+\`\`\`
+`;
+
+      return { content: [{ type: 'text', text: output }] };
+    }
+
+    case 'nativeui_doctor': {
+      const projectPath = args?.projectPath as string || process.cwd();
+
+      let output = `# nativeui Doctor
+
+Checking project at: \`${projectPath}\`
+
+## Quick Check
+
+Run the CLI doctor command for a full diagnostic:
+
+\`\`\`bash
+npx nativeui doctor
+\`\`\`
+
+## Common Issues & Fixes
+
+### 1. "Project not initialized"
+
+\`\`\`bash
+npx nativeui init
+\`\`\`
+
+### 2. Missing dependencies
+
+\`\`\`bash
+npx expo install react-native-reanimated react-native-gesture-handler react-native-safe-area-context
+\`\`\`
+
+### 3. Babel config missing Reanimated plugin
+
+Add to \`babel.config.js\`:
+
+\`\`\`javascript
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: ['react-native-reanimated/plugin'],  // Must be last
+  };
+};
+\`\`\`
+
+### 4. Metro config for Reanimated
+
+Clear cache after babel changes:
+
+\`\`\`bash
+npx expo start --clear
+\`\`\`
+
+### 5. TypeScript path aliases not working
+
+Check \`tsconfig.json\`:
+
+\`\`\`json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+\`\`\`
+
+## Checklist
+
+- [ ] \`nativeui.config.ts\` exists
+- [ ] \`components/ui/\` directory exists
+- [ ] \`@nativeui/core\` installed
+- [ ] \`react-native-reanimated\` installed
+- [ ] \`react-native-gesture-handler\` installed
+- [ ] Babel plugin configured
+- [ ] TypeScript paths configured
+
+## Need Help?
+
+- Documentation: https://nativeui.dev
+- GitHub Issues: https://github.com/your-repo/nativeui/issues
+`;
+
+      return { content: [{ type: 'text', text: output }] };
+    }
+
+    case 'nativeui_search': {
+      const query = (args?.query as string).toLowerCase();
+      const results: RegistryItem[] = [];
+
+      for (const component of registry!.components) {
+        const nameMatch = component.name.toLowerCase().includes(query);
+        const descMatch = component.description.toLowerCase().includes(query);
+        const categoryMatch = component.category.toLowerCase().includes(query);
+
+        if (nameMatch || descMatch || categoryMatch) {
+          results.push(component);
+        }
+      }
+
+      if (results.length === 0) {
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `No components found matching "${query}".\n\nTry a different search term or use \`nativeui_list_components\` to see all.`,
+            },
+          ],
+        };
+      }
+
+      let output = `# Search Results for "${query}"\n\nFound ${results.length} component(s):\n\n`;
+
+      for (const item of results) {
+        output += `## ${item.name}\n\n`;
+        output += `${item.description}\n`;
+        output += `- **Type:** ${item.type}\n`;
+        output += `- **Category:** ${item.category}\n`;
+        output += `- **Status:** ${item.status}\n\n`;
+      }
 
       return { content: [{ type: 'text', text: output }] };
     }
@@ -316,6 +886,17 @@ npx nativeui add ${component.registryDependencies.join(' ')}
   }
 }
 
-function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+// --- Utility Functions ---
+
+function toPascalCase(str: string): string {
+  return str
+    .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
+    .replace(/^(.)/, (c) => c.toUpperCase());
+}
+
+function toKebabCase(str: string): string {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase();
 }

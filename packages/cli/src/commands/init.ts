@@ -205,5 +205,5 @@ export function cn(...inputs: StyleInput[]): Style {
     }
   });
 
-// Config type is exported from @nativeui/core
-export type { NativeUIConfig } from '@nativeui/core';
+// Config type is exported from CLI utils
+export type { NativeUIConfig } from '../utils/config.js';

@@ -4,16 +4,18 @@ import { fileURLToPath } from 'url';
 import createJiti from 'jiti';
 import chalk from 'chalk';
 import { validateConfigOrThrow } from './config-schema.js';
+import {
+  resolveConfig,
+  type NativeUIConfig,
+  type ResolvedNativeUIConfig,
+} from './config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 
 export type ProjectType = 'expo' | 'react-native' | 'unknown';
 
-// Re-export config type from @nativeui/core for CLI usage
-// The config is unified - same type for runtime and CLI
-export type { NativeUIConfig, ResolvedNativeUIConfig } from '@nativeui/core';
-import type { NativeUIConfig, ResolvedNativeUIConfig } from '@nativeui/core';
-import { resolveConfig } from '@nativeui/core';
+// Re-export config types for CLI usage
+export type { NativeUIConfig, ResolvedNativeUIConfig } from './config.js';
 
 /**
  * Find the project root by looking for package.json

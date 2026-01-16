@@ -274,43 +274,80 @@ See [docs/phases/phase-5-b2c-expansion.md](./docs/phases/phase-5-b2c-expansion.m
 
 ## Phase 6: Tooling & MCP
 
-**Status: NOT STARTED**
+**Status: COMPLETE**
 
 CLI polish and MCP-guided component creation.
 
 ### CLI
-- [ ] `nativeui diff` - Show component updates
-- [ ] `nativeui doctor` - Check compatibility
-- [ ] `nativeui update` - Update components
-- [ ] `nativeui create` - Scaffold new component
-- [ ] Interactive component picker
+- [x] `nativeui diff` - Show component updates (hash-based comparison)
+- [x] `nativeui doctor` - Check compatibility (validates setup)
+- [x] `nativeui update` - Update components (with --dry-run, --all)
+- [x] `nativeui create` - Scaffold new component (4 templates)
+- [x] `nativeui pick` - Interactive component picker (category browse, multi-select)
 
 ### MCP Server
-- [ ] Live registry data (not hardcoded)
-- [ ] Component creation guide for Claude
-- [ ] AI suggestions based on context
-- [ ] Theme customization support
+- [x] Live registry data (loads from registry.json)
+- [x] Component creation guide for Claude (nativeui_create_component tool)
+- [x] AI suggestions based on context (keyword-based scoring for 50+ components)
+- [x] Theme customization support (nativeui_customize_theme tool)
+
+### Additional MCP Enhancements
+- [x] nativeui_doctor tool (project diagnostics)
+- [x] nativeui_search tool (component search)
+- [x] Component Patterns Guide resource
+- [x] Theme Customization Guide resource
+- [x] Animation Patterns Guide resource
+- [x] Accessibility Guide resource
 
 ---
 
-## Phase 7: Documentation & Playground
+## Phase 7: Documentation & Landing Page
 
 **Status: NOT STARTED**
 
-Public documentation site with interactive playground.
+See [docs/phases/phase-7-documentation.md](./docs/phases/phase-7-documentation.md) for full specification.
 
-### Documentation Site (Next.js)
-- [ ] Next.js 14+ App Router Setup
-- [ ] MDX for Component Docs
-- [ ] Auto-generated API docs from TypeScript
-- [ ] Getting Started Guide
-- [ ] Theme Customization Guide
+shadcn-style documentation site with React Native Web previews.
 
-### Interactive Playground
-- [ ] Live Component Preview (React Native Web)
-- [ ] Prop Editor (variants, sizes live)
-- [ ] Code Editor with syntax highlighting
-- [ ] Share links for playground states
+### Tech Stack
+- Next.js 14+ (App Router)
+- MDX + Contentlayer
+- Tailwind CSS v4
+- React Native Web (live previews)
+- Fuse.js (search)
+- Netlify (hosting)
+
+### Landing Page
+- [ ] Hero section with value prop
+- [ ] Features grid (6 features)
+- [ ] Live component demo
+- [ ] Stats bar (43 components, 14 blocks, etc.)
+
+### Documentation Site
+- [ ] Three-column layout (sidebar, content, TOC)
+- [ ] ⌘K search with Fuse.js
+- [ ] Dark mode toggle
+- [ ] Mobile responsive
+
+### Component Pages (43)
+- [ ] MDX template with ComponentPreview
+- [ ] Preview/Code tabs
+- [ ] Copy button
+- [ ] Props table
+- [ ] Usage examples
+
+### Blocks Gallery
+- [ ] Grid layout with preview cards
+- [ ] 14 block detail pages
+- [ ] Installation commands
+
+### Milestones
+1. Foundation (Next.js, Tailwind, Layout)
+2. Landing Page
+3. Docs Infrastructure
+4. Component Pages + RN Web
+5. Blocks Gallery
+6. Polish & Deploy
 
 ---
 
