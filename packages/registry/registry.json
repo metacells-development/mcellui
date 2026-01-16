@@ -631,7 +631,7 @@
       "status": "beta",
       "files": ["screens/settings-screen.tsx"],
       "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["switch", "card", "separator"]
+      "registryDependencies": ["list", "switch", "icon-button"]
     }
   ]
 }

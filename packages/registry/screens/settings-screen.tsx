@@ -2,7 +2,7 @@
  * SettingsScreen
  *
  * Complete settings screen with grouped items, switches, navigation rows,
- * and destructive actions. Supports custom sections and footer.
+ * and destructive actions. Uses List, ListItem, Switch, and IconButton primitives.
  *
  * @example
  * ```tsx
@@ -40,16 +40,15 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Pressable,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import { useTheme } from '@nativeui/core';
 
 // Import UI primitives
+import { List, ListItem } from '../ui/list';
 import { Switch } from '../ui/switch';
-import { Card } from '../ui/card';
-import { Separator } from '../ui/separator';
+import { IconButton } from '../ui/icon-button';
 
 // ============================================================================
 // Types
@@ -134,14 +133,6 @@ function BackIcon({ size = 24, color = '#000' }: { size?: number; color?: string
   );
 }
 
-function ChevronRightIcon({ size = 20, color = '#999' }: { size?: number; color?: string }) {
-  return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
-      <Path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
-    </Svg>
-  );
-}
-
 // ============================================================================
 // Component
 // ============================================================================
@@ -153,87 +144,66 @@ export function SettingsScreen({
   footer,
   headerRight,
 }: SettingsScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing } = useTheme();
   const insets = useSafeAreaInsets();
 
-  const renderItem = (item: SettingsItem, index: number, total: number) => {
-    const isFirst = index === 0;
-    const isLast = index === total - 1;
+  const renderItem = (item: SettingsItem, index: number) => {
+    const isDestructive = item.type === 'destructive';
 
-    const itemStyle = [
-      styles.item,
-      {
-        paddingVertical: spacing[4],
-        paddingHorizontal: spacing[4],
-        backgroundColor: colors.card,
-      },
-      isFirst && { borderTopLeftRadius: radius.lg, borderTopRightRadius: radius.lg },
-      isLast && { borderBottomLeftRadius: radius.lg, borderBottomRightRadius: radius.lg },
-    ];
+    // Common props for ListItem
+    const baseProps = {
+      key: index,
+      title: item.label,
+      left: item.icon,
+      disabled: item.disabled,
+      titleStyle: isDestructive ? { color: colors.destructive } : undefined,
+    };
 
-    const labelColor =
-      item.type === 'destructive' ? colors.destructive : colors.foreground;
+    switch (item.type) {
+      case 'navigation':
+        return (
+          <ListItem
+            {...baseProps}
+            subtitle={item.value}
+            showChevron
+            onPress={item.onPress}
+          />
+        );
 
-    const content = (
-      <>
-        {/* Icon */}
-        {item.icon && <View style={[styles.itemIcon, { marginRight: spacing[3] }]}>{item.icon}</View>}
+      case 'toggle':
+        return (
+          <ListItem
+            {...baseProps}
+            right={
+              <Switch
+                checked={item.value}
+                onCheckedChange={item.disabled ? undefined : item.onToggle}
+                disabled={item.disabled}
+              />
+            }
+          />
+        );
 
-        {/* Label */}
-        <Text
-          style={[
-            styles.itemLabel,
-            { color: labelColor, opacity: item.disabled ? 0.5 : 1 },
-          ]}
-        >
-          {item.label}
-        </Text>
+      case 'destructive':
+        return (
+          <ListItem
+            {...baseProps}
+            onPress={item.onPress}
+          />
+        );
 
-        {/* Right Side */}
-        <View style={styles.itemRight}>
-          {item.type === 'navigation' && (
-            <>
-              {item.value && (
-                <Text style={[styles.itemValue, { color: colors.foregroundMuted, marginRight: spacing[2] }]}>
-                  {item.value}
-                </Text>
-              )}
-              <ChevronRightIcon color={colors.foregroundMuted} />
-            </>
-          )}
-          {item.type === 'toggle' && (
-            <Switch
-              checked={item.value}
-              onCheckedChange={item.disabled ? undefined : item.onToggle}
-              disabled={item.disabled}
-            />
-          )}
-          {item.type === 'custom' && item.rightElement}
-        </View>
-      </>
-    );
+      case 'custom':
+        return (
+          <ListItem
+            {...baseProps}
+            right={item.rightElement}
+            onPress={item.onPress}
+          />
+        );
 
-    if (item.type === 'toggle') {
-      return (
-        <View key={index}>
-          <View style={itemStyle}>{content}</View>
-          {!isLast && <Separator style={{ marginLeft: item.icon ? 52 : spacing[4] }} />}
-        </View>
-      );
+      default:
+        return null;
     }
-
-    return (
-      <View key={index}>
-        <Pressable
-          style={({ pressed }) => [itemStyle, pressed && { opacity: 0.7 }]}
-          onPress={item.disabled ? undefined : item.onPress}
-          disabled={item.disabled}
-        >
-          {content}
-        </Pressable>
-        {!isLast && <Separator style={{ marginLeft: item.icon ? 52 : spacing[4] }} />}
-      </View>
-    );
   };
 
   return (
@@ -251,14 +221,18 @@ export function SettingsScreen({
         ]}
       >
         {onBackPress ? (
-          <Pressable onPress={onBackPress} style={styles.backButton}>
-            <BackIcon color={colors.foreground} />
-          </Pressable>
+          <IconButton
+            icon={<BackIcon />}
+            variant="ghost"
+            size="sm"
+            onPress={onBackPress}
+            accessibilityLabel="Go back"
+          />
         ) : (
-          <View style={{ width: 40 }} />
+          <View style={{ width: 32 }} />
         )}
         <Text style={[styles.headerTitle, { color: colors.foreground }]}>{title}</Text>
-        <View style={{ width: 40 }}>{headerRight}</View>
+        <View style={{ width: 32, alignItems: 'flex-end' }}>{headerRight}</View>
       </View>
 
       {/* Content */}
@@ -289,12 +263,13 @@ export function SettingsScreen({
               </Text>
             )}
 
-            {/* Items */}
-            <View style={[styles.sectionItems, { borderRadius: radius.lg, overflow: 'hidden' }]}>
-              {section.items.map((item, index) =>
-                renderItem(item, index, section.items.length)
-              )}
-            </View>
+            {/* Items using List primitive */}
+            <List
+              showDividers
+              insetDividers={section.items.some((item) => item.icon)}
+            >
+              {section.items.map((item, index) => renderItem(item, index))}
+            </List>
 
             {/* Section Footer */}
             {section.footer && (
@@ -335,10 +310,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomWidth: 1,
   },
-  backButton: {
-    padding: 8,
-    marginLeft: -8,
-  },
   headerTitle: {
     fontSize: 17,
     fontWeight: '600',
@@ -352,26 +323,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.5,
   },
-  sectionItems: {},
   sectionFooter: {
     fontSize: 13,
     lineHeight: 18,
-  },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  itemIcon: {},
-  itemLabel: {
-    flex: 1,
-    fontSize: 16,
-  },
-  itemRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  itemValue: {
-    fontSize: 15,
   },
   footer: {
     alignItems: 'center',

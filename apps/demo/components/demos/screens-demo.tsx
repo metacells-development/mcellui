@@ -11,6 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+import { List, ListItem } from '@/components/ui/list';
+import { IconButton } from '@/components/ui/icon-button';
 
 // ============================================================================
 // Demo Component
@@ -473,47 +475,23 @@ function ProfileScreenPreview({ onClose }: { onClose: () => void }) {
 // Settings Screen Preview
 // ============================================================================
 
+function BackIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+      <Path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
 function SettingsScreenPreview({ onClose }: { onClose: () => void }) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing } = useTheme();
   const insets = useSafeAreaInsets();
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 
-  const sections = [
-    {
-      title: 'Account',
-      items: [
-        { label: 'Profile', value: 'Jane Doe', type: 'navigation' as const },
-        { label: 'Email', value: 'jane@example.com', type: 'navigation' as const },
-        { label: 'Password', type: 'navigation' as const },
-      ],
-    },
-    {
-      title: 'Preferences',
-      items: [
-        { label: 'Notifications', type: 'toggle' as const, value: notifications, onToggle: setNotifications },
-        { label: 'Dark Mode', type: 'toggle' as const, value: darkMode, onToggle: setDarkMode },
-        { label: 'Language', value: 'English', type: 'navigation' as const },
-      ],
-    },
-    {
-      title: 'Support',
-      items: [
-        { label: 'Help Center', type: 'navigation' as const },
-        { label: 'Contact Us', type: 'navigation' as const },
-        { label: 'Privacy Policy', type: 'navigation' as const },
-      ],
-    },
-    {
-      items: [
-        { label: 'Sign Out', type: 'destructive' as const },
-      ],
-    },
-  ];
-
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
-      {/* Header */}
+      {/* Header - Using IconButton for back button */}
       <View style={{
         flexDirection: 'row',
         alignItems: 'center',
@@ -524,13 +502,15 @@ function SettingsScreenPreview({ onClose }: { onClose: () => void }) {
         borderBottomWidth: 1,
         borderBottomColor: colors.border,
       }}>
-        <Pressable onPress={onClose} style={{ padding: 8, marginLeft: -8 }}>
-          <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke={colors.foreground} strokeWidth={2}>
-            <Path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
-          </Svg>
-        </Pressable>
+        <IconButton
+          icon={<BackIcon />}
+          variant="ghost"
+          size="sm"
+          onPress={onClose}
+          accessibilityLabel="Close settings"
+        />
         <Text style={{ fontSize: 17, fontWeight: '600', color: colors.foreground }}>Settings</Text>
-        <View style={{ width: 40 }} />
+        <View style={{ width: 32 }} />
       </View>
 
       <ScrollView
@@ -539,64 +519,100 @@ function SettingsScreenPreview({ onClose }: { onClose: () => void }) {
           paddingTop: spacing[4],
           paddingBottom: insets.bottom + spacing[6],
         }}
+        showsVerticalScrollIndicator={false}
       >
-        {sections.map((section, sectionIndex) => (
-          <View key={sectionIndex} style={{ marginBottom: spacing[6] }}>
-            {section.title && (
-              <Text style={{
-                fontSize: 12,
-                fontWeight: '600',
-                letterSpacing: 0.5,
-                color: colors.foregroundMuted,
-                marginBottom: spacing[2],
-                marginLeft: spacing[2],
-              }}>
-                {section.title.toUpperCase()}
-              </Text>
-            )}
-            <View style={{ backgroundColor: colors.card, borderRadius: radius.lg, overflow: 'hidden' }}>
-              {section.items.map((item, itemIndex) => (
-                <View key={itemIndex}>
-                  <Pressable
-                    onPress={() => item.type !== 'toggle' && Alert.alert(item.label)}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      paddingVertical: spacing[4],
-                      paddingHorizontal: spacing[4],
-                    }}
-                  >
-                    <Text style={{
-                      flex: 1,
-                      fontSize: 16,
-                      color: item.type === 'destructive' ? colors.destructive : colors.foreground,
-                    }}>
-                      {item.label}
-                    </Text>
-                    {item.type === 'navigation' && (
-                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        {item.value && (
-                          <Text style={{ color: colors.foregroundMuted, fontSize: 15, marginRight: spacing[2] }}>
-                            {item.value}
-                          </Text>
-                        )}
-                        <Svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke={colors.foregroundMuted} strokeWidth={2}>
-                          <Path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
-                        </Svg>
-                      </View>
-                    )}
-                    {item.type === 'toggle' && (
-                      <Switch checked={item.value} onCheckedChange={item.onToggle} />
-                    )}
-                  </Pressable>
-                  {itemIndex < section.items.length - 1 && (
-                    <Separator style={{ marginLeft: spacing[4] }} />
-                  )}
-                </View>
-              ))}
-            </View>
-          </View>
-        ))}
+        {/* Account Section - Using List + ListItem */}
+        <View style={{ marginBottom: spacing[6] }}>
+          <Text style={{
+            fontSize: 12,
+            fontWeight: '600',
+            letterSpacing: 0.5,
+            color: colors.foregroundMuted,
+            marginBottom: spacing[2],
+            marginLeft: spacing[2],
+          }}>
+            ACCOUNT
+          </Text>
+          <List showDividers>
+            <ListItem
+              title="Profile"
+              subtitle="Jane Doe"
+              showChevron
+              onPress={() => Alert.alert('Profile')}
+            />
+            <ListItem
+              title="Email"
+              subtitle="jane@example.com"
+              showChevron
+              onPress={() => Alert.alert('Email')}
+            />
+            <ListItem
+              title="Password"
+              showChevron
+              onPress={() => Alert.alert('Password')}
+            />
+          </List>
+        </View>
+
+        {/* Preferences Section - Using List + ListItem with Switch */}
+        <View style={{ marginBottom: spacing[6] }}>
+          <Text style={{
+            fontSize: 12,
+            fontWeight: '600',
+            letterSpacing: 0.5,
+            color: colors.foregroundMuted,
+            marginBottom: spacing[2],
+            marginLeft: spacing[2],
+          }}>
+            PREFERENCES
+          </Text>
+          <List showDividers>
+            <ListItem
+              title="Notifications"
+              right={<Switch checked={notifications} onCheckedChange={setNotifications} />}
+            />
+            <ListItem
+              title="Dark Mode"
+              right={<Switch checked={darkMode} onCheckedChange={setDarkMode} />}
+            />
+            <ListItem
+              title="Language"
+              subtitle="English"
+              showChevron
+              onPress={() => Alert.alert('Language')}
+            />
+          </List>
+        </View>
+
+        {/* Support Section */}
+        <View style={{ marginBottom: spacing[6] }}>
+          <Text style={{
+            fontSize: 12,
+            fontWeight: '600',
+            letterSpacing: 0.5,
+            color: colors.foregroundMuted,
+            marginBottom: spacing[2],
+            marginLeft: spacing[2],
+          }}>
+            SUPPORT
+          </Text>
+          <List showDividers>
+            <ListItem title="Help Center" showChevron onPress={() => Alert.alert('Help')} />
+            <ListItem title="Contact Us" showChevron onPress={() => Alert.alert('Contact')} />
+            <ListItem title="Privacy Policy" showChevron onPress={() => Alert.alert('Privacy')} />
+          </List>
+        </View>
+
+        {/* Destructive Action */}
+        <View style={{ marginBottom: spacing[6] }}>
+          <List>
+            <ListItem
+              title="Sign Out"
+              titleStyle={{ color: colors.destructive }}
+              onPress={() => Alert.alert('Sign Out')}
+            />
+          </List>
+        </View>
 
         {/* Footer */}
         <View style={{ alignItems: 'center', marginTop: spacing[4] }}>
