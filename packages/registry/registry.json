@@ -584,6 +584,16 @@
       "registryDependencies": ["badge"]
     },
     {
+      "name": "feed-post-card",
+      "type": "block",
+      "description": "Social feed post card with avatar, content, image, and action buttons",
+      "category": "Social",
+      "status": "beta",
+      "files": ["blocks/feed-post-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar", "icon-button", "separator"]
+    },
+    {
       "name": "login-screen",
       "type": "screen",
       "description": "Complete login screen with email/password form, social login, and forgot password",
@@ -632,6 +642,46 @@
       "files": ["screens/settings-screen.tsx"],
       "dependencies": ["react-native-safe-area-context", "react-native-svg"],
       "registryDependencies": ["list", "switch", "icon-button"]
+    },
+    {
+      "name": "search-screen",
+      "type": "screen",
+      "description": "Complete search screen with filters, recent searches, trending, and categorized results",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["screens/search-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["search-input", "chip", "avatar", "badge", "icon-button"]
+    },
+    {
+      "name": "chat-screen",
+      "type": "screen",
+      "description": "Complete chat/messaging screen with message bubbles, typing indicator, and input",
+      "category": "Messaging",
+      "status": "beta",
+      "files": ["screens/chat-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "notifications-screen",
+      "type": "screen",
+      "description": "Notifications screen with swipe-to-delete, read/unread states, and pull-to-refresh",
+      "category": "Social",
+      "status": "beta",
+      "files": ["screens/notifications-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["separator", "swipeable-row", "notification-item"]
+    },
+    {
+      "name": "feed-screen",
+      "type": "screen",
+      "description": "Social feed/timeline screen with posts, likes, comments, and pull-to-refresh",
+      "category": "Social",
+      "status": "beta",
+      "files": ["screens/feed-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["feed-post-card"]
     }
   ]
 }

@@ -1,12 +1,12 @@
 /**
  * Carousel
  *
- * Auto-playing image/content slideshow with pagination indicators.
- * Supports swipe gestures, autoplay, and custom indicators.
+ * Auto-playing image/content slideshow with animated pagination indicators.
+ * Supports swipe gestures, autoplay, parallax effects, and custom indicators.
  *
  * @example
  * ```tsx
- * // Basic carousel
+ * // Basic carousel with children
  * <Carousel>
  *   <CarouselItem>
  *     <Image source={{ uri: 'https://...' }} style={{ width: '100%', height: 200 }} />
@@ -16,26 +16,24 @@
  *   </CarouselItem>
  * </Carousel>
  *
+ * // With data + renderItem (for parallax support)
+ * <Carousel
+ *   data={slides}
+ *   renderItem={({ item, index, scrollX, width }) => (
+ *     <OnboardingSlide item={item} index={index} scrollX={scrollX} width={width} />
+ *   )}
+ * />
+ *
  * // With autoplay
  * <Carousel autoplay autoplayInterval={5000}>
- *   {images.map((img, i) => (
- *     <CarouselItem key={i}>
- *       <Image source={{ uri: img }} style={styles.image} />
- *     </CarouselItem>
- *   ))}
- * </Carousel>
- *
- * // Hide indicators
- * <Carousel showIndicators={false}>
  *   {items}
  * </Carousel>
  * ```
  */
 
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
 import {
   View,
-  ScrollView,
   StyleSheet,
   ViewStyle,
   Dimensions,
@@ -43,13 +41,14 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent,
   Pressable,
+  FlatList,
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
   interpolate,
   Extrapolation,
+  SharedValue,
 } from 'react-native-reanimated';
 import { useTheme } from '@nativeui/core';
 
@@ -59,9 +58,20 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 // Types
 // ─────────────────────────────────────────────────────────────────────────────
 
-export interface CarouselProps {
-  /** Carousel slides */
-  children: React.ReactNode;
+export interface CarouselRenderItemInfo<T> {
+  item: T;
+  index: number;
+  scrollX: SharedValue<number>;
+  width: number;
+}
+
+export interface CarouselProps<T = any> {
+  /** Carousel slides (alternative to data + renderItem) */
+  children?: React.ReactNode;
+  /** Data array for renderItem pattern */
+  data?: T[];
+  /** Render function for data items - receives scrollX for parallax effects */
+  renderItem?: (info: CarouselRenderItemInfo<T>) => React.ReactElement;
   /** Enable autoplay */
   autoplay?: boolean;
   /** Autoplay interval in ms */
@@ -78,6 +88,8 @@ export interface CarouselProps {
   style?: ViewStyle;
   /** Content height (defaults to auto) */
   height?: number;
+  /** Indicator style variant */
+  indicatorStyle?: 'dot' | 'line';
 }
 
 export interface CarouselItemProps {
@@ -85,6 +97,13 @@ export interface CarouselItemProps {
   children: React.ReactNode;
   /** Item style */
   style?: ViewStyle;
+}
+
+export interface CarouselRef {
+  /** Scroll to a specific slide index */
+  scrollToIndex: (index: number, animated?: boolean) => void;
+  /** Get the current active index */
+  getActiveIndex: () => number;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -100,41 +119,67 @@ export function CarouselItem({ children, style }: CarouselItemProps) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Pagination Dot Component
+// Animated Pagination Dot Component
 // ─────────────────────────────────────────────────────────────────────────────
 
-interface DotProps {
+interface AnimatedDotProps {
   index: number;
-  activeIndex: number;
+  scrollX: SharedValue<number>;
+  width: number;
   activeColor: string;
   inactiveColor: string;
   onPress: () => void;
+  variant: 'dot' | 'line';
 }
 
-function Dot({ index, activeIndex, activeColor, inactiveColor, onPress }: DotProps) {
-  const isActive = index === activeIndex;
-  const scale = useSharedValue(isActive ? 1 : 0.8);
+function AnimatedDot({
+  index,
+  scrollX,
+  width,
+  activeColor,
+  inactiveColor,
+  onPress,
+  variant,
+}: AnimatedDotProps) {
+  const dotStyle = useAnimatedStyle(() => {
+    const inputRange = [
+      (index - 1) * width,
+      index * width,
+      (index + 1) * width,
+    ];
 
-  useEffect(() => {
-    scale.value = withSpring(isActive ? 1 : 0.8, { damping: 20, stiffness: 300 });
-  }, [isActive, scale]);
+    const dotWidth = interpolate(
+      scrollX.value,
+      inputRange,
+      variant === 'line' ? [8, 24, 8] : [8, 12, 8],
+      Extrapolation.CLAMP
+    );
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
+    const opacity = interpolate(
+      scrollX.value,
+      inputRange,
+      [0.4, 1, 0.4],
+      Extrapolation.CLAMP
+    );
+
+    const scale = interpolate(
+      scrollX.value,
+      inputRange,
+      [0.8, 1, 0.8],
+      Extrapolation.CLAMP
+    );
+
+    return {
+      width: dotWidth,
+      opacity,
+      transform: [{ scale }],
+      backgroundColor: activeColor,
+    };
+  });
 
   return (
     <Pressable onPress={onPress}>
-      <Animated.View
-        style={[
-          styles.dot,
-          {
-            backgroundColor: isActive ? activeColor : inactiveColor,
-            width: isActive ? 20 : 8,
-          },
-          animatedStyle,
-        ]}
-      />
+      <Animated.View style={[styles.dot, dotStyle]} />
     </Pressable>
   );
 }
@@ -143,25 +188,33 @@ function Dot({ index, activeIndex, activeColor, inactiveColor, onPress }: DotPro
 // Carousel Component
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function Carousel({
-  children,
-  autoplay = false,
-  autoplayInterval = 4000,
-  showIndicators = true,
-  indicatorPosition = 'bottom',
-  onSlideChange,
-  initialIndex = 0,
-  style,
-  height,
-}: CarouselProps) {
-  const { colors, spacing, radius } = useTheme();
-  const scrollRef = useRef<ScrollView>(null);
+function CarouselInner<T = any>(
+  {
+    children,
+    data,
+    renderItem,
+    autoplay = false,
+    autoplayInterval = 4000,
+    showIndicators = true,
+    indicatorPosition = 'bottom',
+    onSlideChange,
+    initialIndex = 0,
+    style,
+    height,
+    indicatorStyle = 'line',
+  }: CarouselProps<T>,
+  ref: React.ForwardedRef<CarouselRef>
+) {
+  const { colors, spacing } = useTheme();
+  const flatListRef = useRef<FlatList>(null);
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [containerWidth, setContainerWidth] = useState(SCREEN_WIDTH);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const scrollX = useSharedValue(0);
 
-  const childArray = React.Children.toArray(children);
-  const slideCount = childArray.length;
+  // Determine slide count from children or data
+  const childArray = children ? React.Children.toArray(children) : [];
+  const slideCount = data ? data.length : childArray.length;
 
   // Handle container layout to get accurate width
   const handleLayout = useCallback((event: LayoutChangeEvent) => {
@@ -172,14 +225,29 @@ export function Carousel({
   // Scroll to specific slide
   const scrollToSlide = useCallback((index: number, animated = true) => {
     const clampedIndex = Math.max(0, Math.min(index, slideCount - 1));
-    scrollRef.current?.scrollTo({
-      x: clampedIndex * containerWidth,
-      animated,
-    });
-  }, [containerWidth, slideCount]);
+    flatListRef.current?.scrollToIndex({ index: clampedIndex, animated });
+  }, [slideCount]);
+
+  // Expose imperative methods via ref
+  useImperativeHandle(ref, () => ({
+    scrollToIndex: (index: number, animated = true) => {
+      scrollToSlide(index, animated);
+      setActiveIndex(index);
+      onSlideChange?.(index);
+    },
+    getActiveIndex: () => activeIndex,
+  }), [scrollToSlide, activeIndex, onSlideChange]);
+
+  // Handle scroll to update scrollX shared value
+  const handleScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      scrollX.value = event.nativeEvent.contentOffset.x;
+    },
+    []
+  );
 
   // Handle scroll end to determine active slide
-  const handleScrollEnd = useCallback(
+  const handleMomentumScrollEnd = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offsetX = event.nativeEvent.contentOffset.x;
       const newIndex = Math.round(offsetX / containerWidth);
@@ -237,21 +305,13 @@ export function Carousel({
     }
   }, [autoplay, autoplayInterval, slideCount, scrollToSlide]);
 
-  // Scroll to initial index on mount
-  useEffect(() => {
-    if (initialIndex > 0) {
-      setTimeout(() => {
-        scrollToSlide(initialIndex, false);
-      }, 100);
-    }
-  }, [initialIndex, scrollToSlide]);
-
   const handleDotPress = (index: number) => {
     scrollToSlide(index);
     setActiveIndex(index);
     onSlideChange?.(index);
   };
 
+  // Render indicators
   const indicators = showIndicators && slideCount > 1 && (
     <View
       style={[
@@ -259,18 +319,41 @@ export function Carousel({
         indicatorPosition === 'top' ? styles.indicatorsTop : styles.indicatorsBottom,
       ]}
     >
-      {childArray.map((_, index) => (
-        <Dot
+      {Array.from({ length: slideCount }).map((_, index) => (
+        <AnimatedDot
           key={index}
           index={index}
-          activeIndex={activeIndex}
+          scrollX={scrollX}
+          width={containerWidth}
           activeColor={colors.primary}
           inactiveColor={colors.border}
           onPress={() => handleDotPress(index)}
+          variant={indicatorStyle}
         />
       ))}
     </View>
   );
+
+  // Render slide content
+  const renderSlide = useCallback(
+    ({ item, index }: { item: T | React.ReactNode; index: number }) => {
+      if (data && renderItem) {
+        return (
+          <View style={{ width: containerWidth, flex: 1 }}>
+            {renderItem({ item: item as T, index, scrollX, width: containerWidth })}
+          </View>
+        );
+      }
+      return (
+        <View style={{ width: containerWidth, flex: 1 }}>
+          {item as React.ReactNode}
+        </View>
+      );
+    },
+    [containerWidth, data, renderItem, scrollX]
+  );
+
+  const listData = data || childArray;
 
   return (
     <View
@@ -279,18 +362,29 @@ export function Carousel({
     >
       {indicatorPosition === 'top' && indicators}
 
-      <ScrollView
-        ref={scrollRef}
+      <FlatList
+        ref={flatListRef}
+        data={listData as any[]}
+        renderItem={renderSlide}
+        keyExtractor={(_, index) => `carousel-${index}`}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={handleScrollEnd}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        onMomentumScrollEnd={handleMomentumScrollEnd}
         onScrollBeginDrag={handleScrollBeginDrag}
         onScrollEndDrag={handleScrollEndDrag}
-        scrollEventThrottle={16}
+        bounces={false}
         decelerationRate="fast"
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        initialScrollIndex={initialIndex}
+        getItemLayout={(_, index) => ({
+          length: containerWidth,
+          offset: containerWidth * index,
+          index,
+        })}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
         accessibilityRole="adjustable"
         accessibilityValue={{
           min: 0,
@@ -298,24 +392,17 @@ export function Carousel({
           now: activeIndex,
           text: `Slide ${activeIndex + 1} of ${slideCount}`,
         }}
-      >
-        {childArray.map((child, index) => (
-          <View
-            key={index}
-            style={[
-              styles.slideWrapper,
-              { width: containerWidth },
-            ]}
-          >
-            {child}
-          </View>
-        ))}
-      </ScrollView>
+      />
 
       {indicatorPosition === 'bottom' && indicators}
     </View>
   );
 }
+
+// Export with forwardRef while preserving generic type
+export const Carousel = forwardRef(CarouselInner) as <T = any>(
+  props: CarouselProps<T> & { ref?: React.ForwardedRef<CarouselRef> }
+) => React.ReactElement;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Styles
@@ -324,15 +411,6 @@ export function Carousel({
 const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    flexDirection: 'row',
-  },
-  slideWrapper: {
-    flex: 1,
   },
   item: {
     flex: 1,

@@ -75,9 +75,21 @@ export {
   timing,
   pressScale,
   durations,
+  subtleAnimations,
+  playfulAnimations,
+  getAnimationPreset,
+  defaultAnimationPreset,
+  type SpringConfig,
+  type TimingConfig,
+  type SpringTokens,
+  type TimingTokens,
+  type PressScaleTokens,
+  type DurationTokens,
+  type AnimationTokens,
   type SpringPreset,
   type TimingPreset,
   type PressScalePreset,
+  type AnimationPreset,
 } from './animations';
 
 // Component Tokens

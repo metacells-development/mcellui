@@ -211,9 +211,9 @@ Form integration and screen templates.
 
 ---
 
-## Phase 5: B2C Expansion
+## Phase 5: B2C Expansion ✅
 
-**Status: IN PROGRESS** (Batch 1, 2, 3, 4 Complete)
+**Status: COMPLETE**
 
 Expand from 33 items to 61 - optimized for consumer apps.
 
@@ -254,21 +254,21 @@ See [docs/phases/phase-5-b2c-expansion.md](./docs/phases/phase-5-b2c-expansion.m
 - [x] `search-header` - Search + filter + avatar
 
 ### New Screens (3)
-- [ ] `onboarding-screen` - Swipe carousel + skip/start
-- [ ] `forgot-password-screen` - Email + submit
-- [ ] `otp-verification-screen` - Code input + resend
+- [x] `onboarding-screen` - Swipe carousel + skip/start
+- [ ] `forgot-password-screen` - Email + submit (skipped)
+- [x] `otp-verification-screen` - Code input + resend timer + shake animation
 
 ### Theme Enhancements
-- [ ] Animation presets: `subtle` vs `playful`
-- [ ] Spring config variants per preset
+- [x] Animation presets: `subtle` vs `playful`
+- [x] Spring config variants per preset
 
 ### Summary
 | Category | Before | Current | Target |
 |----------|--------|---------|--------|
 | Components | 27 | 43 | 43 |
 | Blocks | 6 | 14 | 14 |
-| Screens | 0 | 0 | 3 |
-| **Total** | **33** | **57** | **60** |
+| Screens | 0 | 2 | 2 |
+| **Total** | **33** | **59** | **59** |
 
 ---
 

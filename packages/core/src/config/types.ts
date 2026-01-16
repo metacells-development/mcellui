@@ -23,6 +23,7 @@ import type { ThemePreset } from '../theme/presets';
 import type { RadiusPreset } from '../theme/radius';
 import type { ThemeColors } from '../theme/colors';
 import type { Fonts } from '../theme/typography';
+import type { AnimationPreset } from '../theme/animations';
 
 /**
  * NativeUI configuration object.
@@ -77,6 +78,15 @@ export interface NativeUIConfig {
    * @default true
    */
   haptics?: boolean;
+
+  /**
+   * Animation preset.
+   * Controls the overall feel of animations throughout the app.
+   * - `subtle`: Professional, smooth animations with minimal overshoot
+   * - `playful`: Bouncy, energetic animations with more personality
+   * @default 'subtle'
+   */
+  animationPreset?: AnimationPreset;
 
   /**
    * Component-specific overrides.
@@ -138,12 +148,13 @@ export interface NativeUIConfig {
 /**
  * Resolved configuration with all defaults applied.
  */
-export interface ResolvedNativeUIConfig extends Required<Omit<NativeUIConfig, 'colors' | 'lightColors' | 'darkColors' | 'fonts' | 'components' | 'aliases' | 'haptics'>> {
+export interface ResolvedNativeUIConfig extends Required<Omit<NativeUIConfig, 'colors' | 'lightColors' | 'darkColors' | 'fonts' | 'components' | 'aliases' | 'haptics' | 'animationPreset'>> {
   colors: Partial<ThemeColors>;
   lightColors: Partial<ThemeColors>;
   darkColors: Partial<ThemeColors>;
   fonts: Partial<Fonts>;
   haptics: boolean;
+  animationPreset: AnimationPreset;
   components: NonNullable<NativeUIConfig['components']>;
   aliases: NonNullable<NativeUIConfig['aliases']>;
 }
@@ -161,6 +172,7 @@ export const defaultConfig: ResolvedNativeUIConfig = {
   darkColors: {},
   fonts: {},
   haptics: true,
+  animationPreset: 'subtle',
   components: {},
   // CLI defaults
   componentsPath: './components/ui',

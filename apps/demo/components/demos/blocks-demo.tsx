@@ -75,6 +75,18 @@ export function BlocksDemo() {
       <Section title="Media Item">
         <MediaItemPreview />
       </Section>
+
+      <Section title="Feed Post Card">
+        <FeedPostCardPreview />
+      </Section>
+
+      <Section title="Login Block">
+        <LoginBlockPreview />
+      </Section>
+
+      <Section title="Signup Block">
+        <SignupBlockPreview />
+      </Section>
     </View>
   );
 }
@@ -954,6 +966,360 @@ function MediaItemPreview() {
 }
 
 // ============================================================================
+// Feed Post Card Preview
+// ============================================================================
+
+function FeedPostCardPreview() {
+  const { colors, spacing, radius } = useTheme();
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(42);
+
+  const handleLike = () => {
+    setLiked(!liked);
+    setLikeCount((prev) => (liked ? prev - 1 : prev + 1));
+  };
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        {/* Author Header */}
+        <View style={[styles.feedHeader, { marginBottom: spacing[3] }]}>
+          <Avatar size="md" fallback="JD" />
+          <View style={{ marginLeft: spacing[3], flex: 1 }}>
+            <Text style={[styles.feedAuthor, { color: colors.foreground }]}>John Doe</Text>
+            <Text style={[styles.feedTime, { color: colors.foregroundMuted }]}>2 hours ago</Text>
+          </View>
+          <Pressable onPress={() => Alert.alert('More options')}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: 20 }}>•••</Text>
+          </Pressable>
+        </View>
+
+        {/* Content */}
+        <Text style={[styles.feedContent, { color: colors.foreground, marginBottom: spacing[3] }]}>
+          Just shipped a new feature! 🚀 Really excited about how this turned out. Let me know what you think!
+        </Text>
+
+        {/* Image placeholder */}
+        <View
+          style={[
+            styles.feedImage,
+            {
+              backgroundColor: colors.secondary,
+              borderRadius: radius.lg,
+              height: 180,
+              marginBottom: spacing[3],
+            },
+          ]}
+        >
+          <Svg width={40} height={40} viewBox="0 0 24 24" fill="none">
+            <Rect x="3" y="3" width="18" height="18" rx="2" stroke={colors.foregroundMuted} strokeWidth="2" />
+            <Circle cx="8.5" cy="8.5" r="1.5" fill={colors.foregroundMuted} />
+            <Path d="M21 15l-5-5L5 21" stroke={colors.foregroundMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </Svg>
+        </View>
+
+        {/* Actions */}
+        <View style={[styles.feedActions, { gap: spacing[4] }]}>
+          <Pressable style={styles.feedAction} onPress={handleLike}>
+            <Svg width={22} height={22} viewBox="0 0 24 24" fill={liked ? colors.destructive : 'none'}>
+              <Path
+                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
+                stroke={liked ? colors.destructive : colors.foregroundMuted}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </Svg>
+            <Text style={[styles.feedActionText, { color: liked ? colors.destructive : colors.foregroundMuted }]}>
+              {likeCount}
+            </Text>
+          </Pressable>
+          <Pressable style={styles.feedAction} onPress={() => Alert.alert('Comments')}>
+            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
+              <Path
+                d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"
+                stroke={colors.foregroundMuted}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </Svg>
+            <Text style={[styles.feedActionText, { color: colors.foregroundMuted }]}>12</Text>
+          </Pressable>
+          <Pressable style={styles.feedAction} onPress={() => Alert.alert('Share')}>
+            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
+              <Path
+                d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"
+                stroke={colors.foregroundMuted}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </Svg>
+          </Pressable>
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Login Block Preview
+// ============================================================================
+
+function LoginBlockPreview() {
+  const { colors, spacing, radius } = useTheme();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={styles.loginContainer}>
+          {/* Header */}
+          <View style={[styles.loginHeader, { marginBottom: spacing[6] }]}>
+            <Text style={[styles.loginTitle, { color: colors.foreground }]}>Welcome back</Text>
+            <Text style={[styles.loginSubtitle, { color: colors.foregroundMuted }]}>
+              Sign in to your account
+            </Text>
+          </View>
+
+          {/* Form */}
+          <View style={{ gap: spacing[4] }}>
+            <View>
+              <Text style={[styles.inputLabel, { color: colors.foreground, marginBottom: spacing[2] }]}>
+                Email
+              </Text>
+              <TextInput
+                style={[
+                  styles.loginInput,
+                  {
+                    backgroundColor: colors.background,
+                    borderColor: colors.border,
+                    borderRadius: radius.md,
+                    color: colors.foreground,
+                    padding: spacing[3],
+                  },
+                ]}
+                placeholder="you@example.com"
+                placeholderTextColor={colors.foregroundMuted}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+            <View>
+              <View style={styles.passwordHeader}>
+                <Text style={[styles.inputLabel, { color: colors.foreground }]}>Password</Text>
+                <Pressable onPress={() => Alert.alert('Forgot Password')}>
+                  <Text style={[styles.forgotPassword, { color: colors.primary }]}>Forgot?</Text>
+                </Pressable>
+              </View>
+              <TextInput
+                style={[
+                  styles.loginInput,
+                  {
+                    backgroundColor: colors.background,
+                    borderColor: colors.border,
+                    borderRadius: radius.md,
+                    color: colors.foreground,
+                    padding: spacing[3],
+                    marginTop: spacing[2],
+                  },
+                ]}
+                placeholder="••••••••"
+                placeholderTextColor={colors.foregroundMuted}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+            </View>
+          </View>
+
+          {/* Button */}
+          <Button
+            onPress={() => Alert.alert('Login', `Email: ${email}`)}
+            style={{ marginTop: spacing[6] }}
+            fullWidth
+          >
+            Sign In
+          </Button>
+
+          {/* Divider */}
+          <View style={[styles.loginDivider, { marginVertical: spacing[6] }]}>
+            <Separator style={{ flex: 1 }} />
+            <Text style={[styles.dividerText, { color: colors.foregroundMuted, marginHorizontal: spacing[3] }]}>
+              or
+            </Text>
+            <Separator style={{ flex: 1 }} />
+          </View>
+
+          {/* Social Login */}
+          <Button variant="outline" onPress={() => Alert.alert('Continue with Google')} fullWidth>
+            Continue with Google
+          </Button>
+
+          {/* Footer */}
+          <View style={[styles.loginFooter, { marginTop: spacing[6] }]}>
+            <Text style={{ color: colors.foregroundMuted }}>Don't have an account? </Text>
+            <Pressable onPress={() => Alert.alert('Sign Up')}>
+              <Text style={{ color: colors.primary, fontWeight: '600' }}>Sign up</Text>
+            </Pressable>
+          </View>
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Signup Block Preview
+// ============================================================================
+
+function SignupBlockPreview() {
+  const { colors, spacing, radius } = useTheme();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [agreed, setAgreed] = useState(false);
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={styles.loginContainer}>
+          {/* Header */}
+          <View style={[styles.loginHeader, { marginBottom: spacing[6] }]}>
+            <Text style={[styles.loginTitle, { color: colors.foreground }]}>Create account</Text>
+            <Text style={[styles.loginSubtitle, { color: colors.foregroundMuted }]}>
+              Get started with your free account
+            </Text>
+          </View>
+
+          {/* Form */}
+          <View style={{ gap: spacing[4] }}>
+            <View>
+              <Text style={[styles.inputLabel, { color: colors.foreground, marginBottom: spacing[2] }]}>
+                Full Name
+              </Text>
+              <TextInput
+                style={[
+                  styles.loginInput,
+                  {
+                    backgroundColor: colors.background,
+                    borderColor: colors.border,
+                    borderRadius: radius.md,
+                    color: colors.foreground,
+                    padding: spacing[3],
+                  },
+                ]}
+                placeholder="John Doe"
+                placeholderTextColor={colors.foregroundMuted}
+                value={name}
+                onChangeText={setName}
+              />
+            </View>
+            <View>
+              <Text style={[styles.inputLabel, { color: colors.foreground, marginBottom: spacing[2] }]}>
+                Email
+              </Text>
+              <TextInput
+                style={[
+                  styles.loginInput,
+                  {
+                    backgroundColor: colors.background,
+                    borderColor: colors.border,
+                    borderRadius: radius.md,
+                    color: colors.foreground,
+                    padding: spacing[3],
+                  },
+                ]}
+                placeholder="you@example.com"
+                placeholderTextColor={colors.foregroundMuted}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+            <View>
+              <Text style={[styles.inputLabel, { color: colors.foreground, marginBottom: spacing[2] }]}>
+                Password
+              </Text>
+              <TextInput
+                style={[
+                  styles.loginInput,
+                  {
+                    backgroundColor: colors.background,
+                    borderColor: colors.border,
+                    borderRadius: radius.md,
+                    color: colors.foreground,
+                    padding: spacing[3],
+                  },
+                ]}
+                placeholder="••••••••"
+                placeholderTextColor={colors.foregroundMuted}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+              <Text style={[styles.passwordHint, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
+                Must be at least 8 characters
+              </Text>
+            </View>
+
+            {/* Terms Checkbox */}
+            <View style={[styles.termsRow, { gap: spacing[2] }]}>
+              <Pressable
+                onPress={() => setAgreed(!agreed)}
+                style={[
+                  styles.checkbox,
+                  {
+                    backgroundColor: agreed ? colors.primary : 'transparent',
+                    borderColor: agreed ? colors.primary : colors.border,
+                    borderRadius: radius.sm,
+                  },
+                ]}
+              >
+                {agreed && (
+                  <Svg width={12} height={12} viewBox="0 0 24 24" fill="none">
+                    <Path d="M20 6L9 17l-5-5" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                  </Svg>
+                )}
+              </Pressable>
+              <Text style={[styles.termsText, { color: colors.foregroundMuted, flex: 1 }]}>
+                I agree to the{' '}
+                <Text style={{ color: colors.primary }}>Terms of Service</Text>
+                {' '}and{' '}
+                <Text style={{ color: colors.primary }}>Privacy Policy</Text>
+              </Text>
+            </View>
+          </View>
+
+          {/* Button */}
+          <Button
+            onPress={() => Alert.alert('Sign Up', `Name: ${name}, Email: ${email}`)}
+            style={{ marginTop: spacing[6] }}
+            disabled={!agreed}
+            fullWidth
+          >
+            Create Account
+          </Button>
+
+          {/* Footer */}
+          <View style={[styles.loginFooter, { marginTop: spacing[6] }]}>
+            <Text style={{ color: colors.foregroundMuted }}>Already have an account? </Text>
+            <Pressable onPress={() => Alert.alert('Sign In')}>
+              <Text style={{ color: colors.primary, fontWeight: '600' }}>Sign in</Text>
+            </Pressable>
+          </View>
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
 // Helper Components
 // ============================================================================
 
@@ -1298,5 +1664,102 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  // Feed Post Card
+  feedHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  feedAuthor: {
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  feedTime: {
+    fontSize: 13,
+  },
+  feedContent: {
+    fontSize: 15,
+    lineHeight: 22,
+  },
+  feedImage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  feedActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  feedAction: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  feedActionText: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  // Login/Signup Block
+  loginContainer: {
+    width: '100%',
+  },
+  loginHeader: {
+    alignItems: 'center',
+  },
+  loginTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  loginSubtitle: {
+    fontSize: 15,
+  },
+  inputLabel: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  loginInput: {
+    borderWidth: 1,
+    fontSize: 16,
+  },
+  passwordHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  forgotPassword: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  loginDivider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dividerText: {
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  loginFooter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  passwordHint: {
+    fontSize: 12,
+  },
+  termsRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 2,
+  },
+  termsText: {
+    fontSize: 13,
+    lineHeight: 18,
   },
 });

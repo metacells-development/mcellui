@@ -46,7 +46,19 @@ import {
   type Typography,
 } from './typography';
 import { getShadow, getPlatformShadow, ShadowSize, ShadowStyle } from './shadows';
-import { springs, timing, pressScale, durations } from './animations';
+import {
+  springs,
+  timing,
+  pressScale,
+  durations,
+  getAnimationPreset,
+  defaultAnimationPreset,
+  type AnimationPreset,
+  type SpringTokens,
+  type TimingTokens,
+  type PressScaleTokens,
+  type DurationTokens,
+} from './animations';
 import { components } from './components';
 import {
   themePresets,
@@ -77,6 +89,8 @@ export interface Theme {
   themePreset?: ThemePreset;
   /** Current radius preset */
   radiusPreset: RadiusPreset;
+  /** Current animation preset */
+  animationPreset: AnimationPreset;
 
   // ─────────────────────────────────────────────────────────────────────────────
   // Design Tokens
@@ -122,13 +136,13 @@ export interface Theme {
   // Animations
   // ─────────────────────────────────────────────────────────────────────────────
   /** Spring animation presets */
-  springs: typeof springs;
+  springs: SpringTokens;
   /** Timing animation presets */
-  timing: typeof timing;
+  timing: TimingTokens;
   /** Press scale presets */
-  pressScale: typeof pressScale;
+  pressScale: PressScaleTokens;
   /** Duration presets */
-  durations: typeof durations;
+  durations: DurationTokens;
 
   // ─────────────────────────────────────────────────────────────────────────────
   // Component Tokens
@@ -219,6 +233,24 @@ export interface ThemeProviderProps {
    */
   haptics?: boolean;
 
+  /**
+   * Animation preset.
+   * Controls the overall feel of animations throughout the app.
+   * - `subtle`: Professional, smooth animations with minimal overshoot
+   * - `playful`: Bouncy, energetic animations with more personality
+   * @default 'subtle'
+   *
+   * @example
+   * ```tsx
+   * // Professional, smooth animations
+   * <ThemeProvider animationPreset="subtle">
+   *
+   * // Bouncy, fun animations
+   * <ThemeProvider animationPreset="playful">
+   * ```
+   */
+  animationPreset?: AnimationPreset;
+
   /** Children components */
   children: ReactNode;
 }
@@ -232,6 +264,7 @@ export function ThemeProvider({
   lightColors: lightColorOverrides,
   darkColors: darkColorOverrides,
   haptics = true,
+  animationPreset = defaultAnimationPreset,
   children,
 }: ThemeProviderProps) {
   const systemColorScheme = useColorScheme();
@@ -306,6 +339,7 @@ export function ThemeProvider({
       // Theme Preset
       themePreset,
       radiusPreset,
+      animationPreset,
 
       // Design Tokens
       colors,
@@ -327,11 +361,8 @@ export function ThemeProvider({
       shadow: (size: ShadowSize) => getShadow(size, isDark),
       platformShadow: (size: ShadowSize) => getPlatformShadow(size, isDark),
 
-      // Animations
-      springs,
-      timing,
-      pressScale,
-      durations,
+      // Animations (resolved from preset)
+      ...getAnimationPreset(animationPreset),
 
       // Component Tokens
       components,
@@ -342,6 +373,7 @@ export function ThemeProvider({
     setColorScheme,
     themePreset,
     radiusPreset,
+    animationPreset,
     fonts,
     typography,
     radius,
@@ -403,6 +435,7 @@ export function useTheme(): Theme {
       },
       themePreset: undefined,
       radiusPreset: defaultRadiusPreset,
+      animationPreset: defaultAnimationPreset,
       colors: lightColors,
       spacing,
       radius: fallbackRadius,
@@ -417,10 +450,7 @@ export function useTheme(): Theme {
       typography: fallbackTypography,
       shadow: (size: ShadowSize) => getShadow(size, isDark),
       platformShadow: (size: ShadowSize) => getPlatformShadow(size, isDark),
-      springs,
-      timing,
-      pressScale,
-      durations,
+      ...getAnimationPreset(defaultAnimationPreset),
       components,
     };
   }

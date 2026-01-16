@@ -2,7 +2,8 @@
  * OnboardingScreen
  *
  * Multi-slide onboarding flow with swipeable pages, pagination dots,
- * and skip/next/get started buttons.
+ * and skip/next/get started buttons. Uses the Carousel primitive for
+ * smooth animations and parallax effects.
  *
  * @example
  * ```tsx
@@ -18,31 +19,27 @@
  * ```
  */
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   Dimensions,
   Image,
   ImageSourcePropType,
-  ViewToken,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
-  useSharedValue,
   useAnimatedStyle,
-  withSpring,
   interpolate,
   Extrapolation,
+  SharedValue,
 } from 'react-native-reanimated';
 import { useTheme } from '@nativeui/core';
 
 // Import UI primitives
 import { Button } from '../ui/button';
+import { Carousel, CarouselRenderItemInfo, CarouselRef } from '../ui/carousel';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -79,71 +76,80 @@ export interface OnboardingScreenProps {
 }
 
 // ============================================================================
-// Component
+// Slide Component with Parallax Animation
 // ============================================================================
 
-export function OnboardingScreen({
-  slides,
-  onComplete,
-  onSkip,
-  completeText = 'Get Started',
-  skipText = 'Skip',
-  hideSkip = false,
-}: OnboardingScreenProps) {
+interface OnboardingSlideComponentProps {
+  item: OnboardingSlide;
+  index: number;
+  scrollX: SharedValue<number>;
+  width: number;
+}
+
+function OnboardingSlideComponent({
+  item,
+  index,
+  scrollX,
+  width,
+}: OnboardingSlideComponentProps) {
   const { colors, spacing, radius } = useTheme();
-  const insets = useSafeAreaInsets();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const flatListRef = useRef<FlatList>(null);
-  const scrollX = useSharedValue(0);
+  // Parallax effect for illustration - moves slower than content
+  const illustrationStyle = useAnimatedStyle(() => {
+    const inputRange = [
+      (index - 1) * width,
+      index * width,
+      (index + 1) * width,
+    ];
 
-  const isLastSlide = currentIndex === slides.length - 1;
+    // Parallax: image moves at 0.3x speed of scroll
+    const translateX = interpolate(
+      scrollX.value,
+      inputRange,
+      [width * 0.3, 0, -width * 0.3],
+      Extrapolation.CLAMP
+    );
 
-  const onViewableItemsChanged = useCallback(
-    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-      const firstItem = viewableItems[0];
-      if (firstItem && firstItem.index !== null && firstItem.index !== undefined) {
-        setCurrentIndex(firstItem.index);
-      }
-    },
-    []
-  );
+    // Scale: slightly smaller when not centered
+    const scale = interpolate(
+      scrollX.value,
+      inputRange,
+      [0.8, 1, 0.8],
+      Extrapolation.CLAMP
+    );
 
-  const viewabilityConfig = useRef({
-    itemVisiblePercentThreshold: 50,
-  }).current;
+    // Fade: less visible when not centered
+    const opacity = interpolate(
+      scrollX.value,
+      inputRange,
+      [0.4, 1, 0.4],
+      Extrapolation.CLAMP
+    );
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    scrollX.value = event.nativeEvent.contentOffset.x;
-  };
+    return {
+      transform: [{ translateX }, { scale }],
+      opacity,
+    };
+  });
 
-  const goToNext = () => {
-    if (isLastSlide) {
-      onComplete?.();
-    } else {
-      flatListRef.current?.scrollToIndex({
-        index: currentIndex + 1,
-        animated: true,
-      });
-    }
-  };
-
-  const renderSlide = ({ item, index }: { item: OnboardingSlide; index: number }) => (
-    <View style={[styles.slide, { width: SCREEN_WIDTH }]}>
-      {/* Illustration */}
+  return (
+    <View style={styles.slide}>
+      {/* Illustration with parallax + scale animation */}
       <View style={styles.illustrationContainer}>
-        {item.illustration ? (
-          item.illustration
-        ) : item.image ? (
-          <Image source={item.image} style={styles.image} resizeMode="contain" />
-        ) : (
-          <View
-            style={[
-              styles.placeholderImage,
-              { backgroundColor: colors.secondary, borderRadius: radius.xl },
-            ]}
-          />
-        )}
+        <Animated.View style={illustrationStyle}>
+          {item.illustration ? (
+            item.illustration
+          ) : item.image ? (
+            <Image source={item.image} style={styles.image} resizeMode="contain" />
+          ) : (
+            <View
+              style={[
+                styles.placeholderImage,
+                { backgroundColor: colors.secondary, borderRadius: radius.xl },
+              ]}
+            />
+          )}
+        </Animated.View>
       </View>
 
       {/* Content */}
@@ -154,6 +160,47 @@ export function OnboardingScreen({
         </Text>
       </View>
     </View>
+  );
+}
+
+// ============================================================================
+// Main Component
+// ============================================================================
+
+export function OnboardingScreen({
+  slides,
+  onComplete,
+  onSkip,
+  completeText = 'Get Started',
+  skipText = 'Skip',
+  hideSkip = false,
+}: OnboardingScreenProps) {
+  const { colors, spacing } = useTheme();
+  const insets = useSafeAreaInsets();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef<CarouselRef>(null);
+
+  const isLastSlide = currentIndex === slides.length - 1;
+
+  const handleSlideChange = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const goToNext = () => {
+    if (isLastSlide) {
+      onComplete?.();
+    } else {
+      carouselRef.current?.scrollToIndex(currentIndex + 1);
+    }
+  };
+
+  const renderSlide = (info: CarouselRenderItemInfo<OnboardingSlide>) => (
+    <OnboardingSlideComponent
+      item={info.item}
+      index={info.index}
+      scrollX={info.scrollX}
+      width={info.width}
+    />
   );
 
   return (
@@ -167,28 +214,21 @@ export function OnboardingScreen({
         </View>
       )}
 
-      {/* Slides */}
-      <FlatList
-        ref={flatListRef}
-        data={slides}
-        renderItem={renderSlide}
-        keyExtractor={(item, index) => item.key || `slide-${index}`}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        bounces={false}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        getItemLayout={(_, index) => ({
-          length: SCREEN_WIDTH,
-          offset: SCREEN_WIDTH * index,
-          index,
-        })}
-      />
+      {/* Carousel with slides and indicators */}
+      <View style={styles.carouselContainer}>
+        <Carousel
+          ref={carouselRef}
+          data={slides}
+          renderItem={renderSlide}
+          onSlideChange={handleSlideChange}
+          showIndicators
+          indicatorStyle="line"
+          indicatorPosition="bottom"
+          style={styles.carousel}
+        />
+      </View>
 
-      {/* Bottom Section */}
+      {/* Bottom Section with Button */}
       <View
         style={[
           styles.bottomSection,
@@ -198,50 +238,6 @@ export function OnboardingScreen({
           },
         ]}
       >
-        {/* Pagination Dots */}
-        <View style={[styles.pagination, { marginBottom: spacing[6] }]}>
-          {slides.map((_, index) => {
-            const dotStyle = useAnimatedStyle(() => {
-              const inputRange = [
-                (index - 1) * SCREEN_WIDTH,
-                index * SCREEN_WIDTH,
-                (index + 1) * SCREEN_WIDTH,
-              ];
-              const width = interpolate(
-                scrollX.value,
-                inputRange,
-                [8, 24, 8],
-                Extrapolation.CLAMP
-              );
-              const opacity = interpolate(
-                scrollX.value,
-                inputRange,
-                [0.4, 1, 0.4],
-                Extrapolation.CLAMP
-              );
-              return {
-                width,
-                opacity,
-              };
-            });
-
-            return (
-              <Animated.View
-                key={index}
-                style={[
-                  styles.dot,
-                  {
-                    backgroundColor: colors.primary,
-                    borderRadius: radius.full,
-                    marginHorizontal: spacing[1],
-                  },
-                  dotStyle,
-                ]}
-              />
-            );
-          })}
-        </View>
-
         {/* Next/Complete Button */}
         <Button onPress={goToNext} style={styles.nextButton}>
           {isLastSlide ? completeText : 'Next'}
@@ -262,6 +258,12 @@ const styles = StyleSheet.create({
   skipContainer: {
     position: 'absolute',
     zIndex: 10,
+  },
+  carouselContainer: {
+    flex: 1,
+  },
+  carousel: {
+    flex: 1,
   },
   slide: {
     flex: 1,
@@ -298,14 +300,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bottomSection: {},
-  pagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dot: {
-    height: 8,
-  },
   nextButton: {
     width: '100%',
   },

@@ -97,21 +97,21 @@ const SIZE_CONFIG = {
     paddingVertical: 4,
     fontSize: 12,
     iconSize: 14,
-    borderRadius: 6,
+    radiusKey: 'md' as const,
   },
   md: {
     paddingHorizontal: 14,
     paddingVertical: 6,
     fontSize: 14,
     iconSize: 16,
-    borderRadius: 8,
+    radiusKey: 'lg' as const,
   },
   lg: {
     paddingHorizontal: 18,
     paddingVertical: 8,
     fontSize: 16,
     iconSize: 18,
-    borderRadius: 10,
+    radiusKey: 'xl' as const,
   },
 };
 
@@ -130,7 +130,7 @@ export function Chip({
   style,
   labelStyle,
 }: ChipProps) {
-  const { colors, fontWeight } = useTheme();
+  const { colors, fontWeight, radius } = useTheme();
   const config = SIZE_CONFIG[size];
 
   const scale = useSharedValue(1);
@@ -198,7 +198,7 @@ export function Chip({
         {
           paddingHorizontal: config.paddingHorizontal,
           paddingVertical: config.paddingVertical,
-          borderRadius: config.borderRadius,
+          borderRadius: radius[config.radiusKey],
           opacity: disabled ? 0.5 : 1,
         },
         animatedStyle,

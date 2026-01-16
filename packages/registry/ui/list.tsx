@@ -40,6 +40,8 @@ import {
   StyleSheet,
   ViewStyle,
   TextStyle,
+  Image,
+  ImageSourcePropType,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -67,12 +69,30 @@ export interface ListProps {
   style?: ViewStyle;
 }
 
+/** Metadata item for thumbnail variant */
+export interface ListItemMetadata {
+  /** Icon to display */
+  icon: React.ReactNode;
+  /** Label text */
+  label: string;
+}
+
 export interface ListItemProps {
+  /** Visual variant */
+  variant?: 'default' | 'thumbnail';
   /** Primary text */
   title: string;
-  /** Secondary text below title */
+  /** Secondary text below title (used as subtitle in default, description in thumbnail) */
   subtitle?: string;
-  /** Content to render on the left (icon, avatar, etc.) */
+  /** Longer description text (thumbnail variant only) */
+  description?: string;
+  /** Thumbnail image source (thumbnail variant only) */
+  thumbnail?: ImageSourcePropType;
+  /** Thumbnail size (thumbnail variant only, default: 100) */
+  thumbnailSize?: number;
+  /** Metadata items with icon and label (thumbnail variant only) */
+  metadata?: ListItemMetadata[];
+  /** Content to render on the left (icon, avatar, etc.) - default variant only */
   left?: React.ReactNode;
   /** Content to render on the right (switch, badge, etc.) */
   right?: React.ReactNode;
@@ -90,6 +110,8 @@ export interface ListItemProps {
   titleStyle?: TextStyle;
   /** Subtitle text style */
   subtitleStyle?: TextStyle;
+  /** Description text style (thumbnail variant only) */
+  descriptionStyle?: TextStyle;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -178,8 +200,13 @@ export function List({
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function ListItem({
+  variant = 'default',
   title,
   subtitle,
+  description,
+  thumbnail,
+  thumbnailSize = 100,
+  metadata,
   left,
   right,
   showChevron = false,
@@ -189,8 +216,9 @@ export function ListItem({
   style,
   titleStyle,
   subtitleStyle,
+  descriptionStyle,
 }: ListItemProps) {
-  const { colors, spacing, fontSize, fontWeight, springs } = useTheme();
+  const { colors, spacing, fontSize, fontWeight, radius, springs } = useTheme();
   const scale = useSharedValue(1);
 
   const isPressable = !!onPress || !!onLongPress;
@@ -225,7 +253,102 @@ export function ListItem({
     transform: [{ scale: scale.value }],
   }));
 
-  const content = (
+  // Thumbnail variant content
+  const thumbnailContent = (
+    <>
+      {/* Thumbnail Image */}
+      {thumbnail && (
+        <Image
+          source={thumbnail}
+          style={[
+            styles.thumbnail,
+            {
+              width: thumbnailSize,
+              height: thumbnailSize,
+              borderRadius: radius.md,
+              marginRight: spacing[3],
+            },
+          ]}
+          resizeMode="cover"
+        />
+      )}
+
+      {/* Content */}
+      <View style={styles.thumbnailContent}>
+        <Text
+          style={[
+            styles.title,
+            {
+              color: disabled ? colors.foregroundMuted : colors.foreground,
+              fontSize: fontSize.base,
+              fontWeight: fontWeight.semibold,
+            },
+            titleStyle,
+          ]}
+          numberOfLines={1}
+        >
+          {title}
+        </Text>
+        {(description || subtitle) && (
+          <Text
+            style={[
+              styles.description,
+              {
+                color: colors.foregroundMuted,
+                fontSize: fontSize.sm,
+                marginTop: spacing[1],
+                lineHeight: fontSize.sm * 1.4,
+              },
+              descriptionStyle,
+            ]}
+            numberOfLines={2}
+          >
+            {description || subtitle}
+          </Text>
+        )}
+        {metadata && metadata.length > 0 && (
+          <View style={[styles.metadataRow, { marginTop: spacing[2], gap: spacing[3] }]}>
+            {metadata.map((item, index) => (
+              <View key={index} style={[styles.metadataItem, { gap: spacing[1] }]}>
+                {React.isValidElement(item.icon)
+                  ? React.cloneElement(item.icon as React.ReactElement<{ color?: string; width?: number; height?: number }>, {
+                      color: colors.foregroundMuted,
+                      width: 14,
+                      height: 14,
+                    })
+                  : item.icon}
+                <Text
+                  style={{
+                    color: colors.foregroundMuted,
+                    fontSize: fontSize.xs,
+                  }}
+                >
+                  {item.label}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+      </View>
+
+      {/* Right Slot */}
+      {right && (
+        <View style={[styles.rightSlot, { marginLeft: spacing[2] }]}>
+          {right}
+        </View>
+      )}
+
+      {/* Chevron */}
+      {showChevron && (
+        <View style={[styles.chevron, { marginLeft: spacing[2] }]}>
+          <ChevronRightIcon color={colors.foregroundMuted} />
+        </View>
+      )}
+    </>
+  );
+
+  // Default variant content
+  const defaultContent = (
     <>
       {/* Left Slot */}
       {left && (
@@ -290,13 +413,16 @@ export function ListItem({
     </>
   );
 
+  const content = variant === 'thumbnail' ? thumbnailContent : defaultContent;
+
   const containerStyle = [
     styles.item,
     {
       paddingHorizontal: spacing[4],
       paddingVertical: spacing[3],
-      minHeight: 56,
+      minHeight: variant === 'thumbnail' ? thumbnailSize + spacing[3] * 2 : 56,
     },
+    variant === 'thumbnail' && styles.thumbnailItem,
     disabled && styles.disabled,
     style,
   ];
@@ -312,7 +438,7 @@ export function ListItem({
         disabled={disabled}
         accessibilityRole="button"
         accessibilityLabel={title}
-        accessibilityHint={subtitle}
+        accessibilityHint={description || subtitle}
         accessibilityState={{ disabled }}
       >
         {content}
@@ -339,6 +465,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  thumbnailItem: {
+    alignItems: 'flex-start',
+  },
   leftSlot: {
     flexShrink: 0,
     alignItems: 'center',
@@ -348,11 +477,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  thumbnailContent: {
+    flex: 1,
+    justifyContent: 'flex-start',
+  },
+  thumbnail: {
+    flexShrink: 0,
+  },
   title: {
     // Dynamic styles applied inline
   },
   subtitle: {
     // Dynamic styles applied inline
+  },
+  description: {
+    // Dynamic styles applied inline
+  },
+  metadataRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  metadataItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   rightSlot: {
     flexShrink: 0,

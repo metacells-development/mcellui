@@ -2,7 +2,7 @@
  * Accordion
  *
  * An expandable/collapsible content panel component.
- * Supports single or multiple expanded items.
+ * Supports single or multiple expanded items with smooth height animations.
  *
  * @example
  * ```tsx
@@ -31,18 +31,24 @@ import {
   StyleSheet,
   ViewStyle,
   TextStyle,
+  LayoutChangeEvent,
 } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withTiming,
-  Easing,
-  runOnJS,
+  withSpring,
+  interpolate,
+  Extrapolation,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
-import { haptic } from '@nativeui/core';
+import Svg, { Path } from 'react-native-svg';
+import { useTheme, haptic } from '@nativeui/core';
 
-const TIMING_CONFIG = { duration: 250, easing: Easing.out(Easing.quad) };
+// Smooth spring config for natural feel
+const SPRING_CONFIG = {
+  damping: 20,
+  stiffness: 200,
+  mass: 0.5,
+};
 
 // Accordion Context
 interface AccordionContextValue {
@@ -65,6 +71,7 @@ function useAccordionContext() {
 interface AccordionItemContextValue {
   value: string;
   isOpen: boolean;
+  isLast: boolean;
 }
 
 const AccordionItemContext = createContext<AccordionItemContextValue | null>(null);
@@ -75,6 +82,21 @@ function useAccordionItemContext() {
     throw new Error('AccordionItem components must be used within an AccordionItem');
   }
   return context;
+}
+
+// Chevron Icon
+function ChevronIcon({ color }: { color: string }) {
+  return (
+    <Svg width={16} height={16} viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M6 9l6 6 6-6"
+        stroke={color}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
 }
 
 // Accordion Root
@@ -102,7 +124,7 @@ export function Accordion({
   children,
   style,
 }: AccordionProps) {
-  const { colors, radius, spacing } = useTheme();
+  const { colors, radius } = useTheme();
 
   // Normalize values to array
   const normalizeValue = (val: string | string[] | undefined): string[] => {
@@ -144,6 +166,10 @@ export function Accordion({
     [type, value, collapsible, isControlled, onValueChange]
   );
 
+  // Count children to determine last item
+  const childArray = React.Children.toArray(children);
+  const childCount = childArray.length;
+
   return (
     <AccordionContext.Provider value={{ type, value, onValueChange: handleValueChange }}>
       <View
@@ -158,7 +184,14 @@ export function Accordion({
           style,
         ]}
       >
-        {children}
+        {React.Children.map(children, (child, index) => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child as React.ReactElement<any>, {
+              __isLast: index === childCount - 1,
+            });
+          }
+          return child;
+        })}
       </View>
     </AccordionContext.Provider>
   );
@@ -170,6 +203,8 @@ export interface AccordionItemProps {
   children: React.ReactNode;
   disabled?: boolean;
   style?: ViewStyle;
+  /** @internal */
+  __isLast?: boolean;
 }
 
 export function AccordionItem({
@@ -177,18 +212,19 @@ export function AccordionItem({
   children,
   disabled = false,
   style,
+  __isLast = false,
 }: AccordionItemProps) {
   const { colors } = useTheme();
   const { value: selectedValues } = useAccordionContext();
   const isOpen = selectedValues.includes(value);
 
   return (
-    <AccordionItemContext.Provider value={{ value, isOpen }}>
+    <AccordionItemContext.Provider value={{ value, isOpen, isLast: __isLast }}>
       <View
         style={[
           styles.item,
           {
-            borderBottomWidth: 1,
+            borderBottomWidth: __isLast ? 0 : 1,
             borderBottomColor: colors.border,
             opacity: disabled ? 0.5 : 1,
           },
@@ -219,10 +255,10 @@ export function AccordionTrigger({
   const { onValueChange } = useAccordionContext();
   const { value, isOpen } = useAccordionItemContext();
 
-  const rotation = useSharedValue(isOpen ? 180 : 0);
+  const progress = useSharedValue(isOpen ? 1 : 0);
 
   React.useEffect(() => {
-    rotation.value = withTiming(isOpen ? 180 : 0, TIMING_CONFIG);
+    progress.value = withSpring(isOpen ? 1 : 0, SPRING_CONFIG);
   }, [isOpen]);
 
   const handlePress = () => {
@@ -232,17 +268,19 @@ export function AccordionTrigger({
   };
 
   const chevronStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${rotation.value}deg` }],
+    transform: [
+      { rotate: `${interpolate(progress.value, [0, 1], [0, 180])}deg` },
+    ],
   }));
 
   return (
     <Pressable
-      style={[
+      style={({ pressed }) => [
         styles.trigger,
         {
           paddingVertical: spacing[4],
           paddingHorizontal: spacing[4],
-          backgroundColor: colors.background,
+          backgroundColor: pressed ? colors.secondary : colors.background,
         },
         style,
       ]}
@@ -260,15 +298,9 @@ export function AccordionTrigger({
       >
         {children}
       </Text>
-      <Animated.Text
-        style={[
-          styles.chevron,
-          { color: colors.foregroundMuted },
-          chevronStyle,
-        ]}
-      >
-        ▼
-      </Animated.Text>
+      <Animated.View style={chevronStyle}>
+        <ChevronIcon color={colors.foregroundMuted} />
+      </Animated.View>
     </Pressable>
   );
 }
@@ -283,30 +315,73 @@ export function AccordionContent({ children, style }: AccordionContentProps) {
   const { colors, spacing } = useTheme();
   const { isOpen } = useAccordionItemContext();
 
-  const height = useSharedValue(isOpen ? 1 : 0);
-  const opacity = useSharedValue(isOpen ? 1 : 0);
+  // Track if we've ever been opened (for initial render optimization)
+  const hasBeenOpened = React.useRef(isOpen);
+  const [measuredHeight, setMeasuredHeight] = useState(0);
+  const heightValue = useSharedValue(0);
+  const progress = useSharedValue(isOpen ? 1 : 0);
 
+  // Update ref synchronously before render logic
+  if (isOpen && !hasBeenOpened.current) {
+    hasBeenOpened.current = true;
+  }
+
+  // Keep a ref to isOpen for use in callbacks
+  const isOpenRef = React.useRef(isOpen);
+  isOpenRef.current = isOpen;
+
+  // Sync measured height to shared value
   React.useEffect(() => {
-    height.value = withTiming(isOpen ? 1 : 0, TIMING_CONFIG);
-    opacity.value = withTiming(isOpen ? 1 : 0, TIMING_CONFIG);
+    if (measuredHeight > 0) {
+      heightValue.value = measuredHeight;
+    }
+  }, [measuredHeight]);
+
+  // Animate open/close
+  React.useEffect(() => {
+    progress.value = withSpring(isOpen ? 1 : 0, SPRING_CONFIG);
   }, [isOpen]);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    height: height.value === 0 ? 0 : 'auto',
-    opacity: opacity.value,
-    overflow: 'hidden',
-  }));
+  const onLayout = (event: LayoutChangeEvent) => {
+    const h = event.nativeEvent.layout.height;
+    // Only accept heights LARGER than current measurement
+    // This prevents accepting small heights from lingering collapse animation
+    if (isOpenRef.current && h > 0 && h > measuredHeight) {
+      setMeasuredHeight(h);
+    }
+  };
 
-  if (!isOpen && height.value === 0) {
+  const animatedStyle = useAnimatedStyle(() => {
+    if (heightValue.value === 0) {
+      // Not measured yet - show full height so onLayout can measure
+      return { overflow: 'hidden' as const };
+    }
+
+    return {
+      height: interpolate(
+        progress.value,
+        [0, 1],
+        [0, heightValue.value],
+        Extrapolation.CLAMP
+      ),
+      overflow: 'hidden' as const,
+    };
+  });
+
+  // Don't render until first opened
+  if (!hasBeenOpened.current) {
     return null;
   }
 
   return (
     <Animated.View style={animatedStyle}>
       <View
+        onLayout={onLayout}
         style={[
           styles.content,
           {
+            // Fix height after measurement to prevent text reflow during animation
+            height: measuredHeight > 0 ? measuredHeight : undefined,
             paddingHorizontal: spacing[4],
             paddingBottom: spacing[4],
             backgroundColor: colors.background,
@@ -332,10 +407,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     flex: 1,
-  },
-  chevron: {
-    fontSize: 10,
-    marginLeft: 8,
+    marginRight: 8,
   },
   content: {},
 });

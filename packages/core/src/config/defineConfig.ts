@@ -58,6 +58,7 @@ export function resolveConfig(config: NativeUIConfig = {}): ResolvedNativeUIConf
     darkColors: config.darkColors ?? defaultConfig.darkColors,
     fonts: config.fonts ?? defaultConfig.fonts,
     haptics: config.haptics ?? defaultConfig.haptics,
+    animationPreset: config.animationPreset ?? defaultConfig.animationPreset,
     components: {
       ...defaultConfig.components,
       ...config.components,
