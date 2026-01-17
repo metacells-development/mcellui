@@ -1,12 +1,32 @@
 {
-  "name": "@nativeui/mcp-server",
-  "version": "0.0.1",
-  "description": "MCP server for nativeui - Claude Code integration",
+  "name": "@metacells/mcellui-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server for mcellui - AI assistant integration for React Native development",
+  "author": "metacells",
+  "license": "MIT",
+  "homepage": "https://mcellui.dev/docs/mcp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metacells-development/mcellui.git",
+    "directory": "packages/mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/metacells-development/mcellui/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "react-native",
+    "expo",
+    "mcellui"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "nativeui-mcp": "./dist/index.js"
+    "mcellui-mcp": "./dist/index.js"
   },
   "files": [
     "dist"

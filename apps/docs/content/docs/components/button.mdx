@@ -1,0 +1,128 @@
+---
+title: Button
+description: A pressable button component with multiple variants, sizes, and loading state.
+---
+
+## Preview
+
+A versatile button component that supports different visual styles, sizes, and states.
+
+<ComponentPreview>
+  <ButtonPreview />
+</ComponentPreview>
+
+## Installation
+
+```bash
+npx mcellui add button
+```
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+
+export function MyComponent() {
+  return (
+    <Button onPress={() => console.log('Pressed!')}>
+      Click me
+    </Button>
+  );
+}
+```
+
+## Examples
+
+### Variants
+
+```tsx
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="destructive">Destructive</Button>
+```
+
+### Sizes
+
+```tsx
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
+```
+
+### Loading State
+
+```tsx
+<Button loading>Loading...</Button>
+<Button loading loadingText="Please wait">Submit</Button>
+```
+
+### Disabled
+
+```tsx
+<Button disabled>Disabled</Button>
+```
+
+### With Icon
+
+```tsx
+import { ArrowRight } from 'lucide-react-native';
+
+<Button>
+  Continue
+  <ArrowRight size={16} />
+</Button>
+```
+
+### Full Width
+
+```tsx
+<Button style={{ width: '100%' }}>Full Width</Button>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'default' \| 'secondary' \| 'outline' \| 'ghost' \| 'destructive'` | `'default'` | Visual style |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size |
+| `loading` | `boolean` | `false` | Show loading spinner |
+| `loadingText` | `string` | - | Text to show while loading |
+| `disabled` | `boolean` | `false` | Disable interactions |
+| `onPress` | `() => void` | - | Press handler |
+| `children` | `ReactNode` | - | Button content |
+
+## Accessibility
+
+- Uses `accessibilityRole="button"`
+- Disabled state is announced
+- Loading state is announced
+- Supports `accessibilityLabel` prop
+
+## Dependencies
+
+None - this component has no external dependencies.
+
+## Source
+
+```tsx
+// components/ui/button.tsx
+import { useTheme } from '@mcellui/core';
+import { forwardRef } from 'react';
+import {
+  Pressable,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+} from 'react-native';
+import type { PressableProps, ViewStyle } from 'react-native';
+
+// ... full source available after installation
+```
+
+## Related
+
+- [Icon Button](/docs/components/icon-button) - Icon-only variant
+- [FAB](/docs/components/fab) - Floating action button

@@ -1,0 +1,54 @@
+---
+title: Blocks
+description: Pre-built screen templates for common mobile app patterns.
+---
+
+# Blocks
+
+Blocks are pre-built screen templates that combine multiple components into complete, ready-to-use screens. Copy, paste, and customize to match your app's design.
+
+## Available Blocks
+
+### Authentication
+
+- [Login Block](/docs/blocks/login-block) - Complete login screen with form validation
+- [Signup Block](/docs/blocks/signup-block) - Registration screen with password confirmation
+
+### Profile & Settings
+
+- [Profile Block](/docs/blocks/profile-block) - User profile display with avatar and stats
+- [Settings List Block](/docs/blocks/settings-list-block) - Settings screen with grouped options
+
+### States
+
+- [Empty State Block](/docs/blocks/empty-state-block) - Placeholder for empty content areas
+- [Error State Block](/docs/blocks/error-state-block) - Error display with retry action
+
+## Installation
+
+Blocks are installed the same way as components:
+
+```bash
+npx mcellui add login-block
+npx mcellui add profile-block
+```
+
+## Dependencies
+
+Most blocks use the Form system and require these dependencies:
+
+```bash
+npm install react-hook-form @hookform/resolvers zod
+```
+
+The CLI will prompt you to install these automatically.
+
+## Customization
+
+Blocks are designed to be customized. After installation, you own the code:
+
+1. **Change the layout** - Adjust spacing, alignment, order
+2. **Modify colors** - Use your theme tokens
+3. **Add/remove fields** - Customize form fields
+4. **Change copy** - Update text and labels
+5. **Add features** - Integrate with your backend

@@ -1,7 +1,15 @@
 {
   "name": "nativeui",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
+  "description": "Beautiful, accessible UI components for Expo and React Native. Copy-paste. You own the code.",
+  "author": "metacells",
+  "license": "MIT",
+  "homepage": "https://mcellui.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metacells/nativeui.git"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -16,13 +24,13 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\""
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "@typescript-eslint/parser": "^7.0.0",
-    "eslint": "^8.57.0",
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
     "turbo": "^2.0.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "typescript-eslint": "^8.0.0"
   },
   "packageManager": "npm@10.2.4",
   "engines": {

@@ -1,0 +1,272 @@
+---
+title: Theming
+description: Customize the look and feel of mcellui components with themes.
+---
+
+# Theming
+
+mcellui uses a design token system for consistent, customizable styling across all components.
+
+## Theme Presets
+
+mcellui comes with 8 built-in theme presets. Set your theme in `mcellui.config.ts`:
+
+```ts
+import { defineConfig } from 'mcellui';
+
+export default defineConfig({
+  theme: 'violet', // zinc, slate, stone, blue, green, rose, orange, violet
+  radius: 'md',
+  colorScheme: 'system',
+});
+```
+
+### Available Presets
+
+| Theme | Primary Color | Description |
+|-------|---------------|-------------|
+| `zinc` | Neutral gray | Clean, minimal aesthetic |
+| `slate` | Cool gray | Professional, modern feel |
+| `stone` | Warm gray | Soft, natural appearance |
+| `blue` | Blue | Trust, reliability |
+| `green` | Green | Growth, success |
+| `rose` | Pink/Rose | Warm, friendly |
+| `orange` | Orange | Energy, creativity |
+| `violet` | Purple | Premium, creative |
+
+## Color Scheme
+
+Control light/dark mode behavior:
+
+```ts
+export default defineConfig({
+  colorScheme: 'system', // 'light', 'dark', or 'system'
+});
+```
+
+- `system` - Follows device settings
+- `light` - Always light mode
+- `dark` - Always dark mode
+
+### Programmatic Control
+
+Toggle themes at runtime:
+
+```tsx
+import { useTheme } from '@/lib/theme';
+
+function ThemeToggle() {
+  const { colorScheme, setColorScheme } = useTheme();
+
+  return (
+    <Button
+      onPress={() =>
+        setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
+      }
+    >
+      Toggle Theme
+    </Button>
+  );
+}
+```
+
+## Design Tokens
+
+### Colors
+
+Access theme colors in your components:
+
+```tsx
+import { useTheme } from '@/lib/theme';
+
+function MyComponent() {
+  const { colors } = useTheme();
+
+  return (
+    <View style={{ backgroundColor: colors.background }}>
+      <Text style={{ color: colors.foreground }}>
+        Hello World
+      </Text>
+    </View>
+  );
+}
+```
+
+#### Color Tokens
+
+| Token | Description |
+|-------|-------------|
+| `background` | Page/screen background |
+| `foreground` | Primary text color |
+| `card` | Card background |
+| `cardForeground` | Card text color |
+| `primary` | Primary brand color |
+| `primaryForeground` | Text on primary |
+| `secondary` | Secondary actions |
+| `secondaryForeground` | Text on secondary |
+| `muted` | Muted backgrounds |
+| `mutedForeground` | Muted text |
+| `accent` | Accent highlights |
+| `accentForeground` | Text on accent |
+| `destructive` | Error/danger states |
+| `destructiveForeground` | Text on destructive |
+| `border` | Border color |
+| `input` | Input border |
+| `ring` | Focus ring |
+
+### Spacing
+
+Consistent spacing scale:
+
+```tsx
+const { spacing } = useTheme();
+
+<View style={{ padding: spacing[4], marginBottom: spacing[2] }}>
+```
+
+| Token | Value |
+|-------|-------|
+| `0` | 0 |
+| `1` | 4 |
+| `2` | 8 |
+| `3` | 12 |
+| `4` | 16 |
+| `5` | 20 |
+| `6` | 24 |
+| `8` | 32 |
+| `10` | 40 |
+| `12` | 48 |
+
+### Border Radius
+
+```tsx
+const { radius } = useTheme();
+
+<View style={{ borderRadius: radius.md }}>
+```
+
+| Token | Default Value |
+|-------|---------------|
+| `none` | 0 |
+| `sm` | 4 |
+| `md` | 8 |
+| `lg` | 12 |
+| `xl` | 16 |
+| `full` | 9999 |
+
+The base radius is controlled by your config:
+
+```ts
+export default defineConfig({
+  radius: 'lg', // Changes all radius values proportionally
+});
+```
+
+## Custom Themes
+
+Create a fully custom theme by extending the base:
+
+```ts
+// lib/theme.tsx
+import { createTheme } from 'mcellui';
+
+export const customTheme = createTheme({
+  colors: {
+    light: {
+      primary: '#6366f1',
+      primaryForeground: '#ffffff',
+      // ... other colors
+    },
+    dark: {
+      primary: '#818cf8',
+      primaryForeground: '#000000',
+      // ... other colors
+    },
+  },
+  spacing: {
+    // Custom spacing scale
+  },
+  radius: {
+    // Custom radius values
+  },
+});
+```
+
+Then use it in your provider:
+
+```tsx
+import { ThemeProvider } from 'mcellui';
+import { customTheme } from '@/lib/theme';
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider theme={customTheme}>
+      <Stack />
+    </ThemeProvider>
+  );
+}
+```
+
+## Platform-Specific Styles
+
+Apply different styles per platform:
+
+```tsx
+import { Platform } from 'react-native';
+import { useTheme } from '@/lib/theme';
+
+function MyComponent() {
+  const { colors, radius } = useTheme();
+
+  return (
+    <View
+      style={{
+        borderRadius: Platform.select({
+          ios: radius.lg,
+          android: radius.md,
+        }),
+      }}
+    >
+      {/* Content */}
+    </View>
+  );
+}
+```
+
+## Best Practices
+
+### 1. Use Theme Tokens
+
+Always use theme tokens instead of hardcoded values:
+
+```tsx
+// ✅ Good
+<View style={{ backgroundColor: colors.card }}>
+
+// ❌ Avoid
+<View style={{ backgroundColor: '#ffffff' }}>
+```
+
+### 2. Support Both Color Schemes
+
+Test your app in both light and dark modes:
+
+```bash
+# iOS Simulator
+Cmd + Shift + A
+
+# Android Emulator
+Settings > Display > Dark theme
+```
+
+### 3. Consistent Spacing
+
+Use the spacing scale for all margins and padding:
+
+```tsx
+// ✅ Good - uses spacing tokens
+<View style={{ padding: spacing[4], gap: spacing[2] }}>
+
+// ❌ Avoid - arbitrary values
+<View style={{ padding: 17, gap: 7 }}>
+```

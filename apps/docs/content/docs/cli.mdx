@@ -1,0 +1,197 @@
+---
+title: CLI
+description: Use the mcellui CLI to add components to your project.
+---
+
+# CLI
+
+The mcellui CLI is the fastest way to add components to your Expo/React Native project.
+
+## Installation
+
+The CLI doesn't need to be installed globally. Use `npx` to run commands:
+
+```bash
+npx mcellui <command>
+```
+
+## Commands
+
+### init
+
+Initialize mcellui in your project. This sets up the configuration file and installs core dependencies.
+
+```bash
+npx mcellui init
+```
+
+This will:
+1. Create `mcellui.config.ts` in your project root
+2. Set up the `components/ui` directory
+3. Install core utilities and theme provider
+4. Add necessary peer dependencies
+
+#### Options
+
+| Option | Description |
+|--------|-------------|
+| `--yes`, `-y` | Skip confirmation prompts |
+| `--defaults` | Use default configuration |
+| `--theme <name>` | Set initial theme (zinc, slate, stone, blue, green, rose, orange, violet) |
+
+### add
+
+Add components to your project.
+
+```bash
+npx mcellui add <component>
+```
+
+#### Examples
+
+Add a single component:
+
+```bash
+npx mcellui add button
+```
+
+Add multiple components:
+
+```bash
+npx mcellui add button card input
+```
+
+Add all components:
+
+```bash
+npx mcellui add --all
+```
+
+#### Options
+
+| Option | Description |
+|--------|-------------|
+| `--all` | Add all available components |
+| `--yes`, `-y` | Skip confirmation prompts |
+| `--overwrite` | Overwrite existing files |
+| `--path <path>` | Custom path for components (default: `components/ui`) |
+
+### list
+
+List all available components.
+
+```bash
+npx mcellui list
+```
+
+Output:
+
+```
+Available components:
+
+UI Components:
+  button          Primary action button with variants
+  card            Container for related content
+  input           Text input field
+  textarea        Multi-line text input
+  select          Dropdown selection
+  checkbox        Boolean selection
+  switch          Toggle switch
+  radio-group     Single selection from options
+  ...
+
+Blocks:
+  login-block     Complete login screen
+  signup-block    Complete signup screen
+  ...
+```
+
+### diff
+
+Show differences between your local components and the latest registry version.
+
+```bash
+npx mcellui diff <component>
+```
+
+This is useful when you want to see what's changed in a component since you installed it.
+
+## Configuration
+
+The `mcellui.config.ts` file controls how components are added to your project:
+
+```ts
+import { defineConfig } from 'mcellui';
+
+export default defineConfig({
+  // Theme preset
+  theme: 'violet',
+
+  // Border radius preset
+  radius: 'md',
+
+  // Color scheme preference
+  colorScheme: 'system',
+
+  // Path where components will be added
+  componentsPath: 'components/ui',
+
+  // Path for utility functions
+  utilsPath: 'lib/utils',
+
+  // TypeScript configuration
+  typescript: true,
+});
+```
+
+### Theme Options
+
+| Theme | Description |
+|-------|-------------|
+| `zinc` | Neutral gray tones |
+| `slate` | Cool gray with blue undertones |
+| `stone` | Warm gray with brown undertones |
+| `blue` | Primary blue accent |
+| `green` | Primary green accent |
+| `rose` | Primary pink/rose accent |
+| `orange` | Primary orange accent |
+| `violet` | Primary purple accent |
+
+### Radius Options
+
+| Radius | Value |
+|--------|-------|
+| `none` | 0 |
+| `sm` | 4 |
+| `md` | 8 |
+| `lg` | 12 |
+| `full` | 9999 |
+
+## Troubleshooting
+
+### "Component already exists"
+
+By default, the CLI won't overwrite existing components. Use `--overwrite` to replace:
+
+```bash
+npx mcellui add button --overwrite
+```
+
+### "Peer dependency not found"
+
+Some components require additional packages. The CLI will prompt you to install them:
+
+```bash
+npx mcellui add sheet
+# This will also install react-native-reanimated if not present
+```
+
+### Custom component path
+
+If your project uses a different structure:
+
+```bash
+npx mcellui add button --path src/components/ui
+```
+
+Or set it in your config file for all future additions.

@@ -1,0 +1,131 @@
+---
+title: Login Block
+description: Complete login screen with email/password form, validation, and social login options.
+---
+
+# Login Block
+
+A complete login screen with email/password form, validation, and optional social login buttons. Uses react-hook-form with Zod validation.
+
+<ComponentPreview>
+  <LoginBlockPreview />
+</ComponentPreview>
+
+## Installation
+
+```bash
+npx mcellui add login-block
+```
+
+### Dependencies
+
+This block requires the form system dependencies:
+
+```bash
+npm install react-hook-form @hookform/resolvers zod
+```
+
+## Usage
+
+```tsx
+import { LoginBlock } from '@/components/blocks/login-block';
+
+export function LoginScreen() {
+  const handleLogin = async (data: { email: string; password: string }) => {
+    // Your login logic
+    await signIn(data.email, data.password);
+  };
+
+  return (
+    <LoginBlock
+      onSubmit={handleLogin}
+      onForgotPassword={() => navigation.navigate('ForgotPassword')}
+      onSignUp={() => navigation.navigate('SignUp')}
+      onSocialLogin={(provider) => handleSocialLogin(provider)}
+    />
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `onSubmit` | `(data: LoginFormData) => void` | Required | Called when form is submitted |
+| `onForgotPassword` | `() => void` | - | Called when "Forgot Password" is pressed |
+| `onSignUp` | `() => void` | - | Called when "Sign Up" is pressed |
+| `onSocialLogin` | `(provider: SocialProvider) => void` | - | Called when social login button is pressed |
+| `loading` | `boolean` | `false` | Show loading state on submit button |
+| `title` | `string` | `"Welcome back"` | Custom title text |
+| `subtitle` | `string` | `"Sign in to your account"` | Custom subtitle text |
+| `showSocialLogin` | `boolean` | `true` | Show social login buttons |
+| `socialProviders` | `SocialProvider[]` | `['google', 'apple']` | Which social providers to show |
+
+### Types
+
+```tsx
+type SocialProvider = 'google' | 'apple' | 'facebook';
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+```
+
+## Customization Examples
+
+### Without Social Login
+
+```tsx
+<LoginBlock
+  onSubmit={handleLogin}
+  showSocialLogin={false}
+/>
+```
+
+### Custom Title
+
+```tsx
+<LoginBlock
+  onSubmit={handleLogin}
+  title="Welcome to MyApp"
+  subtitle="Enter your credentials to continue"
+/>
+```
+
+### Facebook Login
+
+```tsx
+<LoginBlock
+  onSubmit={handleLogin}
+  socialProviders={['google', 'apple', 'facebook']}
+  onSocialLogin={handleSocialLogin}
+/>
+```
+
+## Form Validation
+
+The block uses Zod for validation:
+
+```tsx
+const loginSchema = z.object({
+  email: z.string().email('Please enter a valid email'),
+  password: z.string().min(1, 'Password is required'),
+});
+```
+
+Customize validation by editing the schema in your local copy.
+
+## Accessibility
+
+- Form fields have proper labels
+- Error messages are announced
+- Loading state is communicated
+- Keyboard navigation supported
+
+## Related
+
+- [Signup Block](/docs/blocks/signup-block) - Registration screen
+- [Form](/docs/components/form) - Form system documentation
+- [Input](/docs/components/input) - Input component
+- [Button](/docs/components/button) - Button component

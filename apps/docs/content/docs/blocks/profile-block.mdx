@@ -1,0 +1,130 @@
+---
+title: Profile Block
+description: User profile display with avatar, stats, and action buttons.
+---
+
+# Profile Block
+
+A user profile screen with avatar, name, bio, statistics, and action buttons. Perfect for social apps, user dashboards, or account screens.
+
+<ComponentPreview>
+  <ProfileBlockPreview />
+</ComponentPreview>
+
+## Installation
+
+```bash
+npx mcellui add profile-block
+```
+
+## Usage
+
+```tsx
+import { ProfileBlock } from '@/components/blocks/profile-block';
+
+export function ProfileScreen() {
+  return (
+    <ProfileBlock
+      user={{
+        name: 'John Doe',
+        bio: 'Product Designer at Acme Inc.',
+        avatar: 'https://example.com/avatar.jpg',
+      }}
+      stats={[
+        { label: 'Posts', value: '124' },
+        { label: 'Followers', value: '4.2K' },
+        { label: 'Following', value: '892' },
+      ]}
+      onFollow={() => handleFollow()}
+      onMessage={() => navigation.navigate('Chat')}
+      isFollowing={false}
+    />
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `user` | `User` | Required | User data object |
+| `stats` | `Stat[]` | `[]` | Statistics to display |
+| `onFollow` | `() => void` | - | Called when follow button is pressed |
+| `onMessage` | `() => void` | - | Called when message button is pressed |
+| `onEdit` | `() => void` | - | Called when edit button is pressed (own profile) |
+| `isFollowing` | `boolean` | `false` | Whether current user follows this profile |
+| `isOwnProfile` | `boolean` | `false` | Whether this is the current user's profile |
+| `loading` | `boolean` | `false` | Show loading skeleton |
+
+### Types
+
+```tsx
+interface User {
+  name: string;
+  bio?: string;
+  avatar?: string;
+  username?: string;
+}
+
+interface Stat {
+  label: string;
+  value: string | number;
+}
+```
+
+## Customization Examples
+
+### Own Profile View
+
+```tsx
+<ProfileBlock
+  user={currentUser}
+  stats={userStats}
+  isOwnProfile
+  onEdit={() => navigation.navigate('EditProfile')}
+/>
+```
+
+### Without Stats
+
+```tsx
+<ProfileBlock
+  user={user}
+  stats={[]}
+  onFollow={handleFollow}
+/>
+```
+
+### Custom Stats
+
+```tsx
+<ProfileBlock
+  user={user}
+  stats={[
+    { label: 'Recipes', value: '42' },
+    { label: 'Likes', value: '1.2K' },
+    { label: 'Saved', value: '89' },
+  ]}
+/>
+```
+
+## Variants
+
+The block adapts based on props:
+
+- **Other user's profile**: Shows Follow and Message buttons
+- **Own profile**: Shows Edit Profile button
+- **Loading state**: Shows skeleton placeholders
+
+## Accessibility
+
+- Avatar has appropriate alt text
+- Stats are grouped for screen readers
+- Action buttons have clear labels
+- Loading state is announced
+
+## Related
+
+- [Avatar](/docs/components/avatar) - Avatar component
+- [Button](/docs/components/button) - Button component
+- [Card](/docs/components/card) - Card component

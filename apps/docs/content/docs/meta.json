@@ -1,0 +1,15 @@
+{
+  "title": "Docs",
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "installation",
+    "theming",
+    "cli",
+    "mcp",
+    "---Components---",
+    "components",
+    "---Blocks---",
+    "blocks"
+  ]
+}

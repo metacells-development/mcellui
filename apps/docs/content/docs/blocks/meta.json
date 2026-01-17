@@ -1,0 +1,10 @@
+{
+  "title": "Blocks",
+  "pages": [
+    "---Blocks---",
+    "index",
+    "login-block",
+    "profile-block",
+    "empty-state-block"
+  ]
+}

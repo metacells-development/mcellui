@@ -1,0 +1,281 @@
+---
+title: MCP Server
+description: Use mcellui with Claude Code and other AI assistants via the Model Context Protocol.
+---
+
+# MCP Server
+
+mcellui includes a Model Context Protocol (MCP) server that integrates with Claude Code, VS Code extensions, and other MCP-compatible AI assistants. This allows AI to directly access component documentation, source code, and intelligent suggestions.
+
+## Installation
+
+The MCP server is included in the monorepo at `packages/mcp-server`. To use it:
+
+```bash
+# Build the server
+cd packages/mcp-server
+npm run build
+```
+
+## Configuration
+
+### Claude Code
+
+Add to your Claude Code settings (`~/.claude/settings.json`):
+
+```json
+{
+  "mcpServers": {
+    "mcellui": {
+      "command": "node",
+      "args": ["/path/to/nativeui/packages/mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+### VS Code (Cline/Continue)
+
+Configure in your extension settings:
+
+```json
+{
+  "mcpServers": {
+    "mcellui": {
+      "command": "node",
+      "args": ["${workspaceFolder}/packages/mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+## Available Tools
+
+The MCP server provides 8 tools for AI assistants:
+
+### nativeui_list_components
+
+List all available components with optional filtering.
+
+```typescript
+// Parameters
+{
+  category?: string;  // "Inputs", "Layout", "Data Display", etc.
+  type?: string;      // "ui", "block", "screen", "primitive", "hook"
+}
+```
+
+### nativeui_get_component
+
+Get the full source code for a specific component.
+
+```typescript
+// Parameters
+{
+  name: string;  // Component name, e.g., "button", "card", "input"
+}
+```
+
+### nativeui_add_component
+
+Get CLI instructions to add a component to a project.
+
+```typescript
+// Parameters
+{
+  name: string;  // Component name to add
+}
+```
+
+### nativeui_suggest_component
+
+Get intelligent component suggestions based on what you want to build.
+
+```typescript
+// Parameters
+{
+  description: string;  // e.g., "a login form with email and password"
+}
+```
+
+This tool uses keyword matching to suggest relevant components. For example:
+- "login form" suggests `login-block`, `input`, `button`, `form`
+- "user profile" suggests `profile-block`, `avatar`, `card`
+- "settings page" suggests `settings-list-block`, `switch`, `separator`
+
+### nativeui_create_component
+
+Get a guide and template for creating new custom components.
+
+```typescript
+// Parameters
+{
+  name: string;              // Component name
+  template?: string;         // "basic", "animated", "pressable", "input"
+  withForwardRef?: boolean;  // Include forwardRef pattern
+}
+```
+
+### nativeui_customize_theme
+
+Get guidance on customizing the mcellui theme.
+
+```typescript
+// Parameters
+{
+  aspect?: string;   // "colors", "radius", "fonts", "all"
+  preset?: string;   // Theme preset as base
+}
+```
+
+### nativeui_doctor
+
+Check project setup and diagnose common issues.
+
+```typescript
+// Parameters
+{
+  projectPath?: string;  // Path to project root (optional)
+}
+```
+
+### nativeui_search
+
+Search components by name, description, or keywords.
+
+```typescript
+// Parameters
+{
+  query: string;  // Search query
+}
+```
+
+## Available Resources
+
+The MCP server exposes these resources for AI assistants to read:
+
+| URI | Description |
+|-----|-------------|
+| `nativeui://registry` | Full component registry as JSON |
+| `nativeui://tokens` | Design tokens (colors, spacing, etc.) |
+| `nativeui://docs/getting-started` | Getting started guide |
+| `nativeui://docs/component-patterns` | Component patterns guide |
+| `nativeui://docs/theme-customization` | Theme customization guide |
+| `nativeui://docs/animation-patterns` | Animation patterns guide |
+| `nativeui://docs/accessibility` | Accessibility guide |
+
+## Usage Examples
+
+### With Claude Code
+
+Once configured, you can ask Claude Code:
+
+- "What mcellui components are available for forms?"
+- "Show me the source code for the Button component"
+- "I need to build a login screen, what components should I use?"
+- "How do I customize the theme colors?"
+- "Create a new animated card component"
+
+### Example Conversation
+
+```
+User: I want to build a user profile screen
+
+Claude: Let me check what components would be helpful for a profile screen.
+
+[Calls nativeui_suggest_component with "user profile screen"]
+
+Based on your requirements, I recommend these components:
+
+1. **profile-block** - Complete profile layout with avatar, name, bio, and stats
+2. **avatar** - User avatar with image or initials fallback
+3. **button** - For follow/message actions
+4. **card** - For content sections
+5. **separator** - To divide sections
+
+You can add them all at once:
+
+```bash
+npx mcellui add profile-block avatar button card separator
+```
+
+Would you like me to show you the source code for the profile-block?
+```
+
+## Extending the Server
+
+The MCP server can be extended with additional tools and resources. The source code is in `packages/mcp-server/src/`:
+
+```
+mcp-server/
+├── src/
+│   ├── index.ts        # Server setup
+│   ├── tools/
+│   │   └── index.ts    # Tool definitions & handlers
+│   └── resources/
+│       └── index.ts    # Resource definitions & handlers
+├── package.json
+└── tsconfig.json
+```
+
+### Adding a New Tool
+
+```typescript
+// src/tools/index.ts
+
+export const tools: Tool[] = [
+  // ... existing tools
+  {
+    name: 'nativeui_my_tool',
+    description: 'Description of what it does',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        param1: { type: 'string', description: 'Parameter description' },
+      },
+      required: ['param1'],
+    },
+  },
+];
+
+export async function handleToolCall(name: string, args: Record<string, unknown>) {
+  switch (name) {
+    // ... existing cases
+    case 'nativeui_my_tool': {
+      const param1 = args?.param1 as string;
+      // Handle the tool call
+      return { content: [{ type: 'text', text: 'Result' }] };
+    }
+  }
+}
+```
+
+## Troubleshooting
+
+### Server not connecting
+
+1. Make sure the server is built: `npm run build`
+2. Check the path in your configuration is correct
+3. Verify Node.js is installed and accessible
+
+### Components not found
+
+The server reads from `packages/registry/registry.json`. Make sure:
+1. The registry file exists
+2. The server has the correct relative path to the registry
+
+### Debug mode
+
+Run the server directly to see logs:
+
+```bash
+node packages/mcp-server/dist/index.js
+```
+
+The server outputs to stderr for debugging.
+
+## Related
+
+- [CLI](/docs/cli) - Command line interface
+- [Installation](/docs/installation) - Getting started
+- [Theming](/docs/theming) - Theme customization

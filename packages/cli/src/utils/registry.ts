@@ -47,10 +47,11 @@ export interface ComponentData {
 // --- Configuration ---
 
 /**
- * Base URL for production registry (when published)
- * For now, we use local file system
+ * Base URL for production registry
+ * Can be overridden with MCELLUI_REGISTRY_URL environment variable
  */
-const REGISTRY_URL = process.env.NATIVEUI_REGISTRY_URL;
+const DEFAULT_REGISTRY_URL = 'https://raw.githubusercontent.com/metacells-development/mcellui/main/packages/registry';
+const REGISTRY_URL = process.env.MCELLUI_REGISTRY_URL || process.env.NATIVEUI_REGISTRY_URL || DEFAULT_REGISTRY_URL;
 
 /**
  * Path to local registry (for development)
@@ -103,10 +104,6 @@ async function getLocalRegistry(): Promise<RegistryItem[]> {
  * Fetch registry from remote CDN
  */
 async function getRemoteRegistry(): Promise<RegistryItem[]> {
-  if (!REGISTRY_URL) {
-    throw new Error('NATIVEUI_REGISTRY_URL not configured');
-  }
-
   try {
     const response = await fetch(`${REGISTRY_URL}/registry.json`);
     const registry = (await response.json()) as Registry;
@@ -163,10 +160,6 @@ async function fetchLocalComponent(item: RegistryItem): Promise<ComponentData> {
  * Fetch component from remote CDN
  */
 async function fetchRemoteComponent(item: RegistryItem): Promise<ComponentData> {
-  if (!REGISTRY_URL) {
-    throw new Error('NATIVEUI_REGISTRY_URL not configured');
-  }
-
   const files = await Promise.all(
     item.files.map(async (filePath) => {
       const response = await fetch(`${REGISTRY_URL}/${filePath}`);

@@ -77,15 +77,16 @@ export const initCommand = new Command()
 
       spinner.start('Creating configuration...');
 
-      // Create config file using defineConfig from @nativeui/core
+      // Create config file with inline defineConfig helper
       const configContent = `/**
- * NativeUI Configuration
+ * mcellui Configuration
  *
  * This file defines your app's design system.
  * All components will automatically use these values.
  */
 
-import { defineConfig } from '@nativeui/core';
+// Helper function for type-safe config
+const defineConfig = <T>(config: T): T => config;
 
 export default defineConfig({
   // ============================================

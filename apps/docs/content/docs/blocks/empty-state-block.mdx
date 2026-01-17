@@ -1,0 +1,135 @@
+---
+title: Empty State Block
+description: Placeholder screen for empty content with icon, message, and call-to-action.
+---
+
+# Empty State Block
+
+A placeholder component for empty content areas. Shows an icon, title, description, and optional action buttons. Perfect for empty lists, search results, or initial states.
+
+<ComponentPreview>
+  <EmptyStateBlockPreview />
+</ComponentPreview>
+
+## Installation
+
+```bash
+npx mcellui add empty-state-block
+```
+
+## Usage
+
+```tsx
+import { EmptyStateBlock } from '@/components/blocks/empty-state-block';
+import { Inbox } from 'lucide-react-native';
+
+export function MessagesScreen() {
+  if (messages.length === 0) {
+    return (
+      <EmptyStateBlock
+        icon={<Inbox size={40} color="#a1a1aa" />}
+        title="No messages yet"
+        description="When you receive messages, they will appear here."
+        actionText="Start a Conversation"
+        onAction={() => navigation.navigate('Compose')}
+      />
+    );
+  }
+
+  return <MessageList messages={messages} />;
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `icon` | `ReactNode` | - | Icon element to display |
+| `title` | `string` | Required | Title text |
+| `description` | `string` | - | Description text |
+| `actionText` | `string` | - | Primary action button text |
+| `onAction` | `() => void` | - | Primary action handler |
+| `secondaryActionText` | `string` | - | Secondary action button text |
+| `onSecondaryAction` | `() => void` | - | Secondary action handler |
+| `compact` | `boolean` | `false` | Use compact variant with less padding |
+| `style` | `ViewStyle` | - | Custom container styles |
+
+## Examples
+
+### Empty Search Results
+
+```tsx
+<EmptyStateBlock
+  icon={<Search size={40} color="#a1a1aa" />}
+  title="No results found"
+  description="Try adjusting your search or filters to find what you're looking for."
+  actionText="Clear Filters"
+  onAction={clearFilters}
+/>
+```
+
+### Empty Cart
+
+```tsx
+<EmptyStateBlock
+  icon={<ShoppingCart size={40} color="#a1a1aa" />}
+  title="Your cart is empty"
+  description="Looks like you haven't added anything to your cart yet."
+  actionText="Browse Products"
+  onAction={() => navigation.navigate('Shop')}
+  secondaryActionText="View Wishlist"
+  onSecondaryAction={() => navigation.navigate('Wishlist')}
+/>
+```
+
+### Compact Variant
+
+Use the compact variant for smaller spaces like empty sections within a screen:
+
+```tsx
+<EmptyStateBlock
+  compact
+  icon={<Star size={32} color="#a1a1aa" />}
+  title="No favorites yet"
+  description="Items you favorite will appear here."
+/>
+```
+
+### Without Icon
+
+```tsx
+<EmptyStateBlock
+  title="Nothing here"
+  description="This section is empty."
+/>
+```
+
+## Design Guidelines
+
+### When to Use
+
+- Empty lists or collections
+- No search results
+- Initial states before user action
+- Error states (consider ErrorStateBlock instead)
+- Onboarding placeholder content
+
+### Best Practices
+
+1. **Clear messaging**: Explain why the state is empty
+2. **Actionable**: Provide a clear next step when possible
+3. **Helpful tone**: Don't blame the user
+4. **Appropriate icon**: Match the context (inbox, search, cart, etc.)
+
+## Accessibility
+
+- Icon is decorative (not announced)
+- Title and description are readable
+- Action buttons are clearly labeled
+- Proper heading hierarchy
+
+## Related
+
+- [Error State Block](/docs/blocks/error-state-block) - For error states
+- [Button](/docs/components/button) - Button component
+- [Card](/docs/components/card) - Card component

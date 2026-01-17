@@ -1,0 +1,160 @@
+---
+title: Installation
+description: How to install and set up mcellui in your Expo project.
+---
+
+# Installation
+
+Get started with mcellui in your Expo or React Native project.
+
+## Prerequisites
+
+Before installing mcellui, make sure you have:
+
+- **Node.js 18+** installed
+- An existing **Expo** or **React Native** project
+- **Expo SDK 54+** or **React Native 0.76+**
+
+## Quick Start
+
+The fastest way to get started is with the CLI:
+
+```bash
+npx mcellui init
+```
+
+This command will:
+
+1. **Detect your project type** (Expo or bare React Native)
+2. **Create configuration file** (`mcellui.config.ts`)
+3. **Install core dependencies** (theme provider, utilities)
+4. **Set up directory structure** for components
+
+## Manual Installation
+
+If you prefer to set things up manually:
+
+### 1. Install Core Dependencies
+
+```bash
+# With npm
+npm install react-native-reanimated react-native-gesture-handler
+
+# With yarn
+yarn add react-native-reanimated react-native-gesture-handler
+
+# With pnpm
+pnpm add react-native-reanimated react-native-gesture-handler
+```
+
+### 2. Configure Reanimated
+
+Add the Reanimated babel plugin to your `babel.config.js`:
+
+```js
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: ['react-native-reanimated/plugin'],
+  };
+};
+```
+
+### 3. Create Configuration File
+
+Create `mcellui.config.ts` in your project root:
+
+```ts
+import { defineConfig } from 'mcellui';
+
+export default defineConfig({
+  theme: 'violet',
+  radius: 'md',
+  colorScheme: 'system',
+  componentsPath: 'components/ui',
+  utilsPath: 'lib/utils',
+});
+```
+
+### 4. Set Up Theme Provider
+
+Wrap your app with the theme provider:
+
+```tsx
+// app/_layout.tsx (Expo Router)
+import { ThemeProvider } from '@/lib/theme';
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <Stack />
+    </ThemeProvider>
+  );
+}
+```
+
+## Adding Components
+
+Once initialized, add components using the CLI:
+
+```bash
+# Add a single component
+npx mcellui add button
+
+# Add multiple components
+npx mcellui add button card input dialog
+
+# Add all components
+npx mcellui add --all
+```
+
+Components are copied to your `components/ui` directory (or your configured path).
+
+## Project Structure
+
+After setup, your project will look like this:
+
+```
+your-app/
+├── mcellui.config.ts      # Configuration
+├── components/
+│   └── ui/
+│       ├── button.tsx     # Added components
+│       ├── card.tsx
+│       └── ...
+├── lib/
+│   ├── theme.tsx          # Theme provider
+│   └── utils.ts           # Utility functions
+└── app/
+    └── ...
+```
+
+## TypeScript
+
+mcellui is written in TypeScript and provides full type definitions. No additional configuration needed.
+
+All components export their prop types:
+
+```tsx
+import { Button, type ButtonProps } from '@/components/ui/button';
+```
+
+## Expo Go Compatibility
+
+Most components work in Expo Go. Components that require native modules are marked in the documentation:
+
+| Component | Expo Go | Development Build |
+|-----------|---------|-------------------|
+| Button | ✅ | ✅ |
+| Card | ✅ | ✅ |
+| Sheet | ⚠️ Limited | ✅ |
+| Toast | ⚠️ Limited | ✅ |
+
+For the full experience, we recommend using a [development build](https://docs.expo.dev/develop/development-builds/introduction/).
+
+## Next Steps
+
+- [Theming](/docs/theming) - Customize colors and styles
+- [Components](/docs/components) - Browse available components
+- [CLI Reference](/docs/cli) - Learn all CLI commands
