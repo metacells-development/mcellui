@@ -25,6 +25,18 @@ interface Registry {
   components: RegistryItem[];
 }
 
+// --- Registry Configuration ---
+
+/**
+ * Remote registry URL (same as CLI)
+ */
+const DEFAULT_REGISTRY_URL = 'https://raw.githubusercontent.com/metacells-development/mcellui/main/packages/registry';
+const REGISTRY_URL = process.env.MCELLUI_REGISTRY_URL || process.env.NATIVEUI_REGISTRY_URL || DEFAULT_REGISTRY_URL;
+
+// Cache for registry and component code
+let registryCache: Registry | null = null;
+const componentCodeCache = new Map<string, string>();
+
 // --- Registry Access ---
 
 function getRegistryPath(): string {
@@ -32,7 +44,16 @@ function getRegistryPath(): string {
   return path.resolve(__dirname, '..', '..', 'registry');
 }
 
-function loadRegistry(): Registry | null {
+function isLocalMode(): boolean {
+  const localPath = getRegistryPath();
+  try {
+    return fs.existsSync(path.join(localPath, 'registry.json'));
+  } catch {
+    return false;
+  }
+}
+
+function loadLocalRegistry(): Registry | null {
   try {
     const registryPath = path.join(getRegistryPath(), 'registry.json');
     const data = fs.readFileSync(registryPath, 'utf-8');
@@ -42,7 +63,32 @@ function loadRegistry(): Registry | null {
   }
 }
 
-function loadComponentCode(item: RegistryItem): string | null {
+async function loadRemoteRegistry(): Promise<Registry | null> {
+  try {
+    const response = await fetch(`${REGISTRY_URL}/registry.json`);
+    if (!response.ok) return null;
+    return (await response.json()) as Registry;
+  } catch {
+    return null;
+  }
+}
+
+async function loadRegistry(): Promise<Registry | null> {
+  // Return cached if available
+  if (registryCache) return registryCache;
+
+  // Try local first
+  if (isLocalMode()) {
+    registryCache = loadLocalRegistry();
+    if (registryCache) return registryCache;
+  }
+
+  // Fall back to remote
+  registryCache = await loadRemoteRegistry();
+  return registryCache;
+}
+
+function loadLocalComponentCode(item: RegistryItem): string | null {
   try {
     const registryPath = getRegistryPath();
     const file = item.files[0];
@@ -52,6 +98,44 @@ function loadComponentCode(item: RegistryItem): string | null {
   } catch {
     return null;
   }
+}
+
+async function loadRemoteComponentCode(item: RegistryItem): Promise<string | null> {
+  try {
+    const file = item.files[0];
+    if (!file) return null;
+    const response = await fetch(`${REGISTRY_URL}/${file}`);
+    if (!response.ok) return null;
+    return await response.text();
+  } catch {
+    return null;
+  }
+}
+
+async function loadComponentCode(item: RegistryItem): Promise<string | null> {
+  // Check cache
+  if (componentCodeCache.has(item.name)) {
+    return componentCodeCache.get(item.name)!;
+  }
+
+  let code: string | null = null;
+
+  // Try local first
+  if (isLocalMode()) {
+    code = loadLocalComponentCode(item);
+  }
+
+  // Fall back to remote
+  if (!code) {
+    code = await loadRemoteComponentCode(item);
+  }
+
+  // Cache the result
+  if (code) {
+    componentCodeCache.set(item.name, code);
+  }
+
+  return code;
 }
 
 // --- Tools Definition ---
@@ -268,14 +352,14 @@ export async function handleToolCall(
   name: string,
   args: Record<string, unknown> | undefined
 ): Promise<{ content: Array<{ type: string; text: string }> }> {
-  const registry = loadRegistry();
+  const registry = await loadRegistry();
 
   if (!registry && !['nativeui_doctor', 'nativeui_create_component', 'nativeui_customize_theme'].includes(name)) {
     return {
       content: [
         {
           type: 'text',
-          text: 'Error: Could not load component registry.',
+          text: `Error: Could not load component registry. Tried: ${REGISTRY_URL}/registry.json`,
         },
       ],
     };
@@ -337,7 +421,7 @@ export async function handleToolCall(
         };
       }
 
-      const code = loadComponentCode(component);
+      const code = await loadComponentCode(component);
       if (!code) {
         return {
           content: [
