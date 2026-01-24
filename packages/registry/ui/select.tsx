@@ -42,7 +42,6 @@ import Animated, {
 import { useTheme } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
-const TIMING_CONFIG = { duration: 200, easing: Easing.out(Easing.quad) };
 import {
   Sheet,
   SheetContent,
@@ -55,6 +54,8 @@ export interface SelectOption {
   value: string;
   disabled?: boolean;
 }
+
+export type SelectSize = 'sm' | 'md' | 'lg';
 
 export interface SelectProps {
   /** Label text above select */
@@ -73,6 +74,8 @@ export interface SelectProps {
   helperText?: string;
   /** Disabled state */
   disabled?: boolean;
+  /** Size variant */
+  size?: SelectSize;
   /** Sheet title */
   sheetTitle?: string;
   /** Container style */
@@ -94,12 +97,14 @@ export function Select({
   error,
   helperText,
   disabled = false,
+  size = 'md',
   sheetTitle,
   containerStyle,
   style,
   labelStyle,
 }: SelectProps) {
-  const { colors, radius, spacing } = useTheme();
+  const { colors, components, componentRadius, timing, spacing } = useTheme();
+  const tokens = components.select[size];
   const [open, setOpen] = useState(false);
   const focusProgress = useSharedValue(0);
 
@@ -109,14 +114,20 @@ export function Select({
   const handleOpen = useCallback(() => {
     if (disabled) return;
     haptic('light');
-    focusProgress.value = withTiming(1, TIMING_CONFIG);
+    focusProgress.value = withTiming(1, {
+      duration: timing.default.duration,
+      easing: Easing.out(Easing.quad),
+    });
     setOpen(true);
-  }, [disabled]);
+  }, [disabled, timing]);
 
   const handleClose = useCallback(() => {
-    focusProgress.value = withTiming(0, TIMING_CONFIG);
+    focusProgress.value = withTiming(0, {
+      duration: timing.default.duration,
+      easing: Easing.out(Easing.quad),
+    });
     setOpen(false);
-  }, []);
+  }, [timing]);
 
   const handleSelect = useCallback(
     (optionValue: string) => {
@@ -152,7 +163,7 @@ export function Select({
           style={[
             styles.label,
             {
-              fontSize: 14,
+              fontSize: tokens.labelFontSize,
               marginBottom: spacing[1.5],
               color: hasError ? colors.destructive : colors.foreground,
             },
@@ -167,9 +178,9 @@ export function Select({
         style={[
           styles.trigger,
           {
-            minHeight: 48,
-            paddingHorizontal: 12,
-            borderRadius: radius.md,
+            minHeight: tokens.height,
+            paddingHorizontal: tokens.paddingHorizontal,
+            borderRadius: componentRadius.select,
             backgroundColor: disabled ? colors.backgroundMuted : colors.background,
           },
           animatedBorderStyle,
@@ -185,6 +196,7 @@ export function Select({
           style={[
             styles.triggerText,
             {
+              fontSize: tokens.fontSize,
               color: selectedOption
                 ? disabled
                   ? colors.foregroundMuted
@@ -206,7 +218,7 @@ export function Select({
           style={[
             styles.helperText,
             {
-              fontSize: 12,
+              fontSize: tokens.helperFontSize,
               marginTop: spacing[1],
               color: hasError ? colors.destructive : colors.foregroundMuted,
             },
@@ -234,8 +246,8 @@ export function Select({
                         : pressed
                           ? colors.backgroundMuted
                           : 'transparent',
-                    borderRadius: radius.md,
-                    paddingVertical: spacing[3],
+                    borderRadius: componentRadius.select,
+                    paddingVertical: spacing[size === 'sm' ? 2 : size === 'lg' ? 4 : 3],
                     paddingHorizontal: spacing[4],
                     opacity: option.disabled ? 0.5 : 1,
                   },
@@ -285,7 +297,6 @@ const styles = StyleSheet.create({
   },
   triggerText: {
     flex: 1,
-    fontSize: 14,
   },
   chevron: {
     fontSize: 10,
