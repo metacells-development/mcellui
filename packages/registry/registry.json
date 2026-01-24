@@ -902,6 +902,116 @@
       "files": ["ui/tag-input.tsx"],
       "dependencies": ["react-native-reanimated", "react-native-svg"],
       "registryDependencies": []
+    },
+    {
+      "name": "order-item",
+      "type": "block",
+      "description": "Order history line item with status, products, and actions",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["blocks/order-item.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["badge", "button"]
+    },
+    {
+      "name": "review-card",
+      "type": "block",
+      "description": "User review display with rating, images, and helpful votes",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["blocks/review-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar", "rating", "badge"]
+    },
+    {
+      "name": "task-item",
+      "type": "block",
+      "description": "Todo/task item with checkbox, priority, and due date",
+      "category": "Productivity",
+      "status": "beta",
+      "files": ["blocks/task-item.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": ["checkbox", "badge", "swipeable-row"]
+    },
+    {
+      "name": "event-card",
+      "type": "block",
+      "description": "Calendar event display with date, time, location, and attendees",
+      "category": "Productivity",
+      "status": "beta",
+      "files": ["blocks/event-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar", "avatar-stack", "badge", "card"]
+    },
+    {
+      "name": "article-card",
+      "type": "block",
+      "description": "Blog/news article preview with image, author, and metadata",
+      "category": "Content",
+      "status": "beta",
+      "files": ["blocks/article-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar", "badge", "card"]
+    },
+    {
+      "name": "pricing-card",
+      "type": "block",
+      "description": "Subscription plan display with features, price, and CTA",
+      "category": "Marketing",
+      "status": "beta",
+      "files": ["blocks/pricing-card.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": ["button", "badge"]
+    },
+    {
+      "name": "checkout-screen",
+      "type": "screen",
+      "description": "Multi-step checkout flow with shipping, payment, and review",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["screens/checkout-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["button", "icon-button", "input", "separator", "progress", "radio-group"]
+    },
+    {
+      "name": "order-history-screen",
+      "type": "screen",
+      "description": "Past orders list with filtering, tabs, and order actions",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["screens/order-history-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["icon-button", "tabs", "spinner", "order-item", "empty-state-block"]
+    },
+    {
+      "name": "home-screen",
+      "type": "screen",
+      "description": "Dashboard/landing screen with hero, stats, and featured content",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["screens/home-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["avatar", "icon-button", "search-input", "horizontal-list", "section-header", "stats-card", "hero-block", "content-card"]
+    },
+    {
+      "name": "account-screen",
+      "type": "screen",
+      "description": "User account management with profile and settings navigation",
+      "category": "Profile",
+      "status": "beta",
+      "files": ["screens/account-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["avatar", "button", "icon-button", "list", "separator", "badge"]
+    },
+    {
+      "name": "help-screen",
+      "type": "screen",
+      "description": "FAQ and support screen with searchable topics and contact options",
+      "category": "Support",
+      "status": "beta",
+      "files": ["screens/help-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["icon-button", "search-input", "accordion", "separator", "card"]
     }
   ]
 }
