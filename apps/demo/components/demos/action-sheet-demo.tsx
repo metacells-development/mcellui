@@ -59,6 +59,7 @@ export function ActionSheetDemo() {
   const [photoSheet, setPhotoSheet] = useState(false);
   const [shareSheet, setShareSheet] = useState(false);
   const [menuSheet, setMenuSheet] = useState(false);
+  const [statesSheet, setStatesSheet] = useState(false);
 
   const showAlert = (message: string) => {
     Alert.alert('Action', message);
@@ -149,6 +150,27 @@ export function ActionSheetDemo() {
             onPress={() => showAlert('Delete')}
           >
             Delete
+          </ActionSheetItem>
+        </ActionSheet>
+      </Section>
+
+      <Section title="Item States">
+        <Button variant="outline" onPress={() => setStatesSheet(true)}>
+          Open Item States Demo
+        </Button>
+        <ActionSheet
+          open={statesSheet}
+          onOpenChange={setStatesSheet}
+          title="Item States"
+        >
+          <ActionSheetItem icon={<EditIcon />} onPress={() => { setStatesSheet(false); showAlert('Normal'); }}>
+            Normal Item
+          </ActionSheetItem>
+          <ActionSheetItem disabled>
+            Disabled Item
+          </ActionSheetItem>
+          <ActionSheetItem icon={<TrashIcon />} destructive onPress={() => { setStatesSheet(false); showAlert('Destructive'); }}>
+            Destructive Item
           </ActionSheetItem>
         </ActionSheet>
       </Section>
