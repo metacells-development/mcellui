@@ -17,6 +17,7 @@ function InfoIcon({ color }: { color?: string }) {
 
 export function TooltipDemo() {
   const { colors, spacing } = useTheme();
+  const [controlledOpen, setControlledOpen] = React.useState(false);
 
   return (
     <View style={styles.container}>
@@ -31,40 +32,55 @@ export function TooltipDemo() {
         </Text>
       </Section>
 
-      <Section title="Position: Top (default)">
-        <View style={styles.centered}>
+      <Section title="Positions">
+        <View style={styles.row}>
           <Tooltip content="I appear above the element" position="top">
-            <Button>Tooltip Above</Button>
+            <Button variant="outline" size="sm">Top</Button>
           </Tooltip>
-        </View>
-      </Section>
-
-      <Section title="Position: Bottom">
-        <View style={styles.centered}>
           <Tooltip content="I appear below the element" position="bottom">
-            <Button>Tooltip Below</Button>
+            <Button variant="outline" size="sm">Bottom</Button>
           </Tooltip>
         </View>
       </Section>
 
-      <Section title="On Text">
-        <Text style={{ color: colors.foreground }}>
-          Hover over the{' '}
-          <Tooltip content="More information about this term">
-            <Text style={{ color: colors.primary, textDecorationLine: 'underline' }}>
-              highlighted text
-            </Text>
+      <Section title="Delay Variations">
+        <View style={styles.row}>
+          <Tooltip content="Instant (0ms)" delayMs={0}>
+            <Button variant="outline" size="sm">Instant</Button>
           </Tooltip>
-          {' '}to learn more.
+          <Tooltip content="Default (500ms)" delayMs={500}>
+            <Button variant="outline" size="sm">Default (500ms)</Button>
+          </Tooltip>
+          <Tooltip content="Slow (1000ms)" delayMs={1000}>
+            <Button variant="outline" size="sm">Slow (1s)</Button>
+          </Tooltip>
+        </View>
+        <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
+          Try long-pressing each button to feel the delay difference
         </Text>
       </Section>
 
-      <Section title="On Icon">
-        <View style={styles.row}>
-          <Text style={{ color: colors.foreground }}>Password requirements</Text>
-          <Tooltip content="Password must be at least 8 characters with one uppercase, one lowercase, and one number.">
-            <InfoIcon color={colors.foregroundMuted} />
-          </Tooltip>
+      <Section title="On Different Elements">
+        <View style={styles.column}>
+          <View style={styles.row}>
+            <Text style={{ color: colors.foreground }}>On text: </Text>
+            <Tooltip content="More information about this term">
+              <Text style={{ color: colors.primary, textDecorationLine: 'underline' }}>
+                highlighted text
+              </Text>
+            </Tooltip>
+          </View>
+          <View style={styles.row}>
+            <Text style={{ color: colors.foreground }}>On icon: </Text>
+            <Tooltip content="Password must be at least 8 characters with one uppercase, one lowercase, and one number.">
+              <InfoIcon color={colors.foregroundMuted} />
+            </Tooltip>
+          </View>
+          <View style={styles.row}>
+            <Tooltip content="Helpful tooltip on button">
+              <Button size="sm">On Button</Button>
+            </Tooltip>
+          </View>
         </View>
       </Section>
 
@@ -79,18 +95,31 @@ export function TooltipDemo() {
         </View>
       </Section>
 
-      <Section title="Custom Delay">
-        <View style={styles.row}>
-          <Tooltip content="Instant!" delayMs={0}>
-            <Button variant="outline" size="sm">No delay</Button>
-          </Tooltip>
-          <Tooltip content="Takes a bit longer" delayMs={800}>
-            <Button variant="outline" size="sm">800ms delay</Button>
-          </Tooltip>
+      <Section title="Controlled Tooltip">
+        <View style={styles.column}>
+          <View style={styles.row}>
+            <Button
+              variant="outline"
+              size="sm"
+              onPress={() => setControlledOpen(!controlledOpen)}
+            >
+              Toggle Tooltip
+            </Button>
+            <Tooltip
+              content="This tooltip is controlled by state"
+              open={controlledOpen}
+              onOpenChange={setControlledOpen}
+            >
+              <Button variant="ghost" size="sm">Target Element</Button>
+            </Tooltip>
+          </View>
+          <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
+            Tooltip is currently: {controlledOpen ? 'Open' : 'Closed'}
+          </Text>
         </View>
       </Section>
 
-      <Section title="Disabled">
+      <Section title="Disabled State">
         <View style={styles.centered}>
           <Tooltip content="You won't see this" disabled>
             <Button variant="ghost">Tooltip Disabled</Button>
@@ -110,6 +139,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  column: {
+    gap: 12,
   },
   centered: {
     alignItems: 'center',

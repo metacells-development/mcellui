@@ -145,6 +145,93 @@ export function PopoverDemo() {
         </Card>
       </Section>
 
+      <Section title="Alignments">
+        <Card>
+          <CardContent style={{ paddingTop: spacing[4] }}>
+            <View style={{ gap: spacing[4] }}>
+              <View>
+                <Text style={[styles.popoverText, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
+                  Top position with different alignments:
+                </Text>
+                <View style={{ flexDirection: 'row', gap: spacing[2], justifyContent: 'center' }}>
+                  {(['start', 'center', 'end'] as const).map((align) => (
+                    <Popover key={align}>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" size="sm">{align}</Button>
+                      </PopoverTrigger>
+                      <PopoverContent position="top" align={align}>
+                        <Text style={{ color: colors.foreground }}>
+                          Align: {align}
+                        </Text>
+                      </PopoverContent>
+                    </Popover>
+                  ))}
+                </View>
+              </View>
+              <Separator />
+              <View>
+                <Text style={[styles.popoverText, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
+                  Right position with different alignments:
+                </Text>
+                <View style={{ flexDirection: 'row', gap: spacing[2], justifyContent: 'center' }}>
+                  {(['start', 'center', 'end'] as const).map((align) => (
+                    <Popover key={align}>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" size="sm">{align}</Button>
+                      </PopoverTrigger>
+                      <PopoverContent position="right" align={align}>
+                        <Text style={{ color: colors.foreground }}>
+                          Align: {align}
+                        </Text>
+                      </PopoverContent>
+                    </Popover>
+                  ))}
+                </View>
+              </View>
+            </View>
+          </CardContent>
+        </Card>
+      </Section>
+
+      <Section title="Custom Widths">
+        <Card>
+          <CardContent style={{ paddingTop: spacing[4] }}>
+            <View style={{ flexDirection: 'row', gap: spacing[2], justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm">Narrow (180px)</Button>
+                </PopoverTrigger>
+                <PopoverContent style={{ width: 180 }}>
+                  <Text style={{ color: colors.foreground }}>
+                    Compact popover with narrow width.
+                  </Text>
+                </PopoverContent>
+              </Popover>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm">Medium (240px)</Button>
+                </PopoverTrigger>
+                <PopoverContent style={{ width: 240 }}>
+                  <Text style={{ color: colors.foreground }}>
+                    Medium width popover with more comfortable reading space.
+                  </Text>
+                </PopoverContent>
+              </Popover>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm">Wide (320px)</Button>
+                </PopoverTrigger>
+                <PopoverContent style={{ width: 320 }}>
+                  <Text style={{ color: colors.foreground }}>
+                    Wide popover for more complex content or longer explanations that need extra space.
+                  </Text>
+                </PopoverContent>
+              </Popover>
+            </View>
+          </CardContent>
+        </Card>
+      </Section>
+
       <Section title="Menu Style">
         <Card>
           <CardContent style={{ paddingTop: spacing[4] }}>
