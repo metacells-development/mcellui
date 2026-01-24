@@ -64,18 +64,6 @@ export interface SegmentedControlProps {
   textStyle?: TextStyle;
 }
 
-const heights: Record<SegmentedControlSize, number> = {
-  sm: 32,
-  md: 40,
-  lg: 48,
-};
-
-const fontSizes: Record<SegmentedControlSize, number> = {
-  sm: 13,
-  md: 14,
-  lg: 15,
-};
-
 const SPRING_CONFIG = { damping: 20, stiffness: 200 };
 
 export function SegmentedControl({
@@ -87,16 +75,17 @@ export function SegmentedControl({
   style,
   textStyle,
 }: SegmentedControlProps) {
-  const { colors, radius } = useTheme();
+  const { colors, components, componentRadius, fontWeight } = useTheme();
+  const tokens = components.segmentedControl[size];
   const segmentLayouts = useRef(new Map<string, LayoutRectangle>()).current;
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
 
   const indicatorX = useSharedValue(0);
   const indicatorWidth = useSharedValue(0);
 
-  const height = heights[size];
-  const fontSize = fontSizes[size];
-  const padding = 4;
+  const height = tokens.height;
+  const fontSize = tokens.fontSize;
+  const padding = tokens.padding;
   const segmentHeight = height - padding * 2;
 
   const handleLayout = (segmentValue: string, event: LayoutChangeEvent) => {
@@ -150,7 +139,7 @@ export function SegmentedControl({
         {
           height,
           backgroundColor: colors.backgroundMuted,
-          borderRadius: radius.lg,
+          borderRadius: componentRadius.segmentedControl,
           padding,
           opacity: disabled ? 0.5 : 1,
         },
@@ -164,7 +153,7 @@ export function SegmentedControl({
           {
             height: segmentHeight,
             backgroundColor: colors.background,
-            borderRadius: radius.md,
+            borderRadius: componentRadius.segmentedControlIndicator,
           },
           indicatorStyle,
         ]}
@@ -197,7 +186,7 @@ export function SegmentedControl({
                 {
                   fontSize,
                   color: isActive ? colors.foreground : colors.foregroundMuted,
-                  fontWeight: isActive ? '600' : '500',
+                  fontWeight: isActive ? tokens.activeFontWeight : tokens.fontWeight,
                 },
                 textStyle,
               ]}
