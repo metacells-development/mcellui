@@ -75,6 +75,7 @@ export {
   badgeTokens,
   avatarTokens,
   cardTokens,
+  overlayTypography,
   type ComponentSize,
   // Theme Presets
   themePresets,

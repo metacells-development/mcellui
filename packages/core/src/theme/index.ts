@@ -104,6 +104,7 @@ export {
   badgeTokens,
   avatarTokens,
   cardTokens,
+  overlayTypography,
   type ComponentSize,
 } from './components';
 
