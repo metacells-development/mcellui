@@ -56,6 +56,10 @@ import { ScreensDemo } from '@/components/demos/screens-demo';
 import { RowDemo } from '@/components/demos/row-demo';
 import { ColumnDemo } from '@/components/demos/column-demo';
 import { ScreenDemo } from '@/components/demos/screen-demo';
+// Phase 6 - Core Primitives
+import { TypographyDemo } from '@/components/demos/typography-demo';
+import { AlertDemo } from '@/components/demos/alert-demo';
+import { CollapsibleDemo } from '@/components/demos/collapsible-demo';
 
 const demos: Record<string, React.ComponentType> = {
   button: ButtonDemo,
@@ -111,6 +115,10 @@ const demos: Record<string, React.ComponentType> = {
   row: RowDemo,
   column: ColumnDemo,
   screen: ScreenDemo,
+  // Phase 6 - Core Primitives
+  typography: TypographyDemo,
+  alert: AlertDemo,
+  collapsible: CollapsibleDemo,
 };
 
 const titles: Record<string, string> = {
@@ -167,6 +175,10 @@ const titles: Record<string, string> = {
   row: 'Row',
   column: 'Column',
   screen: 'Screen',
+  // Phase 6 - Core Primitives
+  typography: 'Typography',
+  alert: 'Alert',
+  collapsible: 'Collapsible',
 };
 
 export default function ComponentPage() {

@@ -712,6 +712,36 @@
       "files": ["ui/screen.tsx"],
       "dependencies": ["react-native-safe-area-context"],
       "registryDependencies": []
+    },
+    {
+      "name": "typography",
+      "type": "ui",
+      "description": "Standardized text component with preset styles for consistent typography",
+      "category": "Data Display",
+      "status": "beta",
+      "files": ["ui/typography.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "alert",
+      "type": "ui",
+      "description": "Inline alert/banner for persistent messages with variant styles",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["ui/alert.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "collapsible",
+      "type": "ui",
+      "description": "Simple single-item expand/collapse with smooth animations",
+      "category": "Data Display",
+      "status": "beta",
+      "files": ["ui/collapsible.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
     }
   ]
 }
