@@ -624,6 +624,36 @@
       "registryDependencies": ["avatar"]
     },
     {
+      "name": "product-card",
+      "type": "block",
+      "description": "E-commerce product display card with image, price, rating, and actions",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["blocks/product-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["badge", "button", "rating"]
+    },
+    {
+      "name": "cart-item",
+      "type": "block",
+      "description": "Shopping cart line item with quantity controls and swipe actions",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["blocks/cart-item.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["stepper", "swipeable-row"]
+    },
+    {
+      "name": "banner-block",
+      "type": "block",
+      "description": "Promotional or announcement banner with action button",
+      "category": "Marketing",
+      "status": "beta",
+      "files": ["blocks/banner-block.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["button", "icon-button"]
+    },
+    {
       "name": "login-screen",
       "type": "screen",
       "description": "Complete login screen with email/password form, social login, and forgot password",
