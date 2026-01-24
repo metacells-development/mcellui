@@ -188,6 +188,85 @@ export const TYPOGRAPHY_CONSTANTS = {
 } as const;
 
 // ============================================
+// Alert Constants
+// ============================================
+
+export const ALERT_CONSTANTS = {
+  /** Padding für Small Variant (px) */
+  paddingSm: 12,
+  /** Padding für Medium Variant (px) */
+  paddingMd: 16,
+  /** Padding für Large Variant (px) */
+  paddingLg: 20,
+  /** Icon Size für Small Variant (px) */
+  iconSizeSm: 16,
+  /** Icon Size für Medium Variant (px) */
+  iconSizeMd: 20,
+  /** Icon Size für Large Variant (px) */
+  iconSizeLg: 24,
+  /** Gap zwischen Icon und Text für Small (px) */
+  gapSm: 8,
+  /** Gap zwischen Icon und Text für Medium (px) */
+  gapMd: 12,
+  /** Gap zwischen Icon und Text für Large (px) */
+  gapLg: 16,
+  /** Title Font Size für Small (px) */
+  titleFontSizeSm: 13,
+  /** Title Font Size für Medium (px) */
+  titleFontSizeMd: 15,
+  /** Title Font Size für Large (px) */
+  titleFontSizeLg: 17,
+  /** Text Font Size für Small (px) */
+  textFontSizeSm: 12,
+  /** Text Font Size für Medium (px) */
+  textFontSizeMd: 14,
+  /** Text Font Size für Large (px) */
+  textFontSizeLg: 16,
+} as const;
+
+// ============================================
+// Popover Constants
+// ============================================
+
+export const POPOVER_CONSTANTS = {
+  /** Default Offset vom Trigger (px) */
+  defaultOffset: 8,
+  /** Default Max Width (px) */
+  defaultMaxWidth: 280,
+  /** Minimum Width (px) */
+  minWidth: 120,
+  /** Animation Fade-In Dauer (ms) */
+  animationInDuration: 150,
+  /** Animation Fade-Out Dauer (ms) */
+  animationOutDuration: 100,
+  /** Spring Damping */
+  springDamping: 20,
+  /** Spring Stiffness */
+  springStiffness: 400,
+} as const;
+
+// ============================================
+// Tooltip Constants
+// ============================================
+
+export const TOOLTIP_CONSTANTS = {
+  /** Content Padding (px) */
+  padding: 12,
+  /** Margin vom Trigger (px) */
+  margin: 8,
+  /** Arrow Size (px) */
+  arrowSize: 8,
+  /** Default Max Width (px) */
+  defaultMaxWidth: 250,
+  /** Default Delay before showing (ms) */
+  defaultDelay: 500,
+  /** Animation Fade-In Dauer (ms) */
+  animationInDuration: 150,
+  /** Animation Fade-Out Dauer (ms) */
+  animationOutDuration: 100,
+} as const;
+
+// ============================================
 // Export Types
 // ============================================
 
@@ -201,3 +280,6 @@ export type AnimationConstants = typeof ANIMATION_CONSTANTS;
 export type SliderConstants = typeof SLIDER_CONSTANTS;
 export type StepperConstants = typeof STEPPER_CONSTANTS;
 export type TypographyConstants = typeof TYPOGRAPHY_CONSTANTS;
+export type AlertConstants = typeof ALERT_CONSTANTS;
+export type PopoverConstants = typeof POPOVER_CONSTANTS;
+export type TooltipConstants = typeof TOOLTIP_CONSTANTS;
