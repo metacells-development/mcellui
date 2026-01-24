@@ -13,7 +13,7 @@ This milestone refines all 102 components (55 UI, 28 blocks, 19 screens) to matc
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Form Inputs** - Input, Textarea, Select, Slider, Stepper, Checkbox, Switch, Radio, Tag Input
-- [ ] **Phase 2: Buttons & Actions** - Button, Icon Button, FAB, Segmented Control, Action Sheet
+- [x] **Phase 2: Buttons & Actions** - Button, Icon Button, FAB, Segmented Control, Action Sheet
 - [ ] **Phase 3: Feedback Components** - Toast, Dialog, Alert Dialog, Alert, Sheet, Popover, Tooltip
 - [ ] **Phase 4: Progress & Loading** - Spinner, Skeleton, Progress, Circular Progress, Pull to Refresh
 - [ ] **Phase 5: Data Display** - Card, Avatar, Avatar Stack, Badge, Chip, Label, Typography, Rating, Image
@@ -56,14 +56,15 @@ Plans:
   3. All buttons support size prop (sm, md, lg) with consistent scaling
   4. All buttons support disabled and loading states with proper animations
   5. Demo shows all variants, sizes, and states for each button type
-**Plans**: 5 plans
+**Plans**: 6 plans
 
 Plans:
-- [ ] 02-01-PLAN.md - Add button-like component tokens (IconButton, FAB, SegmentedControl)
-- [ ] 02-02-PLAN.md - Migrate IconButton to centralized tokens with accessibility
-- [ ] 02-03-PLAN.md - Migrate FAB to centralized tokens with accessibility
-- [ ] 02-04-PLAN.md - Migrate SegmentedControl to centralized tokens
-- [ ] 02-05-PLAN.md - Enhance all button-related demos with comprehensive coverage
+- [x] 02-01-PLAN.md - Add centralized tokens for IconButton, FAB, SegmentedControl, ActionSheet
+- [x] 02-02-PLAN.md - Migrate IconButton to centralized tokens with accessibility
+- [x] 02-03-PLAN.md - Migrate FAB to centralized tokens with accessibility
+- [x] 02-04-PLAN.md - Migrate SegmentedControl to centralized tokens
+- [x] 02-05-PLAN.md - Migrate ActionSheet to centralized tokens
+- [x] 02-06-PLAN.md - Enhance demos for Button, IconButton, ActionSheet
 
 ### Phase 3: Feedback Components
 **Goal**: All user feedback components have unified appearance and behavior patterns
@@ -227,7 +228,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Form Inputs | 5/5 | ✓ Complete | 2026-01-24 |
-| 2. Buttons & Actions | 0/5 | Planned | - |
+| 2. Buttons & Actions | 6/6 | ✓ Complete | 2026-01-24 |
 | 3. Feedback Components | 0/5 | Planned | - |
 | 4. Progress & Loading | 0/TBD | Not started | - |
 | 5. Data Display | 0/TBD | Not started | - |
