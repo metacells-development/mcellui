@@ -60,6 +60,13 @@ import { ScreenDemo } from '@/components/demos/screen-demo';
 import { TypographyDemo } from '@/components/demos/typography-demo';
 import { AlertDemo } from '@/components/demos/alert-demo';
 import { CollapsibleDemo } from '@/components/demos/collapsible-demo';
+// Phase 6 - Additional Components
+import { ToggleDemo } from '@/components/demos/toggle-demo';
+import { PopoverDemo } from '@/components/demos/popover-demo';
+import { PaginationDemo } from '@/components/demos/pagination-demo';
+import { CalendarDemo } from '@/components/demos/calendar-demo';
+import { CircularProgressDemo } from '@/components/demos/circular-progress-demo';
+import { TagInputDemo } from '@/components/demos/tag-input-demo';
 
 const demos: Record<string, React.ComponentType> = {
   button: ButtonDemo,
@@ -119,6 +126,13 @@ const demos: Record<string, React.ComponentType> = {
   typography: TypographyDemo,
   alert: AlertDemo,
   collapsible: CollapsibleDemo,
+  // Phase 6 - Additional Components
+  toggle: ToggleDemo,
+  popover: PopoverDemo,
+  pagination: PaginationDemo,
+  calendar: CalendarDemo,
+  'circular-progress': CircularProgressDemo,
+  'tag-input': TagInputDemo,
 };
 
 const titles: Record<string, string> = {
@@ -179,6 +193,13 @@ const titles: Record<string, string> = {
   typography: 'Typography',
   alert: 'Alert',
   collapsible: 'Collapsible',
+  // Phase 6 - Additional Components
+  toggle: 'Toggle',
+  popover: 'Popover',
+  pagination: 'Pagination',
+  calendar: 'Calendar',
+  'circular-progress': 'Circular Progress',
+  'tag-input': 'Tag Input',
 };
 
 export default function ComponentPage() {

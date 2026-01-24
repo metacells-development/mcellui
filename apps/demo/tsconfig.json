@@ -5,7 +5,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/ui/*": ["../../packages/registry/ui/*"],
-      "@/components/blocks/*": ["./components/blocks/*"],
+      "@/components/blocks/*": ["../../packages/registry/blocks/*"],
       "@/components/*": ["./components/*"],
       "@/lib/*": ["./lib/*"]
     }

@@ -46,6 +46,16 @@ export function ScreensDemo() {
     { key: 'notifications', title: 'Notifications Screen', description: 'Notification list with actions' },
     { key: 'feed', title: 'Feed/Timeline', description: 'Social media style feed' },
     { key: 'otp', title: 'OTP Verification', description: 'Code input with resend timer' },
+    // Phase 5-7 Screens
+    { key: 'product-detail', title: 'Product Detail', description: 'E-commerce product page' },
+    { key: 'cart', title: 'Cart Screen', description: 'Shopping cart with items' },
+    { key: 'followers', title: 'Followers Screen', description: 'Follower/following list with tabs' },
+    { key: 'comments', title: 'Comments Screen', description: 'Post comments with replies' },
+    { key: 'checkout', title: 'Checkout Screen', description: 'Multi-step checkout flow' },
+    { key: 'order-history', title: 'Order History', description: 'Past orders with filters' },
+    { key: 'home', title: 'Home Screen', description: 'Dashboard with hero and stats' },
+    { key: 'account', title: 'Account Screen', description: 'User account management' },
+    { key: 'help', title: 'Help & Support', description: 'FAQ and contact options' },
   ];
 
   return (
@@ -120,6 +130,43 @@ export function ScreensDemo() {
 
       <Modal visible={activeScreen === 'otp'} animationType="slide">
         <OTPVerificationScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      {/* Phase 5-7 Screens */}
+      <Modal visible={activeScreen === 'product-detail'} animationType="slide">
+        <ProductDetailScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      <Modal visible={activeScreen === 'cart'} animationType="slide">
+        <CartScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      <Modal visible={activeScreen === 'followers'} animationType="slide">
+        <FollowersScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      <Modal visible={activeScreen === 'comments'} animationType="slide">
+        <CommentsScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      <Modal visible={activeScreen === 'checkout'} animationType="slide">
+        <CheckoutScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      <Modal visible={activeScreen === 'order-history'} animationType="slide">
+        <OrderHistoryScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      <Modal visible={activeScreen === 'home'} animationType="slide">
+        <HomeScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      <Modal visible={activeScreen === 'account'} animationType="slide">
+        <AccountScreenPreview onClose={() => setActiveScreen(null)} />
+      </Modal>
+
+      <Modal visible={activeScreen === 'help'} animationType="slide">
+        <HelpScreenPreview onClose={() => setActiveScreen(null)} />
       </Modal>
     </View>
   );
@@ -1745,6 +1792,752 @@ function OTPVerificationScreenPreview({ onClose }: { onClose: () => void }) {
           Verify
         </Button>
       </View>
+    </View>
+  );
+}
+
+// ============================================================================
+// Product Detail Screen Preview
+// ============================================================================
+
+function ProductDetailScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+  const [selectedSize, setSelectedSize] = useState('M');
+  const [quantity, setQuantity] = useState(1);
+
+  const product = {
+    name: 'Premium Wireless Headphones',
+    price: 299.99,
+    originalPrice: 349.99,
+    rating: 4.8,
+    reviewCount: 256,
+    description: 'Experience premium sound quality with our wireless headphones. Features active noise cancellation, 30-hour battery life, and premium comfort.',
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: [colors.foreground, colors.primary, '#8B4513'],
+    images: [
+      'https://picsum.photos/400/400?random=50',
+      'https://picsum.photos/400/400?random=51',
+      'https://picsum.photos/400/400?random=52',
+    ],
+  };
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}>
+        {/* Header */}
+        <View style={{ position: 'absolute', top: insets.top + spacing[2], left: spacing[4], right: spacing[4], zIndex: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
+          <IconButton icon={<ProfileBackIcon />} variant="secondary" onPress={onClose} accessibilityLabel="Back" />
+          <IconButton icon={<BellIcon />} variant="secondary" onPress={() => Alert.alert('Share')} accessibilityLabel="Share" />
+        </View>
+
+        {/* Image */}
+        <View style={{ height: 350, backgroundColor: colors.secondary, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ color: colors.foregroundMuted, fontSize: 48 }}>🎧</Text>
+        </View>
+
+        {/* Content */}
+        <View style={{ padding: spacing[4] }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: colors.foreground, fontSize: 24, fontWeight: '700' }}>{product.name}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: spacing[2] }}>
+                <Text style={{ color: colors.foreground, fontSize: 11 }}>★★★★★</Text>
+                <Text style={{ color: colors.foregroundMuted, fontSize: 14, marginLeft: spacing[2] }}>
+                  {product.rating} ({product.reviewCount} reviews)
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: spacing[3] }}>
+            <Text style={{ color: colors.foreground, fontSize: 28, fontWeight: '700' }}>${product.price}</Text>
+            {product.originalPrice && (
+              <Text style={{ color: colors.foregroundMuted, fontSize: 18, marginLeft: spacing[2], textDecorationLine: 'line-through' }}>
+                ${product.originalPrice}
+              </Text>
+            )}
+          </View>
+
+          <Text style={{ color: colors.foreground, fontSize: 15, lineHeight: 22, marginTop: spacing[4] }}>
+            {product.description}
+          </Text>
+
+          {/* Size Selection */}
+          <View style={{ marginTop: spacing[4] }}>
+            <Text style={{ color: colors.foreground, fontWeight: '600', marginBottom: spacing[2] }}>Size</Text>
+            <View style={{ flexDirection: 'row', gap: spacing[2] }}>
+              {product.sizes.map((size) => (
+                <Pressable
+                  key={size}
+                  onPress={() => setSelectedSize(size)}
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: radius.md,
+                    borderWidth: 2,
+                    borderColor: selectedSize === size ? colors.primary : colors.border,
+                    backgroundColor: selectedSize === size ? colors.primary + '15' : 'transparent',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text style={{ color: selectedSize === size ? colors.primary : colors.foreground, fontWeight: '600' }}>
+                    {size}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Bottom Bar */}
+      <View style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: colors.background,
+        borderTopWidth: 1,
+        borderTopColor: colors.border,
+        padding: spacing[4],
+        paddingBottom: insets.bottom + spacing[4],
+        flexDirection: 'row',
+        gap: spacing[3],
+      }}>
+        <Button variant="outline" style={{ flex: 1 }} onPress={() => Alert.alert('Added to cart')}>
+          Add to Cart
+        </Button>
+        <Button style={{ flex: 1 }} onPress={() => Alert.alert('Buy Now')}>
+          Buy Now
+        </Button>
+      </View>
+    </View>
+  );
+}
+
+// ============================================================================
+// Cart Screen Preview
+// ============================================================================
+
+function CartScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+  const [items, setItems] = useState([
+    { id: '1', name: 'Wireless Headphones', price: 299.99, quantity: 1, image: '🎧' },
+    { id: '2', name: 'Smart Watch', price: 199.99, quantity: 2, image: '⌚' },
+  ]);
+
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = 9.99;
+  const total = subtotal + shipping;
+
+  const updateQuantity = (id: string, delta: number) => {
+    setItems(items.map(item =>
+      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
+    ));
+  };
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={{ paddingTop: insets.top + spacing[2], paddingHorizontal: spacing[4], paddingBottom: spacing[3], borderBottomWidth: 1, borderBottomColor: colors.border, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <IconButton icon={<ProfileBackIcon />} variant="ghost" onPress={onClose} accessibilityLabel="Back" />
+        <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Cart ({items.length})</Text>
+        <View style={{ width: 44 }} />
+      </View>
+
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: spacing[4] }}>
+        {items.map((item) => (
+          <View key={item.id} style={{
+            flexDirection: 'row',
+            padding: spacing[3],
+            backgroundColor: colors.card,
+            borderRadius: radius.lg,
+            marginBottom: spacing[3],
+            borderWidth: 1,
+            borderColor: colors.border,
+          }}>
+            <View style={{ width: 80, height: 80, backgroundColor: colors.secondary, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontSize: 32 }}>{item.image}</Text>
+            </View>
+            <View style={{ flex: 1, marginLeft: spacing[3] }}>
+              <Text style={{ color: colors.foreground, fontWeight: '600' }}>{item.name}</Text>
+              <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '700', marginTop: spacing[1] }}>${item.price}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: spacing[2] }}>
+                <Pressable onPress={() => updateQuantity(item.id, -1)} style={{ width: 32, height: 32, backgroundColor: colors.secondary, borderRadius: radius.sm, alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ color: colors.foreground, fontSize: 18 }}>−</Text>
+                </Pressable>
+                <Text style={{ color: colors.foreground, marginHorizontal: spacing[3], fontWeight: '600' }}>{item.quantity}</Text>
+                <Pressable onPress={() => updateQuantity(item.id, 1)} style={{ width: 32, height: 32, backgroundColor: colors.secondary, borderRadius: radius.sm, alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ color: colors.foreground, fontSize: 18 }}>+</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Summary */}
+      <View style={{ backgroundColor: colors.card, borderTopWidth: 1, borderTopColor: colors.border, padding: spacing[4], paddingBottom: insets.bottom + spacing[4] }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing[2] }}>
+          <Text style={{ color: colors.foregroundMuted }}>Subtotal</Text>
+          <Text style={{ color: colors.foreground }}>${subtotal.toFixed(2)}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing[3] }}>
+          <Text style={{ color: colors.foregroundMuted }}>Shipping</Text>
+          <Text style={{ color: colors.foreground }}>${shipping.toFixed(2)}</Text>
+        </View>
+        <Separator style={{ marginBottom: spacing[3] }} />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing[4] }}>
+          <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '700' }}>Total</Text>
+          <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '700' }}>${total.toFixed(2)}</Text>
+        </View>
+        <Button onPress={() => Alert.alert('Checkout')}>Checkout</Button>
+      </View>
+    </View>
+  );
+}
+
+// ============================================================================
+// Followers Screen Preview
+// ============================================================================
+
+function FollowersScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+  const [activeTab, setActiveTab] = useState('followers');
+  const [following, setFollowing] = useState<Record<string, boolean>>({ '2': true });
+
+  const users = [
+    { id: '1', name: 'Sarah Miller', username: '@sarahm', avatar: '👩', verified: true },
+    { id: '2', name: 'John Davis', username: '@johnd', avatar: '👨' },
+    { id: '3', name: 'Emma Wilson', username: '@emmaw', avatar: '👩‍🦰' },
+    { id: '4', name: 'Mike Ross', username: '@miker', avatar: '🧑' },
+  ];
+
+  const toggleFollow = (id: string) => {
+    setFollowing(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={{ paddingTop: insets.top + spacing[2], paddingHorizontal: spacing[4], paddingBottom: spacing[2], flexDirection: 'row', alignItems: 'center' }}>
+        <IconButton icon={<ProfileBackIcon />} variant="ghost" onPress={onClose} accessibilityLabel="Back" />
+        <View style={{ flex: 1, marginLeft: spacing[2] }}>
+          <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Jane Doe</Text>
+          <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>@janedoe</Text>
+        </View>
+      </View>
+
+      {/* Tabs */}
+      <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: colors.border }}>
+        {['followers', 'following'].map((tab) => (
+          <Pressable
+            key={tab}
+            onPress={() => setActiveTab(tab)}
+            style={{ flex: 1, alignItems: 'center', paddingVertical: spacing[3], borderBottomWidth: 2, borderBottomColor: activeTab === tab ? colors.primary : 'transparent' }}
+          >
+            <Text style={{ color: activeTab === tab ? colors.primary : colors.foregroundMuted, fontWeight: '600' }}>
+              {tab === 'followers' ? 'Followers' : 'Following'}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
+
+      {/* Users List */}
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: spacing[4] }}>
+        {users.map((user) => (
+          <View key={user.id} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing[4] }}>
+            <View style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: colors.secondary, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontSize: 24 }}>{user.avatar}</Text>
+            </View>
+            <View style={{ flex: 1, marginLeft: spacing[3] }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ color: colors.foreground, fontWeight: '600' }}>{user.name}</Text>
+                {user.verified && <Text style={{ color: colors.primary, marginLeft: spacing[1] }}>✓</Text>}
+              </View>
+              <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>{user.username}</Text>
+            </View>
+            <Button
+              variant={following[user.id] ? 'outline' : 'default'}
+              size="sm"
+              onPress={() => toggleFollow(user.id)}
+            >
+              {following[user.id] ? 'Following' : 'Follow'}
+            </Button>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
+// ============================================================================
+// Comments Screen Preview
+// ============================================================================
+
+function CommentsScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+  const [comment, setComment] = useState('');
+
+  const comments = [
+    { id: '1', author: 'Sarah', avatar: '👩', text: 'This is amazing! Love the design 🔥', time: '2h', likes: 12 },
+    { id: '2', author: 'John', avatar: '👨', text: 'Great work! Keep it up!', time: '1h', likes: 5, replies: [
+      { id: '2a', author: 'Emma', avatar: '👩‍🦰', text: 'Totally agree!', time: '45m', likes: 2 },
+    ] },
+    { id: '3', author: 'Mike', avatar: '🧑', text: 'How did you achieve this effect?', time: '30m', likes: 3 },
+  ];
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={{ paddingTop: insets.top + spacing[2], paddingHorizontal: spacing[4], paddingBottom: spacing[3], borderBottomWidth: 1, borderBottomColor: colors.border, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <IconButton icon={<ProfileBackIcon />} variant="ghost" onPress={onClose} accessibilityLabel="Back" />
+        <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Comments</Text>
+        <View style={{ width: 44 }} />
+      </View>
+
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: spacing[4] }}>
+        {comments.map((c) => (
+          <View key={c.id} style={{ marginBottom: spacing[4] }}>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: colors.secondary, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 20 }}>{c.avatar}</Text>
+              </View>
+              <View style={{ flex: 1, marginLeft: spacing[3] }}>
+                <View style={{ backgroundColor: colors.card, borderRadius: radius.lg, padding: spacing[3] }}>
+                  <Text style={{ color: colors.foreground, fontWeight: '600' }}>{c.author}</Text>
+                  <Text style={{ color: colors.foreground, marginTop: spacing[1] }}>{c.text}</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: spacing[2], gap: spacing[3] }}>
+                  <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>{c.time}</Text>
+                  <Pressable><Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>❤️ {c.likes}</Text></Pressable>
+                  <Pressable><Text style={{ color: colors.primary, fontSize: 12 }}>Reply</Text></Pressable>
+                </View>
+              </View>
+            </View>
+            {c.replies?.map((r) => (
+              <View key={r.id} style={{ flexDirection: 'row', marginTop: spacing[3], marginLeft: 52 }}>
+                <View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.secondary, alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ fontSize: 16 }}>{r.avatar}</Text>
+                </View>
+                <View style={{ flex: 1, marginLeft: spacing[2] }}>
+                  <View style={{ backgroundColor: colors.card, borderRadius: radius.lg, padding: spacing[2] }}>
+                    <Text style={{ color: colors.foreground, fontWeight: '600', fontSize: 13 }}>{r.author}</Text>
+                    <Text style={{ color: colors.foreground, fontSize: 13 }}>{r.text}</Text>
+                  </View>
+                </View>
+              </View>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Input */}
+      <View style={{ paddingHorizontal: spacing[4], paddingVertical: spacing[3], paddingBottom: insets.bottom + spacing[3], borderTopWidth: 1, borderTopColor: colors.border, flexDirection: 'row', alignItems: 'center', gap: spacing[3] }}>
+        <Input value={comment} onChangeText={setComment} placeholder="Add a comment..." style={{ flex: 1 }} />
+        <Button size="sm" onPress={() => { Alert.alert('Comment posted'); setComment(''); }}>Post</Button>
+      </View>
+    </View>
+  );
+}
+
+// ============================================================================
+// Checkout Screen Preview
+// ============================================================================
+
+function CheckoutScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+  const [step, setStep] = useState(1);
+
+  const steps = ['Shipping', 'Payment', 'Review'];
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={{ paddingTop: insets.top + spacing[2], paddingHorizontal: spacing[4], paddingBottom: spacing[3], borderBottomWidth: 1, borderBottomColor: colors.border, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <IconButton icon={<ProfileBackIcon />} variant="ghost" onPress={step > 1 ? () => setStep(step - 1) : onClose} accessibilityLabel="Back" />
+        <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Checkout</Text>
+        <View style={{ width: 44 }} />
+      </View>
+
+      {/* Progress */}
+      <View style={{ flexDirection: 'row', paddingHorizontal: spacing[4], paddingVertical: spacing[3] }}>
+        {steps.map((s, i) => (
+          <View key={s} style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{
+              width: 28, height: 28, borderRadius: 14,
+              backgroundColor: i + 1 <= step ? colors.primary : colors.secondary,
+              alignItems: 'center', justifyContent: 'center',
+            }}>
+              <Text style={{ color: i + 1 <= step ? colors.primaryForeground : colors.foregroundMuted, fontWeight: '600', fontSize: 13 }}>
+                {i + 1}
+              </Text>
+            </View>
+            <Text style={{ color: i + 1 <= step ? colors.foreground : colors.foregroundMuted, marginLeft: spacing[2], fontWeight: i + 1 === step ? '600' : '400', fontSize: 13 }}>
+              {s}
+            </Text>
+            {i < steps.length - 1 && <View style={{ flex: 1, height: 2, backgroundColor: i + 1 < step ? colors.primary : colors.border, marginHorizontal: spacing[2] }} />}
+          </View>
+        ))}
+      </View>
+
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: spacing[4] }}>
+        {step === 1 && (
+          <View style={{ gap: spacing[4] }}>
+            <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Shipping Address</Text>
+            <Input label="Full Name" placeholder="John Doe" />
+            <Input label="Address" placeholder="123 Main St" />
+            <View style={{ flexDirection: 'row', gap: spacing[3] }}>
+              <Input label="City" placeholder="New York" style={{ flex: 1 }} />
+              <Input label="ZIP" placeholder="10001" style={{ flex: 1 }} />
+            </View>
+          </View>
+        )}
+        {step === 2 && (
+          <View style={{ gap: spacing[4] }}>
+            <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Payment Method</Text>
+            <View style={{ backgroundColor: colors.card, padding: spacing[4], borderRadius: radius.lg, borderWidth: 2, borderColor: colors.primary }}>
+              <Text style={{ color: colors.foreground, fontWeight: '600' }}>💳 Credit Card</Text>
+            </View>
+            <Input label="Card Number" placeholder="**** **** **** ****" />
+            <View style={{ flexDirection: 'row', gap: spacing[3] }}>
+              <Input label="Expiry" placeholder="MM/YY" style={{ flex: 1 }} />
+              <Input label="CVV" placeholder="***" style={{ flex: 1 }} />
+            </View>
+          </View>
+        )}
+        {step === 3 && (
+          <View style={{ gap: spacing[4] }}>
+            <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Order Summary</Text>
+            <View style={{ backgroundColor: colors.card, padding: spacing[4], borderRadius: radius.lg, gap: spacing[3] }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ color: colors.foregroundMuted }}>Subtotal</Text>
+                <Text style={{ color: colors.foreground }}>$499.98</Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ color: colors.foregroundMuted }}>Shipping</Text>
+                <Text style={{ color: colors.foreground }}>$9.99</Text>
+              </View>
+              <Separator />
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ color: colors.foreground, fontWeight: '700' }}>Total</Text>
+                <Text style={{ color: colors.foreground, fontWeight: '700' }}>$509.97</Text>
+              </View>
+            </View>
+          </View>
+        )}
+      </ScrollView>
+
+      <View style={{ padding: spacing[4], paddingBottom: insets.bottom + spacing[4] }}>
+        <Button onPress={() => step < 3 ? setStep(step + 1) : Alert.alert('Order Placed!')}>
+          {step < 3 ? 'Continue' : 'Place Order'}
+        </Button>
+      </View>
+    </View>
+  );
+}
+
+// ============================================================================
+// Order History Screen Preview
+// ============================================================================
+
+function OrderHistoryScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+  const [activeTab, setActiveTab] = useState('all');
+
+  const orders = [
+    { id: 'ORD-12345', date: 'Jan 15, 2024', total: 299.99, status: 'Delivered', items: ['🎧', '📱'] },
+    { id: 'ORD-12344', date: 'Jan 10, 2024', total: 149.99, status: 'Shipped', items: ['⌚'] },
+    { id: 'ORD-12343', date: 'Jan 5, 2024', total: 79.99, status: 'Processing', items: ['🎮'] },
+  ];
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={{ paddingTop: insets.top + spacing[2], paddingHorizontal: spacing[4], paddingBottom: spacing[3], borderBottomWidth: 1, borderBottomColor: colors.border, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <IconButton icon={<ProfileBackIcon />} variant="ghost" onPress={onClose} accessibilityLabel="Back" />
+        <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>My Orders</Text>
+        <View style={{ width: 44 }} />
+      </View>
+
+      {/* Tabs */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ maxHeight: 50 }} contentContainerStyle={{ padding: spacing[4], gap: spacing[2] }}>
+        {['all', 'processing', 'shipped', 'delivered'].map((tab) => (
+          <Pressable
+            key={tab}
+            onPress={() => setActiveTab(tab)}
+            style={{
+              paddingHorizontal: spacing[4], paddingVertical: spacing[2],
+              backgroundColor: activeTab === tab ? colors.primary : colors.secondary,
+              borderRadius: radius.full,
+            }}
+          >
+            <Text style={{ color: activeTab === tab ? colors.primaryForeground : colors.foreground, fontWeight: '500' }}>
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </Text>
+          </Pressable>
+        ))}
+      </ScrollView>
+
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: spacing[4] }}>
+        {orders.map((order) => (
+          <Pressable
+            key={order.id}
+            onPress={() => Alert.alert('Order Details', order.id)}
+            style={{ backgroundColor: colors.card, padding: spacing[4], borderRadius: radius.lg, marginBottom: spacing[3], borderWidth: 1, borderColor: colors.border }}
+          >
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing[2] }}>
+              <Text style={{ color: colors.foreground, fontWeight: '600' }}>{order.id}</Text>
+              <Badge variant={order.status === 'Delivered' ? 'success' : order.status === 'Shipped' ? 'default' : 'secondary'}>
+                {order.status}
+              </Badge>
+            </View>
+            <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>{order.date}</Text>
+            <View style={{ flexDirection: 'row', marginTop: spacing[3], gap: spacing[2] }}>
+              {order.items.map((item, i) => (
+                <View key={i} style={{ width: 40, height: 40, backgroundColor: colors.secondary, borderRadius: radius.sm, alignItems: 'center', justifyContent: 'center' }}>
+                  <Text>{item}</Text>
+                </View>
+              ))}
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: spacing[3] }}>
+              <Text style={{ color: colors.foregroundMuted }}>{order.items.length} items</Text>
+              <Text style={{ color: colors.foreground, fontWeight: '700' }}>${order.total}</Text>
+            </View>
+          </Pressable>
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
+// ============================================================================
+// Home Screen Preview
+// ============================================================================
+
+function HomeScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+
+  const stats = [
+    { label: 'Orders', value: '12' },
+    { label: 'Wishlist', value: '24' },
+    { label: 'Points', value: '1.2K' },
+  ];
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + spacing[4] }}>
+        {/* Header */}
+        <View style={{ paddingTop: insets.top + spacing[2], paddingHorizontal: spacing[4], paddingBottom: spacing[4], flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Avatar fallback="JD" size="md" />
+            <View style={{ marginLeft: spacing[3] }}>
+              <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>Welcome back</Text>
+              <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '700' }}>John Doe</Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row', gap: spacing[2] }}>
+            <IconButton icon={<SearchIcon />} variant="ghost" onPress={() => Alert.alert('Search')} accessibilityLabel="Search" />
+            <IconButton icon={<BellIcon />} variant="ghost" onPress={onClose} accessibilityLabel="Notifications" />
+          </View>
+        </View>
+
+        {/* Hero */}
+        <View style={{ marginHorizontal: spacing[4], height: 160, backgroundColor: colors.primary, borderRadius: radius.xl, padding: spacing[5], justifyContent: 'flex-end' }}>
+          <Text style={{ color: colors.primaryForeground, fontSize: 22, fontWeight: '700' }}>Summer Sale!</Text>
+          <Text style={{ color: colors.primaryForeground, opacity: 0.9, marginTop: spacing[1] }}>Up to 50% off selected items</Text>
+          <Button variant="secondary" size="sm" style={{ marginTop: spacing[3], alignSelf: 'flex-start' }} onPress={() => Alert.alert('Shop Now')}>
+            Shop Now
+          </Button>
+        </View>
+
+        {/* Stats */}
+        <View style={{ flexDirection: 'row', marginHorizontal: spacing[4], marginTop: spacing[4], gap: spacing[3] }}>
+          {stats.map((stat) => (
+            <View key={stat.label} style={{ flex: 1, backgroundColor: colors.card, padding: spacing[4], borderRadius: radius.lg, alignItems: 'center', borderWidth: 1, borderColor: colors.border }}>
+              <Text style={{ color: colors.foreground, fontSize: 24, fontWeight: '700' }}>{stat.value}</Text>
+              <Text style={{ color: colors.foregroundMuted, fontSize: 13, marginTop: spacing[1] }}>{stat.label}</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Categories */}
+        <View style={{ marginTop: spacing[6], paddingHorizontal: spacing[4] }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing[3] }}>
+            <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Categories</Text>
+            <Pressable><Text style={{ color: colors.primary }}>See All</Text></Pressable>
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {['👕 Fashion', '💻 Tech', '🏠 Home', '🎮 Gaming', '📚 Books'].map((cat) => (
+              <Pressable key={cat} style={{ backgroundColor: colors.card, paddingHorizontal: spacing[4], paddingVertical: spacing[3], borderRadius: radius.full, marginRight: spacing[2], borderWidth: 1, borderColor: colors.border }}>
+                <Text style={{ color: colors.foreground }}>{cat}</Text>
+              </Pressable>
+            ))}
+          </ScrollView>
+        </View>
+      </ScrollView>
+    </View>
+  );
+}
+
+// ============================================================================
+// Account Screen Preview
+// ============================================================================
+
+function AccountScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+
+  const menuItems = [
+    { icon: '📦', label: 'My Orders', subtitle: '12 orders' },
+    { icon: '❤️', label: 'Wishlist', subtitle: '24 items' },
+    { icon: '📍', label: 'Addresses', subtitle: '2 saved' },
+    { icon: '💳', label: 'Payment Methods', subtitle: '3 cards' },
+    { icon: '🔔', label: 'Notifications' },
+    { icon: '🔒', label: 'Privacy & Security' },
+    { icon: '❓', label: 'Help & Support' },
+  ];
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={{ paddingTop: insets.top + spacing[2], paddingHorizontal: spacing[4], paddingBottom: spacing[3], borderBottomWidth: 1, borderBottomColor: colors.border, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <IconButton icon={<ProfileBackIcon />} variant="ghost" onPress={onClose} accessibilityLabel="Back" />
+        <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Account</Text>
+        <IconButton icon={<SettingsIcon />} variant="ghost" onPress={() => Alert.alert('Settings')} accessibilityLabel="Settings" />
+      </View>
+
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: insets.bottom + spacing[4] }}>
+        {/* Profile Card */}
+        <View style={{ margin: spacing[4], backgroundColor: colors.card, padding: spacing[4], borderRadius: radius.xl, alignItems: 'center', borderWidth: 1, borderColor: colors.border }}>
+          <Avatar fallback="JD" size="xl" />
+          <Text style={{ color: colors.foreground, fontSize: 20, fontWeight: '700', marginTop: spacing[3] }}>John Doe</Text>
+          <Text style={{ color: colors.foregroundMuted, marginTop: spacing[1] }}>john@example.com</Text>
+          <Button variant="outline" size="sm" style={{ marginTop: spacing[3] }} onPress={() => Alert.alert('Edit Profile')}>
+            Edit Profile
+          </Button>
+        </View>
+
+        {/* Menu Items */}
+        <View style={{ marginHorizontal: spacing[4] }}>
+          {menuItems.map((item, index) => (
+            <Pressable
+              key={item.label}
+              onPress={() => Alert.alert(item.label)}
+              style={{
+                flexDirection: 'row', alignItems: 'center', padding: spacing[4],
+                backgroundColor: colors.card, borderTopLeftRadius: index === 0 ? radius.lg : 0, borderTopRightRadius: index === 0 ? radius.lg : 0,
+                borderBottomLeftRadius: index === menuItems.length - 1 ? radius.lg : 0, borderBottomRightRadius: index === menuItems.length - 1 ? radius.lg : 0,
+                borderBottomWidth: index < menuItems.length - 1 ? 1 : 0, borderBottomColor: colors.border,
+              }}
+            >
+              <Text style={{ fontSize: 20 }}>{item.icon}</Text>
+              <View style={{ flex: 1, marginLeft: spacing[3] }}>
+                <Text style={{ color: colors.foreground, fontWeight: '500' }}>{item.label}</Text>
+                {item.subtitle && <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>{item.subtitle}</Text>}
+              </View>
+              <Text style={{ color: colors.foregroundMuted }}>›</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        {/* Sign Out */}
+        <View style={{ margin: spacing[4] }}>
+          <Button variant="outline" onPress={() => Alert.alert('Sign Out')}>
+            <Text style={{ color: colors.destructive }}>Sign Out</Text>
+          </Button>
+        </View>
+      </ScrollView>
+    </View>
+  );
+}
+
+// ============================================================================
+// Help Screen Preview
+// ============================================================================
+
+function HelpScreenPreview({ onClose }: { onClose: () => void }) {
+  const { colors, spacing, radius } = useTheme();
+  const insets = useSafeAreaInsets();
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const faqs = [
+    { id: '1', q: 'How do I track my order?', a: 'You can track your order by going to My Orders and selecting the order you want to track. Click on "Track Order" to see real-time updates.' },
+    { id: '2', q: 'What is your return policy?', a: 'We offer a 30-day return policy for most items. Items must be in original condition with tags attached. Some exclusions apply.' },
+    { id: '3', q: 'How do I contact customer support?', a: 'You can reach us via email at support@example.com, through live chat, or by calling 1-800-EXAMPLE.' },
+  ];
+
+  const contactOptions = [
+    { icon: '💬', label: 'Live Chat', desc: 'Chat with us now' },
+    { icon: '📧', label: 'Email', desc: 'support@example.com' },
+    { icon: '📞', label: 'Call Us', desc: '1-800-EXAMPLE' },
+  ];
+
+  return (
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={{ paddingTop: insets.top + spacing[2], paddingHorizontal: spacing[4], paddingBottom: spacing[3], borderBottomWidth: 1, borderBottomColor: colors.border, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <IconButton icon={<ProfileBackIcon />} variant="ghost" onPress={onClose} accessibilityLabel="Back" />
+        <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600' }}>Help & Support</Text>
+        <View style={{ width: 44 }} />
+      </View>
+
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: spacing[4], paddingBottom: insets.bottom + spacing[4] }}>
+        {/* Search */}
+        <SearchInput placeholder="Search for help..." style={{ marginBottom: spacing[4] }} />
+
+        {/* FAQs */}
+        <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600', marginBottom: spacing[3] }}>
+          Frequently Asked Questions
+        </Text>
+        <View style={{ gap: spacing[2], marginBottom: spacing[6] }}>
+          {faqs.map((faq) => (
+            <Pressable
+              key={faq.id}
+              onPress={() => setExpanded(expanded === faq.id ? null : faq.id)}
+              style={{ backgroundColor: colors.card, borderRadius: radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: colors.border }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: spacing[4] }}>
+                <Text style={{ color: colors.foreground, fontWeight: '500', flex: 1 }}>{faq.q}</Text>
+                <Text style={{ color: colors.foregroundMuted }}>{expanded === faq.id ? '−' : '+'}</Text>
+              </View>
+              {expanded === faq.id && (
+                <View style={{ paddingHorizontal: spacing[4], paddingBottom: spacing[4] }}>
+                  <Text style={{ color: colors.foregroundMuted, lineHeight: 20 }}>{faq.a}</Text>
+                </View>
+              )}
+            </Pressable>
+          ))}
+        </View>
+
+        {/* Contact */}
+        <Text style={{ color: colors.foreground, fontSize: 18, fontWeight: '600', marginBottom: spacing[3] }}>
+          Contact Us
+        </Text>
+        <View style={{ gap: spacing[3] }}>
+          {contactOptions.map((opt) => (
+            <Pressable
+              key={opt.label}
+              onPress={() => Alert.alert(opt.label)}
+              style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: colors.card, padding: spacing[4], borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border }}
+            >
+              <Text style={{ fontSize: 24 }}>{opt.icon}</Text>
+              <View style={{ marginLeft: spacing[3] }}>
+                <Text style={{ color: colors.foreground, fontWeight: '600' }}>{opt.label}</Text>
+                <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>{opt.desc}</Text>
+              </View>
+            </Pressable>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 }

@@ -40,7 +40,7 @@ import { haptic } from '@metacells/mcellui-core';
 // Import UI primitives
 import { Checkbox } from '../ui/checkbox';
 import { Badge } from '../ui/badge';
-import { SwipeableRow, SwipeableAction } from '../ui/swipeable-row';
+import { SwipeableRow, SwipeAction } from '../ui/swipeable-row';
 
 // ============================================================================
 // Icons
@@ -183,12 +183,12 @@ export function TaskItem({
   const priorityConfig = task.priority ? PRIORITY_CONFIG[task.priority] : null;
 
   // Swipe actions
-  const rightActions: SwipeableAction[] = [];
+  const rightActions: SwipeAction[] = [];
 
   if (onEdit) {
     rightActions.push({
       label: 'Edit',
-      backgroundColor: colors.primary,
+      color: colors.primary,
       icon: <EditIcon />,
       onPress: onEdit,
     });
@@ -197,7 +197,7 @@ export function TaskItem({
   if (onDelete) {
     rightActions.push({
       label: 'Delete',
-      backgroundColor: colors.destructive,
+      color: colors.destructive,
       icon: <TrashIcon />,
       onPress: onDelete,
     });

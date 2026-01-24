@@ -226,7 +226,7 @@ export function ProductCard({
 
           {rating !== undefined && (
             <View style={[styles.ratingRow, { marginTop: spacing[1] }]}>
-              <Rating value={rating} size="sm" readOnly />
+              <Rating value={rating} size="sm" readonly />
               {reviewCount !== undefined && (
                 <Text style={[styles.reviewCount, { color: colors.foregroundMuted }]}>
                   ({reviewCount})
@@ -340,7 +340,7 @@ export function ProductCard({
         {/* Rating */}
         {rating !== undefined && (
           <View style={[styles.ratingRow, { marginTop: spacing[1] }]}>
-            <Rating value={rating} size="sm" readOnly />
+            <Rating value={rating} size="sm" readonly />
             {reviewCount !== undefined && (
               <Text style={[styles.reviewCount, { color: colors.foregroundMuted }]}>
                 ({reviewCount})

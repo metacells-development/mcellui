@@ -8,7 +8,24 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Avatar } from '@/components/ui/avatar';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+import { Rating } from '@/components/ui/rating';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
+
+// Import blocks from registry
+import { UserListItem } from '@/components/blocks/user-list-item';
+import { ChatBubble } from '@/components/blocks/chat-bubble';
+import { CommentItem } from '@/components/blocks/comment-item';
+import { ProductCard } from '@/components/blocks/product-card';
+import { CartItem } from '@/components/blocks/cart-item';
+import { BannerBlock } from '@/components/blocks/banner-block';
+import { OrderItem } from '@/components/blocks/order-item';
+import { ReviewCard } from '@/components/blocks/review-card';
+import { TaskItem } from '@/components/blocks/task-item';
+import { EventCard } from '@/components/blocks/event-card';
+import { ArticleCard } from '@/components/blocks/article-card';
+import { PricingCard } from '@/components/blocks/pricing-card';
 
 // ============================================================================
 // Demo Component
@@ -86,6 +103,54 @@ export function BlocksDemo() {
 
       <Section title="Signup Block">
         <SignupBlockPreview />
+      </Section>
+
+      <Section title="User List Item">
+        <UserListItemPreview />
+      </Section>
+
+      <Section title="Chat Bubble">
+        <ChatBubblePreview />
+      </Section>
+
+      <Section title="Comment Item">
+        <CommentItemPreview />
+      </Section>
+
+      <Section title="Product Card">
+        <ProductCardPreview />
+      </Section>
+
+      <Section title="Cart Item">
+        <CartItemPreview />
+      </Section>
+
+      <Section title="Banner Block">
+        <BannerBlockPreview />
+      </Section>
+
+      <Section title="Order Item">
+        <OrderItemPreview />
+      </Section>
+
+      <Section title="Review Card">
+        <ReviewCardPreview />
+      </Section>
+
+      <Section title="Task Item">
+        <TaskItemPreview />
+      </Section>
+
+      <Section title="Event Card">
+        <EventCardPreview />
+      </Section>
+
+      <Section title="Article Card">
+        <ArticleCardPreview />
+      </Section>
+
+      <Section title="Pricing Card">
+        <PricingCardPreview />
       </Section>
     </View>
   );
@@ -1316,6 +1381,527 @@ function SignupBlockPreview() {
         </View>
       </CardContent>
     </Card>
+  );
+}
+
+// ============================================================================
+// User List Item Preview
+// ============================================================================
+
+function UserListItemPreview() {
+  const { colors, spacing } = useTheme();
+  const [following, setFollowing] = useState(false);
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[3] }}>
+          <UserListItem
+            user={{
+              name: 'Sarah Miller',
+              username: '@sarahm',
+              avatarUrl: 'https://i.pravatar.cc/100?img=5',
+            }}
+            verified
+            actionLabel={following ? 'Following' : 'Follow'}
+            actionVariant={following ? 'secondary' : 'default'}
+            onAction={() => setFollowing(!following)}
+            onPress={() => Alert.alert('Profile', 'Navigate to profile')}
+          />
+          <UserListItem
+            user={{
+              name: 'John Davis',
+              username: '@johnd',
+              avatarUrl: 'https://i.pravatar.cc/100?img=8',
+              subtitle: 'Follows you',
+            }}
+            onPress={() => Alert.alert('Profile')}
+          />
+          <UserListItem
+            user={{
+              name: 'Emma Wilson',
+              username: '@emmaw',
+            }}
+            status="online"
+            onPress={() => Alert.alert('Profile')}
+          />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Chat Bubble Preview
+// ============================================================================
+
+function ChatBubblePreview() {
+  const { colors, spacing } = useTheme();
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[2] }}>
+          <ChatBubble
+            message="Hey! How are you doing today?"
+            time="10:30 AM"
+            isOwn={false}
+            user={{ name: 'Sarah', avatarUrl: 'https://i.pravatar.cc/100?img=5' }}
+          />
+          <ChatBubble
+            message="I'm good, thanks! Just working on a new project."
+            time="10:32 AM"
+            isOwn={true}
+            status="read"
+          />
+          <ChatBubble
+            message="That sounds awesome! What kind of project is it?"
+            time="10:33 AM"
+            isOwn={false}
+            user={{ name: 'Sarah', avatarUrl: 'https://i.pravatar.cc/100?img=5' }}
+            isFirst={false}
+            isLast={false}
+          />
+          <ChatBubble
+            message="It's a mobile app using React Native. Really enjoying it so far! 🚀"
+            time="10:35 AM"
+            isOwn={true}
+            status="delivered"
+          />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Comment Item Preview
+// ============================================================================
+
+function CommentItemPreview() {
+  const { colors, spacing } = useTheme();
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(12);
+
+  const handleLike = () => {
+    setLiked(!liked);
+    setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+  };
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[4] }}>
+          <CommentItem
+            user={{
+              name: 'Sarah Miller',
+              avatarUrl: 'https://i.pravatar.cc/100?img=5',
+            }}
+            content="This is absolutely amazing! I love how clean the design is. Great work! 👏"
+            time="2h ago"
+            likes={likeCount}
+            liked={liked}
+            onLike={handleLike}
+            onReply={() => Alert.alert('Reply')}
+          />
+          <CommentItem
+            user={{
+              name: 'John Davis',
+              avatarUrl: 'https://i.pravatar.cc/100?img=8',
+            }}
+            content="Agreed! The attention to detail is impressive."
+            time="1h ago"
+            likes={5}
+            isReply
+            onLike={() => {}}
+          />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Product Card Preview
+// ============================================================================
+
+function ProductCardPreview() {
+  const { colors, spacing } = useTheme();
+  const [wishlisted, setWishlisted] = useState(false);
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[3] }}>
+          <ProductCard
+            title="Wireless Headphones"
+            price={149.99}
+            image={{ uri: 'https://picsum.photos/200/200?random=10' }}
+            rating={4.5}
+            reviewCount={128}
+            wishlisted={wishlisted}
+            onPress={() => Alert.alert('Product Details')}
+            onAddToCart={() => Alert.alert('Added to Cart')}
+            onWishlist={() => setWishlisted(!wishlisted)}
+          />
+          <ProductCard
+            title="Smart Watch Pro"
+            price={299.99}
+            originalPrice={349.99}
+            image={{ uri: 'https://picsum.photos/200/200?random=11' }}
+            rating={4.8}
+            reviewCount={256}
+            badge="Sale"
+            onPress={() => Alert.alert('Product Details')}
+            onAddToCart={() => Alert.alert('Added to Cart')}
+          />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Cart Item Preview
+// ============================================================================
+
+function CartItemPreview() {
+  const { colors, spacing } = useTheme();
+  const [quantity, setQuantity] = useState(2);
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[3] }}>
+          <CartItem
+            product={{
+              name: 'Wireless Headphones',
+              price: 149.99,
+              image: { uri: 'https://picsum.photos/100/100?random=10' },
+              variant: 'Black',
+            }}
+            quantity={quantity}
+            onQuantityChange={setQuantity}
+            onRemove={() => Alert.alert('Remove', 'Remove item from cart?')}
+          />
+          <CartItem
+            product={{
+              name: 'Phone Case Premium',
+              price: 29.99,
+              image: { uri: 'https://picsum.photos/100/100?random=12' },
+              variant: 'Clear',
+            }}
+            quantity={1}
+            onQuantityChange={() => {}}
+            onRemove={() => Alert.alert('Remove')}
+          />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Banner Block Preview
+// ============================================================================
+
+function BannerBlockPreview() {
+  const { colors, spacing } = useTheme();
+  const [showBanner, setShowBanner] = useState(true);
+
+  return (
+    <View style={{ gap: spacing[3] }}>
+      {showBanner && (
+        <BannerBlock
+          title="Limited Time Offer!"
+          subtitle="Get 20% off your first order with code WELCOME20"
+          variant="solid"
+          onAction={() => Alert.alert('Apply Code')}
+          actionLabel="Apply Now"
+          dismissible
+          onDismiss={() => setShowBanner(false)}
+        />
+      )}
+      <BannerBlock
+        title="New Feature Available"
+        subtitle="Check out our latest update with improved performance"
+        variant="gradient"
+        gradientColors={['#10b981', '#059669']}
+        onAction={() => Alert.alert('Learn More')}
+        actionLabel="Learn More"
+      />
+      <BannerBlock
+        title="Maintenance Scheduled"
+        subtitle="System will be down for maintenance on Sunday 2-4 AM"
+        variant="outline"
+      />
+      {!showBanner && (
+        <Button variant="outline" onPress={() => setShowBanner(true)}>
+          Show Banner Again
+        </Button>
+      )}
+    </View>
+  );
+}
+
+// ============================================================================
+// Order Item Preview
+// ============================================================================
+
+function OrderItemPreview() {
+  const { colors, spacing } = useTheme();
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[3] }}>
+          <OrderItem
+            order={{
+              id: 'ORD-12345',
+              date: new Date().toISOString(),
+              total: 299.99,
+              status: 'shipped',
+              items: [
+                { name: 'Wireless Headphones', image: { uri: 'https://picsum.photos/100/100?random=10' } },
+                { name: 'Phone Case', image: { uri: 'https://picsum.photos/100/100?random=12' } },
+              ],
+            }}
+            onPress={() => Alert.alert('Order Details')}
+            onTrack={() => Alert.alert('Track Order')}
+          />
+          <OrderItem
+            order={{
+              id: 'ORD-12344',
+              date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+              total: 149.99,
+              status: 'delivered',
+              items: [
+                { name: 'Smart Watch', image: { uri: 'https://picsum.photos/100/100?random=11' } },
+              ],
+            }}
+            onPress={() => Alert.alert('Order Details')}
+            onReorder={() => Alert.alert('Reorder')}
+            onReview={() => Alert.alert('Write Review')}
+          />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Review Card Preview
+// ============================================================================
+
+function ReviewCardPreview() {
+  const { colors, spacing } = useTheme();
+  const [helpful, setHelpful] = useState(false);
+  const [helpfulCount, setHelpfulCount] = useState(24);
+
+  const handleHelpful = () => {
+    setHelpful(!helpful);
+    setHelpfulCount(helpful ? helpfulCount - 1 : helpfulCount + 1);
+  };
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <ReviewCard
+          author={{
+            name: 'Sarah Miller',
+            avatar: { uri: 'https://i.pravatar.cc/100?img=5' },
+            verified: true,
+          }}
+          rating={5}
+          title="Absolutely love it!"
+          content="This product exceeded my expectations. The quality is fantastic and it works perfectly. Highly recommend to anyone looking for a reliable option. Customer service was also excellent when I had questions."
+          date={new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()}
+          variant="Black / Large"
+          helpfulCount={helpfulCount}
+          isHelpful={helpful}
+          onHelpful={handleHelpful}
+          images={[
+            { uri: 'https://picsum.photos/100/100?random=20' },
+            { uri: 'https://picsum.photos/100/100?random=21' },
+          ]}
+        />
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Task Item Preview
+// ============================================================================
+
+function TaskItemPreview() {
+  const { colors, spacing } = useTheme();
+  const [tasks, setTasks] = useState([
+    { id: '1', title: 'Review pull request', completed: false, priority: 'high' as const },
+    { id: '2', title: 'Update documentation', completed: true, priority: 'medium' as const },
+    { id: '3', title: 'Schedule team meeting', completed: false, priority: 'low' as const },
+  ]);
+
+  const toggleTask = (id: string) => {
+    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+  };
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[2] }}>
+          {tasks.map((task) => (
+            <TaskItem
+              key={task.id}
+              task={task}
+              onToggle={() => toggleTask(task.id)}
+              onPress={() => Alert.alert('Task Details', task.title)}
+            />
+          ))}
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Event Card Preview
+// ============================================================================
+
+function EventCardPreview() {
+  const { colors, spacing } = useTheme();
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[3] }}>
+          <EventCard
+            event={{
+              id: '1',
+              title: 'Team Standup',
+              startTime: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+              endTime: new Date(Date.now() + 2.5 * 60 * 60 * 1000).toISOString(),
+              location: 'Zoom Meeting',
+              color: colors.primary,
+            }}
+            onPress={() => Alert.alert('Event Details')}
+          />
+          <EventCard
+            event={{
+              id: '2',
+              title: 'Product Launch Party',
+              startTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+              endTime: new Date(Date.now() + 27 * 60 * 60 * 1000).toISOString(),
+              location: 'Main Office',
+              color: colors.success,
+              attendees: [
+                { name: 'John', avatar: { uri: 'https://i.pravatar.cc/100?img=8' } },
+                { name: 'Sarah', avatar: { uri: 'https://i.pravatar.cc/100?img=5' } },
+                { name: 'Mike', avatar: { uri: 'https://i.pravatar.cc/100?img=12' } },
+              ],
+            }}
+            onPress={() => Alert.alert('Event Details')}
+          />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Article Card Preview
+// ============================================================================
+
+function ArticleCardPreview() {
+  const { colors, spacing } = useTheme();
+
+  return (
+    <Card>
+      <CardContent style={{ paddingTop: spacing[4] }}>
+        <View style={{ gap: spacing[3] }}>
+          <ArticleCard
+            article={{
+              id: '1',
+              title: 'Getting Started with React Native',
+              excerpt: 'Learn the basics of building mobile apps with React Native, from setup to deployment.',
+              image: { uri: 'https://picsum.photos/400/200?random=30' },
+              author: {
+                name: 'Sarah Miller',
+                avatar: { uri: 'https://i.pravatar.cc/100?img=5' },
+              },
+              publishedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+              readTime: 8,
+              category: 'Tutorial',
+            }}
+            onPress={() => Alert.alert('Read Article')}
+          />
+          <ArticleCard
+            article={{
+              id: '2',
+              title: 'Design Systems for Mobile Apps',
+              excerpt: 'How to create and maintain a consistent design system across your mobile applications.',
+              author: {
+                name: 'John Davis',
+                avatar: { uri: 'https://i.pravatar.cc/100?img=8' },
+              },
+              publishedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+              readTime: 12,
+              category: 'Design',
+            }}
+            onPress={() => Alert.alert('Read Article')}
+            variant="horizontal"
+          />
+        </View>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============================================================================
+// Pricing Card Preview
+// ============================================================================
+
+function PricingCardPreview() {
+  const { colors, spacing } = useTheme();
+
+  return (
+    <View style={{ gap: spacing[3] }}>
+      <PricingCard
+        plan={{
+          id: 'free',
+          name: 'Free',
+          price: 0,
+          interval: 'month',
+          description: 'Perfect for getting started',
+          features: [
+            { text: 'Up to 3 projects', included: true },
+            { text: 'Basic analytics', included: true },
+            { text: 'Community support', included: true },
+            { text: 'Custom domain', included: false },
+            { text: 'Priority support', included: false },
+          ],
+        }}
+        onSelect={() => Alert.alert('Selected Free Plan')}
+      />
+      <PricingCard
+        plan={{
+          id: 'pro',
+          name: 'Pro',
+          price: 19,
+          interval: 'month',
+          description: 'Best for professionals',
+          features: [
+            { text: 'Unlimited projects', included: true },
+            { text: 'Advanced analytics', included: true },
+            { text: 'Priority support', included: true },
+            { text: 'Custom domain', included: true },
+            { text: 'Team collaboration', included: true },
+          ],
+        }}
+        popular
+        onSelect={() => Alert.alert('Selected Pro Plan')}
+      />
+    </View>
   );
 }
 

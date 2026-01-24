@@ -280,7 +280,6 @@ export function ArticleCard({
   // Default variant
   return (
     <Card
-      pressable={!!onPress}
       onPress={onPress ? handlePress : undefined}
       style={style}
     >

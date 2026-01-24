@@ -242,7 +242,6 @@ export function EventCard({
   // Default variant
   return (
     <Card
-      pressable={!!onPress}
       onPress={onPress ? handlePress : undefined}
       style={style}
     >
@@ -321,7 +320,7 @@ export function EventCard({
                     source: a.avatar,
                     fallback: a.name.charAt(0),
                   }))}
-                  size="xs"
+                  size="sm"
                   max={5}
                 />
               </View>

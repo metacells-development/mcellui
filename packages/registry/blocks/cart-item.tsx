@@ -36,7 +36,7 @@ import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Stepper } from '../ui/stepper';
-import { SwipeableRow, SwipeableAction } from '../ui/swipeable-row';
+import { SwipeableRow, SwipeAction } from '../ui/swipeable-row';
 
 // ============================================================================
 // Icons
@@ -169,12 +169,12 @@ export function CartItem({
   const lineTotal = product.price * quantity;
 
   // Right swipe actions
-  const rightActions: SwipeableAction[] = [];
+  const rightActions: SwipeAction[] = [];
 
   if (showSaveForLater && onSaveForLater) {
     rightActions.push({
       label: 'Save',
-      backgroundColor: colors.primary,
+      color: colors.primary,
       icon: <HeartIcon />,
       onPress: handleSaveForLater,
     });
@@ -183,7 +183,7 @@ export function CartItem({
   if (onRemove) {
     rightActions.push({
       label: 'Remove',
-      backgroundColor: colors.destructive,
+      color: colors.destructive,
       icon: <TrashIcon />,
       onPress: handleRemove,
     });
@@ -266,7 +266,7 @@ export function CartItem({
               value={quantity}
               min={minQuantity}
               max={maxQuantity}
-              onChange={onQuantityChange}
+              onValueChange={onQuantityChange}
               size="sm"
             />
           )}
