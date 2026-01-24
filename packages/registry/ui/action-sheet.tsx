@@ -101,7 +101,8 @@ export function ActionSheet({
   children,
   cancelLabel = 'Cancel',
 }: ActionSheetProps) {
-  const { colors, spacing, radius, fontWeight, fontSize } = useTheme();
+  const { colors, spacing, components, componentRadius } = useTheme();
+  const tokens = components.actionSheet;
 
   const translateY = useSharedValue(SCREEN_HEIGHT);
   const backdropOpacity = useSharedValue(0);
@@ -181,6 +182,8 @@ export function ActionSheet({
               {
                 backgroundColor: colors.card,
                 paddingBottom: spacing[8],
+                borderTopLeftRadius: componentRadius.actionSheet,
+                borderTopRightRadius: componentRadius.actionSheet,
               },
               sheetStyle,
             ]}
@@ -201,8 +204,8 @@ export function ActionSheet({
                 style={[
                   styles.header,
                   {
-                    paddingHorizontal: spacing[4],
-                    paddingBottom: spacing[3],
+                    paddingHorizontal: tokens.header.paddingHorizontal,
+                    paddingVertical: tokens.header.paddingVertical,
                     borderBottomWidth: 1,
                     borderBottomColor: colors.border,
                   },
@@ -214,8 +217,8 @@ export function ActionSheet({
                       styles.title,
                       {
                         color: colors.foreground,
-                        fontSize: fontSize.lg,
-                        fontWeight: fontWeight.semibold,
+                        fontSize: tokens.header.fontSize,
+                        fontWeight: tokens.header.fontWeight,
                       },
                     ]}
                   >
@@ -228,7 +231,7 @@ export function ActionSheet({
                       styles.message,
                       {
                         color: colors.foregroundMuted,
-                        fontSize: fontSize.sm,
+                        fontSize: tokens.header.fontSize,
                         marginTop: title ? spacing[1] : 0,
                       },
                     ]}
@@ -251,8 +254,9 @@ export function ActionSheet({
                 style={({ pressed }) => [
                   styles.cancelButton,
                   {
+                    height: tokens.cancel.height,
                     backgroundColor: colors.secondary,
-                    borderRadius: radius.lg,
+                    borderRadius: componentRadius.actionSheet,
                     opacity: pressed ? 0.7 : 1,
                   },
                 ]}
@@ -262,8 +266,8 @@ export function ActionSheet({
                     styles.cancelText,
                     {
                       color: colors.primary,
-                      fontSize: fontSize.base,
-                      fontWeight: fontWeight.semibold,
+                      fontSize: tokens.cancel.fontSize,
+                      fontWeight: tokens.cancel.fontWeight,
                     },
                   ]}
                 >
@@ -290,7 +294,8 @@ export function ActionSheetItem({
   onPress,
   _onClose,
 }: ActionSheetItemProps & { _onClose?: () => void }) {
-  const { colors, spacing, radius, fontWeight, fontSize } = useTheme();
+  const { colors, components, componentRadius } = useTheme();
+  const tokens = components.actionSheet.item;
 
   const handlePress = () => {
     haptic('light');
@@ -309,10 +314,11 @@ export function ActionSheetItem({
       style={({ pressed }) => [
         styles.item,
         {
+          minHeight: tokens.height,
+          paddingHorizontal: tokens.paddingHorizontal,
+          gap: tokens.gap,
           backgroundColor: pressed ? colors.backgroundMuted : 'transparent',
-          borderRadius: radius.lg,
-          paddingVertical: spacing[3],
-          paddingHorizontal: spacing[4],
+          borderRadius: componentRadius.actionSheetItem,
           opacity: disabled ? 0.5 : 1,
         },
       ]}
@@ -320,23 +326,21 @@ export function ActionSheetItem({
       accessibilityState={{ disabled }}
     >
       {icon && (
-        <View style={{ marginRight: spacing[3] }}>
-          {React.isValidElement(icon)
-            ? React.cloneElement(icon as React.ReactElement<{ width?: number; height?: number; color?: string }>, {
-                width: 22,
-                height: 22,
-                color: textColor,
-              })
-            : icon}
-        </View>
+        React.isValidElement(icon)
+          ? React.cloneElement(icon as React.ReactElement<{ width?: number; height?: number; color?: string }>, {
+              width: tokens.iconSize,
+              height: tokens.iconSize,
+              color: textColor,
+            })
+          : icon
       )}
       <Text
         style={[
           styles.itemText,
           {
             color: textColor,
-            fontSize: fontSize.base,
-            fontWeight: fontWeight.medium,
+            fontSize: tokens.fontSize,
+            fontWeight: tokens.fontWeight,
           },
         ]}
       >
@@ -360,8 +364,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   sheet: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     minHeight: 100,
     maxHeight: SCREEN_HEIGHT * 0.7,
   },
@@ -389,8 +391,8 @@ const styles = StyleSheet.create({
   },
   itemText: {},
   cancelButton: {
-    paddingVertical: 14,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   cancelText: {},
 });
