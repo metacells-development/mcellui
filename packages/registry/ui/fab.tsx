@@ -28,7 +28,7 @@
  * ```
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Text,
   Pressable,
@@ -41,7 +41,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, haptic } from '@metacells/mcellui-core';
+import { useTheme, haptic, areAnimationsDisabled } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -72,31 +72,6 @@ export interface FABProps {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Size configs
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SIZE_CONFIG = {
-  sm: {
-    size: 40,
-    iconSize: 18,
-    fontSize: 13,
-    paddingHorizontal: 12,
-  },
-  md: {
-    size: 56,
-    iconSize: 24,
-    fontSize: 14,
-    paddingHorizontal: 16,
-  },
-  lg: {
-    size: 72,
-    iconSize: 32,
-    fontSize: 16,
-    paddingHorizontal: 20,
-  },
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Component
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -110,9 +85,10 @@ export function FAB({
   onPress,
   style,
 }: FABProps) {
-  const { colors, fontWeight, platformShadow } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, components, componentRadius, fontWeight, platformShadow, springs } = useTheme();
+  const tokens = components.fab[size];
 
+  const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
   const scale = useSharedValue(1);
 
   // Variant styles
@@ -132,15 +108,19 @@ export function FAB({
   }[variant];
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ scale: animationsEnabled ? scale.value : 1 }],
   }));
 
   const handlePressIn = () => {
-    scale.value = withSpring(0.92, { damping: 20, stiffness: 400 });
+    if (animationsEnabled) {
+      scale.value = withSpring(0.92, springs.snappy);
+    }
   };
 
   const handlePressOut = () => {
-    scale.value = withSpring(1, { damping: 20, stiffness: 400 });
+    if (animationsEnabled) {
+      scale.value = withSpring(1, springs.snappy);
+    }
   };
 
   const handlePress = () => {
@@ -160,10 +140,10 @@ export function FAB({
         styles.fab,
         {
           backgroundColor: variantStyles.backgroundColor,
-          width: isExtended ? 'auto' : config.size,
-          height: config.size,
-          borderRadius: config.size / 2,
-          paddingHorizontal: isExtended ? config.paddingHorizontal : 0,
+          width: isExtended ? 'auto' : tokens.size,
+          height: tokens.size,
+          borderRadius: tokens.size / 2,
+          paddingHorizontal: isExtended ? tokens.paddingHorizontal : 0,
           opacity: disabled ? 0.5 : 1,
         },
         platformShadow('lg'),
@@ -183,8 +163,8 @@ export function FAB({
         <>
           {React.isValidElement(icon)
             ? React.cloneElement(icon as React.ReactElement<{ width?: number; height?: number; color?: string }>, {
-                width: config.iconSize,
-                height: config.iconSize,
+                width: tokens.iconSize,
+                height: tokens.iconSize,
                 color: variantStyles.iconColor,
               })
             : icon}
@@ -193,8 +173,8 @@ export function FAB({
               style={[
                 styles.label,
                 {
-                  fontSize: config.fontSize,
-                  fontWeight: fontWeight.semibold,
+                  fontSize: tokens.fontSize,
+                  fontWeight: tokens.fontWeight,
                   color: variantStyles.iconColor,
                   marginLeft: 8,
                 },
