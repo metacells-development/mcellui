@@ -37,10 +37,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. All form inputs support disabled, error, and focused states with proper visual feedback
   4. All form inputs have focus rings for accessibility (VoiceOver/TalkBack tested)
   5. Demo shows all variants and states for each input type
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] TBD
+- [ ] 01-01-PLAN.md - Extend token system with form input component tokens
+- [ ] 01-02-PLAN.md - Migrate Textarea and Select to token system with size prop
+- [ ] 01-03-PLAN.md - Migrate Slider, Stepper, Radio to centralized tokens
+- [ ] 01-04-PLAN.md - Migrate TagInput to centralized tokens
+- [ ] 01-05-PLAN.md - Enhance all 9 form input demos with comprehensive state coverage
 
 ### Phase 2: Buttons & Actions
 **Goal**: All button-like components have consistent variants, sizes, and interaction states
@@ -210,11 +214,11 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10 -> 11 -> 12
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Form Inputs | 0/TBD | Not started | - |
+| 1. Form Inputs | 0/5 | Planned | - |
 | 2. Buttons & Actions | 0/TBD | Not started | - |
 | 3. Feedback Components | 0/TBD | Not started | - |
 | 4. Progress & Loading | 0/TBD | Not started | - |
