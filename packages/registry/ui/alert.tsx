@@ -16,7 +16,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
-import { useTheme, ThemeColors } from '@metacells/mcellui-core';
+import { useTheme, ThemeColors, ALERT_CONSTANTS } from '@metacells/mcellui-core';
 
 export type AlertVariant = 'default' | 'info' | 'success' | 'warning' | 'destructive';
 export type AlertSize = 'sm' | 'md' | 'lg';
@@ -91,29 +91,17 @@ function CloseIcon({ color, size }: { color: string; size: number }) {
   );
 }
 
-const sizeTokens = {
-  sm: {
-    padding: 12,
-    iconSize: 16,
-    titleSize: 13,
-    textSize: 12,
-    gap: 8,
-  },
-  md: {
-    padding: 16,
-    iconSize: 20,
-    titleSize: 15,
-    textSize: 14,
-    gap: 12,
-  },
-  lg: {
-    padding: 20,
-    iconSize: 24,
-    titleSize: 17,
-    textSize: 16,
-    gap: 16,
-  },
-};
+// Helper function to get size-specific tokens from ALERT_CONSTANTS
+function getSizeTokens(size: AlertSize) {
+  const suffix = size.charAt(0).toUpperCase() + size.slice(1); // 'sm' -> 'Sm', 'md' -> 'Md', 'lg' -> 'Lg'
+  return {
+    padding: ALERT_CONSTANTS[`padding${suffix}` as keyof typeof ALERT_CONSTANTS] as number,
+    iconSize: ALERT_CONSTANTS[`iconSize${suffix}` as keyof typeof ALERT_CONSTANTS] as number,
+    titleSize: ALERT_CONSTANTS[`titleFontSize${suffix}` as keyof typeof ALERT_CONSTANTS] as number,
+    textSize: ALERT_CONSTANTS[`textFontSize${suffix}` as keyof typeof ALERT_CONSTANTS] as number,
+    gap: ALERT_CONSTANTS[`gap${suffix}` as keyof typeof ALERT_CONSTANTS] as number,
+  };
+}
 
 export function Alert({
   children,
@@ -129,7 +117,7 @@ export function Alert({
   accessibilityLabel,
 }: AlertProps) {
   const { colors, radius, platformShadow } = useTheme();
-  const tokens = sizeTokens[size];
+  const tokens = getSizeTokens(size);
   const variantStyles = getVariantStyles(variant, colors);
 
   // Get the appropriate icon for the variant
