@@ -842,6 +842,66 @@
       "files": ["screens/comments-screen.tsx"],
       "dependencies": ["react-native-safe-area-context", "react-native-svg"],
       "registryDependencies": ["icon-button", "avatar", "spinner", "comment-item", "empty-state-block"]
+    },
+    {
+      "name": "toggle",
+      "type": "ui",
+      "description": "Button-style toggles with single and group selection modes",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/toggle.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "popover",
+      "type": "ui",
+      "description": "Positioned popup with interactive content and backdrop",
+      "category": "Overlay",
+      "status": "beta",
+      "files": ["ui/popover.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "pagination",
+      "type": "ui",
+      "description": "Page navigation with dots, numbers, and simple variants",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["ui/pagination.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "calendar",
+      "type": "ui",
+      "description": "Date grid with single, range, and multiple selection modes",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/calendar.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "circular-progress",
+      "type": "ui",
+      "description": "Ring/donut style progress indicator with animated fill",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["ui/circular-progress.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "tag-input",
+      "type": "ui",
+      "description": "Input field for entering multiple tags with autocomplete",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/tag-input.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
     }
   ]
 }
