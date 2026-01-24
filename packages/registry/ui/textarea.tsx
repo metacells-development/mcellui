@@ -34,9 +34,9 @@ import Animated, {
 import { useTheme } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
-const TIMING_CONFIG = { duration: 200, easing: Easing.out(Easing.quad) };
-
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+
+export type TextareaSize = 'sm' | 'md' | 'lg';
 
 export interface TextareaProps extends Omit<TextInputProps, 'style' | 'multiline'> {
   /** Label text above input */
@@ -45,6 +45,8 @@ export interface TextareaProps extends Omit<TextInputProps, 'style' | 'multiline
   error?: string;
   /** Helper text below input (hidden when error is present) */
   helperText?: string;
+  /** Size variant */
+  size?: TextareaSize;
   /** Number of visible rows (default: 4) */
   rows?: number;
   /** Auto-grow based on content */
@@ -63,15 +65,13 @@ export interface TextareaProps extends Omit<TextInputProps, 'style' | 'multiline
   labelStyle?: TextStyle;
 }
 
-const LINE_HEIGHT = 20;
-const PADDING_VERTICAL = 12;
-
 export const Textarea = forwardRef<TextInput, TextareaProps>(
   (
     {
       label,
       error,
       helperText,
+      size = 'md',
       rows = 4,
       autoGrow = false,
       minRows = 2,
@@ -90,29 +90,36 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
     },
     ref
   ) => {
-    const { colors, radius, spacing } = useTheme();
+    const { colors, components, componentRadius, timing, spacing } = useTheme();
+    const tokens = components.textarea[size];
     const focusProgress = useSharedValue(0);
     const [textLength, setTextLength] = useState(value?.length ?? 0);
-    const [height, setHeight] = useState(rows * LINE_HEIGHT + PADDING_VERTICAL * 2);
+    const [height, setHeight] = useState(rows * tokens.lineHeight + tokens.paddingVertical * 2);
 
     const hasError = !!error;
     const isDisabled = editable === false;
 
     const handleFocus: NonNullable<TextInputProps['onFocus']> = useCallback(
       (e) => {
-        focusProgress.value = withTiming(1, TIMING_CONFIG);
+        focusProgress.value = withTiming(1, {
+          duration: timing.default.duration,
+          easing: Easing.out(Easing.quad),
+        });
         haptic('selection');
         onFocus?.(e);
       },
-      [onFocus]
+      [onFocus, timing]
     );
 
     const handleBlur: NonNullable<TextInputProps['onBlur']> = useCallback(
       (e) => {
-        focusProgress.value = withTiming(0, TIMING_CONFIG);
+        focusProgress.value = withTiming(0, {
+          duration: timing.default.duration,
+          easing: Easing.out(Easing.quad),
+        });
         onBlur?.(e);
       },
-      [onBlur]
+      [onBlur, timing]
     );
 
     const handleChangeText = useCallback(
@@ -128,13 +135,13 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
         if (!autoGrow) return;
 
         const contentHeight = e.nativeEvent.contentSize.height;
-        const minHeight = minRows * LINE_HEIGHT + PADDING_VERTICAL * 2;
-        const maxHeight = maxRows * LINE_HEIGHT + PADDING_VERTICAL * 2;
+        const minHeight = minRows * tokens.lineHeight + tokens.paddingVertical * 2;
+        const maxHeight = maxRows * tokens.lineHeight + tokens.paddingVertical * 2;
 
         const newHeight = Math.min(Math.max(contentHeight, minHeight), maxHeight);
         setHeight(newHeight);
       },
-      [autoGrow, minRows, maxRows]
+      [autoGrow, minRows, maxRows, tokens]
     );
 
     const animatedBorderStyle = useAnimatedStyle(() => {
@@ -155,7 +162,7 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
       };
     }, [hasError, colors]);
 
-    const baseHeight = autoGrow ? height : rows * LINE_HEIGHT + PADDING_VERTICAL * 2;
+    const baseHeight = autoGrow ? height : rows * tokens.lineHeight + tokens.paddingVertical * 2;
 
     return (
       <View style={[styles.container, containerStyle]}>
@@ -164,7 +171,7 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
             style={[
               styles.label,
               {
-                fontSize: 14,
+                fontSize: tokens.labelFontSize,
                 marginBottom: spacing[1.5],
                 color: hasError ? colors.destructive : colors.foreground,
               },
@@ -181,11 +188,11 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
             styles.input,
             {
               height: baseHeight,
-              paddingHorizontal: 12,
-              paddingVertical: PADDING_VERTICAL,
-              borderRadius: radius.md,
-              fontSize: 14,
-              lineHeight: LINE_HEIGHT,
+              paddingHorizontal: tokens.paddingHorizontal,
+              paddingVertical: tokens.paddingVertical,
+              borderRadius: componentRadius.textarea,
+              fontSize: tokens.fontSize,
+              lineHeight: tokens.lineHeight,
               backgroundColor: isDisabled ? colors.backgroundMuted : colors.background,
               color: isDisabled ? colors.foregroundMuted : colors.foreground,
               textAlignVertical: 'top',
@@ -213,7 +220,7 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
               style={[
                 styles.helperText,
                 {
-                  fontSize: 12,
+                  fontSize: tokens.helperFontSize,
                   marginTop: spacing[1],
                   color: hasError ? colors.destructive : colors.foregroundMuted,
                 },
@@ -227,7 +234,7 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
               style={[
                 styles.count,
                 {
-                  fontSize: 12,
+                  fontSize: tokens.helperFontSize,
                   marginTop: spacing[1],
                   color: textLength >= maxLength ? colors.destructive : colors.foregroundMuted,
                 },
