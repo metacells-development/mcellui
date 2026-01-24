@@ -40,7 +40,7 @@ import Animated, {
   withTiming,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, haptic } from '@metacells/mcellui-core';
+import { useTheme, haptic, TOOLTIP_CONSTANTS } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -73,9 +73,7 @@ export interface TooltipProps {
 // Constants
 // ─────────────────────────────────────────────────────────────────────────────
 
-const TOOLTIP_PADDING = 12;
-const TOOLTIP_MARGIN = 8;
-const ARROW_SIZE = 8;
+// Moved to TOOLTIP_CONSTANTS in @metacells/mcellui-core
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Tooltip Component
@@ -85,11 +83,11 @@ export function Tooltip({
   content,
   children,
   position = 'top',
-  delayMs = 500,
+  delayMs = TOOLTIP_CONSTANTS.defaultDelay,
   open: controlledOpen,
   onOpenChange,
   disabled = false,
-  maxWidth = 250,
+  maxWidth = TOOLTIP_CONSTANTS.defaultMaxWidth,
 }: TooltipProps) {
   const { colors, radius, fontSize } = useTheme();
 
@@ -114,11 +112,11 @@ export function Tooltip({
       }
 
       if (value) {
-        opacity.value = withTiming(1, { duration: 150 });
+        opacity.value = withTiming(1, { duration: TOOLTIP_CONSTANTS.animationInDuration });
         scale.value = withSpring(1, { damping: 20, stiffness: 300 });
       } else {
-        opacity.value = withTiming(0, { duration: 100 });
-        scale.value = withTiming(0.9, { duration: 100 });
+        opacity.value = withTiming(0, { duration: TOOLTIP_CONSTANTS.animationOutDuration });
+        scale.value = withTiming(0.9, { duration: TOOLTIP_CONSTANTS.animationOutDuration });
       }
     },
     [isControlled, onOpenChange, opacity, scale]
@@ -174,25 +172,25 @@ export function Tooltip({
     let left = triggerX + triggerWidth / 2 - tooltipSize.width / 2;
 
     // Clamp to screen bounds
-    left = Math.max(TOOLTIP_MARGIN, Math.min(left, SCREEN_WIDTH - tooltipSize.width - TOOLTIP_MARGIN));
+    left = Math.max(TOOLTIP_CONSTANTS.margin, Math.min(left, SCREEN_WIDTH - tooltipSize.width - TOOLTIP_CONSTANTS.margin));
 
     // Calculate vertical position
     let actualPosition = position;
     let top: number;
 
     if (position === 'top') {
-      top = triggerY - tooltipSize.height - ARROW_SIZE - 4;
+      top = triggerY - tooltipSize.height - TOOLTIP_CONSTANTS.arrowSize - 4;
       // If not enough space above, show below
-      if (top < TOOLTIP_MARGIN) {
+      if (top < TOOLTIP_CONSTANTS.margin) {
         actualPosition = 'bottom';
-        top = triggerY + triggerHeight + ARROW_SIZE + 4;
+        top = triggerY + triggerHeight + TOOLTIP_CONSTANTS.arrowSize + 4;
       }
     } else {
-      top = triggerY + triggerHeight + ARROW_SIZE + 4;
+      top = triggerY + triggerHeight + TOOLTIP_CONSTANTS.arrowSize + 4;
       // If not enough space below, show above
-      if (top + tooltipSize.height > SCREEN_HEIGHT - TOOLTIP_MARGIN) {
+      if (top + tooltipSize.height > SCREEN_HEIGHT - TOOLTIP_CONSTANTS.margin) {
         actualPosition = 'top';
-        top = triggerY - tooltipSize.height - ARROW_SIZE - 4;
+        top = triggerY - tooltipSize.height - TOOLTIP_CONSTANTS.arrowSize - 4;
       }
     }
 
@@ -203,7 +201,7 @@ export function Tooltip({
 
   // Calculate arrow position
   const arrowLeft = triggerLayout
-    ? triggerLayout.x + triggerLayout.width / 2 - left - ARROW_SIZE
+    ? triggerLayout.x + triggerLayout.width / 2 - left - TOOLTIP_CONSTANTS.arrowSize
     : 0;
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -305,7 +303,7 @@ export function Tooltip({
                 {
                   borderTopColor: actualPosition === 'top' ? colors.foreground : 'transparent',
                   borderBottomColor: actualPosition === 'bottom' ? colors.foreground : 'transparent',
-                  left: Math.max(ARROW_SIZE, Math.min(arrowLeft, maxWidth - ARROW_SIZE * 3)),
+                  left: Math.max(TOOLTIP_CONSTANTS.arrowSize, Math.min(arrowLeft, maxWidth - TOOLTIP_CONSTANTS.arrowSize * 3)),
                 },
               ]}
             />
@@ -317,8 +315,8 @@ export function Tooltip({
                 {
                   color: colors.background,
                   fontSize: fontSize.sm,
-                  paddingHorizontal: TOOLTIP_PADDING,
-                  paddingVertical: TOOLTIP_PADDING - 4,
+                  paddingHorizontal: TOOLTIP_CONSTANTS.padding,
+                  paddingVertical: TOOLTIP_CONSTANTS.padding - 4,
                 },
               ]}
             >
@@ -351,18 +349,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 0,
     height: 0,
-    borderLeftWidth: ARROW_SIZE,
-    borderRightWidth: ARROW_SIZE,
+    borderLeftWidth: TOOLTIP_CONSTANTS.arrowSize,
+    borderRightWidth: TOOLTIP_CONSTANTS.arrowSize,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
   },
   arrowTop: {
-    top: -ARROW_SIZE,
-    borderBottomWidth: ARROW_SIZE,
+    top: -TOOLTIP_CONSTANTS.arrowSize,
+    borderBottomWidth: TOOLTIP_CONSTANTS.arrowSize,
   },
   arrowBottom: {
-    bottom: -ARROW_SIZE,
-    borderTopWidth: ARROW_SIZE,
+    bottom: -TOOLTIP_CONSTANTS.arrowSize,
+    borderTopWidth: TOOLTIP_CONSTANTS.arrowSize,
   },
   content: {
     textAlign: 'center',
