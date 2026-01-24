@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 1 of 12 (Form Inputs)
-Plan: 0 of 5 in current phase
-Status: Planning complete, ready to execute
-Last activity: 2026-01-24 - Phase 1 planning complete with 5 plans in 3 waves
+Plan: 1 of 5 in current phase
+Status: In progress - Wave 1 complete, ready for Wave 2
+Last activity: 2026-01-24 - Completed 01-01-PLAN.md (Token Foundation)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: N/A
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 3 min
+- Total execution time: 0.05 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-form-inputs | 1/5 | 3 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: N/A
-- Trend: Not yet started
+- Last 5 plans: 01-01 (3 min)
+- Trend: First plan complete
 
 *Updated after each plan completion*
 
@@ -47,6 +47,10 @@ Recent decisions affecting current work:
 - Phase numbering 1-12 for comprehensive depth setting
 - Phase 1 research: Input, Checkbox, Switch already follow gold standard patterns
 - Phase 1 approach: Token foundation (Plan 01) → Component migrations (Plans 02-04 parallel) → Demos (Plan 05)
+- **01-01**: Textarea minHeight = componentHeight * 3 for adequate multi-line editing space
+- **01-01**: Slider thumb always pill-shaped (9999) while track uses preset radius
+- **01-01**: Radio always circular (PILL_RADIUS) regardless of preset for radio button conventions
+- **01-01**: TagInput includes gap tokens for flexible tag density control
 
 ### Pending Todos
 
@@ -59,14 +63,14 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Phase 1 planning complete, ready for `/gsd:execute-phase 1`
+Stopped at: Completed 01-01-PLAN.md, ready for Wave 2 (Plans 02-04)
 Resume file: None
 
 ## Phase 1 Plans
 
 | Plan | Wave | Description | Status |
 |------|------|-------------|--------|
-| 01-01 | 1 | Extend token system with form input component tokens | Pending |
+| 01-01 | 1 | Extend token system with form input component tokens | ✅ Complete (3 min) |
 | 01-02 | 2 | Migrate Textarea and Select to token system | Pending |
 | 01-03 | 2 | Migrate Slider, Stepper, Radio to centralized tokens | Pending |
 | 01-04 | 2 | Migrate TagInput to centralized tokens | Pending |
