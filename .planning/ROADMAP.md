@@ -12,7 +12,7 @@ This milestone refines all 102 components (55 UI, 28 blocks, 19 screens) to matc
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Form Inputs** - Input, Textarea, Select, Slider, Stepper, Checkbox, Switch, Radio, Tag Input
+- [x] **Phase 1: Form Inputs** - Input, Textarea, Select, Slider, Stepper, Checkbox, Switch, Radio, Tag Input
 - [ ] **Phase 2: Buttons & Actions** - Button, Icon Button, FAB, Segmented Control, Action Sheet
 - [ ] **Phase 3: Feedback Components** - Toast, Dialog, Alert Dialog, Alert, Sheet, Popover, Tooltip
 - [ ] **Phase 4: Progress & Loading** - Spinner, Skeleton, Progress, Circular Progress, Pull to Refresh
@@ -40,11 +40,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 5 plans
 
 Plans:
-- [ ] 01-01-PLAN.md - Extend token system with form input component tokens
-- [ ] 01-02-PLAN.md - Migrate Textarea and Select to token system with size prop
-- [ ] 01-03-PLAN.md - Migrate Slider, Stepper, Radio to centralized tokens
-- [ ] 01-04-PLAN.md - Migrate TagInput to centralized tokens
-- [ ] 01-05-PLAN.md - Enhance all 9 form input demos with comprehensive state coverage
+- [x] 01-01-PLAN.md - Extend token system with form input component tokens
+- [x] 01-02-PLAN.md - Migrate Textarea and Select to token system with size prop
+- [x] 01-03-PLAN.md - Migrate Slider, Stepper, Radio to centralized tokens
+- [x] 01-04-PLAN.md - Migrate TagInput to centralized tokens
+- [x] 01-05-PLAN.md - Enhance all 9 form input demos with comprehensive state coverage
 
 ### Phase 2: Buttons & Actions
 **Goal**: All button-like components have consistent variants, sizes, and interaction states
@@ -226,7 +226,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Form Inputs | 1/5 | In Progress | - |
+| 1. Form Inputs | 5/5 | ✓ Complete | 2026-01-24 |
 | 2. Buttons & Actions | 0/5 | Planned | - |
 | 3. Feedback Components | 0/5 | Planned | - |
 | 4. Progress & Loading | 0/TBD | Not started | - |
