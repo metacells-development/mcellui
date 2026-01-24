@@ -444,6 +444,23 @@ export const cardTokens = {
 } as const;
 
 // =============================================================================
+// Overlay Typography Tokens (Dialog, AlertDialog, Sheet)
+// =============================================================================
+
+export const overlayTypography = {
+  title: {
+    fontSize: fontSize.lg,     // 18
+    fontWeight: fontWeight.semibold,
+    lineHeight: 24,
+  },
+  description: {
+    fontSize: fontSize.base,   // 14
+    fontWeight: fontWeight.normal,
+    lineHeight: 20,
+  },
+} as const;
+
+// =============================================================================
 // Export all component tokens
 // =============================================================================
 
@@ -461,6 +478,7 @@ export const components = {
   badge: badgeTokens,
   avatar: avatarTokens,
   card: cardTokens,
+  overlayTypography,
   height: componentHeight,
   icon: iconSize,
 } as const;
