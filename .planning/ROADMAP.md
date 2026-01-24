@@ -56,10 +56,14 @@ Plans:
   3. All buttons support size prop (sm, md, lg) with consistent scaling
   4. All buttons support disabled and loading states with proper animations
   5. Demo shows all variants, sizes, and states for each button type
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] TBD
+- [ ] 02-01-PLAN.md - Add button-like component tokens (IconButton, FAB, SegmentedControl)
+- [ ] 02-02-PLAN.md - Migrate IconButton to centralized tokens with accessibility
+- [ ] 02-03-PLAN.md - Migrate FAB to centralized tokens with accessibility
+- [ ] 02-04-PLAN.md - Migrate SegmentedControl to centralized tokens
+- [ ] 02-05-PLAN.md - Enhance all button-related demos with comprehensive coverage
 
 ### Phase 3: Feedback Components
 **Goal**: All user feedback components have unified appearance and behavior patterns
@@ -222,8 +226,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Form Inputs | 0/5 | Planned | - |
-| 2. Buttons & Actions | 0/TBD | Not started | - |
+| 1. Form Inputs | 1/5 | In Progress | - |
+| 2. Buttons & Actions | 0/5 | Planned | - |
 | 3. Feedback Components | 0/5 | Planned | - |
 | 4. Progress & Loading | 0/TBD | Not started | - |
 | 5. Data Display | 0/TBD | Not started | - |
