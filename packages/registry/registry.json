@@ -26,21 +26,21 @@
     {
       "name": "input",
       "type": "ui",
-      "description": "Text input with label, placeholder, and error states",
+      "description": "Text input with label, password toggle, clear button, and character count",
       "category": "Inputs",
       "status": "beta",
       "files": ["ui/input.tsx"],
-      "dependencies": [],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
       "registryDependencies": []
     },
     {
       "name": "badge",
       "type": "ui",
-      "description": "Small status indicator for labels and counts",
+      "description": "Small status indicator for labels, counts, dots, and notifications",
       "category": "Data Display",
       "status": "beta",
       "files": ["ui/badge.tsx"],
-      "dependencies": [],
+      "dependencies": ["react-native-reanimated"],
       "registryDependencies": []
     },
     {
@@ -396,11 +396,11 @@
     {
       "name": "chip",
       "type": "ui",
-      "description": "Selectable filter pills for filtering content or making selections",
+      "description": "Selectable filter pills with dismissible support",
       "category": "Inputs",
       "status": "beta",
       "files": ["ui/chip.tsx"],
-      "dependencies": ["react-native-reanimated"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
       "registryDependencies": []
     },
     {

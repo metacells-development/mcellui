@@ -35,7 +35,7 @@ import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export type ButtonVariant = 'default' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+export type ButtonVariant = 'default' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link' | 'success';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends Omit<PressableProps, 'style'> {
@@ -220,6 +220,26 @@ function getVariantStyles(
         container: { backgroundColor: colors.destructive } as ViewStyle,
         text: { color: colors.destructiveForeground } as TextStyle,
         spinnerColor: colors.destructiveForeground,
+      };
+    case 'success':
+      return {
+        container: { backgroundColor: colors.success } as ViewStyle,
+        text: { color: colors.successForeground } as TextStyle,
+        spinnerColor: colors.successForeground,
+      };
+    case 'link':
+      return {
+        container: {
+          backgroundColor: 'transparent',
+          paddingHorizontal: 0,
+          paddingVertical: 0,
+          minHeight: undefined,
+        } as ViewStyle,
+        text: {
+          color: colors.primary,
+          textDecorationLine: 'underline',
+        } as TextStyle,
+        spinnerColor: colors.primary,
       };
     default:
       return {
