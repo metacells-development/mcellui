@@ -102,30 +102,7 @@ export interface TagInputProps {
 // ============================================================================
 // Size Configs
 // ============================================================================
-
-const SIZE_CONFIG = {
-  sm: {
-    tagHeight: 24,
-    tagFontSize: 12,
-    inputFontSize: 14,
-    padding: 8,
-    gap: 4,
-  },
-  md: {
-    tagHeight: 28,
-    tagFontSize: 13,
-    inputFontSize: 15,
-    padding: 12,
-    gap: 6,
-  },
-  lg: {
-    tagHeight: 32,
-    tagFontSize: 14,
-    inputFontSize: 16,
-    padding: 16,
-    gap: 8,
-  },
-};
+// Removed: Now using centralized tokens from components.tagInput[size]
 
 // ============================================================================
 // Tag Component
@@ -144,8 +121,8 @@ function Tag({
   size: TagInputSize;
   disabled?: boolean;
 }) {
-  const { colors, radius, spacing } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, radius, spacing, components } = useTheme();
+  const tokens = components.tagInput[size];
 
   const scale = useSharedValue(1);
 
@@ -172,7 +149,7 @@ function Tag({
         animatedStyle,
         styles.tag,
         {
-          height: config.tagHeight,
+          height: tokens.tagHeight,
           backgroundColor: colors.secondary,
           borderRadius: radius.full,
           paddingHorizontal: spacing[2],
@@ -184,7 +161,7 @@ function Tag({
         style={[
           styles.tagText,
           {
-            fontSize: config.tagFontSize,
+            fontSize: tokens.tagFontSize,
             color: colors.foreground,
           },
         ]}
@@ -220,8 +197,8 @@ function SuggestionItem({
   onPress: () => void;
   size: TagInputSize;
 }) {
-  const { colors, spacing } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, spacing, components } = useTheme();
+  const tokens = components.tagInput[size];
 
   return (
     <Pressable
@@ -235,7 +212,7 @@ function SuggestionItem({
         },
       ]}
     >
-      <Text style={{ fontSize: config.inputFontSize, color: colors.foreground }}>
+      <Text style={{ fontSize: tokens.inputFontSize, color: colors.foreground }}>
         {label}
       </Text>
     </Pressable>
@@ -264,8 +241,8 @@ export function TagInput({
   validate,
   style,
 }: TagInputProps) {
-  const { colors, radius, spacing } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, spacing, components, componentRadius } = useTheme();
+  const tokens = components.tagInput[size];
   const inputRef = useRef<TextInput>(null);
 
   const [inputValue, setInputValue] = useState('');
@@ -375,7 +352,16 @@ export function TagInput({
     <View style={style}>
       {/* Label */}
       {label && (
-        <Text style={[styles.label, { color: colors.foreground, marginBottom: spacing[1] }]}>
+        <Text
+          style={[
+            styles.label,
+            {
+              fontSize: tokens.labelFontSize,
+              color: colors.foreground,
+              marginBottom: spacing[1],
+            },
+          ]}
+        >
           {label}
         </Text>
       )}
@@ -388,11 +374,12 @@ export function TagInput({
           {
             borderWidth: 1,
             borderColor: displayError ? colors.destructive : colors.border,
-            borderRadius: radius.md,
-            padding: config.padding,
-            gap: config.gap,
+            borderRadius: componentRadius.tagInput,
+            padding: tokens.padding,
+            gap: tokens.gap,
             backgroundColor: disabled ? colors.secondary : colors.background,
             opacity: disabled ? 0.6 : 1,
+            minHeight: tokens.minHeight,
           },
         ]}
       >
@@ -422,7 +409,7 @@ export function TagInput({
             style={[
               styles.input,
               {
-                fontSize: config.inputFontSize,
+                fontSize: tokens.inputFontSize,
                 color: colors.foreground,
                 minWidth: value.length === 0 ? '100%' : 80,
               },
@@ -444,7 +431,7 @@ export function TagInput({
               backgroundColor: colors.background,
               borderWidth: 1,
               borderColor: colors.border,
-              borderRadius: radius.md,
+              borderRadius: componentRadius.tagInput,
               marginTop: spacing[1],
               shadowColor: '#000',
               shadowOffset: { width: 0, height: 2 },
@@ -473,6 +460,7 @@ export function TagInput({
           style={[
             styles.helperText,
             {
+              fontSize: tokens.helperFontSize,
               color: displayError ? colors.destructive : colors.foregroundMuted,
               marginTop: spacing[1],
             },
@@ -511,7 +499,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontSize: 14,
     fontWeight: '500',
   },
   tag: {
