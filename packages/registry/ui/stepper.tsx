@@ -63,18 +63,6 @@ export interface StepperProps {
   labelStyle?: TextStyle;
 }
 
-const sizeTokens: Record<StepperSize, {
-  height: number;
-  buttonWidth: number;
-  fontSize: number;
-  iconSize: number;
-  valueWidth: number;
-}> = {
-  sm: { height: 32, buttonWidth: 32, fontSize: 14, iconSize: 16, valueWidth: 40 },
-  md: { height: 40, buttonWidth: 40, fontSize: 16, iconSize: 20, valueWidth: 48 },
-  lg: { height: 48, buttonWidth: 48, fontSize: 18, iconSize: 24, valueWidth: 56 },
-};
-
 export function Stepper({
   value,
   onValueChange,
@@ -89,8 +77,8 @@ export function Stepper({
   style,
   labelStyle,
 }: StepperProps) {
-  const { colors, radius, spacing } = useTheme();
-  const tokens = sizeTokens[size];
+  const { colors, components, componentRadius, spacing } = useTheme();
+  const tokens = components.stepper[size];
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
 
   const decrementScale = useSharedValue(1);
@@ -183,7 +171,7 @@ export function Stepper({
           style={[
             styles.label,
             {
-              fontSize: 14,
+              fontSize: tokens.labelFontSize,
               marginBottom: spacing[2],
               color: disabled ? colors.foregroundMuted : colors.foreground,
             },
@@ -198,7 +186,7 @@ export function Stepper({
         style={[
           styles.container,
           {
-            borderRadius: radius.md,
+            borderRadius: componentRadius.stepper,
             overflow: 'hidden',
             opacity: disabled ? 0.5 : 1,
           },
@@ -212,7 +200,7 @@ export function Stepper({
         <AnimatedPressable
           style={[
             getButtonStyle(!canDecrement),
-            { borderTopLeftRadius: radius.md, borderBottomLeftRadius: radius.md },
+            { borderTopLeftRadius: componentRadius.stepper, borderBottomLeftRadius: componentRadius.stepper },
             decrementAnimatedStyle,
           ]}
           onPress={handleDecrement}
@@ -269,7 +257,7 @@ export function Stepper({
         <AnimatedPressable
           style={[
             getButtonStyle(!canIncrement),
-            { borderTopRightRadius: radius.md, borderBottomRightRadius: radius.md },
+            { borderTopRightRadius: componentRadius.stepper, borderBottomRightRadius: componentRadius.stepper },
             incrementAnimatedStyle,
           ]}
           onPress={handleIncrement}
