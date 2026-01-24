@@ -233,6 +233,201 @@ export const avatarTokens = {
 } as const;
 
 // =============================================================================
+// Textarea Component Tokens
+// =============================================================================
+
+export const textareaTokens = {
+  sm: {
+    minHeight: componentHeight.sm * 3,
+    paddingHorizontal: spacing[3],
+    paddingVertical: spacing[2],
+    borderWidth: 1,
+    fontSize: fontSize.base,
+    lineHeight: 20,
+    labelFontSize: fontSize.sm,
+    helperFontSize: fontSize.xs,
+  },
+  md: {
+    minHeight: componentHeight.md * 3,
+    paddingHorizontal: spacing[3],
+    paddingVertical: spacing[2.5],
+    borderWidth: 1,
+    fontSize: fontSize.md,
+    lineHeight: 22,
+    labelFontSize: fontSize.base,
+    helperFontSize: fontSize.sm,
+  },
+  lg: {
+    minHeight: componentHeight.lg * 3,
+    paddingHorizontal: spacing[4],
+    paddingVertical: spacing[3],
+    borderWidth: 1,
+    fontSize: fontSize.lg,
+    lineHeight: 24,
+    labelFontSize: fontSize.md,
+    helperFontSize: fontSize.base,
+  },
+} as const;
+
+// =============================================================================
+// Select Component Tokens
+// =============================================================================
+
+export const selectTokens = {
+  sm: {
+    height: componentHeight.sm,
+    paddingHorizontal: spacing[3],
+    borderWidth: 1,
+    fontSize: fontSize.base,
+    labelFontSize: fontSize.sm,
+    helperFontSize: fontSize.xs,
+    iconSize: iconSize.sm,
+  },
+  md: {
+    height: componentHeight.md,
+    paddingHorizontal: spacing[3],
+    borderWidth: 1,
+    fontSize: fontSize.md,
+    labelFontSize: fontSize.base,
+    helperFontSize: fontSize.sm,
+    iconSize: iconSize.md,
+  },
+  lg: {
+    height: componentHeight.lg,
+    paddingHorizontal: spacing[4],
+    borderWidth: 1,
+    fontSize: fontSize.lg,
+    labelFontSize: fontSize.md,
+    helperFontSize: fontSize.base,
+    iconSize: iconSize.lg,
+  },
+} as const;
+
+// =============================================================================
+// Slider Component Tokens
+// =============================================================================
+
+export const sliderTokens = {
+  sm: {
+    trackHeight: 4,
+    thumbSize: 16,
+    labelFontSize: fontSize.base,
+    valueFontSize: fontSize.base,
+  },
+  md: {
+    trackHeight: 6,
+    thumbSize: 20,
+    labelFontSize: fontSize.md,
+    valueFontSize: fontSize.md,
+  },
+  lg: {
+    trackHeight: 8,
+    thumbSize: 24,
+    labelFontSize: fontSize.lg,
+    valueFontSize: fontSize.lg,
+  },
+} as const;
+
+// =============================================================================
+// Stepper Component Tokens
+// =============================================================================
+
+export const stepperTokens = {
+  sm: {
+    height: componentHeight.sm,
+    buttonWidth: 32,
+    valueWidth: 40,
+    fontSize: fontSize.base,
+    iconSize: iconSize.sm,
+    labelFontSize: fontSize.base,
+  },
+  md: {
+    height: componentHeight.md,
+    buttonWidth: 40,
+    valueWidth: 48,
+    fontSize: fontSize.md,
+    iconSize: iconSize.md,
+    labelFontSize: fontSize.md,
+  },
+  lg: {
+    height: componentHeight.lg,
+    buttonWidth: 48,
+    valueWidth: 56,
+    fontSize: fontSize.lg,
+    iconSize: iconSize.lg,
+    labelFontSize: fontSize.lg,
+  },
+} as const;
+
+// =============================================================================
+// Radio Component Tokens
+// =============================================================================
+
+export const radioTokens = {
+  sm: {
+    outerSize: 16,
+    innerSize: 8,
+    borderWidth: 2,
+    labelFontSize: fontSize.base,
+    descriptionFontSize: fontSize.sm,
+    gap: spacing[2],
+  },
+  md: {
+    outerSize: 20,
+    innerSize: 10,
+    borderWidth: 2,
+    labelFontSize: fontSize.md,
+    descriptionFontSize: fontSize.base,
+    gap: spacing[2.5],
+  },
+  lg: {
+    outerSize: 24,
+    innerSize: 12,
+    borderWidth: 2,
+    labelFontSize: fontSize.lg,
+    descriptionFontSize: fontSize.md,
+    gap: spacing[3],
+  },
+} as const;
+
+// =============================================================================
+// TagInput Component Tokens
+// =============================================================================
+
+export const tagInputTokens = {
+  sm: {
+    minHeight: componentHeight.sm,
+    padding: spacing[2],
+    tagHeight: 24,
+    tagFontSize: fontSize.xs,
+    inputFontSize: fontSize.base,
+    labelFontSize: fontSize.sm,
+    helperFontSize: fontSize.xs,
+    gap: spacing[1],
+  },
+  md: {
+    minHeight: componentHeight.md,
+    padding: spacing[3],
+    tagHeight: 28,
+    tagFontSize: fontSize.sm,
+    inputFontSize: fontSize.md,
+    labelFontSize: fontSize.base,
+    helperFontSize: fontSize.sm,
+    gap: spacing[1.5],
+  },
+  lg: {
+    minHeight: componentHeight.lg,
+    padding: spacing[4],
+    tagHeight: 32,
+    tagFontSize: fontSize.base,
+    inputFontSize: fontSize.lg,
+    labelFontSize: fontSize.md,
+    helperFontSize: fontSize.base,
+    gap: spacing[2],
+  },
+} as const;
+
+// =============================================================================
 // Card Component Tokens
 // =============================================================================
 
@@ -255,8 +450,14 @@ export const cardTokens = {
 export const components = {
   button: buttonTokens,
   input: inputTokens,
+  textarea: textareaTokens,
+  select: selectTokens,
+  slider: sliderTokens,
+  stepper: stepperTokens,
   checkbox: checkboxTokens,
   switch: switchTokens,
+  radio: radioTokens,
+  tagInput: tagInputTokens,
   badge: badgeTokens,
   avatar: avatarTokens,
   card: cardTokens,
