@@ -69,18 +69,6 @@ export interface SliderProps {
   labelStyle?: TextStyle;
 }
 
-const trackHeights: Record<SliderSize, number> = {
-  sm: 4,
-  md: 6,
-  lg: 8,
-};
-
-const thumbSizes: Record<SliderSize, number> = {
-  sm: 16,
-  md: 20,
-  lg: 24,
-};
-
 export function Slider({
   value,
   onValueChange,
@@ -97,14 +85,15 @@ export function Slider({
   style,
   labelStyle,
 }: SliderProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, components, spacing } = useTheme();
+  const tokens = components.slider[size];
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
 
   const trackWidth = useSharedValue(0);
   const thumbScale = useSharedValue(1);
 
-  const trackHeight = trackHeights[size];
-  const thumbSize = thumbSizes[size];
+  const trackHeight = tokens.trackHeight;
+  const thumbSize = tokens.thumbSize;
 
   // Calculate value from position (JS thread version)
   const calculateValue = useCallback(
@@ -196,7 +185,10 @@ export function Slider({
             <Text
               style={[
                 styles.label,
-                { color: disabled ? colors.foregroundMuted : colors.foreground },
+                {
+                  fontSize: tokens.labelFontSize,
+                  color: disabled ? colors.foregroundMuted : colors.foreground,
+                },
                 labelStyle,
               ]}
             >
@@ -207,7 +199,10 @@ export function Slider({
             <Text
               style={[
                 styles.value,
-                { color: disabled ? colors.foregroundMuted : colors.primary },
+                {
+                  fontSize: tokens.valueFontSize,
+                  color: disabled ? colors.foregroundMuted : colors.primary,
+                },
               ]}
             >
               {displayValue}
@@ -282,11 +277,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontSize: 14,
     fontWeight: '500',
   },
   value: {
-    fontSize: 14,
     fontWeight: '600',
   },
   trackContainer: {
