@@ -129,6 +129,12 @@ export interface ComponentRadiusTokens {
   buttonSm: number;
   buttonLg: number;
   input: number;
+  textarea: number;
+  select: number;
+  slider: number;
+  stepper: number;
+  radio: number;
+  tagInput: number;
   card: number;
   badge: number;
   avatar: number;
@@ -158,6 +164,12 @@ export function createComponentRadius(radiusTokens: RadiusTokens): ComponentRadi
     buttonSm: radiusTokens.sm,
     buttonLg: radiusTokens.lg,
     input: radiusTokens.md,
+    textarea: radiusTokens.md,
+    select: radiusTokens.md,
+    slider: radiusTokens.md, // for track container, thumb is always pill
+    stepper: radiusTokens.md,
+    radio: PILL_RADIUS, // always circular
+    tagInput: radiusTokens.md,
     card: radiusTokens.lg,
     // Always pill-shaped regardless of preset
     badge: PILL_RADIUS,
