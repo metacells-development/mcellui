@@ -5,33 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** Every component, block, and screen feels like it was designed and built together
-**Current focus:** Phase 3 - Feedback Components
+**Current focus:** Phase 2 - Buttons & Actions
 
 ## Current Position
 
-Phase: 3 of 12 (Feedback Components)
-Plan: 2 of 5 in current phase
+Phase: 2 of 12 (Buttons & Actions)
+Plan: 1 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-24 - Completed 03-02-PLAN.md
+Last activity: 2026-01-24 - Completed 02-01-PLAN.md
 
-Progress: [█░░░░░░░░░] 11%
+Progress: [█░░░░░░░░░] 12%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 3.4 min
-- Total execution time: 0.40 hours
+- Total plans completed: 8
+- Average duration: 3.2 min
+- Total execution time: 0.43 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-form-inputs | 5/5 | 17.5 min | 3.5 min |
+| 02-buttons-actions | 1/5 | 2 min | 2.0 min |
 | 03-feedback-components | 2/5 | 4.75 min | 2.4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (3.5 min), 01-02 (5 min), 01-05 (3 min), 03-01 (2.25 min), 03-02 (2.5 min)
+- Last 5 plans: 01-02 (5 min), 01-05 (3 min), 03-01 (2.25 min), 03-02 (2.5 min), 02-01 (2 min)
 - Trend: Consistent fast execution, averaging under 3.5 min per plan
 
 *Updated after each plan completion*
@@ -65,6 +66,10 @@ Recent decisions affecting current work:
 - **03-01**: Popover uses spring animations (damping: 20, stiffness: 400) for natural feel
 - **03-02**: Modal components use shared overlayTypography tokens for consistent title/description typography
 - **03-02**: DIALOG_CONSTANTS.contentPadding ensures consistent padding across Dialog and AlertDialog
+- **02-01**: IconButton XL variant uses size 56px with iconSize 28 (matches existing sizeConfig pattern)
+- **02-01**: FAB always uses PILL_RADIUS for fully circular shape regardless of theme preset
+- **02-01**: SegmentedControl MD variant uses height 40px (slightly smaller than componentHeight.md for compact feel)
+- **02-01**: ActionSheet items use componentHeight.lg (48px) for comfortable touch targets
 
 ### Pending Todos
 
@@ -77,7 +82,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Completed 03-02-PLAN.md (Modal typography token migration)
+Stopped at: Completed 02-01-PLAN.md (Button-like component tokens foundation)
 Resume file: None
 
 ## Phase 1 Complete ✓
