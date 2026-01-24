@@ -128,6 +128,13 @@ export interface ComponentRadiusTokens {
   button: number;
   buttonSm: number;
   buttonLg: number;
+  iconButton: number;
+  iconButtonRounded: number;
+  fab: number;
+  segmentedControl: number;
+  segmentedControlIndicator: number;
+  actionSheet: number;
+  actionSheetItem: number;
   input: number;
   textarea: number;
   select: number;
@@ -163,6 +170,17 @@ export function createComponentRadius(radiusTokens: RadiusTokens): ComponentRadi
     button: radiusTokens.md,
     buttonSm: radiusTokens.sm,
     buttonLg: radiusTokens.lg,
+    // IconButton: uses medium radius by default (same as button)
+    iconButton: radiusTokens.md,
+    iconButtonRounded: PILL_RADIUS, // for fully circular
+    // FAB: always fully circular (computed from size, but PILL_RADIUS for CSS)
+    fab: PILL_RADIUS,
+    // SegmentedControl: container uses lg, indicator uses md
+    segmentedControl: radiusTokens.lg,
+    segmentedControlIndicator: radiusTokens.md,
+    // ActionSheet: container uses xl for prominent modal feel, items use md
+    actionSheet: radiusTokens.xl,
+    actionSheetItem: radiusTokens.md,
     input: radiusTokens.md,
     textarea: radiusTokens.md,
     select: radiusTokens.md,
