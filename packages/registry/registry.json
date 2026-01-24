@@ -802,6 +802,46 @@
       "files": ["ui/collapsible.tsx"],
       "dependencies": ["react-native-reanimated", "react-native-svg"],
       "registryDependencies": []
+    },
+    {
+      "name": "product-detail-screen",
+      "type": "screen",
+      "description": "Complete product page with image gallery, variants, reviews, and add to cart",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["screens/product-detail-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["button", "icon-button", "badge", "tabs", "rating", "separator", "avatar", "image-gallery"]
+    },
+    {
+      "name": "cart-screen",
+      "type": "screen",
+      "description": "Shopping cart screen with items, order summary, and checkout action",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["screens/cart-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["button", "icon-button", "separator", "cart-item", "empty-state-block"]
+    },
+    {
+      "name": "followers-screen",
+      "type": "screen",
+      "description": "Follower/following list with search, tabs, and user management",
+      "category": "Social",
+      "status": "beta",
+      "files": ["screens/followers-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["icon-button", "search-input", "tabs", "spinner", "user-list-item", "empty-state-block"]
+    },
+    {
+      "name": "comments-screen",
+      "type": "screen",
+      "description": "Full comments view with nested replies, input, and interactions",
+      "category": "Social",
+      "status": "beta",
+      "files": ["screens/comments-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["icon-button", "avatar", "spinner", "comment-item", "empty-state-block"]
     }
   ]
 }
