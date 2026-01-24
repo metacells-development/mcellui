@@ -10,30 +10,30 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 2 of 12 (Buttons & Actions)
-Plan: 1 of 5 in current phase
+Plan: 2 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-24 - Completed 02-01-PLAN.md
+Last activity: 2026-01-24 - Completed 02-02-PLAN.md
 
-Progress: [█░░░░░░░░░] 12%
+Progress: [██░░░░░░░░] 15%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: 3.2 min
-- Total execution time: 0.43 hours
+- Total plans completed: 10
+- Average duration: 2.9 min
+- Total execution time: 0.48 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-form-inputs | 5/5 | 17.5 min | 3.5 min |
-| 02-buttons-actions | 1/5 | 2 min | 2.0 min |
+| 02-buttons-actions | 2/5 | 4.8 min | 2.4 min |
 | 03-feedback-components | 2/5 | 4.75 min | 2.4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (5 min), 01-05 (3 min), 03-01 (2.25 min), 03-02 (2.5 min), 02-01 (2 min)
-- Trend: Consistent fast execution, averaging under 3.5 min per plan
+- Last 5 plans: 03-01 (2.25 min), 03-02 (2.5 min), 02-01 (2 min), 02-04 (1.3 min), 02-02 (1.5 min)
+- Trend: Accelerating - token migrations consistently under 2 min avg
 
 *Updated after each plan completion*
 
@@ -70,6 +70,12 @@ Recent decisions affecting current work:
 - **02-01**: FAB always uses PILL_RADIUS for fully circular shape regardless of theme preset
 - **02-01**: SegmentedControl MD variant uses height 40px (slightly smaller than componentHeight.md for compact feel)
 - **02-01**: ActionSheet items use componentHeight.lg (48px) for comfortable touch targets
+- **02-04**: SegmentedControl uses componentRadius.segmentedControl for container
+- **02-04**: SegmentedControl uses componentRadius.segmentedControlIndicator for indicator
+- **02-04**: Font weights use tokens.fontWeight and tokens.activeFontWeight
+- **02-02**: IconButton uses 0.9 scale for press feedback (more prominent than Button's 0.95)
+- **02-02**: IconButton respects areAnimationsDisabled() for reduce-motion accessibility
+- **02-02**: IconButton uses BUTTON_CONSTANTS.disabledOpacity for consistent disabled state
 
 ### Pending Todos
 
@@ -82,7 +88,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Completed 02-01-PLAN.md (Button-like component tokens foundation)
+Stopped at: Completed 02-02-PLAN.md (IconButton token migration with accessibility)
 Resume file: None
 
 ## Phase 1 Complete ✓
