@@ -1,79 +1,64 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { View, StyleSheet } from 'react-native';
 import { Textarea } from '@/components/ui/textarea';
+import { Section } from './section';
 
 export function TextareaDemo() {
-  const { spacing, colors } = useTheme();
-  const [bio, setBio] = useState('');
-  const [feedback, setFeedback] = useState('');
-  const [notes, setNotes] = useState('');
+  const [value, setValue] = useState('');
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: colors.foreground }]}>Basic</Text>
-      <Textarea
-        label="Bio"
-        placeholder="Tell us about yourself..."
-        value={bio}
-        onChangeText={setBio}
-      />
+      <Section title="Sizes">
+        <Textarea size="sm" label="Small" placeholder="Small textarea" rows={3} />
+        <Textarea size="md" label="Medium" placeholder="Medium textarea (default)" rows={4} />
+        <Textarea size="lg" label="Large" placeholder="Large textarea" rows={4} />
+      </Section>
 
-      <View style={{ height: spacing[6] }} />
+      <Section title="Auto Grow">
+        <Textarea
+          label="Auto-growing"
+          placeholder="Start typing..."
+          autoGrow
+          minRows={2}
+          maxRows={6}
+          value={value}
+          onChangeText={setValue}
+        />
+      </Section>
 
-      <Text style={[styles.title, { color: colors.foreground }]}>With Character Count</Text>
-      <Textarea
-        label="Feedback"
-        placeholder="Share your thoughts..."
-        value={feedback}
-        onChangeText={setFeedback}
-        maxLength={200}
-        showCount
-        rows={3}
-        helperText="Your feedback helps us improve"
-      />
+      <Section title="Character Count">
+        <Textarea
+          label="Bio"
+          placeholder="Tell us about yourself"
+          showCount
+          maxLength={200}
+        />
+      </Section>
 
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>Auto-Grow</Text>
-      <Textarea
-        label="Notes"
-        placeholder="Start typing..."
-        value={notes}
-        onChangeText={setNotes}
-        autoGrow
-        minRows={2}
-        maxRows={6}
-      />
-
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>Error State</Text>
-      <Textarea
-        label="Description"
-        placeholder="Enter description..."
-        error="Description is required"
-      />
-
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>Disabled</Text>
-      <Textarea
-        label="Read Only"
-        value="This textarea is disabled and cannot be edited."
-        editable={false}
-      />
+      <Section title="States">
+        <Textarea
+          label="Default"
+          placeholder="Default state"
+          rows={3}
+        />
+        <Textarea
+          label="With Error"
+          placeholder="Description"
+          error="Description is required"
+          rows={3}
+        />
+        <Textarea
+          label="Disabled"
+          placeholder="Can't edit"
+          value="Read only content"
+          editable={false}
+          rows={3}
+        />
+      </Section>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
+  container: { gap: 24 },
 });

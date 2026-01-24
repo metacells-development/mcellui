@@ -1,53 +1,74 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input } from '@/components/ui/input';
+import { Section } from './section';
 
 export function InputDemo() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [value, setValue] = useState('');
 
   return (
     <View style={styles.container}>
-      <Input
-        label="Email"
-        placeholder="you@example.com"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        value={email}
-        onChangeText={setEmail}
-      />
+      <Section title="Sizes">
+        <Input size="sm" label="Small" placeholder="Small input" />
+        <Input size="md" label="Medium" placeholder="Medium input (default)" />
+        <Input size="lg" label="Large" placeholder="Large input" />
+      </Section>
 
-      <Input
-        label="Password"
-        placeholder="Enter password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+      <Section title="Features">
+        <Input
+          label="Email"
+          placeholder="you@example.com"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <Input
+          label="Password"
+          placeholder="Enter password"
+          secureTextEntry
+          showPasswordToggle
+        />
+        <Input
+          label="Clearable"
+          placeholder="Type to clear"
+          value={value}
+          onChangeText={setValue}
+          clearable
+        />
+        <Input
+          label="With Helper"
+          placeholder="Username"
+          helperText="This will be your public display name"
+        />
+        <Input
+          label="Character Count"
+          placeholder="Bio"
+          showCount
+          maxLength={100}
+        />
+      </Section>
 
-      <Input
-        label="With Helper Text"
-        placeholder="Username"
-        helperText="This will be your public display name"
-      />
-
-      <Input
-        label="With Error"
-        placeholder="Email"
-        value="invalid-email"
-        error="Please enter a valid email address"
-      />
-
-      <Input
-        label="Disabled"
-        placeholder="Can't edit this"
-        value="Read only value"
-        editable={false}
-      />
+      <Section title="States">
+        <Input
+          label="Default"
+          placeholder="Default state"
+        />
+        <Input
+          label="With Error"
+          placeholder="Email"
+          value="invalid"
+          error="Please enter a valid email"
+        />
+        <Input
+          label="Disabled"
+          placeholder="Can't edit"
+          value="Read only"
+          editable={false}
+        />
+      </Section>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 16 },
+  container: { gap: 24 },
 });
