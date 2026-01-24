@@ -80,6 +80,111 @@ export const buttonTokens = {
 } as const;
 
 // =============================================================================
+// IconButton Component Tokens
+// =============================================================================
+
+export const iconButtonTokens = {
+  sm: {
+    size: 32,
+    iconSize: iconSize.sm,
+  },
+  md: {
+    size: 40,
+    iconSize: iconSize.md,
+  },
+  lg: {
+    size: 48,
+    iconSize: iconSize.lg,
+  },
+  xl: {
+    size: 56,
+    iconSize: 28,
+  },
+} as const;
+
+// =============================================================================
+// FAB Component Tokens
+// =============================================================================
+
+export const fabTokens = {
+  sm: {
+    size: 40,
+    iconSize: 18,
+    fontSize: fontSize.sm,
+    paddingHorizontal: spacing[3],
+    fontWeight: fontWeight.semibold,
+  },
+  md: {
+    size: 56,
+    iconSize: iconSize.lg,
+    fontSize: fontSize.base,
+    paddingHorizontal: spacing[4],
+    fontWeight: fontWeight.semibold,
+  },
+  lg: {
+    size: 72,
+    iconSize: iconSize.xl,
+    fontSize: fontSize.md,
+    paddingHorizontal: spacing[5],
+    fontWeight: fontWeight.semibold,
+  },
+} as const;
+
+// =============================================================================
+// SegmentedControl Component Tokens
+// =============================================================================
+
+export const segmentedControlTokens = {
+  sm: {
+    height: componentHeight.sm,
+    fontSize: fontSize.sm,
+    padding: 4,
+    fontWeight: fontWeight.medium,
+    activeFontWeight: fontWeight.semibold,
+  },
+  md: {
+    height: 40,
+    fontSize: fontSize.base,
+    padding: 4,
+    fontWeight: fontWeight.medium,
+    activeFontWeight: fontWeight.semibold,
+  },
+  lg: {
+    height: 48,
+    fontSize: fontSize.md,
+    padding: 4,
+    fontWeight: fontWeight.medium,
+    activeFontWeight: fontWeight.semibold,
+  },
+} as const;
+
+// =============================================================================
+// ActionSheet Component Tokens
+// =============================================================================
+
+export const actionSheetTokens = {
+  item: {
+    height: componentHeight.lg,
+    fontSize: fontSize.md,
+    fontWeight: fontWeight.medium,
+    iconSize: iconSize.md,
+    paddingHorizontal: spacing[4],
+    gap: spacing[3],
+  },
+  header: {
+    fontSize: fontSize.sm,
+    fontWeight: fontWeight.semibold,
+    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[4],
+  },
+  cancel: {
+    height: componentHeight.lg,
+    fontSize: fontSize.md,
+    fontWeight: fontWeight.semibold,
+  },
+} as const;
+
+// =============================================================================
 // Input Component Tokens
 // =============================================================================
 
@@ -466,6 +571,10 @@ export const overlayTypography = {
 
 export const components = {
   button: buttonTokens,
+  iconButton: iconButtonTokens,
+  fab: fabTokens,
+  segmentedControl: segmentedControlTokens,
+  actionSheet: actionSheetTokens,
   input: inputTokens,
   textarea: textareaTokens,
   select: selectTokens,
