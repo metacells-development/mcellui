@@ -71,10 +71,14 @@ Plans:
   3. All feedback components support variants (info, success, warning, error) where applicable
   4. All modal-style components handle backdrop, gestures, and keyboard consistently
   5. Demo shows all feedback types and interaction patterns
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] TBD
+- [ ] 03-01-PLAN.md - Extend token system with feedback component constants
+- [ ] 03-02-PLAN.md - Migrate Dialog, AlertDialog, Sheet to overlayTypography tokens
+- [ ] 03-03-PLAN.md - Migrate Alert to ALERT_CONSTANTS
+- [ ] 03-04-PLAN.md - Migrate Popover and Tooltip to centralized constants
+- [ ] 03-05-PLAN.md - Enhance Dialog, Sheet, Popover, Tooltip demos
 
 ### Phase 4: Progress & Loading
 **Goal**: All loading and progress components have smooth animations and consistent visual language
@@ -220,7 +224,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|----------------|--------|-----------|
 | 1. Form Inputs | 0/5 | Planned | - |
 | 2. Buttons & Actions | 0/TBD | Not started | - |
-| 3. Feedback Components | 0/TBD | Not started | - |
+| 3. Feedback Components | 0/5 | Planned | - |
 | 4. Progress & Loading | 0/TBD | Not started | - |
 | 5. Data Display | 0/TBD | Not started | - |
 | 6. Layout & Structure | 0/TBD | Not started | - |
