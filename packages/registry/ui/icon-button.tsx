@@ -19,7 +19,7 @@
  * ```
  */
 
-import React, { useCallback, forwardRef } from 'react';
+import React, { useCallback, forwardRef, useMemo } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -34,7 +34,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, BUTTON_CONSTANTS, areAnimationsDisabled } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -66,17 +66,6 @@ export interface IconButtonProps extends Omit<PressableProps, 'style'> {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Size Configuration
-// ─────────────────────────────────────────────────────────────────────────────
-
-const sizeConfig = {
-  sm: { size: 32, iconSize: 16 },
-  md: { size: 40, iconSize: 20 },
-  lg: { size: 48, iconSize: 24 },
-  xl: { size: 56, iconSize: 28 },
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Component
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -97,26 +86,31 @@ export const IconButton = forwardRef(function IconButton(
   }: IconButtonProps,
   ref: React.ForwardedRef<View>
 ) {
-  const { colors, radius, springs, platformShadow } = useTheme();
-  const config = sizeConfig[size];
+  const { colors, components, componentRadius, springs, platformShadow } = useTheme();
+  const tokens = components.iconButton[size];
   const isDisabled = disabled || loading;
 
+  const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
   const scale = useSharedValue(1);
 
   const handlePressIn = useCallback(
     (e: GestureResponderEvent) => {
-      scale.value = withSpring(0.9, springs.snappy);
+      if (animationsEnabled) {
+        scale.value = withSpring(0.9, springs.snappy);
+      }
       onPressIn?.(e);
     },
-    [onPressIn, springs.snappy]
+    [onPressIn, springs.snappy, animationsEnabled]
   );
 
   const handlePressOut = useCallback(
     (e: GestureResponderEvent) => {
-      scale.value = withSpring(1, springs.snappy);
+      if (animationsEnabled) {
+        scale.value = withSpring(1, springs.snappy);
+      }
       onPressOut?.(e);
     },
-    [onPressOut, springs.snappy]
+    [onPressOut, springs.snappy, animationsEnabled]
   );
 
   const handlePress = useCallback(
@@ -128,14 +122,16 @@ export const IconButton = forwardRef(function IconButton(
   );
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ scale: animationsEnabled ? scale.value : 1 }],
   }));
 
   // Get variant-specific styles
   const variantStyles = getVariantStyles(variant, colors);
 
   // Determine border radius
-  const borderRadiusValue = rounded ? config.size / 2 : radius.md;
+  const borderRadiusValue = rounded
+    ? componentRadius.iconButtonRounded
+    : componentRadius.iconButton;
 
   // Add shadow for solid buttons
   const shadowStyle =
@@ -149,13 +145,13 @@ export const IconButton = forwardRef(function IconButton(
       style={[
         styles.base,
         {
-          width: config.size,
-          height: config.size,
+          width: tokens.size,
+          height: tokens.size,
           borderRadius: borderRadiusValue,
         },
         variantStyles.container,
         shadowStyle,
-        isDisabled && styles.disabled,
+        isDisabled && { opacity: BUTTON_CONSTANTS.disabledOpacity },
         animatedStyle,
         style,
       ]}
@@ -175,8 +171,8 @@ export const IconButton = forwardRef(function IconButton(
         />
       ) : (
         React.cloneElement(icon as React.ReactElement<{ width?: number; height?: number; color?: string }>, {
-          width: config.iconSize,
-          height: config.iconSize,
+          width: tokens.iconSize,
+          height: tokens.iconSize,
           color: variantStyles.iconColor,
         })
       )}
@@ -238,8 +234,5 @@ const styles = StyleSheet.create({
   base: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  disabled: {
-    opacity: 0.5,
   },
 });
