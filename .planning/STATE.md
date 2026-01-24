@@ -9,31 +9,31 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 3 of 12 (Feedback Components)
-Plan: 5 of 5 in current phase
+Phase: 2 of 12 (Buttons & Actions)
+Plan: 6 of 6 in current phase
 Status: Phase complete
-Last activity: 2026-01-24 - Completed 03-05-PLAN.md
+Last activity: 2026-01-24 - Completed 02-06-PLAN.md
 
-Progress: [██░░░░░░░░] 18%
+Progress: [███░░░░░░░] 19%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 2.8 min
-- Total execution time: 0.58 hours
+- Total plans completed: 13
+- Average duration: 6.2 min
+- Total execution time: 1.35 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-form-inputs | 5/5 | 17.5 min | 3.5 min |
-| 02-buttons-actions | 3/5 | 6.9 min | 2.3 min |
+| 02-buttons-actions | 6/6 | 50.9 min | 8.5 min |
 | 03-feedback-components | 3/5 | 8.75 min | 2.9 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (2 min), 02-04 (1.3 min), 02-02 (1.5 min), 02-05 (2.1 min), 03-05 (4 min)
-- Trend: Demo plans take longer (3-4 min) than token migrations (1.5-2.5 min)
+- Last 5 plans: 02-04 (1.3 min), 02-02 (1.5 min), 02-05 (2.1 min), 03-05 (4 min), 02-06 (44 min)
+- Trend: Demo enhancements take significantly longer when comprehensive (02-06: 44 min for 3 demos)
 
 *Updated after each plan completion*
 
@@ -78,6 +78,9 @@ Recent decisions affecting current work:
 - **02-02**: IconButton uses BUTTON_CONSTANTS.disabledOpacity for consistent disabled state
 - **02-05**: ActionSheet consumes centralized tokens from components.actionSheet for consistent sizing
 - **02-05**: ActionSheetItem uses tokens for height, fontSize, iconSize, gap (all from tokens.item)
+- **02-06**: Size×variant matrix pattern for demos shows all sizes horizontally per variant row
+- **02-06**: Item states section pattern dedicates demo to showing all interaction states together
+- **02-06**: Icon usage demos separate left icon, right icon, and both icons into distinct examples
 
 ### Pending Todos
 
@@ -90,7 +93,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Completed 03-05-PLAN.md (Enhanced modal component demos)
+Stopped at: Completed 02-06-PLAN.md (Enhanced Button, IconButton, ActionSheet demos)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -105,6 +108,19 @@ Resume file: None
 
 **Verification:** Passed (5/5 must-haves verified)
 **Report:** .planning/phases/01-form-inputs/01-VERIFICATION.md
+
+## Phase 2 Complete ✓
+
+| Plan | Wave | Description | Status |
+|------|------|-------------|--------|
+| 02-01 | 1 | Extend tokens for IconButton, FAB, SegmentedControl, ActionSheet | ✅ Complete (2 min) |
+| 02-02 | 2 | Migrate IconButton to token system | ✅ Complete (1.5 min) |
+| 02-03 | 2 | Verify Button component follows gold standard | ✅ Complete (1.5 min) |
+| 02-04 | 2 | Migrate SegmentedControl to token system | ✅ Complete (1.3 min) |
+| 02-05 | 2 | Migrate ActionSheet to token system | ✅ Complete (2.1 min) |
+| 02-06 | 3 | Enhance Button, IconButton, ActionSheet demos | ✅ Complete (44 min) |
+
+**Note:** FAB demo already comprehensive, no changes needed
 
 ## Phase 3 Partial ✓
 
