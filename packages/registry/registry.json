@@ -594,6 +594,36 @@
       "registryDependencies": ["avatar", "icon-button", "separator"]
     },
     {
+      "name": "user-list-item",
+      "type": "block",
+      "description": "User row for follower lists, search results, and user selection",
+      "category": "Social",
+      "status": "beta",
+      "files": ["blocks/user-list-item.tsx"],
+      "dependencies": [],
+      "registryDependencies": ["avatar", "button", "badge"]
+    },
+    {
+      "name": "chat-bubble",
+      "type": "block",
+      "description": "Chat message bubble with status indicators for messaging interfaces",
+      "category": "Messaging",
+      "status": "beta",
+      "files": ["blocks/chat-bubble.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "comment-item",
+      "type": "block",
+      "description": "Comment display for posts, products, or discussions",
+      "category": "Social",
+      "status": "beta",
+      "files": ["blocks/comment-item.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar"]
+    },
+    {
       "name": "login-screen",
       "type": "screen",
       "description": "Complete login screen with email/password form, social login, and forgot password",
