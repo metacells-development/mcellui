@@ -26,3 +26,8 @@ export {
   hapticPresets,
   type HapticStyle,
 } from './haptics';
+export {
+  isExpoGo,
+  setAnimationsDisabled,
+  areAnimationsDisabled,
+} from './expoGo';

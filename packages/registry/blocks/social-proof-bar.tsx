@@ -20,7 +20,7 @@
 
 import React from 'react';
 import { View, Text, Pressable, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Avatar } from '../ui/avatar';

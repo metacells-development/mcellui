@@ -69,7 +69,7 @@ add_component: {
     name: { type: 'string' },
     path: { type: 'string', optional: true },
   },
-  // Führt `npx nativeui add {name}` aus
+  // Führt `npx mcellui add {name}` aus
   // Returns: { success, files_created, dependencies_installed }
 }
 
@@ -82,7 +82,7 @@ init_project: {
 
 get_project_config: {
   description: 'Get the current nativeui project configuration',
-  // Liest nativeui.config.ts
+  // Liest mcellui.config.ts
 }
 ```
 

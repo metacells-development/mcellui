@@ -28,8 +28,8 @@ import Animated, {
   withTiming,
   interpolateColor,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
-import { haptic } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
+import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
@@ -75,15 +75,15 @@ export const Input = forwardRef<TextInput, InputProps>(
     },
     ref
   ) => {
-    const { colors, components, timing, spacing } = useTheme();
+    const { colors, components, componentRadius, timing, spacing } = useTheme();
     const tokens = components.input[size];
     const focusProgress = useSharedValue(0);
 
     const hasError = !!error;
     const isDisabled = editable === false;
 
-    const handleFocus = useCallback(
-      (e: any) => {
+    const handleFocus: NonNullable<TextInputProps['onFocus']> = useCallback(
+      (e) => {
         focusProgress.value = withTiming(1, timing.default);
         haptic('selection');
         onFocus?.(e);
@@ -91,8 +91,8 @@ export const Input = forwardRef<TextInput, InputProps>(
       [onFocus, timing.default]
     );
 
-    const handleBlur = useCallback(
-      (e: any) => {
+    const handleBlur: NonNullable<TextInputProps['onBlur']> = useCallback(
+      (e) => {
         focusProgress.value = withTiming(0, timing.default);
         onBlur?.(e);
       },
@@ -157,7 +157,7 @@ export const Input = forwardRef<TextInput, InputProps>(
                 minHeight: tokens.height,
                 paddingHorizontal: tokens.paddingHorizontal,
                 paddingVertical: tokens.paddingVertical,
-                borderRadius: tokens.borderRadius,
+                borderRadius: componentRadius.input,
                 fontSize: tokens.fontSize,
                 backgroundColor: isDisabled ? colors.backgroundMuted : colors.background,
                 color: isDisabled ? colors.foregroundMuted : colors.foreground,

@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Card, CardContent, CardImage } from '../ui/card';

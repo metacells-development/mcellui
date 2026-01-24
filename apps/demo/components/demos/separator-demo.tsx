@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Separator } from '@/components/ui/separator';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 import { Section } from './section';
 
 export function SeparatorDemo() {

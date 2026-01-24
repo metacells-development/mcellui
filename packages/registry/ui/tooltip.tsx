@@ -32,6 +32,7 @@ import {
   Modal,
   Dimensions,
   LayoutRectangle,
+  GestureResponderEvent,
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -39,7 +40,7 @@ import Animated, {
   withTiming,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, haptic } from '@nativeui/core';
+import { useTheme, haptic } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -245,16 +246,16 @@ export function Tooltip({
       if (isPressable) {
         // Clone and inject onPressIn/onPressOut for pressable components
         // Use timer-based approach for consistent delay behavior
-        const existingOnPressIn = childProps.onPressIn as ((e: any) => void) | undefined;
-        const existingOnPressOut = childProps.onPressOut as ((e: any) => void) | undefined;
+        const existingOnPressIn = childProps.onPressIn as ((e: GestureResponderEvent) => void) | undefined;
+        const existingOnPressOut = childProps.onPressOut as ((e: GestureResponderEvent) => void) | undefined;
 
         return cloneElement(child as React.ReactElement<Record<string, unknown>>, {
           ref: triggerRef,
-          onPressIn: (e: any) => {
+          onPressIn: (e: GestureResponderEvent) => {
             startDelayTimer(effectiveDelay);
             existingOnPressIn?.(e);
           },
-          onPressOut: (e: any) => {
+          onPressOut: (e: GestureResponderEvent) => {
             cancelDelayTimer();
             existingOnPressOut?.(e);
           },

@@ -9,9 +9,7 @@
  */
 
 import { spacing } from './spacing';
-import { radius, componentRadius } from './radius';
-import { fontSize, fontWeight, typography } from './typography';
-import { ViewStyle, TextStyle } from 'react-native';
+import { fontSize, fontWeight } from './typography';
 
 // =============================================================================
 // Component Heights
@@ -56,7 +54,6 @@ export const buttonTokens = {
     height: componentHeight.sm,
     paddingHorizontal: spacing[3],
     paddingVertical: spacing[1.5],
-    borderRadius: radius.md,
     fontSize: fontSize.base,
     fontWeight: fontWeight.semibold,
     iconSize: iconSize.sm,
@@ -66,7 +63,6 @@ export const buttonTokens = {
     height: componentHeight.md,
     paddingHorizontal: spacing[4],
     paddingVertical: spacing[2.5],
-    borderRadius: radius.md,
     fontSize: fontSize.md,
     fontWeight: fontWeight.semibold,
     iconSize: iconSize.md,
@@ -76,7 +72,6 @@ export const buttonTokens = {
     height: componentHeight.lg,
     paddingHorizontal: spacing[6],
     paddingVertical: spacing[3.5],
-    borderRadius: radius.lg,
     fontSize: fontSize.lg,
     fontWeight: fontWeight.semibold,
     iconSize: iconSize.lg,
@@ -93,7 +88,6 @@ export const inputTokens = {
     height: componentHeight.sm,
     paddingHorizontal: spacing[3],
     paddingVertical: spacing[1.5],
-    borderRadius: radius.md,
     borderWidth: 1,
     fontSize: fontSize.base,
     labelFontSize: fontSize.sm,
@@ -104,7 +98,6 @@ export const inputTokens = {
     height: componentHeight.md,
     paddingHorizontal: spacing[3],
     paddingVertical: spacing[2.5],
-    borderRadius: radius.md,
     borderWidth: 1,
     fontSize: fontSize.md,
     labelFontSize: fontSize.base,
@@ -115,7 +108,6 @@ export const inputTokens = {
     height: componentHeight.lg,
     paddingHorizontal: spacing[4],
     paddingVertical: spacing[3],
-    borderRadius: radius.lg,
     borderWidth: 1,
     fontSize: fontSize.lg,
     labelFontSize: fontSize.md,
@@ -131,7 +123,6 @@ export const inputTokens = {
 export const checkboxTokens = {
   sm: {
     size: 18,
-    borderRadius: radius.xs,
     borderWidth: 2,
     iconSize: 12,
     labelFontSize: fontSize.base,
@@ -139,7 +130,6 @@ export const checkboxTokens = {
   },
   md: {
     size: 22,
-    borderRadius: radius.sm,
     borderWidth: 2,
     iconSize: 14,
     labelFontSize: fontSize.md,
@@ -147,7 +137,6 @@ export const checkboxTokens = {
   },
   lg: {
     size: 26,
-    borderRadius: radius.sm,
     borderWidth: 2,
     iconSize: 18,
     labelFontSize: fontSize.lg,
@@ -165,7 +154,6 @@ export const switchTokens = {
     trackHeight: 24,
     thumbSize: 20,
     thumbOffset: 2,
-    borderRadius: radius.full,
     labelFontSize: fontSize.base,
     gap: spacing[3],
   },
@@ -174,7 +162,6 @@ export const switchTokens = {
     trackHeight: 30,
     thumbSize: 26,
     thumbOffset: 2,
-    borderRadius: radius.full,
     labelFontSize: fontSize.md,
     gap: spacing[3],
   },
@@ -183,7 +170,6 @@ export const switchTokens = {
     trackHeight: 36,
     thumbSize: 32,
     thumbOffset: 2,
-    borderRadius: radius.full,
     labelFontSize: fontSize.lg,
     gap: spacing[4],
   },
@@ -197,21 +183,18 @@ export const badgeTokens = {
   sm: {
     paddingHorizontal: spacing[1.5],
     paddingVertical: spacing[0.5],
-    borderRadius: radius.full,
     fontSize: fontSize.xs,
     fontWeight: fontWeight.medium,
   },
   md: {
     paddingHorizontal: spacing[2.5],
     paddingVertical: spacing[0.5],
-    borderRadius: radius.full,
     fontSize: fontSize.sm,
     fontWeight: fontWeight.medium,
   },
   lg: {
     paddingHorizontal: spacing[3],
     paddingVertical: spacing[1],
-    borderRadius: radius.full,
     fontSize: fontSize.base,
     fontWeight: fontWeight.medium,
   },
@@ -226,31 +209,26 @@ export const avatarTokens = {
     size: 24,
     fontSize: fontSize['2xs'],
     fontWeight: fontWeight.semibold,
-    borderRadius: radius.full,
   },
   sm: {
     size: 32,
     fontSize: fontSize.xs,
     fontWeight: fontWeight.semibold,
-    borderRadius: radius.full,
   },
   md: {
     size: 40,
     fontSize: fontSize.base,
     fontWeight: fontWeight.semibold,
-    borderRadius: radius.full,
   },
   lg: {
     size: 56,
     fontSize: fontSize.xl,
     fontWeight: fontWeight.semibold,
-    borderRadius: radius.full,
   },
   xl: {
     size: 80,
     fontSize: fontSize['2xl'],
     fontWeight: fontWeight.semibold,
-    borderRadius: radius.full,
   },
 } as const;
 
@@ -259,7 +237,6 @@ export const avatarTokens = {
 // =============================================================================
 
 export const cardTokens = {
-  borderRadius: radius.lg,
   borderWidth: 1,
   padding: spacing[4],
   headerPadding: spacing[4],

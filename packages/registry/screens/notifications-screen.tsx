@@ -27,7 +27,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path, Circle } from 'react-native-svg';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Separator } from '../ui/separator';

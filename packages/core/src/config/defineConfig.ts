@@ -2,12 +2,12 @@
  * defineConfig
  *
  * Helper function to define NativeUI configuration with type safety.
- * Use this in your `nativeui.config.ts` file.
+ * Use this in your `mcellui.config.ts` file.
  *
  * @example
  * ```ts
- * // nativeui.config.ts
- * import { defineConfig } from '@nativeui/core';
+ * // mcellui.config.ts
+ * import { defineConfig } from '@metacells/mcellui-core';
  *
  * export default defineConfig({
  *   theme: 'blue',

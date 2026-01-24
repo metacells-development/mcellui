@@ -1,7 +1,7 @@
 {
-  "name": "@nativeui/figma-plugin",
-  "version": "0.0.1",
-  "description": "Figma Plugin for nativeui - Design Token Sync & Component Export",
+  "name": "@metacells/mcellui-figma-plugin",
+  "version": "0.0.2",
+  "description": "Figma Plugin for mcellui - Design Token Sync & Component Export",
   "type": "module",
   "scripts": {
     "build": "node esbuild.config.js",
@@ -10,7 +10,7 @@
     "lint": "eslint src/"
   },
   "dependencies": {
-    "@nativeui/core": "*",
+    "@metacells/mcellui-core": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

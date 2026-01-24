@@ -59,35 +59,43 @@ export async function detectProjectType(projectRoot: string): Promise<ProjectTyp
 }
 
 /**
- * Get nativeui configuration from project.
+ * Config file names in priority order.
+ * mcellui.config.* is the new name, nativeui.config.* is legacy.
+ */
+const CONFIG_FILES = [
+  'mcellui.config.ts',
+  'mcellui.config.js',
+  'mcellui.config.json',
+  'nativeui.config.ts',  // Legacy
+  'nativeui.config.js',  // Legacy
+  'nativeui.config.json', // Legacy
+];
+
+/**
+ * Get mcellui configuration from project.
  * Returns resolved config with all defaults applied.
  */
 export async function getConfig(projectRoot: string): Promise<ResolvedNativeUIConfig | null> {
-  // Try TypeScript config first
-  const tsConfigPath = path.join(projectRoot, 'nativeui.config.ts');
-  if (await fs.pathExists(tsConfigPath)) {
-    return loadTsConfig(tsConfigPath);
-  }
-
-  // Try JavaScript config
-  const jsConfigPath = path.join(projectRoot, 'nativeui.config.js');
-  if (await fs.pathExists(jsConfigPath)) {
-    return loadJsConfig(jsConfigPath);
-  }
-
-  // Try JSON config
-  const jsonConfigPath = path.join(projectRoot, 'nativeui.config.json');
-  if (await fs.pathExists(jsonConfigPath)) {
-    try {
-      const rawConfig = await fs.readJson(jsonConfigPath);
-      const validatedConfig = validateConfigOrThrow(rawConfig, jsonConfigPath);
-      return resolveConfig(validatedConfig);
-    } catch (error) {
-      if (error instanceof Error && error.message.includes('Invalid configuration')) {
-        console.error(chalk.red(error.message));
-        throw error;
+  for (const fileName of CONFIG_FILES) {
+    const configPath = path.join(projectRoot, fileName);
+    if (await fs.pathExists(configPath)) {
+      if (fileName.endsWith('.ts')) {
+        return loadTsConfig(configPath);
+      } else if (fileName.endsWith('.js')) {
+        return loadJsConfig(configPath);
+      } else if (fileName.endsWith('.json')) {
+        try {
+          const rawConfig = await fs.readJson(configPath);
+          const validatedConfig = validateConfigOrThrow(rawConfig, configPath);
+          return resolveConfig(validatedConfig);
+        } catch (error) {
+          if (error instanceof Error && error.message.includes('Invalid configuration')) {
+            console.error(chalk.red(error.message));
+            throw error;
+          }
+          throw error;
+        }
       }
-      throw error;
     }
   }
 
@@ -153,7 +161,7 @@ export function getDefaultConfig(): ResolvedNativeUIConfig {
 }
 
 /**
- * Check if a project has nativeui initialized
+ * Check if a project has mcellui initialized
  */
 export async function isInitialized(projectRoot: string): Promise<boolean> {
   const config = await getConfig(projectRoot);

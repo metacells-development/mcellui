@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '@nativeui/core';
-import { SegmentedControl } from '../ui/segmented-control';
-import { Card } from '../ui/card';
+import { useTheme } from '@metacells/mcellui-core';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { Card } from '@/components/ui/card';
 
 export function SegmentedControlDemo() {
   const { colors, spacing } = useTheme();

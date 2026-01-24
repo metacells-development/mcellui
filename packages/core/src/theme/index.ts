@@ -1,7 +1,7 @@
 /**
  * Theme System
  *
- * Complete design token system for nativeui components.
+ * Complete design token system for mcellui components.
  * Inspired by shadcn/ui - change a few tokens to transform the entire UI.
  */
 

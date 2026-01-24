@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '../ui/accordion';
+} from '@/components/ui/accordion';
 
 export function AccordionDemo() {
   const { colors, spacing } = useTheme();
@@ -139,7 +139,7 @@ export function AccordionDemo() {
             <AccordionTrigger>How do I get started?</AccordionTrigger>
             <AccordionContent>
               <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Simply run `npx nativeui init` in your Expo project, then add components with `npx nativeui add [component]`.
+                Simply run `npx mcellui init` in your Expo project, then add components with `npx mcellui add [component]`.
               </Text>
             </AccordionContent>
           </AccordionItem>

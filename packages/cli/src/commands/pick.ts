@@ -6,6 +6,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import { getConfig, getProjectRoot } from '../utils/project.js';
 import { fetchComponent, getRegistry, type RegistryItem } from '../utils/registry.js';
+import { transformToInstalled } from '../utils/imports.js';
 
 interface CategoryGroup {
   name: string;
@@ -77,25 +78,6 @@ function formatComponentChoice(item: RegistryItem, installed: Set<string>): prom
   };
 }
 
-function transformImports(
-  code: string,
-  config: { componentsPath: string; utilsPath: string; aliases?: { utils?: string } }
-): string {
-  let transformed = code;
-  const utilsAlias = config.aliases?.utils || '@/lib/utils';
-
-  if (utilsAlias === '@/lib/utils') {
-    return transformed;
-  }
-
-  transformed = transformed.replace(
-    /from ['"]@\/lib\/utils['"]/g,
-    `from '${utilsAlias}'`
-  );
-
-  return transformed;
-}
-
 export const pickCommand = new Command()
   .name('pick')
   .description('Interactively browse and select components to add')
@@ -103,21 +85,21 @@ export const pickCommand = new Command()
   .option('-o, --overwrite', 'Overwrite existing files')
   .option('--cwd <path>', 'Working directory', process.cwd())
   .action(async (options) => {
-    console.log(chalk.bold('\n🎨 nativeui Component Picker\n'));
+    console.log(chalk.bold('\n🎨 mcellui Component Picker\n'));
 
     const cwd = path.resolve(options.cwd);
     const projectRoot = await getProjectRoot(cwd);
 
     if (!projectRoot) {
       console.log(chalk.red('Could not find a valid project.'));
-      console.log(chalk.dim('Run `npx nativeui init` first.\n'));
+      console.log(chalk.dim('Run `npx mcellui init` first.\n'));
       return;
     }
 
     const config = await getConfig(projectRoot);
 
     if (!config) {
-      console.log(chalk.yellow('No nativeui.config.ts found. Run `npx nativeui init` first.\n'));
+      console.log(chalk.yellow('No mcellui.config.ts found. Run `npx mcellui init` first.\n'));
       return;
     }
 
@@ -254,7 +236,7 @@ export const pickCommand = new Command()
           }
 
           await fs.ensureDir(targetDir);
-          const transformedContent = transformImports(file.content, config);
+          const transformedContent = transformToInstalled(file.content, config);
           await fs.writeFile(targetPath, transformedContent);
         }
 

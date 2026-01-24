@@ -9,54 +9,66 @@ const __dirname = path.dirname(__filename);
 // --- Registry Access ---
 
 function getRegistryPath(): string {
-  return path.resolve(__dirname, '..', '..', 'registry');
+  // When running from npm package, registry is bundled in the package
+  // When running locally in monorepo, it's in the sibling directory
+  const bundledPath = path.resolve(__dirname, '..', 'registry');
+  const monorepoPath = path.resolve(__dirname, '..', '..', 'registry');
+
+  // Check if bundled registry exists (npm install scenario)
+  if (fs.existsSync(path.join(bundledPath, 'registry.json'))) {
+    return bundledPath;
+  }
+  // Fallback to monorepo path (local development)
+  return monorepoPath;
 }
 
 function getCorePath(): string {
-  return path.resolve(__dirname, '..', '..', 'core', 'src');
+  // Similar logic for core tokens
+  const monorepoPath = path.resolve(__dirname, '..', '..', 'core', 'src');
+  return monorepoPath;
 }
 
 // --- Resources Definition ---
 
 export const resources: Resource[] = [
   {
-    uri: 'nativeui://registry',
+    uri: 'mcellui://registry',
     name: 'Component Registry',
-    description: 'Full list of all nativeui components with metadata',
+    description: 'Full list of all mcellui components with metadata',
     mimeType: 'application/json',
   },
   {
-    uri: 'nativeui://tokens',
+    uri: 'mcellui://tokens',
     name: 'Design Tokens',
     description: 'Color, spacing, typography, and other design tokens',
     mimeType: 'application/json',
   },
   {
-    uri: 'nativeui://docs/getting-started',
+    uri: 'mcellui://docs/getting-started',
     name: 'Getting Started Guide',
-    description: 'How to set up nativeui in your project',
+    description: 'How to set up mcellui in your project',
     mimeType: 'text/markdown',
   },
   {
-    uri: 'nativeui://docs/component-patterns',
+    uri: 'mcellui://docs/component-patterns',
     name: 'Component Patterns Guide',
     description: 'Best practices for building React Native components',
     mimeType: 'text/markdown',
   },
   {
-    uri: 'nativeui://docs/theme-customization',
+    uri: 'mcellui://docs/theme-customization',
     name: 'Theme Customization Guide',
     description: 'How to customize colors, tokens, and themes',
     mimeType: 'text/markdown',
   },
   {
-    uri: 'nativeui://docs/animation-patterns',
+    uri: 'mcellui://docs/animation-patterns',
     name: 'Animation Patterns Guide',
     description: 'Best practices for animations with Reanimated',
     mimeType: 'text/markdown',
   },
   {
-    uri: 'nativeui://docs/accessibility',
+    uri: 'mcellui://docs/accessibility',
     name: 'Accessibility Guide',
     description: 'Making components accessible on iOS and Android',
     mimeType: 'text/markdown',
@@ -69,7 +81,7 @@ export async function handleResourceRead(
   uri: string
 ): Promise<{ contents: Array<{ uri: string; text?: string; mimeType?: string }> }> {
   switch (uri) {
-    case 'nativeui://registry': {
+    case 'mcellui://registry': {
       try {
         const registryPath = path.join(getRegistryPath(), 'registry.json');
         const data = fs.readFileSync(registryPath, 'utf-8');
@@ -83,7 +95,7 @@ export async function handleResourceRead(
       }
     }
 
-    case 'nativeui://tokens': {
+    case 'mcellui://tokens': {
       try {
         const tokens = loadTokens();
         return {
@@ -98,35 +110,35 @@ export async function handleResourceRead(
       }
     }
 
-    case 'nativeui://docs/getting-started':
+    case 'mcellui://docs/getting-started':
       return {
         contents: [
           { uri, text: GETTING_STARTED_MD, mimeType: 'text/markdown' },
         ],
       };
 
-    case 'nativeui://docs/component-patterns':
+    case 'mcellui://docs/component-patterns':
       return {
         contents: [
           { uri, text: COMPONENT_PATTERNS_MD, mimeType: 'text/markdown' },
         ],
       };
 
-    case 'nativeui://docs/theme-customization':
+    case 'mcellui://docs/theme-customization':
       return {
         contents: [
           { uri, text: THEME_CUSTOMIZATION_MD, mimeType: 'text/markdown' },
         ],
       };
 
-    case 'nativeui://docs/animation-patterns':
+    case 'mcellui://docs/animation-patterns':
       return {
         contents: [
           { uri, text: ANIMATION_PATTERNS_MD, mimeType: 'text/markdown' },
         ],
       };
 
-    case 'nativeui://docs/accessibility':
+    case 'mcellui://docs/accessibility':
       return {
         contents: [
           { uri, text: ACCESSIBILITY_MD, mimeType: 'text/markdown' },
@@ -169,7 +181,7 @@ function loadTokens(): Record<string, unknown> {
 
 // --- Documentation ---
 
-const GETTING_STARTED_MD = `# Getting Started with nativeui
+const GETTING_STARTED_MD = `# Getting Started with mcellui
 
 A copy-paste component library for Expo/React Native.
 
@@ -178,19 +190,19 @@ A copy-paste component library for Expo/React Native.
 ### 1. Initialize
 
 \`\`\`bash
-npx nativeui init
+npx mcellui init
 \`\`\`
 
 This creates:
-- \`nativeui.config.ts\` - Configuration file
+- \`mcellui.config.ts\` - Configuration file
 - \`components/ui/\` - Component directory
 - \`lib/utils/cn.ts\` - Style merge utility
 
 ### 2. Add Components
 
 \`\`\`bash
-npx nativeui add button
-npx nativeui add card input badge
+npx mcellui add button
+npx mcellui add card input badge
 \`\`\`
 
 ### 3. Use Components
@@ -218,9 +230,9 @@ export function MyScreen() {
 
 ## Available Commands
 
-- \`npx nativeui init\` - Initialize project
-- \`npx nativeui add <component>\` - Add component(s)
-- \`npx nativeui list\` - List available components
+- \`npx mcellui init\` - Initialize project
+- \`npx mcellui add <component>\` - Add component(s)
+- \`npx mcellui list\` - List available components
 
 ## Platform Support
 
@@ -234,14 +246,14 @@ export function MyScreen() {
 
 const COMPONENT_PATTERNS_MD = `# Component Patterns Guide
 
-Best practices for building React Native components with nativeui.
+Best practices for building React Native components with mcellui.
 
 ## Basic Component Structure
 
 \`\`\`tsx
 import React from 'react';
 import { View, StyleSheet, type ViewProps } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export interface MyComponentProps extends ViewProps {
   variant?: 'default' | 'outlined';
@@ -472,15 +484,15 @@ export const Input = forwardRef<TextInput, InputProps>(
 
 const THEME_CUSTOMIZATION_MD = `# Theme Customization Guide
 
-Customize nativeui themes to match your brand.
+Customize mcellui themes to match your brand.
 
 ## Configuration File
 
-The \`nativeui.config.ts\` file controls theming:
+The \`mcellui.config.ts\` file controls theming:
 
 \`\`\`ts
-// nativeui.config.ts
-import { defineConfig } from 'nativeui';
+// mcellui.config.ts
+import { defineConfig } from 'mcellui';
 
 export default defineConfig({
   // Theme preset (color palette)
@@ -516,7 +528,7 @@ export default defineConfig({
 ## Accessing Theme in Components
 
 \`\`\`tsx
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 function MyComponent() {
   const { colors, spacing, radius, typography } = useTheme();
@@ -615,10 +627,10 @@ const radius = {
 
 ## Dark Mode
 
-nativeui automatically handles dark mode:
+mcellui automatically handles dark mode:
 
 \`\`\`tsx
-import { ThemeProvider } from '@nativeui/core';
+import { ThemeProvider } from '@metacells/mcellui-core';
 
 export default function App() {
   return (
@@ -639,7 +651,7 @@ Options:
 To extend or override colors, modify the theme in your provider:
 
 \`\`\`tsx
-import { ThemeProvider } from '@nativeui/core';
+import { ThemeProvider } from '@metacells/mcellui-core';
 
 const customColors = {
   brand: '#FF6B00',
@@ -663,11 +675,11 @@ export default function App() {
 
 const ANIMATION_PATTERNS_MD = `# Animation Patterns Guide
 
-Best practices for animations with Reanimated in nativeui.
+Best practices for animations with Reanimated in mcellui.
 
 ## Setup
 
-nativeui uses Reanimated 3 for animations:
+mcellui uses Reanimated 3 for animations:
 
 \`\`\`bash
 npx expo install react-native-reanimated
@@ -916,7 +928,7 @@ const expand = (isExpanded: boolean) => {
 
 const ACCESSIBILITY_MD = `# Accessibility Guide
 
-Making nativeui components accessible on iOS and Android.
+Making mcellui components accessible on iOS and Android.
 
 ## Core Principles
 

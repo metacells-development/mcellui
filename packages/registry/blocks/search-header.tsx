@@ -19,7 +19,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 import Svg, { Path } from 'react-native-svg';
 
 // Import UI primitives

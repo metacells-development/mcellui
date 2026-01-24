@@ -42,7 +42,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Badge } from '../ui/badge';

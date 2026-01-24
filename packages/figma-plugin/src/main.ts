@@ -1,5 +1,5 @@
 /**
- * nativeui Figma Plugin - Main Entry (Figma Sandbox)
+ * mcellui Figma Plugin - Main Entry (Figma Sandbox)
  *
  * Dieser Code läuft in der Figma Sandbox und hat Zugriff auf die Figma API.
  * Kommunikation mit dem UI erfolgt über postMessage.
@@ -30,7 +30,7 @@ figma.showUI(__html__, {
   width: 380,
   height: 560,
   themeColors: true,
-  title: 'nativeui',
+  title: 'mcellui',
 });
 
 // ============================================================================
@@ -128,7 +128,7 @@ async function handleExtractTokens(
   // Tokens extrahieren
   const tokens = await extractTokensFromCollection(collection, options);
 
-  // Zu nativeui Config transformieren
+  // Zu mcellui Config transformieren
   const config = transformToNativeUIConfig(tokens);
 
   // Config-Datei generieren
@@ -212,8 +212,8 @@ async function handleImportTokens(options: ImportOptions): Promise<void> {
 
 async function handleDeleteCollections(): Promise<void> {
   await deleteExistingCollections();
-  sendToUI({ type: 'success', message: 'nativeui Collections gelöscht' });
-  figma.notify('nativeui Collections gelöscht');
+  sendToUI({ type: 'success', message: 'mcellui Collections gelöscht' });
+  figma.notify('mcellui Collections gelöscht');
 
   // Collections-Liste aktualisieren
   await handleGetCollections();
@@ -278,8 +278,8 @@ async function handleGenerateComponents(componentNames: string[]): Promise<void>
 
 async function handleDeleteComponents(): Promise<void> {
   await deleteExistingComponents();
-  sendToUI({ type: 'success', message: 'nativeui Components gelöscht' });
-  figma.notify('nativeui Components gelöscht');
+  sendToUI({ type: 'success', message: 'mcellui Components gelöscht' });
+  figma.notify('mcellui Components gelöscht');
 }
 
 // ============================================================================
@@ -299,6 +299,6 @@ setTimeout(async () => {
   try {
     await handleGetCollections();
   } catch (error) {
-    console.error('[nativeui] Fehler beim Laden der Collections:', error);
+    console.error('[mcellui] Fehler beim Laden der Collections:', error);
   }
 }, 100);

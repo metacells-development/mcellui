@@ -37,6 +37,9 @@ import {
   StyleSheet,
   ViewStyle,
   ImageStyle,
+  NativeSyntheticEvent,
+  ImageLoadEventData,
+  ImageErrorEventData,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -46,7 +49,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import Svg, { Path, Rect } from 'react-native-svg';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 const AnimatedImage = Animated.createAnimatedComponent(RNImage);
 
@@ -162,7 +165,7 @@ export function Image({
   const opacity = useSharedValue(0);
 
   const handleLoad = useCallback(
-    (e: any) => {
+    (e: NativeSyntheticEvent<ImageLoadEventData>) => {
       setIsLoading(false);
       opacity.value = withTiming(1, {
         duration: fadeDuration,
@@ -174,7 +177,7 @@ export function Image({
   );
 
   const handleError = useCallback(
-    (e: any) => {
+    (e: NativeSyntheticEvent<ImageErrorEventData>) => {
       setIsLoading(false);
       setHasError(true);
       onError?.(e);

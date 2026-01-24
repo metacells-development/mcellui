@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { FAB } from '@/components/ui/fab';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Simple plus icon
 function PlusIcon({ width = 24, height = 24, color = '#fff' }) {

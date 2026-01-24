@@ -1,7 +1,7 @@
 /**
- * nativeui Figma Plugin - Config Emitter
+ * mcellui Figma Plugin - Config Emitter
  *
- * Generiert die nativeui.config.ts Datei aus transformierten Tokens.
+ * Generiert die mcellui.config.ts Datei aus transformierten Tokens.
  * WICHTIG: Keine Template Literals verwenden - Figma Sandbox unterstützt diese nicht!
  */
 
@@ -30,7 +30,7 @@ function quote(str: string): string {
 export function generateConfigFile(config: NativeUIThemeConfig): string {
   var configContent = formatConfigObject(config, 2);
 
-  return "import { defineConfig } from '@nativeui/core';\n\nexport default defineConfig({\n  theme: " + configContent + ",\n});\n";
+  return "import { defineConfig } from '@metacells/mcellui-core';\n\nexport default defineConfig({\n  theme: " + configContent + ",\n});\n";
 }
 
 // ============================================================================

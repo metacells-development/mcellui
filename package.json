@@ -1,6 +1,6 @@
 {
-  "name": "nativeui",
-  "version": "0.1.0",
+  "name": "mcellui",
+  "version": "0.1.1",
   "private": true,
   "description": "Beautiful, accessible UI components for Expo and React Native. Copy-paste. You own the code.",
   "author": "metacells",
@@ -8,7 +8,7 @@
   "homepage": "https://mcellui.dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/metacells/nativeui.git"
+    "url": "git+https://github.com/metacells/mcellui.git"
   },
   "workspaces": [
     "apps/*",

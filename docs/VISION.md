@@ -22,7 +22,7 @@
    - Beispiele > Erklärungen
 
 4. **Developer Experience ist alles**
-   - `npx nativeui add button` muss in 5 Sekunden funktionieren
+   - `npx mcellui add button` muss in 5 Sekunden funktionieren
    - Keine Config-Hölle, sane defaults
    - Fehlermeldungen die helfen, nicht frustrieren
 
@@ -88,7 +88,7 @@ Eine UI-Bibliothek die:
    - Micro-Animationen überall
    - Native Platform-Patterns
 3. **Expo-optimiert** – Nutzt Expo APIs wo sinnvoll
-4. **CLI-gestützt** – `npx nativeui add button`
+4. **CLI-gestützt** – `npx mcellui add button`
 5. **AI-ready** – MCP Server für Claude Code Integration
 6. **Vollständig typisiert** – TypeScript first
 
@@ -117,7 +117,7 @@ shadcn Style:          nativeui Style:
 ```
 nativeui/
 ├── packages/
-│   ├── cli/              # npx nativeui add button
+│   ├── cli/              # npx mcellui add button
 │   ├── mcp-server/       # Claude Code Integration
 │   ├── core/             # Shared Utilities
 │   └── registry/         # Component Registry Data
@@ -225,7 +225,7 @@ nativeui unterstützt sowohl alte als auch neue Architektur:
 
 ## Kernfeatures
 
-1. **CLI** – `npx nativeui add button card input`
+1. **CLI** – `npx mcellui add button card input`
 2. **MCP Server** – Native Claude Code Integration
 3. **Design Playground** – Web-basierter Live-Preview
 4. **Theme System** – Dark Mode, Custom Themes, Theme Gallery
@@ -234,13 +234,13 @@ nativeui unterstützt sowohl alte als auch neue Architektur:
 
 ```bash
 # Init
-npx nativeui init
+npx mcellui init
 
 # Add components
-npx nativeui add button card input
+npx mcellui add button card input
 
 # Add a complete screen
-npx nativeui add blocks/login-01
+npx mcellui add blocks/login-01
 ```
 
 ## Links

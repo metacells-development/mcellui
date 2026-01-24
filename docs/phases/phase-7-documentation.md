@@ -84,7 +84,7 @@ Based on analysis of shadcn/ui's actual codebase (https://github.com/shadcn-ui/u
 **Features Grid** (3 columns)
 - 🎨 **8 Theme Presets** - Zinc, Slate, Blue, Green, Rose, Orange, Violet, Stone
 - 📱 **iOS + Android** - Tested on both platforms, native feel
-- ⚡ **5 Second Setup** - `npx nativeui init` and you're ready
+- ⚡ **5 Second Setup** - `npx mcellui init` and you're ready
 - 🎭 **Dark Mode** - System, light, dark - all supported
 - 🔧 **You Own It** - No runtime dependency, copy-paste code
 - ♿ **Accessible** - VoiceOver & TalkBack ready
@@ -130,7 +130,7 @@ Based on analysis of shadcn/ui's actual codebase (https://github.com/shadcn-ui/u
 │ - ...    │                                 │          │
 │          │  ## Installation                │          │
 │ Blocks   │  ```bash                        │          │
-│ - Login  │  npx nativeui add button        │          │
+│ - Login  │  npx mcellui add button        │          │
 │ - ...    │  ```                            │          │
 │          │                                 │          │
 └──────────┴─────────────────────────────────┴──────────┘
@@ -175,7 +175,7 @@ Displays a button with various styles and states.
   </TabsList>
   <TabsContent value="cli">
     ```bash
-    npx nativeui add button
+    npx mcellui add button
     ```
   </TabsContent>
   <TabsContent value="manual">
@@ -313,7 +313,7 @@ Installation tabs for CLI vs Manual.
 <CodeTabs>
 <Tab value="cli">
 ```bash
-npx nativeui add button
+npx mcellui add button
 ```
 </Tab>
 <Tab value="manual">

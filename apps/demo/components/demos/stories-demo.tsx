@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { StoryAvatar, StoriesRow } from '@/components/ui/stories';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 const SAMPLE_USERS = [
   { id: '1', name: 'Alice', avatar: 'https://i.pravatar.cc/150?img=1', hasNew: true },

@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-## Projekt: nativeui
+## Projekt: mcellui
 
 Eine moderne, copy-paste UI-Komponenten-Bibliothek für Expo/React Native - inspiriert von shadcn/ui.
 
@@ -13,15 +13,16 @@ Siehe [PHASES.md](./PHASES.md) für Details.
 ## Projektstruktur
 
 ```
-nativeui/
+mcellui/
 ├── docs/                  # Dokumentation
 │   ├── adr/               # Architecture Decision Records
 │   ├── features/          # Feature-Spezifikationen
 │   └── phases/            # Phase-Details
 ├── packages/
-│   ├── cli/               # npx nativeui add button
+│   ├── cli/               # npx mcellui add button
 │   ├── mcp-server/        # Claude Code Integration
 │   ├── core/              # Design Tokens + Utilities
+│   ├── metro-plugin/      # Metro bundler integration
 │   └── registry/          # Component Source Code
 ├── apps/
 │   ├── demo/              # Expo Demo App
@@ -51,7 +52,7 @@ Wir verwenden React Native StyleSheets mit einem ThemeProvider für Theming:
 
 ```tsx
 // Theme-aware Component
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 function MyComponent() {
   const { colors, spacing, radius } = useTheme();
@@ -70,7 +71,7 @@ function MyComponent() {
 }
 ```
 
-**Token Customization:** User nutzt `nativeui.config.ts`:
+**Token Customization:** User nutzt `mcellui.config.ts`:
 
 ```ts
 export default defineConfig({
@@ -136,9 +137,10 @@ Dependencies: `react-hook-form`, `@hookform/resolvers`, `zod`
 ## CLI Commands
 
 ```bash
-npx nativeui init          # Setup in Projekt
-npx nativeui add button    # Component hinzufügen
-npx nativeui list          # Alle Components anzeigen
+npx mcellui init          # Setup in Projekt
+npx mcellui add button    # Component hinzufügen
+npx mcellui list          # Alle Components anzeigen
+npx mcellui diff          # Compare with registry
 ```
 
 ## Qualitätsstandards

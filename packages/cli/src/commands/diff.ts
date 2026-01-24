@@ -3,25 +3,29 @@ import chalk from 'chalk';
 import ora from 'ora';
 import fs from 'fs-extra';
 import path from 'path';
-import crypto from 'crypto';
-import { getConfig, getProjectRoot, ResolvedNativeUIConfig } from '../utils/project';
+import * as Diff from 'diff';
+import { getConfig, getProjectRoot } from '../utils/project';
 import { fetchComponent, getRegistry, RegistryItem } from '../utils/registry';
+import { getInstalledFiles } from '../utils/installed';
+import { normalizeForComparison } from '../utils/imports';
 
 interface DiffResult {
   name: string;
-  status: 'up-to-date' | 'changed' | 'local-only' | 'error';
+  fileName: string;
+  status: 'identical' | 'modified' | 'local-only' | 'error';
   localFile?: string;
-  registryFile?: string;
+  diff?: string;
   error?: string;
 }
 
 export const diffCommand = new Command()
   .name('diff')
-  .description('Check for component updates against the registry')
+  .description('Compare locally installed components against the registry source')
+  .argument('[components...]', 'Component names to diff (optional, diffs all if omitted)')
   .option('--cwd <path>', 'Working directory', process.cwd())
+  .option('--list', 'Only list components with differences')
   .option('--json', 'Output as JSON')
-  .option('-v, --verbose', 'Show detailed diff information')
-  .action(async (options) => {
+  .action(async (components: string[], options) => {
     const spinner = ora();
 
     try {
@@ -30,7 +34,7 @@ export const diffCommand = new Command()
 
       if (!projectRoot) {
         console.log(chalk.red('Could not find a valid project.'));
-        console.log(chalk.dim('Run `npx nativeui init` first.'));
+        console.log(chalk.dim('Run `npx mcellui init` first.'));
         process.exit(1);
       }
 
@@ -38,7 +42,7 @@ export const diffCommand = new Command()
 
       if (!config) {
         console.log(chalk.red('Project not initialized.'));
-        console.log(chalk.dim('Run `npx nativeui init` first.'));
+        console.log(chalk.dim('Run `npx mcellui init` first.'));
         process.exit(1);
       }
 
@@ -46,11 +50,11 @@ export const diffCommand = new Command()
 
       // Get installed components
       const componentsDir = path.join(projectRoot, config.componentsPath);
-      const installedFiles = await getInstalledComponents(componentsDir);
+      const installedFiles = await getInstalledFiles(componentsDir);
 
       if (installedFiles.length === 0) {
         spinner.info('No components installed yet.');
-        console.log(chalk.dim('\nAdd components with: npx nativeui add <component>'));
+        console.log(chalk.dim('\nAdd components with: npx mcellui add <component>'));
         return;
       }
 
@@ -65,19 +69,39 @@ export const diffCommand = new Command()
         }
       }
 
+      // Filter to specific components if provided
+      let filesToCompare = installedFiles;
+      if (components.length > 0) {
+        const componentFileNames = components.map(c => {
+          // Handle both "button" and "button.tsx" formats
+          return c.endsWith('.tsx') ? c : `${c}.tsx`;
+        });
+        filesToCompare = installedFiles.filter(file => {
+          const fileName = path.basename(file);
+          return componentFileNames.includes(fileName);
+        });
+
+        if (filesToCompare.length === 0) {
+          spinner.fail(`None of the specified components found: ${components.join(', ')}`);
+          process.exit(1);
+        }
+      }
+
       spinner.text = 'Comparing components...';
       const results: DiffResult[] = [];
 
-      for (const localFile of installedFiles) {
+      for (const localFile of filesToCompare) {
         const fileName = path.basename(localFile);
+        const componentName = fileName.replace(/\.tsx?$/, '');
         const registryItem = registryMap.get(fileName);
 
         if (!registryItem) {
           // Local-only component (not in registry)
           results.push({
-            name: fileName.replace(/\.tsx?$/, ''),
+            name: componentName,
+            fileName,
             status: 'local-only',
-            localFile: localFile,
+            localFile,
           });
           continue;
         }
@@ -89,6 +113,7 @@ export const diffCommand = new Command()
           if (!component) {
             results.push({
               name: registryItem.name,
+              fileName,
               status: 'error',
               error: 'Failed to fetch from registry',
             });
@@ -101,6 +126,7 @@ export const diffCommand = new Command()
           if (!registryFile) {
             results.push({
               name: registryItem.name,
+              fileName,
               status: 'error',
               error: 'File not found in registry',
             });
@@ -110,29 +136,39 @@ export const diffCommand = new Command()
           // Read local file
           const localContent = await fs.readFile(localFile, 'utf-8');
 
-          // Transform registry content same way as add command
-          const transformedRegistryContent = transformImports(registryFile.content, config);
+          // Normalize both contents for comparison (handles whitespace + import paths)
+          const normalizedLocal = normalizeForComparison(localContent);
+          const normalizedRegistry = normalizeForComparison(registryFile.content);
 
-          // Compare using content hash
-          const localHash = hashContent(localContent);
-          const registryHash = hashContent(transformedRegistryContent);
-
-          if (localHash === registryHash) {
+          if (normalizedLocal === normalizedRegistry) {
             results.push({
               name: registryItem.name,
-              status: 'up-to-date',
-              localFile: localFile,
+              fileName,
+              status: 'identical',
+              localFile,
             });
           } else {
+            // Generate unified diff
+            const diffOutput = Diff.createPatch(
+              fileName,
+              normalizedRegistry,
+              normalizedLocal,
+              'registry',
+              'local'
+            );
+
             results.push({
               name: registryItem.name,
-              status: 'changed',
-              localFile: localFile,
+              fileName,
+              status: 'modified',
+              localFile,
+              diff: diffOutput,
             });
           }
         } catch (error) {
           results.push({
             name: registryItem.name,
+            fileName,
             status: 'error',
             error: String(error),
           });
@@ -144,145 +180,96 @@ export const diffCommand = new Command()
       // Output results
       if (options.json) {
         console.log(JSON.stringify(results, null, 2));
-        return;
+        const hasChanges = results.some(r => r.status === 'modified');
+        process.exit(hasChanges ? 1 : 0);
       }
 
-      printResults(results, options.verbose);
+      printResults(results, options.list);
+
+      // Exit code: 0 if all identical, 1 if any differences
+      const hasChanges = results.some(r => r.status === 'modified');
+      process.exit(hasChanges ? 1 : 0);
     } catch (error) {
-      spinner.fail('Failed to check for updates');
+      spinner.fail('Failed to diff components');
       console.error(error);
       process.exit(1);
     }
   });
 
 /**
- * Get list of installed component files
+ * Print formatted results with colored diff output
  */
-async function getInstalledComponents(componentsDir: string): Promise<string[]> {
-  if (!await fs.pathExists(componentsDir)) {
-    return [];
-  }
-
-  const files = await fs.readdir(componentsDir);
-  const componentFiles: string[] = [];
-
-  for (const file of files) {
-    if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-      // Skip index files
-      if (file === 'index.ts' || file === 'index.tsx') {
-        continue;
-      }
-      componentFiles.push(path.join(componentsDir, file));
-    }
-  }
-
-  return componentFiles;
-}
-
-/**
- * Create hash of content for comparison
- */
-function hashContent(content: string): string {
-  // Normalize whitespace and line endings for comparison
-  const normalized = content
-    .replace(/\r\n/g, '\n')
-    .replace(/\s+$/gm, '')  // Remove trailing whitespace
-    .trim();
-
-  return crypto.createHash('md5').update(normalized).digest('hex');
-}
-
-/**
- * Transform import paths in component code (same as add command)
- */
-function transformImports(
-  code: string,
-  config: ResolvedNativeUIConfig
-): string {
-  let transformed = code;
-
-  const utilsAlias = config.aliases?.utils || '@/lib/utils';
-
-  if (utilsAlias === '@/lib/utils') {
-    return transformed;
-  }
-
-  transformed = transformed.replace(
-    /from ['"]@\/lib\/utils['"]/g,
-    `from '${utilsAlias}'`
-  );
-
-  return transformed;
-}
-
-/**
- * Print formatted results
- */
-function printResults(results: DiffResult[], verbose: boolean): void {
-  const upToDate = results.filter(r => r.status === 'up-to-date');
-  const changed = results.filter(r => r.status === 'changed');
+function printResults(results: DiffResult[], listOnly: boolean): void {
+  const identical = results.filter(r => r.status === 'identical');
+  const modified = results.filter(r => r.status === 'modified');
   const localOnly = results.filter(r => r.status === 'local-only');
   const errors = results.filter(r => r.status === 'error');
 
   console.log();
-  console.log(chalk.bold('Component Diff Report'));
-  console.log(chalk.dim('─'.repeat(40)));
+  console.log(chalk.bold('Comparing components...'));
   console.log();
 
-  // Summary counts
-  const total = results.length;
-  console.log(`Found ${chalk.bold(total)} installed component${total !== 1 ? 's' : ''}`);
+  // Print each result
+  for (const result of results) {
+    switch (result.status) {
+      case 'identical':
+        console.log(`${chalk.green('✓')} ${result.fileName}    ${chalk.dim('(identical)')}`);
+        break;
+      case 'modified':
+        console.log(`${chalk.red('✗')} ${result.fileName}      ${chalk.yellow('(modified)')}`);
+        if (!listOnly && result.diff) {
+          printColoredDiff(result.diff);
+        }
+        break;
+      case 'local-only':
+        console.log(`${chalk.yellow('⚠')} ${result.fileName}    ${chalk.dim('(not in registry)')}`);
+        break;
+      case 'error':
+        console.log(`${chalk.red('!')} ${result.fileName}    ${chalk.red(`(error: ${result.error})`)}`);
+        break;
+    }
+  }
+
+  // Summary
   console.log();
+  const parts: string[] = [];
+  if (identical.length > 0) parts.push(`${identical.length} identical`);
+  if (modified.length > 0) parts.push(`${modified.length} modified`);
+  if (localOnly.length > 0) parts.push(`${localOnly.length} custom`);
+  if (errors.length > 0) parts.push(`${errors.length} errors`);
 
-  // Changed components (updates available)
-  if (changed.length > 0) {
-    console.log(chalk.yellow(`⚡ ${changed.length} update${changed.length !== 1 ? 's' : ''} available:`));
-    for (const item of changed) {
-      console.log(`   ${chalk.yellow('●')} ${item.name}`);
-    }
+  console.log(chalk.dim(`Summary: ${parts.join(', ')}`));
+
+  // Hint for updating
+  if (modified.length > 0) {
     console.log();
-    console.log(chalk.dim('   Update with: npx nativeui add <component> --overwrite'));
-    console.log();
+    console.log(chalk.dim('Update modified components with:'));
+    console.log(chalk.cyan(`  npx mcellui add ${modified.map(m => m.name).join(' ')} --overwrite`));
   }
+}
 
-  // Up to date
-  if (upToDate.length > 0) {
-    console.log(chalk.green(`✓ ${upToDate.length} up to date:`));
-    if (verbose) {
-      for (const item of upToDate) {
-        console.log(`   ${chalk.green('●')} ${item.name}`);
-      }
-    } else {
-      const names = upToDate.map(r => r.name).join(', ');
-      console.log(chalk.dim(`   ${names}`));
+/**
+ * Print colored unified diff output
+ */
+function printColoredDiff(diffOutput: string): void {
+  const lines = diffOutput.split('\n');
+
+  // Skip the header lines (first 4 lines of unified diff format)
+  const contentLines = lines.slice(4);
+
+  for (const line of contentLines) {
+    if (line.startsWith('+') && !line.startsWith('+++')) {
+      // Added line (local has this, registry doesn't)
+      console.log(chalk.green(`    ${line}`));
+    } else if (line.startsWith('-') && !line.startsWith('---')) {
+      // Removed line (registry has this, local doesn't)
+      console.log(chalk.red(`    ${line}`));
+    } else if (line.startsWith('@@')) {
+      // Hunk header
+      console.log(chalk.cyan(`    ${line}`));
+    } else if (line.trim()) {
+      // Context line
+      console.log(chalk.dim(`    ${line}`));
     }
-    console.log();
-  }
-
-  // Local-only components
-  if (localOnly.length > 0) {
-    console.log(chalk.blue(`◐ ${localOnly.length} local-only (not in registry):`));
-    for (const item of localOnly) {
-      console.log(`   ${chalk.blue('●')} ${item.name}`);
-    }
-    console.log();
-  }
-
-  // Errors
-  if (errors.length > 0) {
-    console.log(chalk.red(`✗ ${errors.length} error${errors.length !== 1 ? 's' : ''}:`));
-    for (const item of errors) {
-      console.log(`   ${chalk.red('●')} ${item.name}: ${chalk.dim(item.error)}`);
-    }
-    console.log();
-  }
-
-  // Final summary
-  if (changed.length === 0 && errors.length === 0) {
-    console.log(chalk.green('All registry components are up to date!'));
-  } else if (changed.length > 0) {
-    console.log(
-      chalk.yellow(`Run ${chalk.cyan('npx nativeui add ' + changed.map(c => c.name).join(' ') + ' --overwrite')} to update`)
-    );
   }
 }

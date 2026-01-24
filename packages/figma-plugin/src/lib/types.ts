@@ -1,5 +1,5 @@
 /**
- * nativeui Figma Plugin - Type Definitions
+ * mcellui Figma Plugin - Type Definitions
  */
 
 // ============================================================================
@@ -70,7 +70,7 @@ export interface TokenCollection {
 }
 
 // ============================================================================
-// nativeui Config Types
+// mcellui Config Types
 // ============================================================================
 
 export interface NativeUIThemeConfig {

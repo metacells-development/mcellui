@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Rating } from '@/components/ui/rating';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export function RatingDemo() {
   const { colors, spacing, radius } = useTheme();

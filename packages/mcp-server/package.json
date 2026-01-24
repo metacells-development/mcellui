@@ -1,6 +1,6 @@
 {
   "name": "@metacells/mcellui-mcp-server",
-  "version": "0.1.1",
+  "version": "0.1.6",
   "description": "MCP server for mcellui - AI assistant integration for React Native development",
   "author": "metacells",
   "license": "MIT",
@@ -29,10 +29,12 @@
     "mcellui-mcp": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "registry"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && npm run copy-registry",
+    "copy-registry": "cp -r ../registry/registry.json ../registry/ui ./registry/ 2>/dev/null || mkdir -p registry && cp ../registry/registry.json registry/ && cp -r ../registry/ui registry/",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
     "lint": "eslint src/"

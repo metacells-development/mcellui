@@ -1,7 +1,7 @@
 {
-  "name": "@nativeui/core",
-  "version": "0.0.1",
-  "private": true,
+  "name": "@metacells/mcellui-core",
+  "version": "0.1.2",
+  "description": "Core theme system and utilities for mcellui - React Native UI components",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -17,6 +17,23 @@
       "types": "./src/utils/index.ts",
       "default": "./src/utils/index.ts"
     }
+  },
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "react-native",
+    "expo",
+    "ui-components",
+    "theme",
+    "design-system",
+    "mcellui"
+  ],
+  "author": "christlerjohannes",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metacells/mcellui"
   },
   "scripts": {
     "type-check": "tsc --noEmit",

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { useTheme } from '@nativeui/core';
-import { Stepper } from '../ui/stepper';
+import { useTheme } from '@metacells/mcellui-core';
+import { Stepper } from '@/components/ui/stepper';
 
 export function StepperDemo() {
   const { spacing, colors } = useTheme();

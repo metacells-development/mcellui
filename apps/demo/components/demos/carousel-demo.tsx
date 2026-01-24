@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { Carousel, CarouselItem } from '@/components/ui/carousel';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 

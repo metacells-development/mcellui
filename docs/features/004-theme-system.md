@@ -163,7 +163,7 @@ export const useTheme = () => useContext(ThemeContext);
 ## Custom Themes
 
 ```typescript
-// nativeui.config.ts
+// mcellui.config.ts
 export default defineConfig({
   theme: {
     // Override einzelner Tokens
@@ -180,9 +180,9 @@ export default defineConfig({
 ## Theme Presets
 
 ```bash
-npx nativeui theme add midnight-black
-npx nativeui theme add candy-pop
-npx nativeui theme add earth-tones
+npx mcellui theme add midnight-black
+npx mcellui theme add candy-pop
+npx mcellui theme add earth-tones
 ```
 
 **Verfügbare Presets:**

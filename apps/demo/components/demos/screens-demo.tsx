@@ -4,7 +4,7 @@ import Animated, { useAnimatedStyle, interpolate, Extrapolation, SharedValue, us
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
 
 import { Button } from '@/components/ui/button';

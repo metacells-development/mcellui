@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Component demos
 import { ButtonDemo } from '@/components/demos/button-demo';
@@ -52,6 +52,10 @@ import { TooltipDemo } from '@/components/demos/tooltip-demo';
 import { ImageGalleryDemo } from '@/components/demos/image-gallery-demo';
 // Phase 5 - Screens
 import { ScreensDemo } from '@/components/demos/screens-demo';
+// Layout Components
+import { RowDemo } from '@/components/demos/row-demo';
+import { ColumnDemo } from '@/components/demos/column-demo';
+import { ScreenDemo } from '@/components/demos/screen-demo';
 
 const demos: Record<string, React.ComponentType> = {
   button: ButtonDemo,
@@ -103,6 +107,10 @@ const demos: Record<string, React.ComponentType> = {
   'image-gallery': ImageGalleryDemo,
   // Phase 5 - Screens
   screens: ScreensDemo,
+  // Layout Components
+  row: RowDemo,
+  column: ColumnDemo,
+  screen: ScreenDemo,
 };
 
 const titles: Record<string, string> = {
@@ -155,6 +163,10 @@ const titles: Record<string, string> = {
   'image-gallery': 'Image Gallery',
   // Phase 5 - Screens
   screens: 'Screens',
+  // Layout Components
+  row: 'Row',
+  column: 'Column',
+  screen: 'Screen',
 };
 
 export default function ComponentPage() {

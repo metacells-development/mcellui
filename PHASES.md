@@ -10,7 +10,7 @@ Monorepo foundation with all packages and tooling.
 - [x] Turborepo monorepo structure
 - [x] TypeScript configuration (base, node, react-native)
 - [x] ESLint + Prettier setup
-- [x] `@nativeui/core` - Design tokens + utils (`cn()`)
+- [x] `@metacells/mcellui-core` - Design tokens + utils (`cn()`)
 - [x] `@nativeui/cli` - Basic structure (init, add, list)
 - [x] `@nativeui/mcp-server` - Basic structure (5 tools, 3 resources)
 - [x] `@nativeui/registry` - 5 starter components
@@ -50,8 +50,8 @@ Make everything actually work end-to-end.
 ```bash
 npm install        # ✅ No errors
 npm run dev        # ✅ Demo app starts
-npx nativeui init  # ✅ Creates config
-npx nativeui add button  # ✅ Copies component
+npx mcellui init  # ✅ Creates config
+npx mcellui add button  # ✅ Copies component
 ```
 
 ### Bonus Completed (beyond original scope)
@@ -120,7 +120,7 @@ We stay with React Native StyleSheet + ThemeProvider. Reasons:
 - Compound components with React Context (Tabs, Accordion, Dialog)
 - Controlled/Uncontrolled pattern for all inputs
 - Platform-specific styling (iOS vs Android)
-- Haptic feedback integration via `@nativeui/core`
+- Haptic feedback integration via `@metacells/mcellui-core`
 
 #### Files Created/Modified
 - 18 new component files in `packages/registry/ui/`
@@ -160,7 +160,7 @@ Design-to-code workflow mit Figma Integration.
 - [x] Figma Plugin Setup (manifest, UI, esbuild)
 - [x] Design Token Sync (Colors, Spacing, Radius)
 - [x] Light/Dark Mode Support
-- [x] nativeui.config.ts Generator
+- [x] mcellui.config.ts Generator
 - [ ] Component Export (Figma → nativeui Code)
 - [ ] Theme Generation aus Figma Styles
 - [ ] Asset Export (Icons, Images)

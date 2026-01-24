@@ -1,7 +1,7 @@
 /**
  * Token Importer - Code → Figma
  *
- * Importiert nativeui Tokens als Figma Variables.
+ * Importiert mcellui Tokens als Figma Variables.
  */
 
 import { lightColors, darkColors, spacing, radius } from '../data/tokens';
@@ -58,7 +58,7 @@ export async function importColorTokens(): Promise<{
   darkModeId: string;
 }> {
   // Erstelle Collection
-  const collection = figma.variables.createVariableCollection('nativeui/colors');
+  const collection = figma.variables.createVariableCollection('mcellui/colors');
 
   // Benenne den ersten Mode um zu "Light"
   const lightModeId = collection.modes[0].modeId;
@@ -120,7 +120,7 @@ export async function importSpacingTokens(): Promise<{
   collection: VariableCollection;
   variables: Variable[];
 }> {
-  const collection = figma.variables.createVariableCollection('nativeui/spacing');
+  const collection = figma.variables.createVariableCollection('mcellui/spacing');
 
   // Spacing hat keine Modes - nur einen Default Mode
   const modeId = collection.modes[0].modeId;
@@ -157,7 +157,7 @@ export async function importRadiusTokens(): Promise<{
   collection: VariableCollection;
   variables: Variable[];
 }> {
-  const collection = figma.variables.createVariableCollection('nativeui/radius');
+  const collection = figma.variables.createVariableCollection('mcellui/radius');
 
   const modeId = collection.modes[0].modeId;
   collection.renameMode(modeId, 'Default');
@@ -188,7 +188,7 @@ export async function importRadiusTokens(): Promise<{
 // =============================================================================
 
 /**
- * Importiert alle nativeui Tokens nach Figma
+ * Importiert alle mcellui Tokens nach Figma
  */
 export async function importAllTokens(): Promise<ImportResult> {
   const errors: string[] = [];
@@ -233,7 +233,7 @@ export async function importAllTokens(): Promise<ImportResult> {
 // =============================================================================
 
 /**
- * Prüft ob nativeui Collections bereits existieren
+ * Prüft ob mcellui Collections bereits existieren
  */
 export async function checkExistingCollections(): Promise<{
   hasColors: boolean;
@@ -243,20 +243,20 @@ export async function checkExistingCollections(): Promise<{
   const collections = await figma.variables.getLocalVariableCollectionsAsync();
 
   return {
-    hasColors: collections.some((c) => c.name === 'nativeui/colors'),
-    hasSpacing: collections.some((c) => c.name === 'nativeui/spacing'),
-    hasRadius: collections.some((c) => c.name === 'nativeui/radius'),
+    hasColors: collections.some((c) => c.name === 'mcellui/colors'),
+    hasSpacing: collections.some((c) => c.name === 'mcellui/spacing'),
+    hasRadius: collections.some((c) => c.name === 'mcellui/radius'),
   };
 }
 
 /**
- * Löscht alle nativeui Collections
+ * Löscht alle mcellui Collections
  */
 export async function deleteExistingCollections(): Promise<void> {
   const collections = await figma.variables.getLocalVariableCollectionsAsync();
 
   for (const collection of collections) {
-    if (collection.name.startsWith('nativeui/')) {
+    if (collection.name.startsWith('mcellui/')) {
       collection.remove();
     }
   }

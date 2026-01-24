@@ -1,8 +1,8 @@
 {
-  "name": "@nativeui/registry",
-  "version": "0.0.1",
+  "name": "@metacells/mcellui-registry",
+  "version": "0.0.2",
   "private": true,
-  "description": "Component registry for nativeui",
+  "description": "Component registry for mcellui",
   "scripts": {
     "type-check": "tsc --noEmit",
     "lint": "eslint .",

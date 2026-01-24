@@ -2,7 +2,7 @@
  * ErrorBoundary
  *
  * A React error boundary component for catching and handling
- * runtime errors in nativeui components.
+ * runtime errors in mcellui components.
  *
  * @example
  * ```tsx

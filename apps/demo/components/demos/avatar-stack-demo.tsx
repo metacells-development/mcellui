@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { AvatarStack } from '@/components/ui/avatar-stack';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 const sampleUsers = [
   { name: 'Alice Johnson', source: { uri: 'https://i.pravatar.cc/150?img=1' } },

@@ -78,7 +78,7 @@ Expand nativeui from 27 components to a full B2C-ready library with 56+ items.
 ### Animation Presets
 
 ```ts
-// nativeui.config.ts
+// mcellui.config.ts
 export default defineConfig({
   theme: 'violet',
   radius: 'lg',

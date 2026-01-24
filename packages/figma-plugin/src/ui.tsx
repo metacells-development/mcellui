@@ -1,5 +1,5 @@
 /**
- * nativeui Figma Plugin - UI Entry (React)
+ * mcellui Figma Plugin - UI Entry (React)
  *
  * Dieser Code läuft in einem iframe und rendert das Plugin UI.
  * Kommunikation mit dem Main-Thread erfolgt über postMessage.
@@ -248,7 +248,7 @@ function App() {
   };
 
   const handleDeleteCollections = () => {
-    if (confirm('Alle nativeui Collections löschen?')) {
+    if (confirm('Alle mcellui Collections löschen?')) {
       setIsLoading(true);
       sendToMain({ type: 'delete-collections' });
     }
@@ -274,7 +274,7 @@ function App() {
   };
 
   const handleDeleteComponents = () => {
-    if (confirm('Alle nativeui Components löschen?')) {
+    if (confirm('Alle mcellui Components löschen?')) {
       setIsLoading(true);
       sendToMain({ type: 'delete-components' });
     }
@@ -311,7 +311,7 @@ function App() {
       {/* Header */}
       <div className="section" style={{ paddingBottom: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 16, fontWeight: 600 }}>nativeui</span>
+          <span style={{ fontSize: 16, fontWeight: 600 }}>mcellui</span>
           <span style={{ fontSize: 11, color: 'var(--figma-color-text-secondary)' }}>
             Token Sync
           </span>
@@ -443,9 +443,9 @@ function ImportTab({
             lineHeight: 1.5,
           }}
         >
-          <strong>nativeui Tokens importieren</strong>
+          <strong>mcellui Tokens importieren</strong>
           <br />
-          Erstellt Figma Variable Collections mit allen Design Tokens aus der nativeui Library.
+          Erstellt Figma Variable Collections mit allen Design Tokens aus der mcellui Library.
         </div>
       </div>
 
@@ -462,9 +462,9 @@ function ImportTab({
           >
             <strong>Existierende Collections:</strong>
             <br />
-            {existingCollections.hasColors && '• nativeui/colors\n'}
-            {existingCollections.hasSpacing && '• nativeui/spacing\n'}
-            {existingCollections.hasRadius && '• nativeui/radius'}
+            {existingCollections.hasColors && '• mcellui/colors\n'}
+            {existingCollections.hasSpacing && '• mcellui/spacing\n'}
+            {existingCollections.hasRadius && '• mcellui/radius'}
           </div>
         </div>
       )}
@@ -567,7 +567,7 @@ function ImportTab({
             disabled={isLoading}
             style={{ width: '100%', fontSize: 11 }}
           >
-            nativeui Collections löschen
+            mcellui Collections löschen
           </button>
         </div>
       )}
@@ -621,9 +621,9 @@ function ComponentsTab({
             lineHeight: 1.5,
           }}
         >
-          <strong>nativeui Components generieren</strong>
+          <strong>mcellui Components generieren</strong>
           <br />
-          Erstellt Figma Component Sets mit allen Variants basierend auf den nativeui React Native
+          Erstellt Figma Component Sets mit allen Variants basierend auf den mcellui React Native
           Components.
         </div>
       </div>
@@ -638,7 +638,7 @@ function ComponentsTab({
             fontSize: 11,
           }}
         >
-          <strong>Hinweis:</strong> Zuerst müssen die nativeui Tokens importiert werden (Tokens Tab),
+          <strong>Hinweis:</strong> Zuerst müssen die mcellui Tokens importiert werden (Tokens Tab),
           damit die Components die korrekten Farben verwenden können.
         </div>
       </div>
@@ -744,7 +744,7 @@ function ComponentsTab({
             disabled={isLoading}
             style={{ width: '100%', fontSize: 11 }}
           >
-            nativeui Components löschen
+            mcellui Components löschen
           </button>
         </div>
       )}
@@ -793,7 +793,7 @@ function ExportTab({
             Keine Variable Collections gefunden.
             <br />
             <span style={{ fontSize: 10 }}>
-              Erstelle eine Collection oder importiere nativeui Tokens.
+              Erstelle eine Collection oder importiere mcellui Tokens.
             </span>
           </div>
         ) : (
@@ -920,7 +920,7 @@ function ExportTab({
               color: 'var(--figma-color-text-secondary)',
             }}
           >
-            Kopiere den Code in deine <code>nativeui.config.ts</code> Datei.
+            Kopiere den Code in deine <code>mcellui.config.ts</code> Datei.
           </div>
         </div>
       )}

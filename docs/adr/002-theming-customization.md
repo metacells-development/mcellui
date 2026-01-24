@@ -135,7 +135,7 @@ Pass a complete theme object like styled-components/emotion:
 
 ### Alternative 2: Tailwind-style Config File
 
-Use a config file like `nativeui.config.js`:
+Use a config file like `mcellui.config.js`:
 
 ```js
 module.exports = {

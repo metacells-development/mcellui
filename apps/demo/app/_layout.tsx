@@ -1,13 +1,13 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { ConfigProvider, useTheme, useConfig, ThemePreset, RadiusPreset } from '@nativeui/core';
+import { ConfigProvider, useTheme, useConfig, ThemePreset, RadiusPreset } from '@metacells/mcellui-core';
 import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet, Modal, SafeAreaView, ScrollView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ToastProvider } from '@/components/ui/toast';
 
 // Import your config file - this is the "global CSS" for your app
-import config from '../nativeui.config';
+import config from '../mcellui.config';
 
 // Theme selector modal component
 function ThemeSelector({
@@ -151,7 +151,7 @@ function RootLayoutContent({
         <Stack.Screen
           name="index"
           options={{
-            title: 'nativeui',
+            title: 'mcellui',
             headerRight: () => (
               <View style={headerStyles.headerRight}>
                 <ThemedHeader />
@@ -166,6 +166,13 @@ function RootLayoutContent({
           name="components/[name]"
           options={{
             title: 'Component',
+            headerRight: () => <ThemedHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="playground"
+          options={{
+            title: 'Theme Playground',
             headerRight: () => <ThemedHeader />,
           }}
         />

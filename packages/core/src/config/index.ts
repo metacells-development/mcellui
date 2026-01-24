@@ -5,8 +5,8 @@
  *
  * @example
  * ```ts
- * // nativeui.config.ts
- * import { defineConfig } from '@nativeui/core';
+ * // mcellui.config.ts
+ * import { defineConfig } from '@metacells/mcellui-core';
  *
  * export default defineConfig({
  *   theme: 'blue',
@@ -20,8 +20,8 @@
  * @example
  * ```tsx
  * // App.tsx
- * import { ConfigProvider } from '@nativeui/core';
- * import config from './nativeui.config';
+ * import { ConfigProvider } from '@metacells/mcellui-core';
+ * import config from './mcellui.config';
  *
  * export default function App() {
  *   return (

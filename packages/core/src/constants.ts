@@ -7,7 +7,7 @@
  *
  * @example
  * ```tsx
- * import { SHEET_CONSTANTS } from '@nativeui/core';
+ * import { SHEET_CONSTANTS } from '@metacells/mcellui-core';
  *
  * // In SheetContent:
  * if (translationY > height * SHEET_CONSTANTS.closeThreshold) {

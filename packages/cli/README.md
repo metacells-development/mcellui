@@ -25,7 +25,7 @@ nativeui init
 npx @nativeui/cli init
 ```
 
-This creates a `nativeui.config.ts` with your theme preferences.
+This creates a `mcellui.config.ts` with your theme preferences.
 
 2. **Add components:**
 
@@ -58,7 +58,7 @@ Initialize nativeui in your project.
 npx @nativeui/cli init
 ```
 
-Creates `nativeui.config.ts` with theme configuration.
+Creates `mcellui.config.ts` with theme configuration.
 
 ### `add <components...>`
 
@@ -126,7 +126,7 @@ Templates: `basic`, `animated`, `pressable`, `input`
 
 ## Configuration
 
-`nativeui.config.ts`:
+`mcellui.config.ts`:
 
 ```ts
 import { defineConfig } from '@nativeui/cli';

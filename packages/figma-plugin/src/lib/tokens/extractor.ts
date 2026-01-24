@@ -1,5 +1,5 @@
 /**
- * nativeui Figma Plugin - Token Extractor
+ * mcellui Figma Plugin - Token Extractor
  *
  * Extrahiert Design Tokens aus Figma Variable Collections.
  */

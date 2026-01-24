@@ -28,7 +28,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Import your components
 import { Avatar } from '../ui/avatar';

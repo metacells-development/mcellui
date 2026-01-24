@@ -11,7 +11,7 @@ import { resources, handleResourceRead } from './resources';
 
 const server = new Server(
   {
-    name: 'nativeui-mcp',
+    name: 'mcellui-mcp',
     version: '0.0.1',
   },
   {
@@ -46,7 +46,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error('nativeui MCP server running');
+  console.error('mcellui MCP server running');
 }
 
 main().catch(console.error);

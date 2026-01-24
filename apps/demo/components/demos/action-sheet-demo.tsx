@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert } from 'react-native';
 import { ActionSheet, ActionSheetItem } from '@/components/ui/action-sheet';
 import { Button } from '@/components/ui/button';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Simple icons
 function CameraIcon({ width = 22, height = 22, color = '#000' }) {

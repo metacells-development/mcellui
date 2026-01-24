@@ -67,9 +67,9 @@
 
 ```bash
 # Vor jedem Release:
-npx nativeui test:all      # Unit + Visual
-npx nativeui a11y check    # Accessibility
-npx nativeui doctor        # SDK Compatibility
+npx mcellui test:all      # Unit + Visual
+npx mcellui a11y check    # Accessibility
+npx mcellui doctor        # SDK Compatibility
 ```
 
 ### Per-Component Checklist

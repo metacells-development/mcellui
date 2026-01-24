@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '@nativeui/core';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/tabs';
-import { Card } from '../ui/card';
+import { useTheme } from '@metacells/mcellui-core';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card } from '@/components/ui/card';
 
 export function TabsDemo() {
   const { colors, spacing } = useTheme();

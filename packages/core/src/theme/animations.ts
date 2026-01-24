@@ -8,7 +8,6 @@
  */
 
 // Type definitions for Reanimated-compatible configs
-// Defined inline to avoid hard dependency on react-native-reanimated
 export interface SpringConfig {
   damping?: number;
   mass?: number;
@@ -19,15 +18,26 @@ export interface SpringConfig {
   velocity?: number;
 }
 
+/**
+ * Timing config for animations.
+ *
+ * Note: We intentionally omit `easing` from these configs because custom easing
+ * functions must be Reanimated worklets to work with withTiming(). Instead,
+ * consumers should use Reanimated's Easing module directly:
+ *
+ * @example
+ * ```tsx
+ * import { Easing } from 'react-native-reanimated';
+ *
+ * withTiming(value, {
+ *   duration: timing.default.duration,
+ *   easing: Easing.out(Easing.quad),
+ * });
+ * ```
+ */
 export interface TimingConfig {
-  duration?: number;
-  easing?: (t: number) => number;
+  duration: number;
 }
-
-// Common easing functions (compatible with Reanimated)
-const easeOutQuad = (t: number) => 1 - (1 - t) * (1 - t);
-const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-const easeInQuad = (t: number) => t * t;
 
 /**
  * Spring configurations for different animation contexts
@@ -77,38 +87,24 @@ export const springs: SpringTokens = {
 };
 
 /**
- * Timing configurations for linear/eased animations
+ * Timing configurations for animations.
+ * Duration-only configs - use Reanimated's Easing module for custom easing.
  */
 export const timing: TimingTokens = {
   /** Fast transition - 150ms */
-  fast: {
-    duration: 150,
-    easing: easeOutQuad,
-  },
+  fast: { duration: 150 },
 
   /** Default transition - 200ms */
-  default: {
-    duration: 200,
-    easing: easeOutQuad,
-  },
+  default: { duration: 200 },
 
   /** Slow transition - 300ms */
-  slow: {
-    duration: 300,
-    easing: easeOutQuad,
-  },
+  slow: { duration: 300 },
 
-  /** Enter animation - 250ms ease out */
-  enter: {
-    duration: 250,
-    easing: easeOutCubic,
-  },
+  /** Enter animation - 250ms */
+  enter: { duration: 250 },
 
-  /** Exit animation - 200ms ease in */
-  exit: {
-    duration: 200,
-    easing: easeInQuad,
-  },
+  /** Exit animation - 200ms */
+  exit: { duration: 200 },
 };
 
 /**
@@ -243,26 +239,11 @@ export const subtleAnimations: AnimationTokens = {
     },
   },
   timing: {
-    fast: {
-      duration: 120,
-      easing: easeOutQuad,
-    },
-    default: {
-      duration: 180,
-      easing: easeOutQuad,
-    },
-    slow: {
-      duration: 280,
-      easing: easeOutQuad,
-    },
-    enter: {
-      duration: 220,
-      easing: easeOutCubic,
-    },
-    exit: {
-      duration: 180,
-      easing: easeInQuad,
-    },
+    fast: { duration: 120 },
+    default: { duration: 180 },
+    slow: { duration: 280 },
+    enter: { duration: 220 },
+    exit: { duration: 180 },
   },
   pressScale: {
     subtle: 0.99,
@@ -317,26 +298,11 @@ export const playfulAnimations: AnimationTokens = {
     },
   },
   timing: {
-    fast: {
-      duration: 180,
-      easing: easeOutQuad,
-    },
-    default: {
-      duration: 240,
-      easing: easeOutQuad,
-    },
-    slow: {
-      duration: 350,
-      easing: easeOutQuad,
-    },
-    enter: {
-      duration: 300,
-      easing: easeOutCubic,
-    },
-    exit: {
-      duration: 220,
-      easing: easeInQuad,
-    },
+    fast: { duration: 180 },
+    default: { duration: 240 },
+    slow: { duration: 350 },
+    enter: { duration: 300 },
+    exit: { duration: 220 },
   },
   pressScale: {
     subtle: 0.97,

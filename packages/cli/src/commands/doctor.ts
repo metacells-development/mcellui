@@ -36,7 +36,7 @@ const REQUIRED_PEER_DEPS = [
 ];
 
 const RECOMMENDED_DEPS = [
-  { name: '@nativeui/core', reason: 'Theme system and utilities' },
+  { name: '@metacells/mcellui-core', reason: 'Theme system and utilities' },
 ];
 
 /**
@@ -103,7 +103,7 @@ async function checkProjectType(projectRoot: string): Promise<CheckResult> {
       name: 'Project Type',
       status: 'fail',
       message: 'Not an Expo or React Native project',
-      fix: 'nativeui requires Expo or React Native',
+      fix: 'mcellui requires Expo or React Native',
     };
   }
 
@@ -115,30 +115,44 @@ async function checkProjectType(projectRoot: string): Promise<CheckResult> {
 }
 
 /**
- * Check if nativeui is initialized
+ * Check if mcellui is initialized
  */
 async function checkInitialized(projectRoot: string): Promise<CheckResult> {
-  // Check for config file existence
+  // Check for config file existence (new name first, then legacy)
   const configFiles = [
-    'nativeui.config.ts',
-    'nativeui.config.js',
-    'nativeui.config.json',
+    'mcellui.config.ts',
+    'mcellui.config.js',
+    'mcellui.config.json',
+    'nativeui.config.ts',  // Legacy
+    'nativeui.config.js',  // Legacy
+    'nativeui.config.json', // Legacy
   ];
 
   let foundConfig: string | null = null;
+  let isLegacy = false;
   for (const file of configFiles) {
     if (await fs.pathExists(path.join(projectRoot, file))) {
       foundConfig = file;
+      isLegacy = file.startsWith('nativeui.');
       break;
     }
   }
 
   if (!foundConfig) {
     return {
-      name: 'NativeUI Config',
+      name: 'mcellui Config',
       status: 'fail',
-      message: 'nativeui.config.ts not found',
-      fix: 'Run: npx nativeui init',
+      message: 'mcellui.config.ts not found',
+      fix: 'Run: npx mcellui init',
+    };
+  }
+
+  if (isLegacy) {
+    return {
+      name: 'mcellui Config',
+      status: 'warn',
+      message: `Found legacy config: ${foundConfig}`,
+      fix: 'Consider renaming to mcellui.config.ts',
     };
   }
 
@@ -154,7 +168,7 @@ async function checkInitialized(projectRoot: string): Promise<CheckResult> {
 
       if (!hasExport) {
         return {
-          name: 'NativeUI Config',
+          name: 'mcellui Config',
           status: 'warn',
           message: 'Config file missing default export',
           fix: 'Add: export default defineConfig({ ... })',
@@ -163,7 +177,7 @@ async function checkInitialized(projectRoot: string): Promise<CheckResult> {
 
       if (!hasDefineConfig) {
         return {
-          name: 'NativeUI Config',
+          name: 'mcellui Config',
           status: 'warn',
           message: 'Config not using defineConfig helper',
           fix: 'Wrap config with: defineConfig({ ... })',
@@ -177,22 +191,22 @@ async function checkInitialized(projectRoot: string): Promise<CheckResult> {
         JSON.parse(content);
       } catch {
         return {
-          name: 'NativeUI Config',
+          name: 'mcellui Config',
           status: 'fail',
           message: 'Invalid JSON in config file',
-          fix: 'Check JSON syntax in nativeui.config.json',
+          fix: 'Check JSON syntax in mcellui.config.json',
         };
       }
     }
 
     return {
-      name: 'NativeUI Config',
+      name: 'mcellui Config',
       status: 'pass',
       message: `Found ${foundConfig}`,
     };
   } catch (error) {
     return {
-      name: 'NativeUI Config',
+      name: 'mcellui Config',
       status: 'fail',
       message: 'Could not read config file',
       fix: error instanceof Error ? error.message : 'Check file permissions',
@@ -204,7 +218,7 @@ async function checkInitialized(projectRoot: string): Promise<CheckResult> {
  * Check if configured paths exist
  */
 async function checkPaths(projectRoot: string): Promise<CheckResult> {
-  // Default paths used by nativeui
+  // Default paths used by mcellui
   const defaultComponentsPath = './components/ui';
   const defaultUtilsPath = './lib/utils';
 
@@ -212,8 +226,15 @@ async function checkPaths(projectRoot: string): Promise<CheckResult> {
   let componentsPathValue = defaultComponentsPath;
   let utilsPathValue = defaultUtilsPath;
 
-  // Check common config file locations
-  const configFiles = ['nativeui.config.ts', 'nativeui.config.js', 'nativeui.config.json'];
+  // Check common config file locations (new name first, then legacy)
+  const configFiles = [
+    'mcellui.config.ts',
+    'mcellui.config.js',
+    'mcellui.config.json',
+    'nativeui.config.ts',
+    'nativeui.config.js',
+    'nativeui.config.json',
+  ];
   for (const file of configFiles) {
     const configPath = path.join(projectRoot, file);
     if (await fs.pathExists(configPath)) {
@@ -242,7 +263,7 @@ async function checkPaths(projectRoot: string): Promise<CheckResult> {
       name: 'Component Paths',
       status: 'warn',
       message: 'Component and utils directories not created yet',
-      fix: `Add a component: npx nativeui add button`,
+      fix: `Add a component: npx mcellui add button`,
     };
   }
 
@@ -251,7 +272,7 @@ async function checkPaths(projectRoot: string): Promise<CheckResult> {
       name: 'Component Paths',
       status: 'warn',
       message: `Components directory not found: ${componentsPathValue}`,
-      fix: 'Add a component to create it: npx nativeui add button',
+      fix: 'Add a component to create it: npx mcellui add button',
     };
   }
 
@@ -500,7 +521,7 @@ async function checkExpoGo(projectRoot: string): Promise<CheckResult | null> {
  */
 function printReport(report: DoctorReport): void {
   console.log();
-  console.log(chalk.bold('NativeUI Doctor'));
+  console.log(chalk.bold('mcellui Doctor'));
   console.log(chalk.dim('Checking your project setup...'));
   console.log();
 

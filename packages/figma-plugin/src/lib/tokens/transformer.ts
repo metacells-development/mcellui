@@ -1,7 +1,7 @@
 /**
- * nativeui Figma Plugin - Token Transformer
+ * mcellui Figma Plugin - Token Transformer
  *
- * Transformiert extrahierte Figma Tokens in das nativeui Config-Format.
+ * Transformiert extrahierte Figma Tokens in das mcellui Config-Format.
  */
 
 import type { TokenCollection, NativeUIThemeConfig } from '../types';
@@ -44,7 +44,7 @@ export function transformToNativeUIConfig(tokens: TokenCollection): NativeUIThem
 // ============================================================================
 
 /**
- * nativeui erwartet folgende Color Token Namen:
+ * mcellui erwartet folgende Color Token Namen:
  * - background, foreground
  * - card, cardForeground
  * - primary, primaryForeground
@@ -129,7 +129,7 @@ function transformColors(colors: Record<string, string>): Record<string, string>
 // ============================================================================
 
 /**
- * nativeui Spacing Scale:
+ * mcellui Spacing Scale:
  * 0.5: 2, 1: 4, 1.5: 6, 2: 8, 2.5: 10, 3: 12, 3.5: 14, 4: 16,
  * 5: 20, 6: 24, 7: 28, 8: 32, 9: 36, 10: 40, 11: 44, 12: 48,
  * 14: 56, 16: 64, 20: 80, 24: 96, 28: 112, 32: 128
@@ -189,7 +189,7 @@ function transformSpacing(spacing: Record<string, number>): Record<string, numbe
 // ============================================================================
 
 /**
- * nativeui Radius Scale:
+ * mcellui Radius Scale:
  * none: 0, sm: 4, md: 8, lg: 12, xl: 16, 2xl: 24, full: 9999
  */
 

@@ -11,9 +11,9 @@ import { pickCommand } from './commands/pick';
 const program = new Command();
 
 program
-  .name('nativeui')
+  .name('mcellui')
   .description('Add beautiful UI components to your Expo/React Native project')
-  .version('0.0.1');
+  .version('0.1.4');
 
 program.addCommand(initCommand);
 program.addCommand(addCommand);

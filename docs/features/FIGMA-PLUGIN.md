@@ -66,7 +66,7 @@ Ein Figma Plugin das Design-to-Code Workflows für nativeui ermöglicht. Designe
                               │
                               ▼
                     ┌──────────────────┐
-                    │  nativeui.config │
+                    │  mcellui.config │
                     │  components/ui/  │
                     │  assets/         │
                     └──────────────────┘
@@ -107,10 +107,10 @@ Figma Variables Collection: "nativeui"
     └── ...
 ```
 
-**Output: `nativeui.config.ts`**
+**Output: `mcellui.config.ts`**
 
 ```typescript
-import { defineConfig } from '@nativeui/core';
+import { defineConfig } from '@metacells/mcellui-core';
 
 export default defineConfig({
   theme: {
@@ -381,7 +381,7 @@ packages/figma-plugin/
 - [ ] Plugin UI mit React
 - [ ] Figma Variables API Integration
 - [ ] Token Extraction Logic
-- [ ] nativeui.config.ts Generator
+- [ ] mcellui.config.ts Generator
 - [ ] Light/Dark Mode Support
 
 ### Milestone 2: Component Export (Week 2)
@@ -476,7 +476,7 @@ function transformToNativeUI(tokens: TokenCollection): NativeUIConfig {
 
 // Generate config file
 function generateConfigFile(config: NativeUIConfig): string {
-  return `import { defineConfig } from '@nativeui/core';
+  return `import { defineConfig } from '@metacells/mcellui-core';
 
 export default defineConfig(${JSON.stringify(config, null, 2)});
 `;

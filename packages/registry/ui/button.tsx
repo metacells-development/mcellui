@@ -13,7 +13,7 @@
  * ```
  */
 
-import React, { useCallback, forwardRef } from 'react';
+import React, { useCallback, forwardRef, useMemo } from 'react';
 import {
   Text,
   View,
@@ -23,14 +23,15 @@ import {
   ActivityIndicator,
   PressableProps,
   Pressable,
+  GestureResponderEvent,
 } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, BUTTON_CONSTANTS } from '@nativeui/core';
-import { haptic } from '@nativeui/core';
+import { useTheme, BUTTON_CONSTANTS, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -77,29 +78,39 @@ export const Button = forwardRef(function Button(
   }: ButtonProps,
   ref: React.ForwardedRef<View>
 ) {
-  const { colors, components, platformShadow, springs } = useTheme();
+  const { colors, components, componentRadius, platformShadow, springs } = useTheme();
   const tokens = components.button[size];
   const isDisabled = disabled || loading;
+  const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
   const scale = useSharedValue(1);
 
+  // Get size-specific border radius from dynamic componentRadius
+  const borderRadius = size === 'sm' ? componentRadius.buttonSm
+    : size === 'lg' ? componentRadius.buttonLg
+    : componentRadius.button;
+
   const handlePressIn = useCallback(
-    (e: any) => {
-      scale.value = withSpring(BUTTON_CONSTANTS.pressScale, springs.snappy);
+    (e: GestureResponderEvent) => {
+      if (animationsEnabled) {
+        scale.value = withSpring(BUTTON_CONSTANTS.pressScale, springs.snappy);
+      }
       onPressIn?.(e);
     },
-    [onPressIn, springs.snappy]
+    [onPressIn, springs.snappy, animationsEnabled]
   );
 
   const handlePressOut = useCallback(
-    (e: any) => {
-      scale.value = withSpring(1, springs.snappy);
+    (e: GestureResponderEvent) => {
+      if (animationsEnabled) {
+        scale.value = withSpring(1, springs.snappy);
+      }
       onPressOut?.(e);
     },
-    [onPressOut, springs.snappy]
+    [onPressOut, springs.snappy, animationsEnabled]
   );
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       haptic('light');
       onPress?.(e);
     },
@@ -107,7 +118,7 @@ export const Button = forwardRef(function Button(
   );
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [{ scale: animationsEnabled ? scale.value : 1 }],
   }));
 
   // Get variant-specific styles
@@ -128,7 +139,7 @@ export const Button = forwardRef(function Button(
           minHeight: tokens.height,
           paddingHorizontal: tokens.paddingHorizontal,
           paddingVertical: tokens.paddingVertical,
-          borderRadius: tokens.borderRadius,
+          borderRadius,
           gap: tokens.gap,
         },
         variantStyles.container,

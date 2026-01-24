@@ -1,7 +1,7 @@
 /**
  * cn() - Class Name / Style Merger
  *
- * The core utility for merging styles in nativeui.
+ * The core utility for merging styles in mcellui.
  * Inspired by shadcn/ui's cn() but adapted for React Native StyleSheet.
  */
 

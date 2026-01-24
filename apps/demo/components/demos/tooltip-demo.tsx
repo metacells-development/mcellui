@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Tooltip } from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 function InfoIcon({ color }: { color?: string }) {
   return (

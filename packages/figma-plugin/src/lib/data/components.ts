@@ -1,5 +1,5 @@
 /**
- * nativeui Component Definitions für Figma
+ * mcellui Component Definitions für Figma
  *
  * PIXEL-PERFEKTE Werte direkt aus packages/core/src/theme/
  *

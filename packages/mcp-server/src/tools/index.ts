@@ -40,8 +40,17 @@ const componentCodeCache = new Map<string, string>();
 // --- Registry Access ---
 
 function getRegistryPath(): string {
-  // packages/mcp-server/dist -> packages/registry
-  return path.resolve(__dirname, '..', '..', 'registry');
+  // When running from npm package, registry is bundled in the package
+  // When running locally in monorepo, it's in the sibling directory
+  const bundledPath = path.resolve(__dirname, '..', 'registry');
+  const monorepoPath = path.resolve(__dirname, '..', '..', 'registry');
+
+  // Check if bundled registry exists (npm install scenario)
+  if (fs.existsSync(path.join(bundledPath, 'registry.json'))) {
+    return bundledPath;
+  }
+  // Fallback to monorepo path (local development)
+  return monorepoPath;
 }
 
 function isLocalMode(): boolean {
@@ -142,8 +151,8 @@ async function loadComponentCode(item: RegistryItem): Promise<string | null> {
 
 export const tools: Tool[] = [
   {
-    name: 'nativeui_list_components',
-    description: 'List all available nativeui components with filtering options',
+    name: 'mcellui_list_components',
+    description: 'List all available mcellui components with filtering options',
     inputSchema: {
       type: 'object',
       properties: {
@@ -159,8 +168,8 @@ export const tools: Tool[] = [
     },
   },
   {
-    name: 'nativeui_get_component',
-    description: 'Get the full source code for a specific component',
+    name: 'mcellui_get_component',
+    description: 'Get concise documentation for a component: description, props, examples, and installation. Use this first to understand a component.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -173,7 +182,21 @@ export const tools: Tool[] = [
     },
   },
   {
-    name: 'nativeui_add_component',
+    name: 'mcellui_get_component_source',
+    description: 'Get the full source code for a component. Only use this when you need to see the complete implementation details.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+          description: 'Component name (e.g., "button", "card", "input")',
+        },
+      },
+      required: ['name'],
+    },
+  },
+  {
+    name: 'mcellui_add_component',
     description: 'Get instructions to add a component to a project',
     inputSchema: {
       type: 'object',
@@ -187,7 +210,7 @@ export const tools: Tool[] = [
     },
   },
   {
-    name: 'nativeui_suggest_component',
+    name: 'mcellui_suggest_component',
     description: 'Get intelligent component suggestions based on what you want to build',
     inputSchema: {
       type: 'object',
@@ -201,7 +224,7 @@ export const tools: Tool[] = [
     },
   },
   {
-    name: 'nativeui_create_component',
+    name: 'mcellui_create_component',
     description: 'Get a guide and template for creating a new custom component',
     inputSchema: {
       type: 'object',
@@ -224,8 +247,8 @@ export const tools: Tool[] = [
     },
   },
   {
-    name: 'nativeui_customize_theme',
-    description: 'Get guidance on customizing the nativeui theme (colors, radius, fonts)',
+    name: 'mcellui_customize_theme',
+    description: 'Get guidance on customizing the mcellui theme (colors, radius, fonts)',
     inputSchema: {
       type: 'object',
       properties: {
@@ -242,8 +265,8 @@ export const tools: Tool[] = [
     },
   },
   {
-    name: 'nativeui_doctor',
-    description: 'Check nativeui project setup and diagnose common issues',
+    name: 'mcellui_doctor',
+    description: 'Check mcellui project setup and diagnose common issues',
     inputSchema: {
       type: 'object',
       properties: {
@@ -255,7 +278,7 @@ export const tools: Tool[] = [
     },
   },
   {
-    name: 'nativeui_search',
+    name: 'mcellui_search',
     description: 'Search components by name, description, or keywords',
     inputSchema: {
       type: 'object',
@@ -354,7 +377,7 @@ export async function handleToolCall(
 ): Promise<{ content: Array<{ type: string; text: string }> }> {
   const registry = await loadRegistry();
 
-  if (!registry && !['nativeui_doctor', 'nativeui_create_component', 'nativeui_customize_theme'].includes(name)) {
+  if (!registry && !['mcellui_doctor', 'mcellui_create_component', 'mcellui_customize_theme'].includes(name)) {
     return {
       content: [
         {
@@ -366,7 +389,7 @@ export async function handleToolCall(
   }
 
   switch (name) {
-    case 'nativeui_list_components': {
+    case 'mcellui_list_components': {
       const category = args?.category as string | undefined;
       const type = args?.type as string | undefined;
       let components = registry!.components;
@@ -392,7 +415,7 @@ export async function handleToolCall(
         byCategory.get(c.category)!.push(c);
       }
 
-      let output = `# Available nativeui Components\n\n`;
+      let output = `# Available mcellui Components\n\n`;
       for (const [cat, items] of byCategory) {
         output += `## ${cat}\n\n`;
         for (const item of items) {
@@ -406,7 +429,41 @@ export async function handleToolCall(
       return { content: [{ type: 'text', text: output }] };
     }
 
-    case 'nativeui_get_component': {
+    case 'mcellui_get_component': {
+      const componentName = args?.name as string;
+      const component = registry!.components.find((c) => c.name === componentName);
+
+      if (!component) {
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Component "${componentName}" not found.\n\nAvailable: ${registry!.components.map((c) => c.name).join(', ')}`,
+            },
+          ],
+        };
+      }
+
+      const code = await loadComponentCode(component);
+      if (!code) {
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Error: Could not load documentation for "${componentName}".`,
+            },
+          ],
+        };
+      }
+
+      // Parse and return concise documentation instead of full source code
+      const docs = parseComponentDocs(code);
+      const output = formatComponentDocs(component, docs);
+
+      return { content: [{ type: 'text', text: output }] };
+    }
+
+    case 'mcellui_get_component_source': {
       const componentName = args?.name as string;
       const component = registry!.components.find((c) => c.name === componentName);
 
@@ -433,33 +490,17 @@ export async function handleToolCall(
         };
       }
 
-      const output = `# ${component.name}
-
-${component.description}
-
-**Category:** ${component.category}
-**Status:** ${component.status}
-${component.dependencies?.length ? `**Dependencies:** ${component.dependencies.join(', ')}` : ''}
-
-## Source Code
+      const output = `# ${toPascalCase(component.name)} - Source Code
 
 \`\`\`tsx
 ${code}
-\`\`\`
-
-## Usage
-
-\`\`\`tsx
-import { ${toPascalCase(component.name)} } from '@/components/ui/${component.name}';
-
-<${toPascalCase(component.name)} />
 \`\`\`
 `;
 
       return { content: [{ type: 'text', text: output }] };
     }
 
-    case 'nativeui_add_component': {
+    case 'mcellui_add_component': {
       const componentName = args?.name as string;
       const component = registry!.components.find((c) => c.name === componentName);
 
@@ -479,7 +520,7 @@ import { ${toPascalCase(component.name)} } from '@/components/ui/${component.nam
 Run this command:
 
 \`\`\`bash
-npx nativeui add ${component.name}
+npx @metacells/mcellui-cli add ${component.name}
 \`\`\`
 `;
 
@@ -500,7 +541,7 @@ npx expo install ${component.dependencies.join(' ')}
 This component depends on: ${component.registryDependencies.join(', ')}
 
 \`\`\`bash
-npx nativeui add ${component.registryDependencies.join(' ')}
+npx @metacells/mcellui-cli add ${component.registryDependencies.join(' ')}
 \`\`\`
 `;
       }
@@ -508,7 +549,7 @@ npx nativeui add ${component.registryDependencies.join(' ')}
       return { content: [{ type: 'text', text: output }] };
     }
 
-    case 'nativeui_suggest_component': {
+    case 'mcellui_suggest_component': {
       const description = (args?.description as string).toLowerCase();
       const suggestions: Array<{ component: RegistryItem; score: number; matchedKeywords: string[] }> = [];
 
@@ -552,7 +593,7 @@ npx nativeui add ${component.registryDependencies.join(' ')}
           content: [
             {
               type: 'text',
-              text: `No specific component suggestions for "${description}".\n\nTry being more specific or use \`nativeui_list_components\` to browse all available components.\n\n**Tip:** Mention specific UI elements like "button", "card", "form", "modal", "list", etc.`,
+              text: `No specific component suggestions for "${description}".\n\nTry being more specific or use \`mcellui_list_components\` to browse all available components.\n\n**Tip:** Mention specific UI elements like "button", "card", "form", "modal", "list", etc.`,
             },
           ],
         };
@@ -572,12 +613,12 @@ npx nativeui add ${component.registryDependencies.join(' ')}
       }
 
       const componentNames = topSuggestions.map(s => s.component.name).join(' ');
-      output += `\n---\n\n**Add all suggested components:**\n\n\`\`\`bash\nnpx nativeui add ${componentNames}\n\`\`\``;
+      output += `\n---\n\n**Add all suggested components:**\n\n\`\`\`bash\nnpx @metacells/mcellui-cli add ${componentNames}\n\`\`\``;
 
       return { content: [{ type: 'text', text: output }] };
     }
 
-    case 'nativeui_create_component': {
+    case 'mcellui_create_component': {
       const componentName = args?.name as string;
       const template = (args?.template as string) || 'basic';
       const withForwardRef = args?.withForwardRef as boolean || false;
@@ -592,7 +633,7 @@ npx nativeui add ${component.registryDependencies.join(' ')}
 The easiest way to create a new component:
 
 \`\`\`bash
-npx nativeui create ${kebabName} --template ${template}${withForwardRef ? ' --forward-ref' : ''}
+npx @metacells/mcellui-cli create ${kebabName} --template ${template}${withForwardRef ? ' --forward-ref' : ''}
 \`\`\`
 
 This creates \`components/ui/${kebabName}.tsx\` with the ${template} template.
@@ -613,7 +654,7 @@ Your component should follow this structure:
 \`\`\`tsx
 import React${withForwardRef ? ', { forwardRef }' : ''} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export interface ${pascalName}Props {
   // Define your props here
@@ -675,11 +716,11 @@ const {
       return { content: [{ type: 'text', text: output }] };
     }
 
-    case 'nativeui_customize_theme': {
+    case 'mcellui_customize_theme': {
       const aspect = (args?.aspect as string) || 'all';
       const preset = args?.preset as string;
 
-      let output = `# Customize nativeui Theme\n\n`;
+      let output = `# Customize mcellui Theme\n\n`;
 
       if (aspect === 'all' || aspect === 'colors') {
         output += `## Color Customization
@@ -689,7 +730,7 @@ const {
 Available presets: \`zinc\`, \`slate\`, \`stone\`, \`blue\`, \`green\`, \`rose\`, \`orange\`, \`violet\`
 
 \`\`\`typescript
-// nativeui.config.ts
+// mcellui.config.ts
 export default defineConfig({
   theme: '${preset || 'blue'}',
 });
@@ -793,8 +834,8 @@ function App() {
       output += `## Full Config Example
 
 \`\`\`typescript
-// nativeui.config.ts
-import { defineConfig } from '@nativeui/core';
+// mcellui.config.ts
+import { defineConfig } from '@metacells/mcellui-core';
 
 export default defineConfig({
   // Theme preset
@@ -840,10 +881,10 @@ export default defineConfig({
       return { content: [{ type: 'text', text: output }] };
     }
 
-    case 'nativeui_doctor': {
+    case 'mcellui_doctor': {
       const projectPath = args?.projectPath as string || process.cwd();
 
-      let output = `# nativeui Doctor
+      let output = `# mcellui Doctor
 
 Checking project at: \`${projectPath}\`
 
@@ -852,7 +893,7 @@ Checking project at: \`${projectPath}\`
 Run the CLI doctor command for a full diagnostic:
 
 \`\`\`bash
-npx nativeui doctor
+npx @metacells/mcellui-cli doctor
 \`\`\`
 
 ## Common Issues & Fixes
@@ -860,7 +901,7 @@ npx nativeui doctor
 ### 1. "Project not initialized"
 
 \`\`\`bash
-npx nativeui init
+npx @metacells/mcellui-cli init
 \`\`\`
 
 ### 2. Missing dependencies
@@ -908,9 +949,9 @@ Check \`tsconfig.json\`:
 
 ## Checklist
 
-- [ ] \`nativeui.config.ts\` exists
+- [ ] \`mcellui.config.ts\` exists
 - [ ] \`components/ui/\` directory exists
-- [ ] \`@nativeui/core\` installed
+- [ ] \`@metacells/mcellui-core\` installed
 - [ ] \`react-native-reanimated\` installed
 - [ ] \`react-native-gesture-handler\` installed
 - [ ] Babel plugin configured
@@ -918,14 +959,14 @@ Check \`tsconfig.json\`:
 
 ## Need Help?
 
-- Documentation: https://nativeui.dev
-- GitHub Issues: https://github.com/your-repo/nativeui/issues
+- Documentation: https://mcellui.dev
+- GitHub Issues: https://github.com/metacells/mcellui/issues
 `;
 
       return { content: [{ type: 'text', text: output }] };
     }
 
-    case 'nativeui_search': {
+    case 'mcellui_search': {
       const query = (args?.query as string).toLowerCase();
       const results: RegistryItem[] = [];
 
@@ -944,7 +985,7 @@ Check \`tsconfig.json\`:
           content: [
             {
               type: 'text',
-              text: `No components found matching "${query}".\n\nTry a different search term or use \`nativeui_list_components\` to see all.`,
+              text: `No components found matching "${query}".\n\nTry a different search term or use \`mcellui_list_components\` to see all.`,
             },
           ],
         };
@@ -968,6 +1009,150 @@ Check \`tsconfig.json\`:
         content: [{ type: 'text', text: `Unknown tool: ${name}` }],
       };
   }
+}
+
+// --- Component Documentation Parser ---
+
+interface ParsedProp {
+  name: string;
+  type: string;
+  required: boolean;
+  description: string;
+  defaultValue?: string;
+}
+
+interface ParsedDocs {
+  description: string;
+  example: string;
+  props: ParsedProp[];
+  exports: string[];
+}
+
+/**
+ * Parse component documentation from source code.
+ * Extracts description, @example, and props interface.
+ */
+function parseComponentDocs(code: string): ParsedDocs {
+  const result: ParsedDocs = {
+    description: '',
+    example: '',
+    props: [],
+    exports: [],
+  };
+
+  // Extract main docblock description and example
+  const docblockMatch = code.match(/\/\*\*\s*\n([\s\S]*?)\*\//);
+  if (docblockMatch) {
+    const docblock = docblockMatch[1];
+
+    // Extract description (lines before @example)
+    const descLines: string[] = [];
+    const lines = docblock.split('\n');
+    for (const line of lines) {
+      const cleaned = line.replace(/^\s*\*\s?/, '').trim();
+      if (cleaned.startsWith('@example')) break;
+      if (cleaned) descLines.push(cleaned);
+    }
+    result.description = descLines.join(' ').trim();
+
+    // Extract @example code block
+    const exampleMatch = docblock.match(/@example\s*\n\s*\*\s*```tsx?\s*\n([\s\S]*?)```/);
+    if (exampleMatch) {
+      result.example = exampleMatch[1]
+        .split('\n')
+        .map(line => line.replace(/^\s*\*\s?/, ''))
+        .join('\n')
+        .trim();
+    }
+  }
+
+  // Extract all exported interface/type props
+  const propsInterfaces = code.matchAll(/export\s+(?:interface|type)\s+(\w+Props)\s*(?:=\s*)?{([^}]+)}/g);
+  for (const match of propsInterfaces) {
+    const interfaceName = match[1];
+    const propsBody = match[2];
+
+    // Parse individual props with JSDoc comments
+    const propPattern = /(?:\/\*\*\s*(.*?)\s*\*\/\s*)?([\w]+)(\?)?:\s*([^;]+);/g;
+    let propMatch;
+    while ((propMatch = propPattern.exec(propsBody)) !== null) {
+      const [, docComment, propName, optional, propType] = propMatch;
+      result.props.push({
+        name: propName,
+        type: propType.trim(),
+        required: !optional,
+        description: docComment?.replace(/\s+/g, ' ').trim() || '',
+      });
+    }
+  }
+
+  // Extract exported function/component names
+  const exportMatches = code.matchAll(/export\s+(?:function|const)\s+(\w+)/g);
+  for (const match of exportMatches) {
+    result.exports.push(match[1]);
+  }
+
+  // Extract exported types/interfaces
+  const typeExports = code.matchAll(/export\s+(?:type|interface)\s+(\w+)/g);
+  for (const match of typeExports) {
+    result.exports.push(match[1]);
+  }
+
+  return result;
+}
+
+/**
+ * Format parsed docs as concise markdown documentation.
+ */
+function formatComponentDocs(
+  component: RegistryItem,
+  docs: ParsedDocs
+): string {
+  const pascalName = toPascalCase(component.name);
+
+  let output = `# ${pascalName}\n\n`;
+  output += `${docs.description || component.description}\n\n`;
+
+  // Metadata
+  output += `**Category:** ${component.category} · **Status:** ${component.status}\n\n`;
+
+  // Installation
+  output += `## Installation\n\n`;
+  output += `\`\`\`bash\nnpx @metacells/mcellui-cli add ${component.name}\n\`\`\`\n\n`;
+
+  if (component.dependencies?.length) {
+    output += `**Peer Dependencies:** ${component.dependencies.join(', ')}\n\n`;
+  }
+
+  if (component.registryDependencies?.length) {
+    output += `**Required Components:** ${component.registryDependencies.join(', ')}\n\n`;
+  }
+
+  // Example
+  if (docs.example) {
+    output += `## Example\n\n`;
+    output += `\`\`\`tsx\n${docs.example}\n\`\`\`\n\n`;
+  }
+
+  // Props table
+  if (docs.props.length > 0) {
+    output += `## Props\n\n`;
+    output += `| Prop | Type | Required | Description |\n`;
+    output += `|------|------|----------|-------------|\n`;
+    for (const prop of docs.props) {
+      const typeStr = prop.type.length > 40 ? prop.type.slice(0, 37) + '...' : prop.type;
+      output += `| \`${prop.name}\` | \`${typeStr}\` | ${prop.required ? '✓' : ''} | ${prop.description} |\n`;
+    }
+    output += '\n';
+  }
+
+  // Exports
+  if (docs.exports.length > 0) {
+    output += `## Exports\n\n`;
+    output += `\`\`\`tsx\nimport { ${docs.exports.join(', ')} } from '@/components/ui/${component.name}';\n\`\`\`\n`;
+  }
+
+  return output;
 }
 
 // --- Utility Functions ---

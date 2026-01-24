@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 import { Section } from './section';
 
 export function ProgressDemo() {

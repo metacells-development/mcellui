@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { useTheme } from '@nativeui/core';
-import { Slider } from '../ui/slider';
+import { useTheme } from '@metacells/mcellui-core';
+import { Slider } from '@/components/ui/slider';
 
 export function SliderDemo() {
   const { spacing, colors } = useTheme();

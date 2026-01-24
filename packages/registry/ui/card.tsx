@@ -42,13 +42,14 @@ import {
   TextStyle,
   ImageStyle,
   PressableProps,
+  GestureResponderEvent,
 } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, haptic } from '@nativeui/core';
+import { useTheme, haptic } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -63,7 +64,7 @@ export interface CardProps {
 }
 
 export function Card({ children, onPress, disabled, style }: CardProps) {
-  const { colors, components, platformShadow, springs } = useTheme();
+  const { colors, components, componentRadius, platformShadow, springs } = useTheme();
   const tokens = components.card;
   const scale = useSharedValue(1);
   const isInteractive = !!onPress && !disabled;
@@ -81,7 +82,7 @@ export function Card({ children, onPress, disabled, style }: CardProps) {
   }, [isInteractive, springs.snappy]);
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       if (isInteractive) {
         haptic('light');
         onPress?.(e);
@@ -97,7 +98,7 @@ export function Card({ children, onPress, disabled, style }: CardProps) {
   const cardStyle = [
     styles.card,
     {
-      borderRadius: tokens.borderRadius,
+      borderRadius: componentRadius.card,
       borderWidth: tokens.borderWidth,
       backgroundColor: colors.card,
       borderColor: colors.border,
@@ -151,10 +152,10 @@ export function CardImage({
   overlay = false,
   style,
 }: CardImageProps) {
-  const { colors, components } = useTheme();
+  const { colors, components, componentRadius } = useTheme();
   const tokens = components.card;
   // Calculate inner border radius (outer - border width)
-  const innerRadius = tokens.borderRadius - tokens.borderWidth;
+  const innerRadius = componentRadius.card - tokens.borderWidth;
 
   return (
     <View style={[styles.imageContainer, { borderTopLeftRadius: innerRadius, borderTopRightRadius: innerRadius }]}>
@@ -341,7 +342,7 @@ export function ImageCard({
   textPosition = 'bottom',
   style,
 }: ImageCardProps) {
-  const { colors, components, platformShadow, springs, spacing } = useTheme();
+  const { colors, components, componentRadius, platformShadow, springs, spacing } = useTheme();
   const tokens = components.card;
   const scale = useSharedValue(1);
   const isInteractive = !!onPress;
@@ -359,7 +360,7 @@ export function ImageCard({
   }, [isInteractive, springs.snappy]);
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       if (isInteractive) {
         haptic('light');
         onPress?.(e);
@@ -415,7 +416,7 @@ export function ImageCard({
 
   const cardStyle = [
     styles.imageCard,
-    { borderRadius: tokens.borderRadius + 4 },
+    { borderRadius: componentRadius.card + 4 },
     platformShadow('md'),
     style,
   ];
@@ -471,7 +472,7 @@ export function MediaCard({
   onPress,
   style,
 }: MediaCardProps) {
-  const { colors, components, platformShadow, springs, spacing } = useTheme();
+  const { colors, components, componentRadius, platformShadow, springs, spacing } = useTheme();
   const tokens = components.card;
   const scale = useSharedValue(1);
   const isInteractive = !!onPress;
@@ -489,7 +490,7 @@ export function MediaCard({
   }, [isInteractive, springs.snappy]);
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       if (isInteractive) {
         haptic('light');
         onPress?.(e);
@@ -505,7 +506,7 @@ export function MediaCard({
   const content = (
     <>
       {/* Image container */}
-      <View style={[styles.mediaCardImageContainer, { borderRadius: tokens.borderRadius }, platformShadow('sm')]}>
+      <View style={[styles.mediaCardImageContainer, { borderRadius: componentRadius.card }, platformShadow('sm')]}>
         <Image
           source={source}
           style={[

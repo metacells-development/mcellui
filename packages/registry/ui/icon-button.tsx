@@ -27,14 +27,15 @@ import {
   View,
   PressableProps,
   ActivityIndicator,
+  GestureResponderEvent,
 } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
-import { haptic } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
+import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -103,7 +104,7 @@ export const IconButton = forwardRef(function IconButton(
   const scale = useSharedValue(1);
 
   const handlePressIn = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       scale.value = withSpring(0.9, springs.snappy);
       onPressIn?.(e);
     },
@@ -111,7 +112,7 @@ export const IconButton = forwardRef(function IconButton(
   );
 
   const handlePressOut = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       scale.value = withSpring(1, springs.snappy);
       onPressOut?.(e);
     },
@@ -119,7 +120,7 @@ export const IconButton = forwardRef(function IconButton(
   );
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       haptic('light');
       onPress?.(e);
     },

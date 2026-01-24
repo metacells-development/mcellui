@@ -1,7 +1,7 @@
 /**
  * NativeUI CLI Config Types and Utilities
  *
- * Local copy of config types to avoid importing from @nativeui/core at runtime,
+ * Local copy of config types to avoid importing from @metacells/mcellui-core at runtime,
  * which would pull in react-native and cause bundling issues.
  */
 

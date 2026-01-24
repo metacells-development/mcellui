@@ -8,7 +8,7 @@ Figma Plugin für nativeui - Design Token Sync & Component Export.
 
 - **Figma Variables → nativeui Theme**: Extrahiere Design Tokens aus Figma Variable Collections
 - **Light/Dark Mode Support**: Automatische Erkennung und Zuordnung von Modes
-- **Config Generator**: Generiert `nativeui.config.ts` zum Copy-Paste
+- **Config Generator**: Generiert `mcellui.config.ts` zum Copy-Paste
 
 ### Phase 3.2: Component Export (geplant)
 
@@ -55,7 +55,7 @@ packages/figma-plugin/
 │       ├── tokens/
 │       │   ├── extractor.ts    # Figma Variables → Tokens
 │       │   ├── transformer.ts  # Tokens → nativeui Format
-│       │   └── emitter.ts      # nativeui.config.ts Generator
+│       │   └── emitter.ts      # mcellui.config.ts Generator
 │       └── types.ts
 └── dist/                   # Build Output (gitignored)
     ├── main.js
@@ -131,7 +131,7 @@ Collection: "nativeui" (oder beliebiger Name)
 ## Output Beispiel
 
 ```typescript
-import { defineConfig } from '@nativeui/core';
+import { defineConfig } from '@metacells/mcellui-core';
 
 export default defineConfig({
   theme: {

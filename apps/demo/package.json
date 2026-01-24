@@ -1,6 +1,6 @@
 {
-  "name": "@nativeui/demo",
-  "version": "0.0.1",
+  "name": "@metacells/mcellui-demo",
+  "version": "0.0.2",
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
@@ -14,7 +14,9 @@
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
     "@hookform/resolvers": "^3.9.0",
-    "@nativeui/core": "*",
+    "@metacells/mcellui-cli": "^0.1.4",
+    "@metacells/mcellui-metro-plugin": "*",
+    "@metacells/mcellui-core": "*",
     "@react-native-community/datetimepicker": "8.4.4",
     "expo": "54",
     "expo-asset": "~12.0.12",

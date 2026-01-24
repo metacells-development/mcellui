@@ -36,6 +36,7 @@ import {
   Dimensions,
   Pressable,
   PressableProps,
+  GestureResponderEvent,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -45,8 +46,8 @@ import Animated, {
   runOnJS,
   interpolate,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
-import { haptic } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
+import { haptic } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -233,7 +234,7 @@ export function AlertDialogCancel({
   const { onClose } = useAlertDialog();
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       haptic('light');
       onPress?.(e);
       onClose();
@@ -284,7 +285,7 @@ export function AlertDialogAction({
   const { onClose } = useAlertDialog();
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       haptic(destructive ? 'warning' : 'light');
       onPress?.(e);
       onClose();

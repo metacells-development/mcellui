@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 const components = [
   { name: 'button', title: 'Button', description: 'Pressable button with variants and sizes' },
@@ -65,6 +65,36 @@ export default function Home() {
         </Text>
       </View>
 
+      {/* Theme Playground Link */}
+      <Link href="/playground" asChild>
+        <Pressable
+          style={({ pressed }) => [
+            styles.playgroundCard,
+            {
+              backgroundColor: colors.primary,
+              borderRadius: radius.lg,
+              padding: spacing[4],
+              marginBottom: spacing[4],
+              opacity: pressed ? 0.9 : 1,
+            },
+          ]}
+        >
+          <View style={styles.playgroundContent}>
+            <View>
+              <Text style={[styles.playgroundTitle, { color: colors.primaryForeground }]}>
+                Theme Playground
+              </Text>
+              <Text style={[styles.playgroundDescription, { color: colors.primaryForeground, opacity: 0.8 }]}>
+                Explore all 40 theme/radius combinations
+              </Text>
+            </View>
+            <Text style={[styles.playgroundIcon, { color: colors.primaryForeground }]}>
+              →
+            </Text>
+          </View>
+        </Pressable>
+      </Link>
+
       <View style={[styles.grid, { gap: spacing[3] }]}>
         {components.map((component) => (
           <Link
@@ -99,7 +129,7 @@ export default function Home() {
 
       <View style={[styles.footer, { marginTop: spacing[8], paddingVertical: spacing[4] }]}>
         <Text style={[styles.footerText, { color: colors.foregroundMuted }]}>
-          Built with @nativeui/core
+          Built with @metacells/mcellui-core
         </Text>
         <Text style={[styles.footerHint, { color: colors.foregroundSubtle, marginTop: spacing[1] }]}>
           Tap 🎨 to change theme • 🌙 to toggle dark mode
@@ -130,6 +160,24 @@ const styles = StyleSheet.create({
   },
   cardDescription: {
     fontSize: 14,
+  },
+  playgroundCard: {},
+  playgroundContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  playgroundTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  playgroundDescription: {
+    fontSize: 14,
+    marginTop: 2,
+  },
+  playgroundIcon: {
+    fontSize: 24,
+    fontWeight: '600',
   },
   footer: {
     alignItems: 'center',

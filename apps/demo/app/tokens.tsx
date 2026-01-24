@@ -32,8 +32,8 @@ import {
   badgeTokens,
   avatarTokens,
   cardTokens,
-} from '@nativeui/core';
-import { ThemeSelector } from '../components/ui/theme-selector';
+} from '@metacells/mcellui-core';
+import { ThemeSelector } from '@/components/theme-selector';
 import { useThemeSettings } from '../context/ThemeSettingsContext';
 
 // =============================================================================

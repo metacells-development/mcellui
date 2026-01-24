@@ -32,7 +32,7 @@ export const createCommand = new Command()
 
       if (!projectRoot) {
         console.log(chalk.red('Could not find a valid project.'));
-        console.log(chalk.dim('Run `npx nativeui init` first.'));
+        console.log(chalk.dim('Run `npx mcellui init` first.'));
         process.exit(1);
       }
 
@@ -40,7 +40,7 @@ export const createCommand = new Command()
 
       if (!config) {
         console.log(chalk.red('Project not initialized.'));
-        console.log(chalk.dim('Run `npx nativeui init` first.'));
+        console.log(chalk.dim('Run `npx mcellui init` first.'));
         process.exit(1);
       }
 
@@ -146,7 +146,7 @@ function generateBasicComponent(name: string, forwardRef: boolean): string {
   if (forwardRef) {
     return `import React, { forwardRef } from 'react';
 import { View, Text, StyleSheet, ViewProps } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export interface ${name}Props extends ViewProps {
   /**
@@ -158,7 +158,7 @@ export interface ${name}Props extends ViewProps {
 /**
  * ${name}
  *
- * A custom component created with nativeui create.
+ * A custom component created with mcellui create.
  *
  * @example
  * \`\`\`tsx
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
 
   return `import React from 'react';
 import { View, Text, StyleSheet, ViewProps } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export interface ${name}Props extends ViewProps {
   /**
@@ -219,7 +219,7 @@ export interface ${name}Props extends ViewProps {
 /**
  * ${name}
  *
- * A custom component created with nativeui create.
+ * A custom component created with mcellui create.
  *
  * @example
  * \`\`\`tsx
@@ -284,7 +284,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export interface ${name}Props extends ViewProps {
   /**
@@ -296,7 +296,7 @@ export interface ${name}Props extends ViewProps {
 /**
  * ${name}
  *
- * An animated component created with nativeui create.
+ * An animated component created with mcellui create.
  *
  * @example
  * \`\`\`tsx
@@ -357,7 +357,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -375,7 +375,7 @@ export interface ${name}Props extends Omit<PressableProps, 'style'> {
 /**
  * ${name}
  *
- * A pressable component created with nativeui create.
+ * A pressable component created with mcellui create.
  *
  * @example
  * \`\`\`tsx
@@ -451,7 +451,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -469,7 +469,7 @@ export interface ${name}Props extends Omit<PressableProps, 'style'> {
 /**
  * ${name}
  *
- * A pressable component created with nativeui create.
+ * A pressable component created with mcellui create.
  *
  * @example
  * \`\`\`tsx
@@ -545,7 +545,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export interface ${name}Props extends TextInputProps {
   /**
@@ -561,7 +561,7 @@ export interface ${name}Props extends TextInputProps {
 /**
  * ${name}
  *
- * A custom input component created with nativeui create.
+ * A custom input component created with mcellui create.
  *
  * @example
  * \`\`\`tsx
@@ -671,7 +671,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export interface ${name}Props extends TextInputProps {
   /**
@@ -687,7 +687,7 @@ export interface ${name}Props extends TextInputProps {
 /**
  * ${name}
  *
- * A custom input component created with nativeui create.
+ * A custom input component created with mcellui create.
  *
  * @example
  * \`\`\`tsx

@@ -4,9 +4,9 @@ import ora from 'ora';
 import prompts from 'prompts';
 import fs from 'fs-extra';
 import path from 'path';
-import crypto from 'crypto';
 import { getConfig, getProjectRoot, ResolvedNativeUIConfig } from '../utils/project';
 import { fetchComponent, getRegistry, RegistryItem } from '../utils/registry';
+import { transformToInstalled, normalizeForComparison } from '../utils/imports';
 
 interface ComponentDiff {
   name: string;
@@ -31,7 +31,7 @@ export const updateCommand = new Command()
 
       if (!projectRoot) {
         console.log(chalk.red('Could not find a valid project.'));
-        console.log(chalk.dim('Run `npx nativeui init` first.'));
+        console.log(chalk.dim('Run `npx mcellui init` first.'));
         process.exit(1);
       }
 
@@ -39,7 +39,7 @@ export const updateCommand = new Command()
 
       if (!config) {
         console.log(chalk.red('Project not initialized.'));
-        console.log(chalk.dim('Run `npx nativeui init` first.'));
+        console.log(chalk.dim('Run `npx mcellui init` first.'));
         process.exit(1);
       }
 
@@ -51,7 +51,7 @@ export const updateCommand = new Command()
 
       if (diffs.length === 0) {
         spinner.info('No components installed yet.');
-        console.log(chalk.dim('\nAdd components with: npx nativeui add <component>'));
+        console.log(chalk.dim('\nAdd components with: npx mcellui add <component>'));
         return;
       }
 
@@ -138,7 +138,7 @@ export const updateCommand = new Command()
             await fs.ensureDir(targetDir);
 
             // Transform imports
-            const transformedContent = transformImports(file.content, config);
+            const transformedContent = transformToInstalled(file.content, config);
             await fs.writeFile(targetPath, transformedContent);
           }
 
@@ -257,45 +257,14 @@ async function checkForUpdate(
     if (!registryFile) return false;
 
     const localContent = await fs.readFile(localFile, 'utf-8');
-    const transformedRegistryContent = transformImports(registryFile.content, config);
 
-    const localHash = hashContent(localContent);
-    const registryHash = hashContent(transformedRegistryContent);
+    // Normalize both for comparison (handles whitespace + import paths)
+    const normalizedLocal = normalizeForComparison(localContent);
+    const normalizedRegistry = normalizeForComparison(registryFile.content);
 
-    return localHash !== registryHash;
+    return normalizedLocal !== normalizedRegistry;
   } catch {
     return false;
   }
 }
 
-/**
- * Create hash of content for comparison
- */
-function hashContent(content: string): string {
-  const normalized = content
-    .replace(/\r\n/g, '\n')
-    .replace(/\s+$/gm, '')
-    .trim();
-
-  return crypto.createHash('md5').update(normalized).digest('hex');
-}
-
-/**
- * Transform import paths (same as add command)
- */
-function transformImports(code: string, config: ResolvedNativeUIConfig): string {
-  let transformed = code;
-
-  const utilsAlias = config.aliases?.utils || '@/lib/utils';
-
-  if (utilsAlias === '@/lib/utils') {
-    return transformed;
-  }
-
-  transformed = transformed.replace(
-    /from ['"]@\/lib\/utils['"]/g,
-    `from '${utilsAlias}'`
-  );
-
-  return transformed;
-}

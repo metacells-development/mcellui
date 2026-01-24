@@ -1,7 +1,7 @@
 /**
- * NativeUI Config Schema
+ * McellUI Config Schema
  *
- * Zod-basierte Validierung für nativeui.config.ts
+ * Zod-basierte Validierung für mcellui.config.ts
  * Gibt klare Fehlermeldungen bei ungültiger Konfiguration.
  */
 
@@ -161,7 +161,7 @@ export function validateConfigOrThrow(config: unknown, configPath: string): Vali
     const errorList = result.errors.map((e) => `  - ${e}`).join('\n');
     throw new Error(
       `Invalid configuration in ${configPath}:\n${errorList}\n\n` +
-      `See https://nativeui.dev/docs/config for valid options.`
+      `See https://mcellui.dev/docs/config for valid options.`
     );
   }
 

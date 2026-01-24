@@ -6,8 +6,8 @@
  *
  * @example
  * ```ts
- * // nativeui.config.ts
- * import { defineConfig } from '@nativeui/core';
+ * // mcellui.config.ts
+ * import { defineConfig } from '@metacells/mcellui-core';
  *
  * export default defineConfig({
  *   theme: 'blue',
@@ -27,7 +27,7 @@ import type { AnimationPreset } from '../theme/animations';
 
 /**
  * NativeUI configuration object.
- * Place in `nativeui.config.ts` at your project root.
+ * Place in `mcellui.config.ts` at your project root.
  */
 export interface NativeUIConfig {
   // ============================================
@@ -113,7 +113,7 @@ export interface NativeUIConfig {
   };
 
   // ============================================
-  // CLI Configuration (used by `npx nativeui add`)
+  // CLI Configuration (used by `npx mcellui add`)
   // ============================================
 
   /**

@@ -3,7 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Card, CardContent } from '@/components/ui/card';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export function SectionHeaderDemo() {
   const { colors } = useTheme();

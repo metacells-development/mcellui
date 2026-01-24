@@ -1,4 +1,4 @@
-# ADR 004: Unified Configuration File (nativeui.config.ts)
+# ADR 004: Unified Configuration File (mcellui.config.ts)
 
 **Status:** Accepted
 **Date:** 2026-01-15
@@ -14,7 +14,7 @@ In ADR-002, we rejected a config file approach in favor of ThemeProvider props:
 
 However, as the project evolved, we identified two use cases that benefit from a unified config file:
 
-1. **CLI configuration** - The `npx nativeui add` command needs to know where to install components, what path aliases to use, and which style preset to apply. This information must persist between CLI invocations.
+1. **CLI configuration** - The `npx mcellui add` command needs to know where to install components, what path aliases to use, and which style preset to apply. This information must persist between CLI invocations.
 
 2. **Runtime theming** - While ThemeProvider props work well, having a single source of truth for the design system (similar to `tailwind.config.js`) improves developer experience and makes it easy to share configuration across team members.
 
@@ -22,13 +22,13 @@ The shadcn/ui CLI already uses a `components.json` config file. We extend this p
 
 ## Decision
 
-We introduce `nativeui.config.ts` as the single configuration file for both CLI and runtime theming.
+We introduce `mcellui.config.ts` as the single configuration file for both CLI and runtime theming.
 
 ### Configuration API
 
 ```ts
-// nativeui.config.ts
-import { defineConfig } from '@nativeui/core';
+// mcellui.config.ts
+import { defineConfig } from '@metacells/mcellui-core';
 
 export default defineConfig({
   // ============================================
@@ -71,7 +71,7 @@ export default defineConfig({
   },
 
   // ============================================
-  // CLI Configuration (used by npx nativeui add)
+  // CLI Configuration (used by npx mcellui add)
   // ============================================
 
   // Where components are installed
@@ -95,8 +95,8 @@ export default defineConfig({
 
 ```tsx
 // App.tsx or _layout.tsx
-import { ConfigProvider } from '@nativeui/core';
-import config from './nativeui.config';
+import { ConfigProvider } from '@metacells/mcellui-core';
+import config from './mcellui.config';
 
 export default function App() {
   return (
@@ -111,7 +111,7 @@ export default function App() {
 
 ```tsx
 interface ConfigProviderProps {
-  /** Configuration from nativeui.config.ts */
+  /** Configuration from mcellui.config.ts */
   config?: NativeUIConfig;
 
   /** Override theme (takes precedence over config) */
@@ -147,11 +147,11 @@ function App() {
 The CLI reads the same config file:
 
 ```bash
-# Initializes project and creates nativeui.config.ts
-npx nativeui init
+# Initializes project and creates mcellui.config.ts
+npx mcellui init
 
-# Reads nativeui.config.ts to determine component installation path
-npx nativeui add button
+# Reads mcellui.config.ts to determine component installation path
+npx mcellui add button
 ```
 
 The CLI uses `jiti` to load TypeScript config files without requiring a build step.
@@ -182,7 +182,7 @@ Keep `components.json` for CLI (like shadcn) and use ThemeProvider props for run
 Use a JSON file for simplicity:
 
 ```json
-// nativeui.config.json
+// mcellui.config.json
 {
   "theme": "blue",
   "componentsPath": "./components/ui"
@@ -209,7 +209,7 @@ Continue with ThemeProvider props and add a separate CLI config:
 
 ### Negative
 
-- **Extra file** - Projects need `nativeui.config.ts` in root
+- **Extra file** - Projects need `mcellui.config.ts` in root
 - **Import required** - Config must be imported in app entry point
 - **Learning curve** - Users need to understand config vs props
 
@@ -267,14 +267,14 @@ Before:
 
 After:
 ```tsx
-// nativeui.config.ts
+// mcellui.config.ts
 export default defineConfig({
   theme: 'blue',
   radius: 'md',
 });
 
 // App.tsx
-import config from './nativeui.config';
+import config from './mcellui.config';
 
 <ConfigProvider config={config}>
   <App />
@@ -295,7 +295,7 @@ const config: NativeUIConfig = {
 
 After:
 ```ts
-import { defineConfig } from '@nativeui/core';
+import { defineConfig } from '@metacells/mcellui-core';
 
 export default defineConfig({
   componentsPath: './components/ui',

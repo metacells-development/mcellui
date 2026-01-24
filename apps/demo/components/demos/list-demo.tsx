@@ -5,7 +5,7 @@ import { List, ListItem } from '@/components/ui/list';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Demo Icons
 function UserIcon({ color = '#000', width = 24, height = 24 }) {

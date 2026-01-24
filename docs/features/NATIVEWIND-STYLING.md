@@ -324,7 +324,7 @@ import { vars } from 'nativewind';
 
 ```tsx
 import { StyleSheet, View, Text } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 function Card() {
   const { colors, spacing, radius } = useTheme();

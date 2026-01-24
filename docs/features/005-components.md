@@ -309,13 +309,13 @@ screens/
 
 ```bash
 # Einen Screen installieren
-npx nativeui add screens/auth/screen-login
+npx mcellui add screens/auth/screen-login
 
 # Alle Auth Screens
-npx nativeui add screens/auth
+npx mcellui add screens/auth
 
 # Screen mit Anpassungen
-npx nativeui add screens/main/screen-home-dashboard --name HomeScreen
+npx mcellui add screens/main/screen-home-dashboard --name HomeScreen
 ```
 
 ## Form Integration
@@ -622,11 +622,11 @@ icons/
 
 ```bash
 # Icons werden mit Components installiert
-npx nativeui add button  # Inkludiert benötigte Icons
+npx mcellui add button  # Inkludiert benötigte Icons
 
 # Oder einzeln
-npx nativeui add icons/ui
-npx nativeui add icons/social
+npx mcellui add icons/ui
+npx mcellui add icons/social
 ```
 
 ## Illustrations
@@ -946,7 +946,7 @@ const { soundEnabled } = useSoundSettings();
 
 ```bash
 # Sounds sind optional
-npx nativeui add sounds
+npx mcellui add sounds
 
 # Installiert:
 # - Sound files (mp3, klein)

@@ -35,7 +35,7 @@ Visual Regression Testing, Unit Tests und Performance Profiling.
 
 ```bash
 # Aktuell getestete SDKs
-npx nativeui doctor
+npx mcellui doctor
 
 # Output:
 # nativeui Compatibility Check
@@ -53,7 +53,7 @@ Automatische Screenshots für alle Komponenten mit Vergleich bei Updates.
 ### Setup
 
 ```bash
-npx nativeui test:visual init
+npx mcellui test:visual init
 
 # Erstellt:
 # - __snapshots__/ Ordner
@@ -79,13 +79,13 @@ export default {
 
 ```bash
 # Snapshots erstellen
-npx nativeui test:visual update
+npx mcellui test:visual update
 
 # Snapshots vergleichen
-npx nativeui test:visual
+npx mcellui test:visual
 
 # Einzelne Komponente
-npx nativeui test:visual button
+npx mcellui test:visual button
 ```
 
 ### CI Integration
@@ -93,7 +93,7 @@ npx nativeui test:visual button
 ```yaml
 # .github/workflows/visual-tests.yml
 - name: Visual Regression Tests
-  run: npx nativeui test:visual
+  run: npx mcellui test:visual
 
 - name: Upload Diff
   if: failure()
@@ -200,7 +200,7 @@ console.log(result);
 ### Bundle Size
 
 ```bash
-npx nativeui analyze
+npx mcellui analyze
 
 # Output:
 # Component Bundle Sizes
@@ -223,7 +223,7 @@ console.log(result);
 ## Storybook Integration
 
 ```bash
-npx nativeui storybook init
+npx mcellui storybook init
 ```
 
 ### Auto-generated Stories
@@ -262,11 +262,11 @@ export const Primary = {
 npm test
 
 # Visual Regression
-npx nativeui test:visual
+npx mcellui test:visual
 
 # Performance
-npx nativeui analyze
+npx mcellui analyze
 
 # All Tests
-npx nativeui test:all
+npx mcellui test:all
 ```

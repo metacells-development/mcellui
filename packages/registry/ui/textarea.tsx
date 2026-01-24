@@ -31,8 +31,8 @@ import Animated, {
   interpolateColor,
   Easing,
 } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
-import { haptic } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
+import { haptic } from '@metacells/mcellui-core';
 
 const TIMING_CONFIG = { duration: 200, easing: Easing.out(Easing.quad) };
 
@@ -98,8 +98,8 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
     const hasError = !!error;
     const isDisabled = editable === false;
 
-    const handleFocus = useCallback(
-      (e: any) => {
+    const handleFocus: NonNullable<TextInputProps['onFocus']> = useCallback(
+      (e) => {
         focusProgress.value = withTiming(1, TIMING_CONFIG);
         haptic('selection');
         onFocus?.(e);
@@ -107,8 +107,8 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
       [onFocus]
     );
 
-    const handleBlur = useCallback(
-      (e: any) => {
+    const handleBlur: NonNullable<TextInputProps['onBlur']> = useCallback(
+      (e) => {
         focusProgress.value = withTiming(0, TIMING_CONFIG);
         onBlur?.(e);
       },

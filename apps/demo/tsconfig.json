@@ -4,6 +4,8 @@
     "strict": true,
     "paths": {
       "@/*": ["./*"],
+      "@/components/ui/*": ["../../packages/registry/ui/*"],
+      "@/components/blocks/*": ["./components/blocks/*"],
       "@/components/*": ["./components/*"],
       "@/lib/*": ["./lib/*"]
     }

@@ -1,7 +1,7 @@
 /**
  * ThemeProvider
  *
- * Provides theme context to all nativeui components.
+ * Provides theme context to all mcellui components.
  * Automatically detects system color scheme and provides all design tokens.
  *
  * Like shadcn/ui - change tokens here to transform the entire UI.
@@ -24,6 +24,7 @@ import React, { createContext, useContext, useMemo, useState, useCallback, useEf
 import { useColorScheme, ViewStyle } from 'react-native';
 import { lightColors, darkColors, ThemeColors } from './colors';
 import { setHapticsEnabled } from '../utils/haptics';
+import { setAnimationsDisabled, isExpoGo } from '../utils/expoGo';
 import { spacing } from './spacing';
 import {
   createRadius,
@@ -251,6 +252,24 @@ export interface ThemeProviderProps {
    */
   animationPreset?: AnimationPreset;
 
+  /**
+   * Enable or disable animations globally.
+   * - `true`: Force enable animations
+   * - `false`: Force disable animations (components will use static styles)
+   * - `'auto'`: Automatically detect - disable in Expo Go, enable in dev/prod builds
+   * @default 'auto'
+   *
+   * @example
+   * ```tsx
+   * // Auto-detect (disabled in Expo Go)
+   * <ThemeProvider animations="auto">
+   *
+   * // Force disable for testing or accessibility
+   * <ThemeProvider animations={false}>
+   * ```
+   */
+  animations?: boolean | 'auto';
+
   /** Children components */
   children: ReactNode;
 }
@@ -265,6 +284,7 @@ export function ThemeProvider({
   darkColors: darkColorOverrides,
   haptics = true,
   animationPreset = defaultAnimationPreset,
+  animations = 'auto',
   children,
 }: ThemeProviderProps) {
   const systemColorScheme = useColorScheme();
@@ -274,6 +294,17 @@ export function ThemeProvider({
   useEffect(() => {
     setHapticsEnabled(haptics);
   }, [haptics]);
+
+  // Set global animations enabled state
+  useEffect(() => {
+    if (animations === 'auto') {
+      // Use automatic detection (Expo Go = disabled)
+      setAnimationsDisabled(null);
+    } else {
+      // Use explicit override
+      setAnimationsDisabled(!animations);
+    }
+  }, [animations]);
 
   const setColorScheme = useCallback((newPreference: ColorSchemePreference) => {
     setPreference(newPreference);

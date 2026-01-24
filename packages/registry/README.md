@@ -89,13 +89,13 @@ Ready-to-use screen templates. Copy-paste and customize.
 
 ```bash
 # Add a component
-npx nativeui add button
+npx mcellui add button
 
 # Add a block
-npx nativeui add login-block
+npx mcellui add login-block
 
 # Add multiple
-npx nativeui add button card input form
+npx mcellui add button card input form
 ```
 
 ## Dependencies

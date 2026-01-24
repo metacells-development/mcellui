@@ -37,7 +37,7 @@ import {
   Pressable,
   ViewStyle,
 } from 'react-native';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Import your components
 import { Switch } from '../ui/switch';

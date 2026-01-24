@@ -1,7 +1,7 @@
 /**
  * Component Generator - Code → Figma
  *
- * Generiert nativeui Components als Figma Component Sets mit Variants.
+ * Generiert mcellui Components als Figma Component Sets mit Variants.
  * PIXEL-PERFEKTE Darstellung wie in der Demo App.
  */
 
@@ -69,11 +69,11 @@ function generateVariantCombinations(
 }
 
 /**
- * Findet eine Variable by Name im nativeui/colors Collection
+ * Findet eine Variable by Name im mcellui/colors Collection
  */
 async function findColorVariable(variablePath: string): Promise<Variable | null> {
   var collections = await figma.variables.getLocalVariableCollectionsAsync();
-  var colorCollection = collections.find(function(c) { return c.name === 'nativeui/colors'; });
+  var colorCollection = collections.find(function(c) { return c.name === 'mcellui/colors'; });
 
   if (!colorCollection) {
     return null;
@@ -734,7 +734,7 @@ async function createComponentSet(
 // =============================================================================
 
 /**
- * Generiert alle nativeui Components in Figma
+ * Generiert alle mcellui Components in Figma
  */
 export async function generateAllComponents(): Promise<GenerateResult> {
   var errors: string[] = [];
@@ -812,7 +812,7 @@ export async function generateComponent(
 }
 
 /**
- * Prüft ob nativeui Components bereits existieren
+ * Prüft ob mcellui Components bereits existieren
  */
 export async function checkExistingComponents(): Promise<{
   exists: boolean;
@@ -838,7 +838,7 @@ export async function checkExistingComponents(): Promise<{
 }
 
 /**
- * Löscht alle nativeui Components
+ * Löscht alle mcellui Components
  */
 export async function deleteExistingComponents(): Promise<void> {
   for (var i = 0; i < allComponents.length; i++) {

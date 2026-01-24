@@ -3,7 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { IconButton } from '@/components/ui/icon-button';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Demo Icons
 function PlusIcon({ color = '#000', width = 24, height = 24 }) {

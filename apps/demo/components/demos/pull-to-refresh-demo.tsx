@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { useTheme } from '@nativeui/core';
-import { PullToRefresh, RefreshIndicator } from '../ui/pull-to-refresh';
+import { useTheme } from '@metacells/mcellui-core';
+import { PullToRefresh, RefreshIndicator } from '@/components/ui/pull-to-refresh';
 
 export function PullToRefreshDemo() {
   const { colors, spacing, radius } = useTheme();

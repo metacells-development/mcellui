@@ -25,7 +25,7 @@ Design-to-Code Workflow mit einem Figma Plugin, das Design Tokens synchronisiert
 - [x] Plugin UI mit React (ui.tsx mit Token-Selektor)
 - [x] Figma Variables API Integration (extractor.ts)
 - [x] Token Extraction (Colors, Spacing, Radius)
-- [x] `nativeui.config.ts` Generator (transformer.ts, emitter.ts)
+- [x] `mcellui.config.ts` Generator (transformer.ts, emitter.ts)
 - [x] Light/Dark Mode Support (automatische Mode-Erkennung)
 
 **Implementierte Dateien:**

@@ -141,6 +141,12 @@ export interface ComponentRadiusTokens {
 export type ComponentRadiusKey = keyof ComponentRadiusTokens;
 
 /**
+ * Pill radius constant - always fully rounded regardless of preset.
+ * Used for components that should always be pill-shaped (avatar, switch, badge).
+ */
+const PILL_RADIUS = 9999;
+
+/**
  * Creates component-specific radius values from radius tokens.
  *
  * @param radiusTokens - Base radius tokens
@@ -153,10 +159,11 @@ export function createComponentRadius(radiusTokens: RadiusTokens): ComponentRadi
     buttonLg: radiusTokens.lg,
     input: radiusTokens.md,
     card: radiusTokens.lg,
-    badge: radiusTokens.full,
-    avatar: radiusTokens.full,
+    // Always pill-shaped regardless of preset
+    badge: PILL_RADIUS,
+    avatar: PILL_RADIUS,
     checkbox: radiusTokens.sm,
-    switch: radiusTokens.full,
+    switch: PILL_RADIUS,
     modal: radiusTokens.xl,
     tooltip: radiusTokens.md,
   };

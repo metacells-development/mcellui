@@ -44,8 +44,8 @@ Follow these patterns to ensure consistency, quality, and maintainability.
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
-import { useTheme } from '@nativeui/core';
-import { haptic } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
+import { haptic } from '@metacells/mcellui-core';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -599,7 +599,7 @@ export interface ButtonProps {
 ### Implementation
 
 ```tsx
-import { haptic } from '@nativeui/core';
+import { haptic } from '@metacells/mcellui-core';
 
 function Button({ onPress }: Props) {
   const handlePress = () => {

@@ -19,7 +19,7 @@ nativeui provides a powerful theming system inspired by shadcn/ui. With minimal 
 Control the roundness of all components with a single prop.
 
 ```tsx
-import { ThemeProvider } from '@nativeui/core';
+import { ThemeProvider } from '@metacells/mcellui-core';
 
 // Sharp, brutalist design
 <ThemeProvider radius="none">

@@ -5,7 +5,7 @@
  */
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { ThemePreset, RadiusPreset } from '@nativeui/core';
+import { ThemePreset, RadiusPreset } from '@metacells/mcellui-core';
 
 interface ThemeSettingsContextType {
   themePreset: ThemePreset;

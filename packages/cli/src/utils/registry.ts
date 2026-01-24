@@ -49,16 +49,22 @@ export interface ComponentData {
 /**
  * Base URL for production registry
  * Can be overridden with MCELLUI_REGISTRY_URL environment variable
+ * Set to empty string to force local mode
  */
 const DEFAULT_REGISTRY_URL = 'https://raw.githubusercontent.com/metacells-development/mcellui/main/packages/registry';
-const REGISTRY_URL = process.env.MCELLUI_REGISTRY_URL || process.env.NATIVEUI_REGISTRY_URL || DEFAULT_REGISTRY_URL;
+
+// Check if env var is explicitly set (even to empty string)
+const hasEnvOverride = 'MCELLUI_REGISTRY_URL' in process.env || 'NATIVEUI_REGISTRY_URL' in process.env;
+const REGISTRY_URL = hasEnvOverride
+  ? (process.env.MCELLUI_REGISTRY_URL || process.env.NATIVEUI_REGISTRY_URL || '')
+  : DEFAULT_REGISTRY_URL;
 
 /**
  * Path to local registry (for development)
  */
 function getLocalRegistryPath(): string {
   // In development, registry is sibling package
-  // packages/cli/dist -> packages/registry
+  // packages/cli/dist -> packages/cli -> packages/registry
   return path.resolve(__dirname, '..', '..', 'registry');
 }
 

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 ### CLI Integration
 
 ```bash
-npx nativeui a11y check
+npx mcellui a11y check
 
 # Output:
 # ✓ Button: All checks passed
@@ -194,7 +194,7 @@ const a11yProps = Platform.select({
 # Oder: adb shell settings put secure enabled_accessibility_services com.google.android.marvin.talkback
 
 # CLI Check für beide
-npx nativeui a11y test --ios --android
+npx mcellui a11y test --ios --android
 ```
 
 ## Implementation

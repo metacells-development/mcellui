@@ -75,7 +75,7 @@ export function isHapticsEnabled(): boolean {
  * Respects the global haptics enabled state. Disabled via:
  * - `setHapticsEnabled(false)`
  * - `<ThemeProvider haptics={false}>`
- * - `nativeui.config.ts` with `haptics: false`
+ * - `mcellui.config.ts` with `haptics: false`
  *
  * @example
  * ```tsx

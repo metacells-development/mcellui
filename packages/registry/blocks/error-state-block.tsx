@@ -32,7 +32,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 // Import your components
 import { Button } from '../ui/button';

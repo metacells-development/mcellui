@@ -8,7 +8,7 @@ import { getProjectRoot, detectProjectType } from '../utils/project';
 
 export const initCommand = new Command()
   .name('init')
-  .description('Initialize nativeui in your project')
+  .description('Initialize mcellui in your project')
   .option('-y, --yes', 'Skip prompts and use defaults')
   .option('--cwd <path>', 'Working directory', process.cwd())
   .action(async (options) => {
@@ -25,18 +25,27 @@ export const initCommand = new Command()
       }
 
       console.log();
-      console.log(chalk.bold('Welcome to nativeui!'));
+      console.log(chalk.bold('Welcome to mcellui!'));
       console.log(chalk.dim('The copy-paste component library for Expo/React Native'));
       console.log();
 
       const projectType = await detectProjectType(projectRoot);
       console.log(chalk.dim(`Detected: ${projectType}`));
 
-      // Check if already initialized
-      const configPath = path.join(projectRoot, 'nativeui.config.ts');
+      // Check if already initialized (check both new and legacy names)
+      const configPath = path.join(projectRoot, 'mcellui.config.ts');
+      const legacyConfigPath = path.join(projectRoot, 'nativeui.config.ts');
+
       if (await fs.pathExists(configPath)) {
         console.log(chalk.yellow('Project already initialized.'));
         console.log(chalk.dim(`Config found at: ${configPath}`));
+        return;
+      }
+
+      if (await fs.pathExists(legacyConfigPath)) {
+        console.log(chalk.yellow('Project already initialized with legacy config.'));
+        console.log(chalk.dim(`Config found at: ${legacyConfigPath}`));
+        console.log(chalk.dim('Consider renaming to mcellui.config.ts'));
         return;
       }
 
@@ -113,7 +122,7 @@ export default defineConfig({
   // },
 
   // ============================================
-  // CLI Configuration (used by npx nativeui add)
+  // CLI Configuration (used by npx mcellui add)
   // ============================================
 
   // Path where components will be installed
@@ -190,14 +199,14 @@ export function cn(...inputs: StyleInput[]): Style {
       spinner.succeed('Utilities installed');
 
       console.log();
-      console.log(chalk.green('Success!') + ' nativeui initialized.');
+      console.log(chalk.green('Success!') + ' mcellui initialized.');
       console.log();
       console.log('Next steps:');
       console.log(chalk.dim('  1.'), 'Add your first component:');
-      console.log(chalk.cyan('     npx nativeui add button'));
+      console.log(chalk.cyan('     npx mcellui add button'));
       console.log();
       console.log(chalk.dim('  2.'), 'Browse available components:');
-      console.log(chalk.cyan('     npx nativeui list'));
+      console.log(chalk.cyan('     npx mcellui list'));
       console.log();
     } catch (error) {
       spinner.fail('Failed to initialize');

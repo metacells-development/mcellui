@@ -1,7 +1,7 @@
 /**
- * nativeui Token Definitions
+ * mcellui Token Definitions
  *
- * Diese Datei enthält alle Token-Werte aus @nativeui/core
+ * Diese Datei enthält alle Token-Werte aus @metacells/mcellui-core
  * für den Import nach Figma.
  */
 

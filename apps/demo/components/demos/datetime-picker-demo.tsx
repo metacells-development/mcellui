@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { DateTimePicker } from '@/components/ui/datetime-picker';
 import { Section } from './section';
-import { useTheme } from '@nativeui/core';
+import { useTheme } from '@metacells/mcellui-core';
 
 export function DateTimePickerDemo() {
   const { colors } = useTheme();

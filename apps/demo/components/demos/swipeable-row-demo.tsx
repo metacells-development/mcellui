@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
-import { useTheme } from '@nativeui/core';
-import { SwipeableRow, SwipeAction } from '../ui/swipeable-row';
+import { useTheme } from '@metacells/mcellui-core';
+import { SwipeableRow, SwipeAction } from '@/components/ui/swipeable-row';
 
 interface EmailItem {
   id: string;

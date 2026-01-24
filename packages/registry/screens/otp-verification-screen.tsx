@@ -33,7 +33,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme, haptic } from '@nativeui/core';
+import { useTheme, haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Button } from '../ui/button';
