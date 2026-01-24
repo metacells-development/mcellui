@@ -6,19 +6,43 @@ import { Section } from './section';
 export function RadioGroupDemo() {
   const [plan, setPlan] = useState('startup');
   const [priority, setPriority] = useState('medium');
-  const [size, setSize] = useState('md');
+  const [sizeValue, setSizeValue] = useState('md');
 
   return (
     <View style={styles.container}>
-      <Section title="Basic">
+      <Section title="Sizes">
+        <RadioGroup value={sizeValue} onValueChange={setSizeValue} size="sm">
+          <RadioGroupItem value="sm" label="Small radio" />
+          <RadioGroupItem value="md" label="Medium radio" />
+          <RadioGroupItem value="lg" label="Large radio" />
+        </RadioGroup>
+
+        <View style={styles.spacer} />
+
+        <RadioGroup value={sizeValue} onValueChange={setSizeValue} size="md">
+          <RadioGroupItem value="sm" label="Small radio" />
+          <RadioGroupItem value="md" label="Medium radio" />
+          <RadioGroupItem value="lg" label="Large radio" />
+        </RadioGroup>
+
+        <View style={styles.spacer} />
+
+        <RadioGroup value={sizeValue} onValueChange={setSizeValue} size="lg">
+          <RadioGroupItem value="sm" label="Small radio" />
+          <RadioGroupItem value="md" label="Medium radio" />
+          <RadioGroupItem value="lg" label="Large radio" />
+        </RadioGroup>
+      </Section>
+
+      <Section title="Features">
         <RadioGroup value={plan} onValueChange={setPlan}>
           <RadioGroupItem value="free" label="Free" />
           <RadioGroupItem value="startup" label="Startup" />
           <RadioGroupItem value="enterprise" label="Enterprise" />
         </RadioGroup>
-      </Section>
 
-      <Section title="With Descriptions">
+        <View style={styles.spacer} />
+
         <RadioGroup value={plan} onValueChange={setPlan}>
           <RadioGroupItem
             value="free"
@@ -38,36 +62,19 @@ export function RadioGroupDemo() {
         </RadioGroup>
       </Section>
 
-      <Section title="Priority Selection">
+      <Section title="States">
         <RadioGroup value={priority} onValueChange={setPriority}>
-          <RadioGroupItem value="low" label="Low priority" />
-          <RadioGroupItem value="medium" label="Medium priority" />
-          <RadioGroupItem value="high" label="High priority" />
-          <RadioGroupItem value="urgent" label="Urgent" />
-        </RadioGroup>
-      </Section>
-
-      <Section title="Sizes">
-        <RadioGroup value={size} onValueChange={setSize} size="sm">
-          <RadioGroupItem value="sm" label="Small" />
-          <RadioGroupItem value="md" label="Medium" />
-          <RadioGroupItem value="lg" label="Large" />
+          <RadioGroupItem value="low" label="Low priority (unselected)" />
+          <RadioGroupItem value="medium" label="Medium priority (selected)" />
+          <RadioGroupItem value="high" label="High priority (unselected)" />
         </RadioGroup>
 
         <View style={styles.spacer} />
 
-        <RadioGroup value={size} onValueChange={setSize} size="lg">
-          <RadioGroupItem value="sm" label="Small" />
-          <RadioGroupItem value="md" label="Medium" />
-          <RadioGroupItem value="lg" label="Large" />
-        </RadioGroup>
-      </Section>
-
-      <Section title="Disabled">
         <RadioGroup value="option1" onValueChange={() => {}} disabled>
-          <RadioGroupItem value="option1" label="Option 1 (selected)" />
-          <RadioGroupItem value="option2" label="Option 2" />
-          <RadioGroupItem value="option3" label="Option 3" />
+          <RadioGroupItem value="option1" label="Option 1 (selected, disabled)" />
+          <RadioGroupItem value="option2" label="Option 2 (disabled)" />
+          <RadioGroupItem value="option3" label="Option 3 (disabled)" />
         </RadioGroup>
       </Section>
     </View>
@@ -76,5 +83,5 @@ export function RadioGroupDemo() {
 
 const styles = StyleSheet.create({
   container: { gap: 24 },
-  spacer: { height: 16 },
+  spacer: { height: 12 },
 });

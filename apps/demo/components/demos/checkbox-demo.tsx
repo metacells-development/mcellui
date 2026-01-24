@@ -10,29 +10,6 @@ export function CheckboxDemo() {
 
   return (
     <View style={styles.container}>
-      <Section title="Basic">
-        <Checkbox
-          checked={checked1}
-          onCheckedChange={setChecked1}
-          label="Accept terms and conditions"
-          description="You agree to our Terms of Service and Privacy Policy"
-        />
-        <Checkbox
-          checked={checked2}
-          onCheckedChange={setChecked2}
-          label="Subscribe to newsletter"
-          description="Get weekly updates about new features"
-        />
-      </Section>
-
-      <Section title="States">
-        <Checkbox checked={false} label="Unchecked" />
-        <Checkbox checked={true} label="Checked" />
-        <Checkbox indeterminate label="Indeterminate" />
-        <Checkbox disabled label="Disabled" />
-        <Checkbox disabled checked label="Disabled checked" />
-      </Section>
-
       <Section title="Sizes">
         <Checkbox
           size="sm"
@@ -51,6 +28,49 @@ export function CheckboxDemo() {
           checked={checked3}
           onCheckedChange={setChecked3}
           label="Large checkbox"
+        />
+      </Section>
+
+      <Section title="Features">
+        <Checkbox
+          checked={checked1}
+          onCheckedChange={setChecked1}
+          label="Accept terms and conditions"
+        />
+        <Checkbox
+          checked={checked2}
+          onCheckedChange={setChecked2}
+          label="Subscribe to newsletter"
+          description="Get weekly updates about new features"
+        />
+        <Checkbox
+          indeterminate
+          label="Select all items"
+          description="Some items are selected"
+        />
+      </Section>
+
+      <Section title="States">
+        <Checkbox
+          checked={false}
+          label="Unchecked"
+        />
+        <Checkbox
+          checked={true}
+          label="Checked"
+        />
+        <Checkbox
+          indeterminate
+          label="Indeterminate"
+        />
+        <Checkbox
+          disabled
+          label="Disabled unchecked"
+        />
+        <Checkbox
+          disabled
+          checked
+          label="Disabled checked"
         />
       </Section>
 

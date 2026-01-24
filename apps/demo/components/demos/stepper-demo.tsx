@@ -1,102 +1,107 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { View, StyleSheet } from 'react-native';
 import { Stepper } from '@/components/ui/stepper';
+import { Section } from './section';
 
 export function StepperDemo() {
-  const { spacing, colors } = useTheme();
   const [quantity, setQuantity] = useState(1);
   const [guests, setGuests] = useState(2);
   const [items, setItems] = useState(5);
+  const [atMin, setAtMin] = useState(1);
+  const [atMax, setAtMax] = useState(10);
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: colors.foreground }]}>Basic</Text>
-      <Stepper
-        value={quantity}
-        onValueChange={setQuantity}
-        min={1}
-        max={10}
-        label="Quantity"
-      />
+      <Section title="Sizes">
+        <Stepper
+          size="sm"
+          value={quantity}
+          onValueChange={setQuantity}
+          label="Small"
+        />
+        <Stepper
+          size="md"
+          value={quantity}
+          onValueChange={setQuantity}
+          label="Medium"
+        />
+        <Stepper
+          size="lg"
+          value={quantity}
+          onValueChange={setQuantity}
+          label="Large"
+        />
+      </Section>
 
-      <View style={{ height: spacing[6] }} />
+      <Section title="Variants">
+        <Stepper
+          variant="default"
+          value={guests}
+          onValueChange={setGuests}
+          label="Default"
+        />
+        <Stepper
+          variant="outline"
+          value={guests}
+          onValueChange={setGuests}
+          label="Outline"
+        />
+        <Stepper
+          variant="ghost"
+          value={guests}
+          onValueChange={setGuests}
+          label="Ghost"
+        />
+      </Section>
 
-      <Text style={[styles.title, { color: colors.foreground }]}>Size Variants</Text>
-      <View style={styles.row}>
-        <View style={styles.column}>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted }]}>Small</Text>
-          <Stepper value={quantity} onValueChange={setQuantity} size="sm" />
-        </View>
-        <View style={styles.column}>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted }]}>Medium</Text>
-          <Stepper value={quantity} onValueChange={setQuantity} size="md" />
-        </View>
-        <View style={styles.column}>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted }]}>Large</Text>
-          <Stepper value={quantity} onValueChange={setQuantity} size="lg" />
-        </View>
-      </View>
+      <Section title="Features">
+        <Stepper
+          value={quantity}
+          onValueChange={setQuantity}
+          min={1}
+          max={10}
+          label="Quantity (1-10)"
+        />
+        <Stepper
+          value={items}
+          onValueChange={setItems}
+          min={0}
+          max={99}
+          label="Items in Cart"
+          formatValue={(v) => v.toString().padStart(2, '0')}
+        />
+      </Section>
 
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>Variants</Text>
-      <View style={{ gap: spacing[4] }}>
-        <View>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>Default</Text>
-          <Stepper value={guests} onValueChange={setGuests} variant="default" />
-        </View>
-        <View>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>Outline</Text>
-          <Stepper value={guests} onValueChange={setGuests} variant="outline" />
-        </View>
-        <View>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>Ghost</Text>
-          <Stepper value={guests} onValueChange={setGuests} variant="ghost" />
-        </View>
-      </View>
-
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>Custom Format</Text>
-      <Stepper
-        value={items}
-        onValueChange={setItems}
-        min={0}
-        max={99}
-        label="Items in Cart"
-        formatValue={(v) => v.toString().padStart(2, '0')}
-      />
-
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>Disabled</Text>
-      <Stepper
-        value={3}
-        label="Locked"
-        disabled
-      />
+      <Section title="States">
+        <Stepper
+          value={quantity}
+          onValueChange={setQuantity}
+          label="Default"
+        />
+        <Stepper
+          value={atMin}
+          onValueChange={setAtMin}
+          min={1}
+          max={10}
+          label="At Minimum (- button disabled)"
+        />
+        <Stepper
+          value={atMax}
+          onValueChange={setAtMax}
+          min={1}
+          max={10}
+          label="At Maximum (+ button disabled)"
+        />
+        <Stepper
+          value={5}
+          label="Disabled"
+          disabled
+        />
+      </Section>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 12,
-  },
-  row: {
-    flexDirection: 'row',
-    gap: 16,
-  },
-  column: {
-    flex: 1,
-  },
+  container: { gap: 24 },
 });

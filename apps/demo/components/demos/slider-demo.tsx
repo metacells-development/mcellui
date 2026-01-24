@@ -1,100 +1,86 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { View, StyleSheet } from 'react-native';
 import { Slider } from '@/components/ui/slider';
+import { Section } from './section';
 
 export function SliderDemo() {
-  const { spacing, colors } = useTheme();
   const [volume, setVolume] = useState(50);
-  const [brightness, setBrightness] = useState(75);
   const [price, setPrice] = useState(250);
   const [rating, setRating] = useState(3);
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: colors.foreground }]}>Basic</Text>
-      <Slider
-        value={volume}
-        onValueChange={setVolume}
-        label="Volume"
-        showValue
-      />
+      <Section title="Sizes">
+        <Slider
+          size="sm"
+          value={volume}
+          onValueChange={setVolume}
+          label="Small"
+          showValue
+        />
+        <Slider
+          size="md"
+          value={volume}
+          onValueChange={setVolume}
+          label="Medium"
+          showValue
+        />
+        <Slider
+          size="lg"
+          value={volume}
+          onValueChange={setVolume}
+          label="Large"
+          showValue
+        />
+      </Section>
 
-      <View style={{ height: spacing[6] }} />
+      <Section title="Features">
+        <Slider
+          value={volume}
+          onValueChange={setVolume}
+          label="Volume"
+          showValue
+        />
+        <Slider
+          value={price}
+          onValueChange={setPrice}
+          min={0}
+          max={1000}
+          step={50}
+          label="Price Range"
+          showValue
+          formatValue={(v) => `$${v}`}
+        />
+        <Slider
+          value={rating}
+          onValueChange={setRating}
+          min={1}
+          max={5}
+          step={1}
+          label="Rating"
+          showValue
+          formatValue={(v) => `${v} ⭐`}
+        />
+      </Section>
 
-      <Text style={[styles.title, { color: colors.foreground }]}>Size Variants</Text>
-      <Slider
-        value={brightness}
-        onValueChange={setBrightness}
-        size="sm"
-        label="Small"
-        showValue
-      />
-      <View style={{ height: spacing[4] }} />
-      <Slider
-        value={brightness}
-        onValueChange={setBrightness}
-        size="md"
-        label="Medium"
-        showValue
-      />
-      <View style={{ height: spacing[4] }} />
-      <Slider
-        value={brightness}
-        onValueChange={setBrightness}
-        size="lg"
-        label="Large"
-        showValue
-      />
-
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>Custom Range & Format</Text>
-      <Slider
-        value={price}
-        onValueChange={setPrice}
-        min={0}
-        max={1000}
-        step={50}
-        label="Price Range"
-        showValue
-        formatValue={(v) => `$${v}`}
-      />
-
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>With Steps</Text>
-      <Slider
-        value={rating}
-        onValueChange={setRating}
-        min={1}
-        max={5}
-        step={1}
-        label="Rating"
-        showValue
-        formatValue={(v) => `${v} ⭐`}
-      />
-
-      <View style={{ height: spacing[6] }} />
-
-      <Text style={[styles.title, { color: colors.foreground }]}>Disabled</Text>
-      <Slider
-        value={50}
-        label="Locked"
-        showValue
-        disabled
-      />
+      <Section title="States">
+        <Slider
+          value={volume}
+          onValueChange={setVolume}
+          label="Default"
+          showValue
+        />
+        <Slider
+          value={50}
+          label="Disabled"
+          showValue
+          disabled
+        />
+      </Section>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
+  container: { gap: 24 },
 });

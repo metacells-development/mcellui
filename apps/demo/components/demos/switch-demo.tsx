@@ -6,11 +6,16 @@ import { Section } from './section';
 export function SwitchDemo() {
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  const [autoSave, setAutoSave] = useState(true);
 
   return (
     <View style={styles.container}>
-      <Section title="With Labels">
+      <Section title="Sizes">
+        <Switch size="sm" checked={true} label="Small" />
+        <Switch size="md" checked={true} label="Medium" />
+        <Switch size="lg" checked={true} label="Large" />
+      </Section>
+
+      <Section title="Features">
         <Switch
           checked={notifications}
           onCheckedChange={setNotifications}
@@ -24,23 +29,30 @@ export function SwitchDemo() {
           description="Switch between light and dark themes"
         />
         <Switch
-          checked={autoSave}
-          onCheckedChange={setAutoSave}
+          checked={notifications}
+          onCheckedChange={setNotifications}
           label="Auto-save drafts"
         />
       </Section>
 
       <Section title="States">
-        <Switch checked={false} label="Off" />
-        <Switch checked={true} label="On" />
-        <Switch disabled label="Disabled off" />
-        <Switch disabled checked label="Disabled on" />
-      </Section>
-
-      <Section title="Sizes">
-        <Switch size="sm" checked={true} label="Small" />
-        <Switch size="md" checked={true} label="Medium" />
-        <Switch size="lg" checked={true} label="Large" />
+        <Switch
+          checked={false}
+          label="Off"
+        />
+        <Switch
+          checked={true}
+          label="On"
+        />
+        <Switch
+          disabled
+          label="Disabled off"
+        />
+        <Switch
+          disabled
+          checked
+          label="Disabled on"
+        />
       </Section>
 
       <Section title="Without Label">
