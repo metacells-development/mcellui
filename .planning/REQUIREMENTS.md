@@ -69,33 +69,35 @@ Explicitly excluded from this milestone.
 
 ## Traceability
 
-Which phases cover which requirements. Updated during roadmap creation.
+All requirements apply to ALL phases. Each phase applies the full quality standard to its component group.
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| VISUAL-01 | TBD | Pending |
-| VISUAL-02 | TBD | Pending |
-| VISUAL-03 | TBD | Pending |
-| VISUAL-04 | TBD | Pending |
-| VISUAL-05 | TBD | Pending |
-| API-01 | TBD | Pending |
-| API-02 | TBD | Pending |
-| API-03 | TBD | Pending |
-| API-04 | TBD | Pending |
-| API-05 | TBD | Pending |
-| STATE-01 | TBD | Pending |
-| STATE-02 | TBD | Pending |
-| STATE-03 | TBD | Pending |
-| STATE-04 | TBD | Pending |
-| DEMO-01 | TBD | Pending |
-| DEMO-02 | TBD | Pending |
-| COMPOSE-01 | TBD | Pending |
+| Requirement | Phases | Status |
+|-------------|--------|--------|
+| VISUAL-01 | All (1-12) | Pending |
+| VISUAL-02 | All (1-12) | Pending |
+| VISUAL-03 | All (1-12) | Pending |
+| VISUAL-04 | All (1-12) | Pending |
+| VISUAL-05 | All (1-12) | Pending |
+| API-01 | All (1-12) | Pending |
+| API-02 | Phases 1-3, 5, 7-12 (where variants apply) | Pending |
+| API-03 | Phases 1-5, 7-12 (where sizes apply) | Pending |
+| API-04 | Phases 3, 7, 8 (complex components) | Pending |
+| API-05 | All (1-12) | Pending |
+| STATE-01 | All (1-12) | Pending |
+| STATE-02 | Phases 2, 4, 8-12 (async components) | Pending |
+| STATE-03 | Phases 1, 8, 9, 12 (validatable components) | Pending |
+| STATE-04 | Phases 1-3, 5, 7-12 (focusable components) | Pending |
+| DEMO-01 | All (1-12) | Pending |
+| DEMO-02 | All (1-12) | Pending |
+| COMPOSE-01 | All (1-12) | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
-- Mapped to phases: 0
-- Unmapped: 17 ⚠️
+- Mapped to phases: 17/17 ✓
+- Unmapped: 0
+
+**Note:** Requirements are quality standards, not features. Each phase applies all relevant standards to its component group. Some requirements (like API-02 variants or STATE-03 error states) only apply to applicable component types within each phase.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 after initial definition*
+*Last updated: 2026-01-24 after roadmap creation*
