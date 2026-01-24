@@ -38,8 +38,7 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
-import { haptic } from '@metacells/mcellui-core';
+import { useTheme, haptic, POPOVER_CONSTANTS } from '@metacells/mcellui-core';
 
 // ============================================================================
 // Types
@@ -178,9 +177,9 @@ export function PopoverContent({
   children,
   position = 'bottom',
   align = 'center',
-  offset = 8,
+  offset = POPOVER_CONSTANTS.defaultOffset,
   style,
-  maxWidth = 280,
+  maxWidth = POPOVER_CONSTANTS.defaultMaxWidth,
 }: PopoverContentProps) {
   const { colors, radius, spacing } = useTheme();
   const { open, setOpen, triggerLayout } = usePopoverContext();
@@ -190,11 +189,11 @@ export function PopoverContent({
 
   React.useEffect(() => {
     if (open) {
-      opacity.value = withTiming(1, { duration: 150 });
-      scale.value = withSpring(1, { damping: 20, stiffness: 400 });
+      opacity.value = withTiming(1, { duration: POPOVER_CONSTANTS.animationInDuration });
+      scale.value = withSpring(1, { damping: POPOVER_CONSTANTS.springDamping, stiffness: POPOVER_CONSTANTS.springStiffness });
     } else {
-      opacity.value = withTiming(0, { duration: 100 });
-      scale.value = withTiming(0.95, { duration: 100 });
+      opacity.value = withTiming(0, { duration: POPOVER_CONSTANTS.animationOutDuration });
+      scale.value = withTiming(0.95, { duration: POPOVER_CONSTANTS.animationOutDuration });
     }
   }, [open]);
 
@@ -349,6 +348,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    minWidth: 120,
+    minWidth: POPOVER_CONSTANTS.minWidth,
   },
 });
