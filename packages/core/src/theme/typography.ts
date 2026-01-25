@@ -229,6 +229,8 @@ export interface Typography {
   h2: TextStyle;
   h3: TextStyle;
   h4: TextStyle;
+  h5: TextStyle;
+  h6: TextStyle;
   bodyLg: TextStyle;
   body: TextStyle;
   bodySm: TextStyle;
@@ -288,6 +290,20 @@ export function createTypography(fonts: Fonts): Typography {
       fontSize: fontSize.lg,
       fontWeight: fontWeight.semibold,
       lineHeight: fontSize.lg * lineHeight.snug,
+    },
+
+    h5: {
+      fontFamily: fonts.heading,
+      fontSize: fontSize.md,
+      fontWeight: fontWeight.semibold,
+      lineHeight: fontSize.md * lineHeight.snug,
+    },
+
+    h6: {
+      fontFamily: fonts.heading,
+      fontSize: fontSize.base,
+      fontWeight: fontWeight.semibold,
+      lineHeight: fontSize.base * lineHeight.snug,
     },
 
     // Body - use sans font
