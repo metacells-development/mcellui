@@ -917,6 +917,67 @@ export const swipeableRowTokens = {
 } as const;
 
 // =============================================================================
+// Screen Component Tokens
+// =============================================================================
+
+export const SCREEN_CONSTANTS = {
+  // Header tokens (iOS: 44px, Android: 56px)
+  header: {
+    heightIOS: 44,
+    heightAndroid: 56,
+    titleFontSize: 18,  // Uses fontSize.lg
+    titleFontWeight: '600',
+  },
+  // Content padding
+  content: {
+    paddingHorizontal: 'spacing[4]',  // 16px standard
+    paddingHorizontalWide: 'spacing[6]',  // 24px for auth screens
+  },
+  // Section spacing
+  section: {
+    marginTop: 'spacing[6]',
+    marginBottom: 'spacing[4]',
+    titleFontSize: 18,  // fontSize.lg
+    titleFontWeight: '600',
+  },
+  // Footer/bottom bar
+  footer: {
+    paddingVertical: 'spacing[3]',
+    paddingHorizontal: 'spacing[4]',
+  },
+} as const;
+
+/**
+ * Screen tokens with resolved theme values.
+ * Use this function to get computed tokens at runtime.
+ */
+export const screenTokens = (
+  spacingTokens: typeof spacing,
+  fontSizeTokens: typeof fontSize
+) => ({
+  header: {
+    heightIOS: 44,
+    heightAndroid: 56,
+    titleFontSize: fontSizeTokens.lg,
+    titleFontWeight: '600' as const,
+  },
+  content: {
+    paddingHorizontal: spacingTokens[4],
+    paddingHorizontalWide: spacingTokens[6],
+  },
+  section: {
+    marginTop: spacingTokens[6],
+    marginBottom: spacingTokens[4],
+    titleFontSize: fontSizeTokens.lg,
+    titleFontWeight: '600' as const,
+  },
+  footer: {
+    paddingVertical: spacingTokens[3],
+    paddingHorizontal: spacingTokens[4],
+  },
+});
+
+// =============================================================================
 // Auth Block Tokens (Login, Signup)
 // =============================================================================
 
@@ -1015,6 +1076,72 @@ export const settingsBlockTokens = {
     chevronFontWeight: fontWeight.semibold,
     paddingVertical: spacing[3.5],
     paddingHorizontal: spacing[4],
+  },
+} as const;
+
+// =============================================================================
+// E-commerce Block Tokens (Banner, Hero, Pricing, Stats)
+// =============================================================================
+
+export const ecommerceBlockTokens = {
+  banner: {
+    sm: {
+      padding: spacing[3],             // 12
+      titleFontSize: fontSize.base,    // 14
+      subtitleFontSize: fontSize.xs,   // 12
+      iconSize: 20,
+      minHeight: 56,
+    },
+    md: {
+      padding: spacing[4],             // 16
+      titleFontSize: fontSize.md,      // 16
+      subtitleFontSize: fontSize.base, // 14
+      iconSize: 24,
+      minHeight: 72,
+    },
+    lg: {
+      padding: spacing[5],             // 20
+      titleFontSize: fontSize.xl,      // 20
+      subtitleFontSize: fontSize.md,   // 16
+      iconSize: 32,
+      minHeight: 100,
+    },
+    titleFontWeight: fontWeight.bold,
+    subtitleLineHeight: 20,
+  },
+  hero: {
+    titleFontSize: fontSize['3xl'],    // 32
+    titleFontWeight: 800,              // extra bold
+    titleLineHeight: 38,
+    subtitleFontSize: fontSize.md,     // 16
+    subtitleLineHeight: 24,
+    defaultHeight: 400,
+  },
+  pricing: {
+    planNameFontSize: fontSize.xl,     // 20
+    planNameFontWeight: fontWeight.bold,
+    descriptionFontSize: fontSize.base, // 14
+    priceFontSize: 40,
+    priceFontWeight: 800,
+    priceLineHeight: 48,
+    intervalFontSize: fontSize.md,     // 16
+    intervalFontWeight: fontWeight.medium,
+    originalPriceFontSize: fontSize.md, // 16
+    savingsFontSize: fontSize.sm,      // 13
+    savingsFontWeight: fontWeight.semibold,
+    featureTextFontSize: fontSize.base, // 14
+    featureIconSize: 20,
+    featureIconInnerSize: 12,
+    badgeTopOffset: -12,
+  },
+  stats: {
+    labelFontSize: fontSize.base,      // 14
+    labelFontWeight: fontWeight.medium,
+    valueFontSize: fontSize['3xl'],    // 32
+    valueFontWeight: fontWeight.bold,
+    trendFontSize: fontSize.base,      // 14
+    trendFontWeight: fontWeight.semibold,
+    trendLabelFontSize: fontSize.sm,   // 13
   },
 } as const;
 
