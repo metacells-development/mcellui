@@ -22,8 +22,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 8: Advanced Components** - Calendar, DateTime Picker, Image Gallery, Pagination, Stories, Search Input, Form
 - [x] **Phase 9: Blocks - Auth & Settings** - Login, Signup, Profile, Settings List, Empty State, Error State
 - [x] **Phase 10: Blocks - Content & Social** - Product Card, Cart Item, Article Card, Event Card, Feed Post, User List Item, Chat Bubble, Comment Item, Review Card
-- [ ] **Phase 11: Blocks - E-commerce & Info** - Banner, Hero, Pricing Card, Stats Card, Feature Card, Content Card, Social Proof Bar, Media Item, Notification Item, Onboarding Slide, Order Item, Task Item, Search Header
-- [ ] **Phase 12: Screens** - All 19 screen templates (Login, Signup, Profile, Settings, Feed, Cart, Checkout, etc.)
+- [x] **Phase 11: Blocks - E-commerce & Info** - Banner, Hero, Pricing Card, Stats Card, Feature Card, Content Card, Social Proof Bar, Media Item, Notification Item, Onboarding Slide, Order Item, Task Item, Search Header
+- [x] **Phase 12: Screens** - All 19 screen templates (Login, Signup, Profile, Settings, Feed, Cart, Checkout, etc.)
 
 ## Phase Details
 
@@ -235,12 +235,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 11-01-PLAN.md - Add ecommerceBlockTokens and infoBlockTokens to core theme
-- [ ] 11-02-PLAN.md - Migrate BannerBlock and HeroBlock to ecommerceBlockTokens
-- [ ] 11-03-PLAN.md - Migrate PricingCard and StatsCard to ecommerceBlockTokens
-- [ ] 11-04-PLAN.md - Migrate FeatureCard, ContentCard, OnboardingSlide, SocialProofBar to infoBlockTokens
-- [ ] 11-05-PLAN.md - Migrate NotificationItem, MediaItem, OrderItem, TaskItem, SearchHeader to infoBlockTokens
-- [ ] 11-06-PLAN.md - Enhance blocks demo with all 13 Phase 11 block demos
+- [x] 11-01-PLAN.md - Add ecommerceBlockTokens and infoBlockTokens to core theme
+- [x] 11-02-PLAN.md - Migrate BannerBlock and HeroBlock to ecommerceBlockTokens
+- [x] 11-03-PLAN.md - Migrate PricingCard and StatsCard to ecommerceBlockTokens
+- [x] 11-04-PLAN.md - Migrate FeatureCard, ContentCard, OnboardingSlide, SocialProofBar to infoBlockTokens
+- [x] 11-05-PLAN.md - Migrate NotificationItem, MediaItem, OrderItem, TaskItem, SearchHeader to infoBlockTokens
+- [x] 11-06-PLAN.md - Enhance blocks demo with all 13 Phase 11 block demos
 
 ### Phase 12: Screens
 **Goal**: All screen templates are production-ready examples with complete flows
@@ -255,12 +255,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 12-01-PLAN.md - Add screen tokens to core, migrate auth screens (Login, Signup, OTP)
-- [ ] 12-02-PLAN.md - Migrate Profile, Settings, Account screens to theme tokens
-- [ ] 12-03-PLAN.md - Migrate Feed, Chat, Notifications, Comments screens to theme tokens
-- [ ] 12-04-PLAN.md - Migrate Cart, Checkout, ProductDetail, OrderHistory screens to theme tokens
-- [ ] 12-05-PLAN.md - Migrate Home, Search, Followers, Onboarding, Help screens to theme tokens
-- [ ] 12-06-PLAN.md - Enhance screens demo with actual registry components and state coverage
+- [x] 12-01-PLAN.md - Add screen tokens to core, migrate auth screens (Login, Signup, OTP)
+- [x] 12-02-PLAN.md - Migrate Profile, Settings, Account screens to theme tokens
+- [x] 12-03-PLAN.md - Migrate Feed, Chat, Notifications, Comments screens to theme tokens
+- [x] 12-04-PLAN.md - Migrate Cart, Checkout, ProductDetail, OrderHistory screens to theme tokens
+- [x] 12-05-PLAN.md - Migrate Home, Search, Followers, Onboarding, Help screens to theme tokens
+- [x] 12-06-PLAN.md - Enhance screens demo with actual registry components and state coverage
 
 ## Progress
 
@@ -279,5 +279,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 8. Advanced Components | 7/7 | ✓ Complete | 2026-01-25 |
 | 9. Blocks - Auth & Settings | 6/6 | ✓ Complete | 2026-01-25 |
 | 10. Blocks - Content & Social | 6/6 | ✓ Complete | 2026-01-25 |
-| 11. Blocks - E-commerce & Info | 0/6 | Planned | - |
-| 12. Screens | 0/6 | Planned | - |
+| 11. Blocks - E-commerce & Info | 6/6 | ✓ Complete | 2026-01-25 |
+| 12. Screens | 6/6 | ✓ Complete | 2026-01-25 |
