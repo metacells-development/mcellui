@@ -19,9 +19,9 @@
  */
 
 import React from 'react';
-import { View, Text, Pressable, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text, Pressable, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, socialBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -96,6 +96,10 @@ export interface CommentItemProps {
   likes?: number;
   /** Whether current user has liked this comment */
   liked?: boolean;
+  /** Whether like action is loading */
+  likeLoading?: boolean;
+  /** Whether all actions are disabled */
+  disabled?: boolean;
   /** Number of replies (for showing "View X replies") */
   replyCount?: number;
   /** Whether this is a reply (nested comment) */
@@ -126,6 +130,8 @@ export function CommentItem({
   time,
   likes = 0,
   liked = false,
+  likeLoading = false,
+  disabled = false,
   replyCount = 0,
   isReply = false,
   repliesExpanded = false,
@@ -161,7 +167,7 @@ export function CommentItem({
       style={[
         styles.container,
         {
-          paddingLeft: isReply ? spacing[6] : 0,
+          paddingLeft: isReply ? socialBlockTokens.comment.indentPerLevel : 0,
         },
         style,
       ]}
@@ -171,7 +177,7 @@ export function CommentItem({
         <Avatar
           source={user.avatarUrl ? { uri: user.avatarUrl } : undefined}
           fallback={initials}
-          size={isReply ? 'sm' : 'md'}
+          size={isReply ? socialBlockTokens.avatar.commentSize : socialBlockTokens.avatar.postSize}
         />
       </Pressable>
 
@@ -180,7 +186,15 @@ export function CommentItem({
         {/* Header: name, verified badge, time */}
         <View style={styles.header}>
           <Pressable onPress={onUserPress} style={styles.userInfo}>
-            <Text style={[styles.userName, { color: colors.foreground }]}>
+            <Text
+              style={[
+                {
+                  fontSize: socialBlockTokens.typography.authorFontSize,
+                  fontWeight: socialBlockTokens.typography.authorFontWeight,
+                  color: colors.foreground,
+                },
+              ]}
+            >
               {user.name}
             </Text>
             {user.verified && (
@@ -195,47 +209,102 @@ export function CommentItem({
             )}
           </Pressable>
           {time && (
-            <Text style={[styles.time, { color: colors.foregroundMuted, marginLeft: spacing[2] }]}>
+            <Text
+              style={[
+                {
+                  fontSize: socialBlockTokens.typography.timeFontSize,
+                  color: colors.foregroundMuted,
+                  marginLeft: spacing[2],
+                },
+              ]}
+            >
               {time}
             </Text>
           )}
         </View>
 
         {/* Comment text */}
-        <Text style={[styles.text, { color: colors.foreground, marginTop: spacing[1] }]}>
+        <Text
+          style={[
+            {
+              fontSize: socialBlockTokens.typography.contentFontSize,
+              lineHeight: 20,
+              color: colors.foreground,
+              marginTop: spacing[1],
+            },
+          ]}
+        >
           {content}
         </Text>
 
         {/* Actions: like, reply, more */}
         <View style={[styles.actions, { marginTop: spacing[2], gap: spacing[4] }]}>
           {/* Like */}
-          <Pressable
-            onPress={handleLike}
-            style={[styles.action, { gap: spacing[1] }]}
-            accessibilityRole="button"
-            accessibilityLabel={liked ? 'Unlike comment' : 'Like comment'}
-          >
-            <HeartIcon
-              size={16}
-              color={liked ? colors.destructive : colors.foregroundMuted}
-              filled={liked}
-            />
-            {likes > 0 && (
-              <Text style={[styles.actionText, { color: colors.foregroundMuted }]}>
-                {likes}
-              </Text>
+          <View style={{ opacity: disabled || likeLoading ? 0.5 : 1 }}>
+            {likeLoading ? (
+              <View style={[styles.action, { gap: spacing[1] }]}>
+                <ActivityIndicator size="small" color={colors.foregroundMuted} />
+                {likes > 0 && (
+                  <Text
+                    style={[
+                      {
+                        fontSize: socialBlockTokens.typography.actionFontSize,
+                        color: colors.foregroundMuted,
+                      },
+                    ]}
+                  >
+                    {likes}
+                  </Text>
+                )}
+              </View>
+            ) : (
+              <Pressable
+                onPress={handleLike}
+                style={[styles.action, { gap: spacing[1] }]}
+                disabled={disabled || likeLoading}
+                accessibilityRole="button"
+                accessibilityLabel={liked ? 'Unlike comment' : 'Like comment'}
+                accessibilityState={{ disabled: disabled || likeLoading }}
+              >
+                <HeartIcon
+                  size={socialBlockTokens.action.iconSize}
+                  color={liked ? colors.destructive : colors.foregroundMuted}
+                  filled={liked}
+                />
+                {likes > 0 && (
+                  <Text
+                    style={[
+                      {
+                        fontSize: socialBlockTokens.typography.actionFontSize,
+                        color: colors.foregroundMuted,
+                      },
+                    ]}
+                  >
+                    {likes}
+                  </Text>
+                )}
+              </Pressable>
             )}
-          </Pressable>
+          </View>
 
           {/* Reply */}
           <Pressable
             onPress={handleReply}
-            style={[styles.action, { gap: spacing[1] }]}
+            style={[styles.action, { gap: spacing[1], opacity: disabled ? 0.5 : 1 }]}
+            disabled={disabled}
             accessibilityRole="button"
             accessibilityLabel="Reply to comment"
+            accessibilityState={{ disabled }}
           >
-            <ReplyIcon size={16} color={colors.foregroundMuted} />
-            <Text style={[styles.actionText, { color: colors.foregroundMuted }]}>
+            <ReplyIcon size={socialBlockTokens.action.iconSize} color={colors.foregroundMuted} />
+            <Text
+              style={[
+                {
+                  fontSize: socialBlockTokens.typography.actionFontSize,
+                  color: colors.foregroundMuted,
+                },
+              ]}
+            >
               Reply
             </Text>
           </Pressable>
@@ -244,11 +313,13 @@ export function CommentItem({
           {onMore && (
             <Pressable
               onPress={onMore}
-              style={styles.action}
+              style={[styles.action, { opacity: disabled ? 0.5 : 1 }]}
+              disabled={disabled}
               accessibilityRole="button"
               accessibilityLabel="More options"
+              accessibilityState={{ disabled }}
             >
-              <MoreIcon size={16} color={colors.foregroundMuted} />
+              <MoreIcon size={socialBlockTokens.action.iconSize} color={colors.foregroundMuted} />
             </Pressable>
           )}
         </View>
@@ -290,23 +361,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  userName: {
-    fontWeight: '600',
-    fontSize: 14,
-  },
   verifiedBadge: {
     width: 12,
     height: 12,
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  time: {
-    fontSize: 12,
-  },
-  text: {
-    fontSize: 14,
-    lineHeight: 20,
   },
   actions: {
     flexDirection: 'row',
@@ -315,9 +375,6 @@ const styles = StyleSheet.create({
   action: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  actionText: {
-    fontSize: 12,
   },
   viewReplies: {
     flexDirection: 'row',
