@@ -1159,6 +1159,59 @@ export const paginationTokens = {
 } as const;
 
 // =============================================================================
+// Stories Component Tokens
+// =============================================================================
+
+export const storiesTokens = {
+  sm: {
+    outer: 56,
+    inner: 50,
+    avatar: 46,
+    borderWidth: 3,
+    fontSize: fontSize.xs,
+    plusSize: 14,
+    nameMarginTop: spacing[1],  // was hardcoded 4
+  },
+  md: {
+    outer: 72,
+    inner: 64,
+    avatar: 60,
+    borderWidth: 3,
+    fontSize: fontSize.xs,  // 11 not in scale, use 12
+    plusSize: 18,
+    nameMarginTop: spacing[1],
+  },
+  lg: {
+    outer: 88,
+    inner: 80,
+    avatar: 74,
+    borderWidth: 4,
+    fontSize: fontSize.sm,
+    plusSize: 22,
+    nameMarginTop: spacing[1],
+  },
+  row: {
+    paddingHorizontal: spacing[4],
+    gap: spacing[3],
+  },
+} as const;
+
+// =============================================================================
+// SearchInput Component Tokens
+// =============================================================================
+
+export const searchInputTokens = {
+  height: componentHeight.md,  // was hardcoded 44
+  paddingHorizontal: spacing[3],
+  iconSize: 20,
+  iconMarginRight: spacing[2],
+  clearSize: 18,
+  rightContainerWidth: 24,
+  rightContainerMarginLeft: spacing[2],
+  fontSize: fontSize.md,  // was hardcoded 16
+} as const;
+
+// =============================================================================
 // Export all component tokens
 // =============================================================================
 
@@ -1199,6 +1252,13 @@ export const components = {
   stateBlock: stateBlockTokens,
   profileBlock: profileBlockTokens,
   settingsBlock: settingsBlockTokens,
+  calendar: calendarTokens,
+  dateTimePicker: dateTimePickerTokens,
+  form: formTokens,
+  imageGallery: imageGalleryTokens,
+  pagination: paginationTokens,
+  stories: storiesTokens,
+  searchInput: searchInputTokens,
   height: componentHeight,
   icon: iconSize,
 } as const;
