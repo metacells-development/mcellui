@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** Every component, block, and screen feels like it was designed and built together
-**Current focus:** Phase 4 - Progress & Loading
+**Current focus:** Phases 4 & 5 - Progress/Loading & Data Display (parallel)
 
 ## Current Position
 
-Phase: 3 of 12 (Feedback Components)
-Plan: 6 of 6 in current phase
-Status: Phase complete
-Last activity: 2026-01-25 - Completed 03-06-PLAN.md (gap closure)
+Phase: 4-5 of 12 (Progress & Loading, Data Display)
+Plans: 04-01, 05-01 complete
+Status: In progress (parallel execution)
+Last activity: 2026-01-25 - Completed 05-01-PLAN.md
 
-Progress: [████░░░░░░] 25%
+Progress: [████░░░░░░] 29%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 6.2 min
-- Total execution time: 1.35 hours
+- Total plans completed: 14
+- Average duration: 5.9 min
+- Total execution time: 1.4 hours
 
 **By Phase:**
 
@@ -30,10 +30,11 @@ Progress: [████░░░░░░] 25%
 | 01-form-inputs | 5/5 | 17.5 min | 3.5 min |
 | 02-buttons-actions | 6/6 | 50.9 min | 8.5 min |
 | 03-feedback-components | 6/6 | 9.75 min | 1.6 min |
+| 04-progress-loading | 1/4 | 2.2 min | 2.2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-05 (2.1 min), 03-05 (4 min), 02-06 (44 min), 03-06 (1 min)
-- Trend: Gap closure plans are fast (targeted single fixes)
+- Last 5 plans: 03-05 (4 min), 02-06 (44 min), 03-06 (1 min), 04-01 (2.2 min)
+- Trend: Token foundation plans consistently fast (2-3 min)
 
 *Updated after each plan completion*
 
@@ -81,6 +82,10 @@ Recent decisions affecting current work:
 - **02-06**: Size×variant matrix pattern for demos shows all sizes horizontally per variant row
 - **02-06**: Item states section pattern dedicates demo to showing all interaction states together
 - **02-06**: Icon usage demos separate left icon, right icon, and both icons into distinct examples
+- **04-01**: Spinner MD uses 'small' ActivityIndicator for 24px wrapper consistency with native API
+- **04-01**: Skeleton radius map includes none/sm/md/lg/full for maximum border radius flexibility
+- **04-01**: Progress animation tokens separate determinate vs indeterminate durations (300ms vs 1000ms)
+- **04-01**: CircularProgress includes labelSize tokens for percentage display scaling (10/14/20px)
 
 ### Pending Todos
 
@@ -92,8 +97,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-24
-Stopped at: Completed 02-06-PLAN.md (Enhanced Button, IconButton, ActionSheet demos)
+Last session: 2026-01-25
+Stopped at: Completed 04-01-PLAN.md (Progress & Loading token foundation)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -135,3 +140,12 @@ Resume file: None
 
 **Verification:** Passed (5/5 must-haves verified)
 **Report:** .planning/phases/03-feedback-components/03-VERIFICATION.md
+
+## Phase 4 In Progress
+
+| Plan | Wave | Description | Status |
+|------|------|-------------|--------|
+| 04-01 | 1 | Add centralized tokens for Spinner, Skeleton, Progress, CircularProgress | ✅ Complete (2.2 min) |
+| 04-02 | 2 | Migrate Spinner and Skeleton to token system | Pending |
+| 04-03 | 2 | Migrate Progress and CircularProgress to tokens | Pending |
+| 04-04 | 3 | Enhance all progress/loading demos | Pending |
