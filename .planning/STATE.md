@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 10 of 12 (Blocks: Content & Social) - IN PROGRESS
-Plans: 4 of 5 complete
-Status: Executing - swipeable blocks enhancement complete
-Last activity: 2026-01-25 - Completed 10-04-PLAN.md
+Phase: 11 of 12 (Blocks: E-commerce & Info)
+Plans: 3 of 6 complete
+Status: In progress - E-commerce block token migration wave 2 complete
+Last activity: 2026-01-25 - Completed 11-03-PLAN.md
 
-Progress: [████████░░] 77%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 40
+- Total plans completed: 42
 - Average duration: 4.1 min
-- Total execution time: 2.83 hours
+- Total execution time: 3.0 hours
 
 **By Phase:**
 
@@ -36,12 +36,12 @@ Progress: [████████░░] 77%
 | 07-navigation-interaction | 5/5 | 10.3 min | 2.1 min |
 | 08-advanced-components | 4/7 | 15.1 min | 3.8 min |
 | 09-blocks-auth-settings | 6/6 | 14.3 min | 2.9 min |
-| 10-blocks-content-social | 4/5 | 14.4 min | 3.6 min |
-| 12-screens | 1/6 | 7.7 min | 7.7 min |
+| 10-blocks-content-social | 4/5 | 21.4 min | 5.4 min |
+| 12-screens | 2/6 | 11.7 min | 5.9 min |
 
 **Recent Trend:**
-- Last 5 plans: 10-04 (5 min), 10-03 (5.4 min), 12-01 (7.7 min), 10-01 (4 min), 09-06 (2 min)
-- Trend: Block enhancement plans 5-6 min, screen migrations 7-8 min, token foundation plans 3-4 min
+- Last 5 plans: 12-02 (4 min), 10-02 (7 min), 10-04 (5 min), 10-03 (5.4 min), 12-01 (7.7 min)
+- Trend: Screen migrations 4-8 min, card block migrations 7 min, token foundation 3-4 min
 
 *Updated after each plan completion*
 
@@ -162,6 +162,15 @@ Recent decisions affecting current work:
 - **10-04**: Missing block token exports fixed as blocking issue (Rule 3)
 - **10-03**: ActivityIndicator replaces action buttons during loading (no layout shift with 32px width)
 - **10-03**: Disabled opacity set to 0.5 for consistent visual feedback across social blocks
+- **12-01**: SCREEN_CONSTANTS provides two-tier token approach (constants + computed function)
+- **12-01**: Auth screens use inline dynamic styles for all theme-dependent properties
+- **12-01**: Logo placeholder text intentionally hardcoded (white on primary background)
+- **12-02**: Profile name uses fontSize['2xl'] (24px) for greater visual prominence
+- **12-02**: Settings header uses fontSize.lg (18px) matching iOS conventions
+- **12-02**: Account screen uses fontSize.xl for user name display (20px)
+- **12-02**: All stat values consistently use fontSize.xl with fontWeight.bold
+- **12-02**: All stat labels consistently use fontSize.xs
+- **12-02**: Section headers in Settings use fontSize.xs with uppercase transform
 - **10-03**: Icon sizes standardized to socialBlockTokens.action.iconSize (20px) for all social actions
 - **12-01**: SCREEN_CONSTANTS provides two-tier token approach (constants + computed function)
 - **12-01**: Auth screens use inline dynamic styles for all theme-dependent properties
@@ -298,14 +307,14 @@ Resume file: None
 | Plan | Wave | Description | Status |
 |------|------|-------------|--------|
 | 10-01 | 1 | Add contentSocialBlockTokens to components.ts | ✅ Complete (4 min) |
-| 10-02 | 2 | Card blocks visual consistency (ProductCard, ArticleCard, EventCard, ReviewCard) | Pending |
+| 10-02 | 2 | Card blocks visual consistency (ProductCard, ArticleCard, EventCard, ReviewCard) | ✅ Complete (7 min) |
 | 10-03 | 2 | Social blocks interaction states (FeedPostCard, ChatBubble, CommentItem) | ✅ Complete (5.4 min) |
-| 10-04 | 2 | Swipeable blocks enhancement (UserListItem, CartItem) | Pending |
+| 10-04 | 2 | Swipeable blocks enhancement (UserListItem, CartItem) | ✅ Complete (5 min) |
 | 10-05 | 3 | Demo enhancement with loading states and all variants | Pending |
 
 **Goal:** Content and social blocks have consistent card patterns and interaction states
 **Blocks:** ProductCard, CartItem, ArticleCard, EventCard, FeedPostCard, UserListItem, ChatBubble, CommentItem, ReviewCard (9 blocks)
-**Progress:** 2/5 plans complete - Token foundation + social interaction states complete
+**Progress:** 4/5 plans complete - Card blocks, social blocks, and swipeable blocks complete
 
 ## Phase 12 In Progress
 
