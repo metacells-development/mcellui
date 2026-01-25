@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** Every component, block, and screen feels like it was designed and built together
-**Current focus:** Phases 4 & 5 - Progress/Loading & Data Display (parallel)
+**Current focus:** Phase 6 - Layout & Structure
 
 ## Current Position
 
-Phase: 4-5 of 12 (Progress & Loading, Data Display)
-Plans: 04-01, 04-02, 04-03, 05-01, 05-03, 05-04 complete
-Status: In progress (parallel execution)
-Last activity: 2026-01-25 - Completed 04-02-PLAN.md
+Phase: 6 of 12 (Layout & Structure)
+Plans: 06-01 complete
+Status: In progress
+Last activity: 2026-01-25 - Completed 06-01-PLAN.md
 
-Progress: [████░░░░░░] 37%
+Progress: [████░░░░░░] 39%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 19
-- Average duration: 5.3 min
-- Total execution time: 1.60 hours
+- Total plans completed: 20
+- Average duration: 5.1 min
+- Total execution time: 1.64 hours
 
 **By Phase:**
 
@@ -32,10 +32,11 @@ Progress: [████░░░░░░] 37%
 | 03-feedback-components | 6/6 | 9.75 min | 1.6 min |
 | 04-progress-loading | 3/4 | 9.3 min | 3.1 min |
 | 05-data-display | 3/5 | 5.4 min | 1.8 min |
+| 06-layout-structure | 1/4 | 2.5 min | 2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-03 (2 min), 05-04 (1.4 min), 04-03 (3.3 min), 04-02 (3.8 min)
-- Trend: Token migrations averaging 2-4 min with bug fixes included
+- Last 5 plans: 05-04 (1.4 min), 04-03 (3.3 min), 04-02 (3.8 min), 06-01 (2.5 min)
+- Trend: Token foundation plans consistently fast (2-3 min)
 
 *Updated after each plan completion*
 
@@ -97,6 +98,9 @@ Recent decisions affecting current work:
 - **04-03**: CircularProgress respects areAnimationsDisabled() for reduce-motion accessibility
 - **04-03**: Indeterminate CircularProgress shows 50% fill when reduce-motion enabled (vs animated rotation)
 - **04-03**: Static value strategy (direct assignment) used when animations disabled for better performance
+- **06-01**: LIST_CONSTANTS.dividerInset = spacing[14] (56px) for iOS-standard left inset
+- **06-01**: LIST_CONSTANTS.itemMinHeight = componentHeight.lg (52px) for consistent touch targets
+- **06-01**: listTokens.item includes iconSize and iconMargin for standard icon layout
 
 ### Pending Todos
 
@@ -109,7 +113,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 04-02-PLAN.md (Spinner and Skeleton token migration)
+Stopped at: Completed 06-01-PLAN.md (List component token foundation)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -170,3 +174,12 @@ Resume file: None
 | 05-03 | 2 | Migrate Rating and AvatarStack to tokens | ✅ Complete (2 min) |
 | 05-04 | 2 | Migrate Typography h5/h6 and Image to tokens | ✅ Complete (1.4 min) |
 | 05-05 | 3 | Enhance data display component demos | Pending |
+
+## Phase 6 In Progress
+
+| Plan | Wave | Description | Status |
+|------|------|-------------|--------|
+| 06-01 | 1 | Extend core token system with List and layout component tokens | ✅ Complete (2.5 min) |
+| 06-02 | 2 | Migrate List component to token system | Pending |
+| 06-03 | 2 | Migrate SectionHeader to token system | Pending |
+| 06-04 | 3 | Enhance List and SectionHeader demos | Pending |
