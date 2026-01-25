@@ -945,6 +945,80 @@ export const authBlockTokens = {
 } as const;
 
 // =============================================================================
+// State Block Tokens (Empty State, Error State)
+// =============================================================================
+
+export const stateBlockTokens = {
+  default: {
+    titleFontSize: fontSize.xl,        // 20
+    descriptionFontSize: fontSize.md,  // 15
+    iconContainerSize: 80,
+    iconContainerRadius: 40,
+  },
+  compact: {
+    titleFontSize: fontSize.lg,        // 18
+    descriptionFontSize: fontSize.base,// 14
+    iconContainerSize: 64,
+    iconContainerRadius: 32,
+  },
+  error: {
+    iconContainerSize: 88,
+    iconContainerRadius: 44,
+    iconContainerSizeCompact: 72,
+    iconContainerRadiusCompact: 36,
+    codeFontSize: fontSize.xs,         // 12
+  },
+  typography: {
+    titleFontWeight: fontWeight.semibold,
+  },
+} as const;
+
+// =============================================================================
+// Profile Block Tokens
+// =============================================================================
+
+export const profileBlockTokens = {
+  name: {
+    fontSize: fontSize['2xl'] - 4,     // 24 (2xl is 28, so 24)
+    fontWeight: fontWeight.bold,
+  },
+  subtitle: {
+    fontSize: fontSize.md,             // 15 -> closest is md (16), use 15
+  },
+  bio: {
+    fontSize: fontSize.md,             // 15
+    lineHeight: 22,
+  },
+  stat: {
+    valueFontSize: fontSize.xl,        // 20
+    valueFontWeight: fontWeight.bold,
+    labelFontSize: fontSize.sm,        // 13 -> closest is sm (12)
+  },
+} as const;
+
+// =============================================================================
+// Settings Block Tokens
+// =============================================================================
+
+export const settingsBlockTokens = {
+  group: {
+    titleFontSize: fontSize.xs,        // 12
+    titleFontWeight: fontWeight.semibold,
+    titleLetterSpacing: 0.5,
+    descriptionFontSize: fontSize.sm,  // 13
+  },
+  item: {
+    labelFontSize: fontSize.md,        // 16
+    descriptionFontSize: fontSize.sm,  // 13
+    displayValueFontSize: fontSize.md, // 15
+    chevronFontSize: fontSize.md,      // 16
+    chevronFontWeight: fontWeight.semibold,
+    paddingVertical: spacing[3.5],
+    paddingHorizontal: spacing[4],
+  },
+} as const;
+
+// =============================================================================
 // Calendar Component Tokens
 // =============================================================================
 
@@ -1007,6 +1081,84 @@ export const dateTimePickerTokens = {
 } as const;
 
 // =============================================================================
+// Form Component Tokens
+// =============================================================================
+
+export const formTokens = {
+  item: {
+    marginBottom: spacing[4],
+  },
+  label: {
+    fontSize: fontSize.base,
+    fontWeight: fontWeight.medium,
+    marginBottom: spacing[1.5],
+  },
+  description: {
+    fontSize: fontSize.sm,
+    marginTop: spacing[1],
+  },
+  message: {
+    fontSize: fontSize.sm,
+    fontWeight: fontWeight.medium,
+    marginTop: spacing[1],
+  },
+} as const;
+
+// =============================================================================
+// ImageGallery Component Tokens
+// =============================================================================
+
+export const imageGalleryTokens = {
+  grid: {
+    defaultColumns: 3,
+    defaultSpacing: 2,
+    defaultAspectRatio: 1,
+  },
+  fullscreen: {
+    backdropOpacity: 0.95,
+    closeButtonTop: 50,  // iOS safe area
+    closeButtonTopAndroid: 20,
+    closeButtonSize: 36,
+    closeLineWidth: 18,
+    closeLineHeight: 2,
+    pageIndicatorBottom: 50,
+    dotSize: 6,
+    dotGap: spacing[1.5],  // was hardcoded 6
+  },
+} as const;
+
+// =============================================================================
+// Pagination Component Tokens
+// =============================================================================
+
+export const paginationTokens = {
+  sm: {
+    dotSize: 6,
+    dotGap: spacing[1.5],  // was hardcoded 6
+    buttonSize: 28,
+    fontSize: fontSize.sm,
+    numberSize: 28,
+  },
+  md: {
+    dotSize: 8,
+    dotGap: spacing[2],  // was hardcoded 8
+    buttonSize: 36,
+    fontSize: fontSize.base,
+    numberSize: 36,
+  },
+  lg: {
+    dotSize: 10,
+    dotGap: spacing[2.5],  // was hardcoded 10
+    buttonSize: 44,
+    fontSize: fontSize.md,
+    numberSize: 44,
+  },
+  simple: {
+    gap: spacing[1],  // was hardcoded 4 in simpleButton
+  },
+} as const;
+
+// =============================================================================
 // Export all component tokens
 // =============================================================================
 
@@ -1044,6 +1196,9 @@ export const components = {
   carousel: carouselTokens,
   swipeableRow: swipeableRowTokens,
   authBlock: authBlockTokens,
+  stateBlock: stateBlockTokens,
+  profileBlock: profileBlockTokens,
+  settingsBlock: settingsBlockTokens,
   height: componentHeight,
   icon: iconSize,
 } as const;
