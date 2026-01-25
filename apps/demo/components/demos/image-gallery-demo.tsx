@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TextStyle, ViewStyle } from 'react-native';
 import { ImageGallery } from '@/components/ui/image-gallery';
 import { Section } from './section';
 import { useTheme } from '@metacells/mcellui-core';
@@ -20,105 +20,209 @@ const SAMPLE_IMAGES = [
 const FEW_IMAGES = SAMPLE_IMAGES.slice(0, 4);
 
 export function ImageGalleryDemo() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize } = useTheme();
 
   const handleImagePress = (index: number) => {
     console.log('Image pressed:', index);
   };
 
+  const containerStyle: ViewStyle = {
+    gap: spacing[6], // 24px
+  };
+
+  const hintStyle: TextStyle = {
+    fontSize: fontSize.xs, // 12px
+    color: colors.foregroundMuted,
+    marginTop: spacing[2], // 8px
+    textAlign: 'center',
+  };
+
+  const labelStyle: TextStyle = {
+    fontSize: fontSize.sm, // 14px
+    color: colors.foregroundMuted,
+    marginBottom: spacing[2], // 8px
+    textAlign: 'center',
+  };
+
   return (
-    <View style={styles.container}>
-      <Section title="Basic Gallery (3 columns)">
-        <View style={{ marginHorizontal: -spacing[4] }}>
-          <ImageGallery
-            images={SAMPLE_IMAGES}
-            onImagePress={handleImagePress}
-          />
-        </View>
-        <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
-          Tap any image to view fullscreen. Pinch to zoom, swipe to navigate.
-        </Text>
-      </Section>
-
-      <Section title="2 Columns">
-        <View style={{ marginHorizontal: -spacing[4] }}>
-          <ImageGallery
-            images={FEW_IMAGES}
-            columns={2}
-            spacing={4}
-          />
-        </View>
-      </Section>
-
-      <Section title="4 Columns (Small Grid)">
-        <View style={{ marginHorizontal: -spacing[4] }}>
-          <ImageGallery
-            images={SAMPLE_IMAGES}
-            columns={4}
-            spacing={2}
-          />
-        </View>
-      </Section>
-
-      <Section title="With Border Radius">
-        <View style={{ marginHorizontal: -spacing[4] }}>
-          <ImageGallery
-            images={FEW_IMAGES}
-            columns={2}
-            spacing={8}
-            borderRadius={radius.lg}
-          />
+    <View style={containerStyle}>
+      <Section title="Grid Layouts">
+        <View style={{ gap: spacing[4] }}>
+          <View>
+            <Text style={labelStyle}>2 Columns</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES}
+                columns={2}
+                spacing={4}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={labelStyle}>3 Columns (Default)</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={SAMPLE_IMAGES.slice(0, 6)}
+                columns={3}
+                onImagePress={handleImagePress}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={labelStyle}>4 Columns</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={SAMPLE_IMAGES}
+                columns={4}
+                spacing={2}
+              />
+            </View>
+          </View>
         </View>
       </Section>
 
-      <Section title="Portrait Aspect Ratio">
-        <View style={{ marginHorizontal: -spacing[4] }}>
-          <ImageGallery
-            images={FEW_IMAGES.slice(0, 3)}
-            columns={3}
-            spacing={4}
-            aspectRatio={0.75}
-            borderRadius={radius.md}
-          />
+      <Section title="Aspect Ratios">
+        <View style={{ gap: spacing[4] }}>
+          <View>
+            <Text style={labelStyle}>Square (1:1)</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES}
+                columns={2}
+                spacing={4}
+                aspectRatio={1}
+                borderRadius={radius.md}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={labelStyle}>Portrait (3:4)</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES.slice(0, 3)}
+                columns={3}
+                spacing={4}
+                aspectRatio={0.75}
+                borderRadius={radius.md}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={labelStyle}>Landscape (16:9)</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES.slice(0, 2)}
+                columns={2}
+                spacing={8}
+                aspectRatio={16 / 9}
+                borderRadius={radius.lg}
+              />
+            </View>
+          </View>
         </View>
       </Section>
 
-      <Section title="Landscape Aspect Ratio">
-        <View style={{ marginHorizontal: -spacing[4] }}>
-          <ImageGallery
-            images={FEW_IMAGES.slice(0, 2)}
-            columns={2}
-            spacing={8}
-            aspectRatio={1.5}
-            borderRadius={radius.lg}
-          />
+      <Section title="Spacing">
+        <View style={{ gap: spacing[4] }}>
+          <View>
+            <Text style={labelStyle}>Tight (2px)</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES}
+                columns={2}
+                spacing={2}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={labelStyle}>Normal (4px)</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES}
+                columns={2}
+                spacing={4}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={labelStyle}>Loose (8px)</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES}
+                columns={2}
+                spacing={8}
+              />
+            </View>
+          </View>
         </View>
       </Section>
 
-      <Section title="Viewer Disabled">
-        <View style={{ marginHorizontal: -spacing[4] }}>
-          <ImageGallery
-            images={FEW_IMAGES.slice(0, 3)}
-            columns={3}
-            disableViewer
-            onImagePress={(index) => {
-              console.log('Custom action for image:', index);
-            }}
-          />
+      <Section title="Features">
+        <View style={{ gap: spacing[4] }}>
+          <View>
+            <Text style={labelStyle}>Custom Border Radius</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES}
+                columns={2}
+                spacing={8}
+                borderRadius={radius.lg}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={labelStyle}>Viewer Disabled</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES.slice(0, 3)}
+                columns={3}
+                disableViewer
+                onImagePress={(index) => {
+                  console.log('Custom action for image:', index);
+                }}
+              />
+            </View>
+            <Text style={hintStyle}>
+              Fullscreen viewer disabled - use for custom actions
+            </Text>
+          </View>
         </View>
-        <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
-          Fullscreen viewer is disabled. Use onImagePress for custom actions.
-        </Text>
+      </Section>
+
+      <Section title="Use Cases">
+        <View style={{ gap: spacing[4] }}>
+          <View>
+            <Text style={labelStyle}>Photo Album</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={SAMPLE_IMAGES}
+                columns={3}
+                spacing={4}
+                borderRadius={radius.sm}
+                onImagePress={handleImagePress}
+              />
+            </View>
+            <Text style={hintStyle}>
+              Tap any image to view fullscreen. Pinch to zoom, swipe to navigate.
+            </Text>
+          </View>
+          <View>
+            <Text style={labelStyle}>Product Images</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={FEW_IMAGES}
+                columns={2}
+                spacing={8}
+                aspectRatio={1}
+                borderRadius={radius.lg}
+              />
+            </View>
+            <Text style={hintStyle}>
+              Square aspect ratio with larger spacing for e-commerce
+            </Text>
+          </View>
+        </View>
       </Section>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { gap: 32 },
-  hint: {
-    fontSize: 12,
-    marginTop: 8,
-    textAlign: 'center',
-  },
-});

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, ViewStyle, TextStyle, Alert } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -7,6 +7,8 @@ import { useTheme } from '@metacells/mcellui-core';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
@@ -16,6 +18,7 @@ import {
   FormMessage,
   FormDescription,
 } from '@/components/ui/form';
+import { Section } from './section';
 
 // ============================================================================
 // Schemas
@@ -26,51 +29,59 @@ const loginSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
-const signupSchema = z.object({
+const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters')
-    .regex(/[A-Z]/, 'Must contain at least one uppercase letter')
-    .regex(/[0-9]/, 'Must contain at least one number'),
-  acceptTerms: z.literal(true, {
-    errorMap: () => ({ message: 'You must accept the terms' }),
-  }),
+  subject: z.string().min(1, 'Subject is required'),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
+  newsletter: z.boolean().optional(),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
-type SignupFormData = z.infer<typeof signupSchema>;
+type ContactFormData = z.infer<typeof contactSchema>;
 
 // ============================================================================
 // Demo Component
 // ============================================================================
 
 export function FormDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize } = useTheme();
+
+  const containerStyle: ViewStyle = {
+    gap: spacing[6], // 24px
+  };
 
   return (
-    <View style={styles.container}>
-      <Section title="Login Form">
-        <LoginFormExample />
-      </Section>
-
-      <Section title="Signup Form">
-        <SignupFormExample />
+    <View style={containerStyle}>
+      <Section title="Basic Form">
+        <BasicFormExample />
       </Section>
 
       <Section title="Form States">
         <FormStatesExample />
+      </Section>
+
+      <Section title="Field Types">
+        <FieldTypesExample />
+      </Section>
+
+      <Section title="Validation">
+        <ValidationExample />
+      </Section>
+
+      <Section title="Use Cases">
+        <ContactFormExample />
       </Section>
     </View>
   );
 }
 
 // ============================================================================
-// Login Form Example
+// Basic Form Example
 // ============================================================================
 
-function LoginFormExample() {
+function BasicFormExample() {
+  const { spacing } = useTheme();
   const [loading, setLoading] = useState(false);
 
   const form = useForm<LoginFormData>({
@@ -83,7 +94,6 @@ function LoginFormExample() {
 
   const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setLoading(false);
     Alert.alert('Success', `Logged in as ${data.email}`);
@@ -145,154 +155,44 @@ function LoginFormExample() {
 }
 
 // ============================================================================
-// Signup Form Example
-// ============================================================================
-
-function SignupFormExample() {
-  const { colors, spacing } = useTheme();
-  const [loading, setLoading] = useState(false);
-
-  const form = useForm<SignupFormData>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      acceptTerms: false as unknown as true,
-    },
-  });
-
-  const onSubmit = async (data: SignupFormData) => {
-    setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-    Alert.alert('Success', `Account created for ${data.name}`);
-    form.reset();
-  };
-
-  return (
-    <Form form={form}>
-      <FormField
-        control={form.control}
-        name="name"
-        render={({ field, fieldState }) => (
-          <FormItem>
-            <FormLabel required>Full Name</FormLabel>
-            <Input
-              placeholder="John Doe"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              error={fieldState.error?.message}
-              autoCapitalize="words"
-              autoComplete="name"
-            />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="email"
-        render={({ field, fieldState }) => (
-          <FormItem>
-            <FormLabel required>Email</FormLabel>
-            <Input
-              placeholder="email@example.com"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              error={fieldState.error?.message}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-            />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="password"
-        render={({ field, fieldState }) => (
-          <FormItem>
-            <FormLabel required>Password</FormLabel>
-            <Input
-              placeholder="Create a strong password"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              error={fieldState.error?.message}
-              secureTextEntry
-              autoComplete="password-new"
-            />
-            <FormDescription>
-              Min 8 characters, 1 uppercase, 1 number
-            </FormDescription>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="acceptTerms"
-        render={({ field, fieldState }) => (
-          <FormItem style={{ marginBottom: spacing[6] }}>
-            <View style={styles.checkboxRow}>
-              <Checkbox
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-              <Text
-                style={[
-                  styles.termsText,
-                  { color: colors.foregroundMuted, marginLeft: spacing[2] },
-                ]}
-              >
-                I agree to the Terms of Service and Privacy Policy
-              </Text>
-            </View>
-            {fieldState.error && (
-              <Text
-                style={[
-                  styles.errorText,
-                  { color: colors.destructive, marginTop: spacing[1] },
-                ]}
-              >
-                {fieldState.error.message}
-              </Text>
-            )}
-          </FormItem>
-        )}
-      />
-
-      <Button
-        onPress={form.handleSubmit(onSubmit)}
-        loading={loading}
-        fullWidth
-      >
-        Create Account
-      </Button>
-    </Form>
-  );
-}
-
-// ============================================================================
 // Form States Example
 // ============================================================================
 
 function FormStatesExample() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize } = useTheme();
+
+  const containerStyle: ViewStyle = {
+    gap: spacing[4], // 16px
+  };
+
+  const labelStyle: TextStyle = {
+    fontSize: fontSize.xs, // 12px
+    fontWeight: '500',
+    color: colors.foregroundMuted,
+    marginBottom: spacing[2], // 8px
+  };
 
   return (
-    <View style={{ gap: spacing[4] }}>
+    <View style={containerStyle}>
       <View>
-        <Text style={[styles.stateLabel, { color: colors.foregroundMuted }]}>
-          Error State
-        </Text>
+        <Text style={labelStyle}>Pristine (no interaction)</Text>
+        <Input
+          label="Email"
+          placeholder="email@example.com"
+        />
+      </View>
+
+      <View>
+        <Text style={labelStyle}>Touched (focused then blurred)</Text>
+        <Input
+          label="Email"
+          placeholder="email@example.com"
+          value=""
+        />
+      </View>
+
+      <View>
+        <Text style={labelStyle}>Error State</Text>
         <Input
           label="Email"
           placeholder="email@example.com"
@@ -301,81 +201,302 @@ function FormStatesExample() {
       </View>
 
       <View>
-        <Text style={[styles.stateLabel, { color: colors.foregroundMuted }]}>
-          Disabled State
-        </Text>
-        <Input
-          label="Email"
-          placeholder="email@example.com"
-          value="disabled@example.com"
-          editable={false}
-        />
-      </View>
-
-      <View>
-        <Text style={[styles.stateLabel, { color: colors.foregroundMuted }]}>
-          With Helper Text
-        </Text>
-        <Input
-          label="Username"
-          placeholder="Choose a username"
-          helperText="Username must be unique"
-        />
+        <Text style={labelStyle}>Submitting</Text>
+        <Button loading fullWidth>
+          Submitting...
+        </Button>
       </View>
     </View>
   );
 }
 
 // ============================================================================
-// Helper Components
+// Field Types Example
 // ============================================================================
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function FieldTypesExample() {
+  const { spacing } = useTheme();
+  const [selectValue, setSelectValue] = useState('');
+  const [checkboxValue, setCheckboxValue] = useState(false);
+
+  const containerStyle: ViewStyle = {
+    gap: spacing[4], // 16px
+  };
+
+  const checkboxRowStyle: ViewStyle = {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing[2], // 8px
+  };
+
   return (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      <View style={styles.sectionContent}>{children}</View>
+    <View style={containerStyle}>
+      <Input
+        label="Text Input"
+        placeholder="Enter text"
+      />
+
+      <Textarea
+        label="Textarea"
+        placeholder="Enter longer text"
+        numberOfLines={4}
+      />
+
+      <Select
+        label="Select"
+        value={selectValue}
+        onValueChange={setSelectValue}
+        options={[
+          { label: 'Option 1', value: '1' },
+          { label: 'Option 2', value: '2' },
+          { label: 'Option 3', value: '3' },
+        ]}
+        placeholder="Choose an option"
+      />
+
+      <View style={checkboxRowStyle}>
+        <Checkbox
+          checked={checkboxValue}
+          onCheckedChange={setCheckboxValue}
+        />
+        <Text>Checkbox option</Text>
+      </View>
     </View>
   );
 }
 
 // ============================================================================
-// Styles
+// Validation Example
 // ============================================================================
 
-const styles = StyleSheet.create({
-  container: {
-    gap: 32,
-  },
-  section: {
-    gap: 16,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#737373',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  sectionContent: {
-    gap: 8,
-  },
-  checkboxRow: {
+function ValidationExample() {
+  const { spacing } = useTheme();
+
+  const schema = z.object({
+    username: z.string().min(3, 'Username must be at least 3 characters'),
+    age: z.string().regex(/^\d+$/, 'Must be a number').refine((val) => parseInt(val) >= 18, 'Must be 18 or older'),
+  });
+
+  type FormData = z.infer<typeof schema>;
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      username: '',
+      age: '',
+    },
+  });
+
+  return (
+    <Form form={form}>
+      <FormField
+        control={form.control}
+        name="username"
+        render={({ field, fieldState }) => (
+          <FormItem>
+            <FormLabel required>Username</FormLabel>
+            <Input
+              placeholder="Enter username"
+              value={field.value}
+              onChangeText={field.onChange}
+              onBlur={field.onBlur}
+              error={fieldState.error?.message}
+            />
+            <FormDescription>
+              Choose a unique username (min 3 characters)
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="age"
+        render={({ field, fieldState }) => (
+          <FormItem>
+            <FormLabel required>Age</FormLabel>
+            <Input
+              placeholder="Enter age"
+              value={field.value}
+              onChangeText={field.onChange}
+              onBlur={field.onBlur}
+              error={fieldState.error?.message}
+              keyboardType="number-pad"
+            />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <Button
+        onPress={form.handleSubmit((data) => {
+          Alert.alert('Valid', JSON.stringify(data, null, 2));
+        })}
+        fullWidth
+      >
+        Validate
+      </Button>
+    </Form>
+  );
+}
+
+// ============================================================================
+// Contact Form Example (Use Case)
+// ============================================================================
+
+function ContactFormExample() {
+  const { colors, spacing, fontSize } = useTheme();
+  const [loading, setLoading] = useState(false);
+
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+      newsletter: false,
+    },
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    setLoading(false);
+    Alert.alert('Message Sent', 'We will get back to you soon!');
+    form.reset();
+  };
+
+  const checkboxRowStyle: ViewStyle = {
     flexDirection: 'row',
     alignItems: 'flex-start',
-  },
-  termsText: {
-    fontSize: 14,
+    gap: spacing[2], // 8px
+  };
+
+  const checkboxTextStyle: TextStyle = {
+    fontSize: fontSize.sm, // 14px
+    color: colors.foregroundMuted,
     flex: 1,
     lineHeight: 20,
-  },
-  errorText: {
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  stateLabel: {
-    fontSize: 12,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
-});
+  };
+
+  const titleStyle: TextStyle = {
+    fontSize: fontSize.sm, // 14px
+    color: colors.foregroundMuted,
+    textAlign: 'center',
+    marginBottom: spacing[2], // 8px
+  };
+
+  return (
+    <View>
+      <Text style={titleStyle}>Contact Form</Text>
+      <Form form={form}>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormLabel required>Name</FormLabel>
+              <Input
+                placeholder="Your name"
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                error={fieldState.error?.message}
+                autoCapitalize="words"
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormLabel required>Email</FormLabel>
+              <Input
+                placeholder="your@email.com"
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                error={fieldState.error?.message}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+              <FormDescription>
+                We'll never share your email.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="subject"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormLabel required>Subject</FormLabel>
+              <Input
+                placeholder="How can we help?"
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                error={fieldState.error?.message}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="message"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormLabel required>Message</FormLabel>
+              <Textarea
+                placeholder="Tell us more..."
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                error={fieldState.error?.message}
+                numberOfLines={4}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="newsletter"
+          render={({ field }) => (
+            <FormItem style={{ marginBottom: spacing[2] }}>
+              <View style={checkboxRowStyle}>
+                <Checkbox
+                  checked={field.value || false}
+                  onCheckedChange={field.onChange}
+                />
+                <Text style={checkboxTextStyle}>
+                  Subscribe to our newsletter
+                </Text>
+              </View>
+            </FormItem>
+          )}
+        />
+
+        <Button
+          onPress={form.handleSubmit(onSubmit)}
+          loading={loading}
+          fullWidth
+        >
+          Send Message
+        </Button>
+      </Form>
+    </View>
+  );
+}
