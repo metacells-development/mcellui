@@ -120,7 +120,7 @@ export function SignUpScreen({
   logo,
   appName = 'Create account',
 }: SignUpScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const [name, setName] = useState('');
@@ -165,10 +165,29 @@ export function SignUpScreen({
               <Text style={styles.logoText}>Logo</Text>
             </View>
           )}
-          <Text style={[styles.title, { color: colors.foreground, marginTop: spacing[5] }]}>
+          <Text
+            style={[
+              styles.title,
+              {
+                color: colors.foreground,
+                marginTop: spacing[5],
+                fontSize: fontSize['2xl'],
+                fontWeight: fontWeight.bold,
+              },
+            ]}
+          >
             {appName}
           </Text>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+          <Text
+            style={[
+              styles.subtitle,
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[2],
+                fontSize: fontSize.md,
+              },
+            ]}
+          >
             Join us today
           </Text>
         </View>
@@ -186,7 +205,9 @@ export function SignUpScreen({
               },
             ]}
           >
-            <Text style={[styles.errorText, { color: colors.destructive }]}>{error}</Text>
+            <Text style={[styles.errorText, { color: colors.destructive, fontSize: fontSize.sm }]}>
+              {error}
+            </Text>
           </View>
         )}
 
@@ -224,17 +245,39 @@ export function SignUpScreen({
               checked={acceptedTerms}
               onCheckedChange={setAcceptedTerms}
             />
-            <Text style={[styles.termsText, { color: colors.foregroundMuted, marginLeft: spacing[3], flex: 1 }]}>
+            <Text
+              style={[
+                styles.termsText,
+                {
+                  color: colors.foregroundMuted,
+                  marginLeft: spacing[3],
+                  flex: 1,
+                  fontSize: fontSize.sm,
+                },
+              ]}
+            >
               I agree to the{' '}
               <Text
-                style={[styles.termsLink, { color: colors.primary }]}
+                style={[
+                  styles.termsLink,
+                  {
+                    color: colors.primary,
+                    fontWeight: fontWeight.medium,
+                  },
+                ]}
                 onPress={onTermsPress}
               >
                 Terms of Service
               </Text>
               {' '}and{' '}
               <Text
-                style={[styles.termsLink, { color: colors.primary }]}
+                style={[
+                  styles.termsLink,
+                  {
+                    color: colors.primary,
+                    fontWeight: fontWeight.medium,
+                  },
+                ]}
                 onPress={onPrivacyPress}
               >
                 Privacy Policy
@@ -256,7 +299,16 @@ export function SignUpScreen({
         {onSocialSignUp && (
           <View style={[styles.dividerContainer, { marginVertical: spacing[6] }]}>
             <Separator style={{ flex: 1 }} />
-            <Text style={[styles.dividerText, { color: colors.foregroundMuted, marginHorizontal: spacing[4] }]}>
+            <Text
+              style={[
+                styles.dividerText,
+                {
+                  color: colors.foregroundMuted,
+                  marginHorizontal: spacing[4],
+                  fontSize: fontSize.sm,
+                },
+              ]}
+            >
               or sign up with
             </Text>
             <Separator style={{ flex: 1 }} />
@@ -273,7 +325,17 @@ export function SignUpScreen({
             >
               <View style={styles.socialButtonContent}>
                 <GoogleIcon />
-                <Text style={[styles.socialButtonText, { color: colors.foreground, marginLeft: spacing[2] }]}>
+                <Text
+                  style={[
+                    styles.socialButtonText,
+                    {
+                      color: colors.foreground,
+                      marginLeft: spacing[2],
+                      fontSize: fontSize.base,
+                      fontWeight: fontWeight.medium,
+                    },
+                  ]}
+                >
                   Google
                 </Text>
               </View>
@@ -285,7 +347,17 @@ export function SignUpScreen({
             >
               <View style={styles.socialButtonContent}>
                 <AppleIcon color={colors.foreground} />
-                <Text style={[styles.socialButtonText, { color: colors.foreground, marginLeft: spacing[2] }]}>
+                <Text
+                  style={[
+                    styles.socialButtonText,
+                    {
+                      color: colors.foreground,
+                      marginLeft: spacing[2],
+                      fontSize: fontSize.base,
+                      fontWeight: fontWeight.medium,
+                    },
+                  ]}
+                >
                   Apple
                 </Text>
               </View>
@@ -296,11 +368,22 @@ export function SignUpScreen({
         {/* Login Link */}
         {onLogin && (
           <View style={[styles.loginContainer, { marginTop: spacing[8] }]}>
-            <Text style={[styles.loginText, { color: colors.foregroundMuted }]}>
+            <Text style={[styles.loginText, { color: colors.foregroundMuted, fontSize: fontSize.base }]}>
               Already have an account?{' '}
             </Text>
             <Pressable onPress={onLogin}>
-              <Text style={[styles.loginLink, { color: colors.primary }]}>Sign in</Text>
+              <Text
+                style={[
+                  styles.loginLink,
+                  {
+                    color: colors.primary,
+                    fontSize: fontSize.base,
+                    fontWeight: fontWeight.semibold,
+                  },
+                ]}
+              >
+                Sign in
+              </Text>
             </Pressable>
           </View>
         )}
@@ -334,16 +417,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
   },
-  title: {
-    fontSize: 26,
-    fontWeight: '700',
-  },
-  subtitle: {
-    fontSize: 16,
-  },
+  title: {},
+  subtitle: {},
   errorContainer: {},
   errorText: {
-    fontSize: 14,
     textAlign: 'center',
   },
   form: {},
@@ -352,19 +429,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   termsText: {
-    fontSize: 14,
     lineHeight: 20,
   },
-  termsLink: {
-    fontWeight: '500',
-  },
+  termsLink: {},
   dividerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  dividerText: {
-    fontSize: 13,
-  },
+  dividerText: {},
   socialButtons: {
     flexDirection: 'row',
   },
@@ -373,19 +445,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  socialButtonText: {
-    fontSize: 15,
-    fontWeight: '500',
-  },
+  socialButtonText: {},
   loginContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  loginText: {
-    fontSize: 15,
-  },
-  loginLink: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
+  loginText: {},
+  loginLink: {},
 });

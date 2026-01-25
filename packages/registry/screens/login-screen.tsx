@@ -108,7 +108,7 @@ export function LoginScreen({
   logo,
   appName = 'Welcome back',
 }: LoginScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const [email, setEmail] = useState('');
@@ -149,10 +149,29 @@ export function LoginScreen({
               <Text style={styles.logoText}>Logo</Text>
             </View>
           )}
-          <Text style={[styles.title, { color: colors.foreground, marginTop: spacing[6] }]}>
+          <Text
+            style={[
+              styles.title,
+              {
+                color: colors.foreground,
+                marginTop: spacing[6],
+                fontSize: fontSize['2xl'],
+                fontWeight: fontWeight.bold,
+              },
+            ]}
+          >
             {appName}
           </Text>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+          <Text
+            style={[
+              styles.subtitle,
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[2],
+                fontSize: fontSize.md,
+              },
+            ]}
+          >
             Sign in to continue
           </Text>
         </View>
@@ -170,7 +189,9 @@ export function LoginScreen({
               },
             ]}
           >
-            <Text style={[styles.errorText, { color: colors.destructive }]}>{error}</Text>
+            <Text style={[styles.errorText, { color: colors.destructive, fontSize: fontSize.sm }]}>
+              {error}
+            </Text>
           </View>
         )}
 
@@ -197,7 +218,16 @@ export function LoginScreen({
           {/* Forgot Password */}
           {onForgotPassword && (
             <Pressable onPress={onForgotPassword} style={styles.forgotPassword}>
-              <Text style={[styles.forgotPasswordText, { color: colors.primary }]}>
+              <Text
+                style={[
+                  styles.forgotPasswordText,
+                  {
+                    color: colors.primary,
+                    fontSize: fontSize.sm,
+                    fontWeight: fontWeight.medium,
+                  },
+                ]}
+              >
                 Forgot password?
               </Text>
             </Pressable>
@@ -217,7 +247,16 @@ export function LoginScreen({
         {onSocialLogin && (
           <View style={[styles.dividerContainer, { marginVertical: spacing[6] }]}>
             <Separator style={{ flex: 1 }} />
-            <Text style={[styles.dividerText, { color: colors.foregroundMuted, marginHorizontal: spacing[4] }]}>
+            <Text
+              style={[
+                styles.dividerText,
+                {
+                  color: colors.foregroundMuted,
+                  marginHorizontal: spacing[4],
+                  fontSize: fontSize.sm,
+                },
+              ]}
+            >
               or continue with
             </Text>
             <Separator style={{ flex: 1 }} />
@@ -234,7 +273,17 @@ export function LoginScreen({
             >
               <View style={styles.socialButtonContent}>
                 <GoogleIcon />
-                <Text style={[styles.socialButtonText, { color: colors.foreground, marginLeft: spacing[2] }]}>
+                <Text
+                  style={[
+                    styles.socialButtonText,
+                    {
+                      color: colors.foreground,
+                      marginLeft: spacing[2],
+                      fontSize: fontSize.base,
+                      fontWeight: fontWeight.medium,
+                    },
+                  ]}
+                >
                   Google
                 </Text>
               </View>
@@ -246,7 +295,17 @@ export function LoginScreen({
             >
               <View style={styles.socialButtonContent}>
                 <AppleIcon color={colors.foreground} />
-                <Text style={[styles.socialButtonText, { color: colors.foreground, marginLeft: spacing[2] }]}>
+                <Text
+                  style={[
+                    styles.socialButtonText,
+                    {
+                      color: colors.foreground,
+                      marginLeft: spacing[2],
+                      fontSize: fontSize.base,
+                      fontWeight: fontWeight.medium,
+                    },
+                  ]}
+                >
                   Apple
                 </Text>
               </View>
@@ -257,11 +316,22 @@ export function LoginScreen({
         {/* Sign Up Link */}
         {onSignUp && (
           <View style={[styles.signUpContainer, { marginTop: spacing[8] }]}>
-            <Text style={[styles.signUpText, { color: colors.foregroundMuted }]}>
+            <Text style={[styles.signUpText, { color: colors.foregroundMuted, fontSize: fontSize.base }]}>
               Don't have an account?{' '}
             </Text>
             <Pressable onPress={onSignUp}>
-              <Text style={[styles.signUpLink, { color: colors.primary }]}>Sign up</Text>
+              <Text
+                style={[
+                  styles.signUpLink,
+                  {
+                    color: colors.primary,
+                    fontSize: fontSize.base,
+                    fontWeight: fontWeight.semibold,
+                  },
+                ]}
+              >
+                Sign up
+              </Text>
             </Pressable>
           </View>
         )}
@@ -295,33 +365,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-  },
-  subtitle: {
-    fontSize: 16,
-  },
+  title: {},
+  subtitle: {},
   errorContainer: {},
   errorText: {
-    fontSize: 14,
     textAlign: 'center',
   },
   form: {},
   forgotPassword: {
     alignSelf: 'flex-end',
   },
-  forgotPasswordText: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
+  forgotPasswordText: {},
   dividerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  dividerText: {
-    fontSize: 13,
-  },
+  dividerText: {},
   socialButtons: {
     flexDirection: 'row',
   },
@@ -330,19 +389,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  socialButtonText: {
-    fontSize: 15,
-    fontWeight: '500',
-  },
+  socialButtonText: {},
   signUpContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  signUpText: {
-    fontSize: 15,
-  },
-  signUpLink: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
+  signUpText: {},
+  signUpLink: {},
 });
