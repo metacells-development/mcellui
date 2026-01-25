@@ -186,10 +186,14 @@ Plans:
   3. Empty State and Error State blocks support customization props
   4. All blocks support loading states during async operations
   5. Demo shows complete workflows with all states (empty, loading, error, success)
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] TBD
+- [ ] 09-01-PLAN.md - Add auth, state, profile, settings block tokens to core
+- [ ] 09-02-PLAN.md - Migrate LoginBlock and SignupBlock to authBlockTokens
+- [ ] 09-03-PLAN.md - Migrate ProfileBlock and SettingsListBlock to tokens
+- [ ] 09-04-PLAN.md - Migrate EmptyStateBlock and ErrorStateBlock to stateBlockTokens
+- [ ] 09-05-PLAN.md - Enhance blocks demo with comprehensive state coverage
 
 ### Phase 10: Blocks - Content & Social
 **Goal**: Content and social blocks have consistent card patterns and interaction states
@@ -251,7 +255,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 6. Layout & Structure | 0/5 | Planned | - |
 | 7. Navigation & Interaction | 0/5 | Planned | - |
 | 8. Advanced Components | 0/TBD | Not started | - |
-| 9. Blocks - Auth & Settings | 0/TBD | Not started | - |
+| 9. Blocks - Auth & Settings | 0/5 | Planned | - |
 | 10. Blocks - Content & Social | 0/TBD | Not started | - |
 | 11. Blocks - E-commerce & Info | 0/TBD | Not started | - |
 | 12. Screens | 0/TBD | Not started | - |
