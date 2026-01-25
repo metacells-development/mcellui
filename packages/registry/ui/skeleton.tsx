@@ -22,7 +22,7 @@ import Animated, {
   interpolate,
   Easing,
 } from 'react-native-reanimated';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, areAnimationsDisabled, skeletonTokens } from '@metacells/mcellui-core';
 
 export type SkeletonRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
@@ -43,14 +43,6 @@ export interface SkeletonProps {
   style?: ViewStyle;
 }
 
-const radiusMap: Record<SkeletonRadius, number> = {
-  none: 0,
-  sm: 4,
-  md: 8,
-  lg: 12,
-  full: 9999,
-};
-
 export function Skeleton({
   width = '100%',
   height = 20,
@@ -69,7 +61,7 @@ export function Skeleton({
     if (shouldAnimate) {
       shimmerProgress.value = withRepeat(
         withTiming(1, {
-          duration: 1500,
+          duration: skeletonTokens.animation.duration,
           easing: Easing.inOut(Easing.ease),
         }),
         -1,
@@ -82,11 +74,11 @@ export function Skeleton({
     const opacity = interpolate(
       shimmerProgress.value,
       [0, 0.5, 1],
-      [0.3, 0.6, 0.3]
+      [skeletonTokens.animation.minOpacity, skeletonTokens.animation.maxOpacity, skeletonTokens.animation.minOpacity]
     );
 
     return {
-      opacity: shouldAnimate ? opacity : 0.3,
+      opacity: shouldAnimate ? opacity : skeletonTokens.animation.minOpacity,
     };
   });
 
@@ -95,7 +87,7 @@ export function Skeleton({
     : {
         width,
         height,
-        borderRadius: radiusMap[radius],
+        borderRadius: skeletonTokens.radius[radius],
       };
 
   return (
@@ -128,10 +120,10 @@ export interface SkeletonTextProps {
 }
 
 export function SkeletonText({
-  lines = 3,
-  gap = 8,
-  lastLineWidth = '60%',
-  lineHeight = 16,
+  lines = skeletonTokens.text.defaultLines,
+  gap = skeletonTokens.text.defaultGap,
+  lastLineWidth = skeletonTokens.text.lastLineWidth,
+  lineHeight = skeletonTokens.text.defaultLineHeight,
   style,
 }: SkeletonTextProps) {
   return (
