@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, ViewStyle, TextStyle } from 'react-native';
 import { useTheme } from '@metacells/mcellui-core';
 
 interface SectionProps {
@@ -8,29 +8,28 @@ interface SectionProps {
 }
 
 export function Section({ title, children }: SectionProps) {
-  const { colors } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
+
+  const sectionStyle: ViewStyle = {
+    gap: spacing[3], // 12px
+  };
+
+  const titleStyle: TextStyle = {
+    fontSize: fontSize.sm, // 14px equivalent
+    fontWeight: fontWeight.semibold,
+    color: colors.foregroundMuted,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  };
+
+  const contentStyle: ViewStyle = {
+    gap: spacing[2], // 8px
+  };
 
   return (
-    <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.foregroundMuted }]}>
-        {title}
-      </Text>
-      <View style={styles.sectionContent}>{children}</View>
+    <View style={sectionStyle}>
+      <Text style={titleStyle}>{title}</Text>
+      <View style={contentStyle}>{children}</View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  section: {
-    gap: 12,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  sectionContent: {
-    gap: 8,
-  },
-});
