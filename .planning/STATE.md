@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 9 of 12 (Blocks - Auth & Settings)
-Plans: 09-02 of 4 complete
-Status: In progress - Auth blocks migrated to centralized tokens
-Last activity: 2026-01-25 - Completed 09-02-PLAN.md
+Phase: 8 of 12 (Advanced Components)
+Plans: 08-04 of ? complete
+Status: In progress - ImageGallery, Pagination, Stories migrated to tokens
+Last activity: 2026-01-25 - Completed 08-04-PLAN.md
 
-Progress: [█████░░░░░] 54%
+Progress: [█████░░░░░] 55%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 32
-- Average duration: 3.9 min
-- Total execution time: 2.28 hours
+- Total plans completed: 33
+- Average duration: 3.8 min
+- Total execution time: 2.34 hours
 
 **By Phase:**
 
@@ -34,12 +34,12 @@ Progress: [█████░░░░░] 54%
 | 05-data-display | 5/5 | 10.1 min | 2.0 min |
 | 06-layout-structure | 5/5 | 17.6 min | 3.5 min |
 | 07-navigation-interaction | 2/5 | 5 min | 2.5 min |
-| 08-advanced-components | 1/? | 3.6 min | 3.6 min |
+| 08-advanced-components | 2/? | 7.0 min | 3.5 min |
 | 09-blocks-auth-settings | 4/? | 9.05 min | 2.26 min |
 
 **Recent Trend:**
-- Last 5 plans: 09-02 (3.75 min), 09-04 (2.3 min), 07-02 (3 min), 08-01 (3.6 min), 09-01 (3 min)
-- Trend: Auth block migrations 3-4 min, state block migrations 2-3 min
+- Last 5 plans: 08-04 (3.4 min), 09-02 (3.75 min), 09-04 (2.3 min), 07-02 (3 min), 08-01 (3.6 min)
+- Trend: Advanced component migrations consistently 3-4 min
 
 *Updated after each plan completion*
 
@@ -137,6 +137,9 @@ Recent decisions affecting current work:
 - **08-01**: Stories fontSize uses xs (12) instead of 11 (closest available scale value)
 - **08-01**: ImageGallery closeButtonTop uses platform-specific safe area values (iOS: 50, Android: 20)
 - **08-01**: Pagination simple variant has only gap token (no size variants needed for simple UI)
+- **08-04**: Export imageGalleryTokens, paginationTokens, storiesTokens from core/theme for component consumption
+- **08-04**: Platform-specific token pattern (iOS vs Android top positions) for fullscreen viewer close button
+- **08-04**: Row component token pattern (paddingHorizontal/gap) for StoriesRow horizontal layout
 - **09-04**: SVG icon sizes (40/48px) preserved as component logic in ErrorStateBlock (not tokens - icon detail sizing)
 - **09-04**: stateBlockTokens and profileBlockTokens exported from core/index for block consumption
 
@@ -151,7 +154,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 09-02-PLAN.md (Auth blocks migrated to centralized typography tokens)
+Stopped at: Completed 08-04-PLAN.md (ImageGallery, Pagination, Stories migrated to tokens)
 Resume file: None
 
 ## Phase 1 Complete ✓
