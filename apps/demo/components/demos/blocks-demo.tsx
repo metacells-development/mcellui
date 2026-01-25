@@ -888,100 +888,58 @@ function MediaItemPreview() {
     </Card>
   );
 }
-
 // ============================================================================
 // Feed Post Card Preview
 // ============================================================================
 
 function FeedPostCardPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing } = useTheme();
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(42);
+  const [commentCount, setCommentCount] = useState(12);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [commentLoading, setCommentLoading] = useState(false);
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    setLikeLoading(true);
+    await new Promise((r) => setTimeout(r, 800));
     setLiked(!liked);
     setLikeCount((prev) => (liked ? prev - 1 : prev + 1));
+    setLikeLoading(false);
+  };
+
+  const handleComment = async () => {
+    setCommentLoading(true);
+    await new Promise((r) => setTimeout(r, 600));
+    setCommentLoading(false);
+    Alert.alert('Comments', 'Opening comments...');
   };
 
   return (
     <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        {/* Author Header */}
-        <View style={[styles.feedHeader, { marginBottom: spacing[3] }]}>
-          <Avatar size="md" fallback="JD" />
-          <View style={{ marginLeft: spacing[3], flex: 1 }}>
-            <Text style={[styles.feedAuthor, { color: colors.foreground }]}>John Doe</Text>
-            <Text style={[styles.feedTime, { color: colors.foregroundMuted }]}>2 hours ago</Text>
-          </View>
-          <Pressable onPress={() => Alert.alert('More options')}>
-            <Text style={{ color: colors.foregroundMuted, fontSize: 20 }}>•••</Text>
-          </Pressable>
-        </View>
-
-        {/* Content */}
-        <Text style={[styles.feedContent, { color: colors.foreground, marginBottom: spacing[3] }]}>
-          Just shipped a new feature! 🚀 Really excited about how this turned out. Let me know what you think!
-        </Text>
-
-        {/* Image placeholder */}
-        <View
-          style={[
-            styles.feedImage,
-            {
-              backgroundColor: colors.secondary,
-              borderRadius: radius.lg,
-              height: 180,
-              marginBottom: spacing[3],
-            },
-          ]}
-        >
-          <Svg width={40} height={40} viewBox="0 0 24 24" fill="none">
-            <Rect x="3" y="3" width="18" height="18" rx="2" stroke={colors.foregroundMuted} strokeWidth="2" />
-            <Circle cx="8.5" cy="8.5" r="1.5" fill={colors.foregroundMuted} />
-            <Path d="M21 15l-5-5L5 21" stroke={colors.foregroundMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </Svg>
-        </View>
-
-        {/* Actions */}
-        <View style={[styles.feedActions, { gap: spacing[4] }]}>
-          <Pressable style={styles.feedAction} onPress={handleLike}>
-            <Svg width={22} height={22} viewBox="0 0 24 24" fill={liked ? colors.destructive : 'none'}>
-              <Path
-                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
-                stroke={liked ? colors.destructive : colors.foregroundMuted}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-            <Text style={[styles.feedActionText, { color: liked ? colors.destructive : colors.foregroundMuted }]}>
-              {likeCount}
-            </Text>
-          </Pressable>
-          <Pressable style={styles.feedAction} onPress={() => Alert.alert('Comments')}>
-            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
-              <Path
-                d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"
-                stroke={colors.foregroundMuted}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-            <Text style={[styles.feedActionText, { color: colors.foregroundMuted }]}>12</Text>
-          </Pressable>
-          <Pressable style={styles.feedAction} onPress={() => Alert.alert('Share')}>
-            <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
-              <Path
-                d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"
-                stroke={colors.foregroundMuted}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-          </Pressable>
-        </View>
+      <CardHeader>
+        <CardTitle>Loading States</CardTitle>
+        <CardDescription>Try interacting to see loading indicators</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <FeedPostCard
+          user={{
+            name: 'John Doe',
+            avatarUrl: 'https://i.pravatar.cc/100?img=12',
+          }}
+          content="Just shipped a new feature! 🚀 Really excited about how this turned out. Let me know what you think!"
+          time="2 hours ago"
+          hasImage={true}
+          likes={likeCount}
+          comments={commentCount}
+          liked={liked}
+          likeLoading={likeLoading}
+          commentLoading={commentLoading}
+          onLike={handleLike}
+          onComment={handleComment}
+          onShare={() => Alert.alert('Share')}
+          showSeparator={false}
+        />
       </CardContent>
     </Card>
   );
@@ -1158,14 +1116,22 @@ function CommentItemPreview() {
   const { colors, spacing } = useTheme();
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(12);
+  const [likeLoading, setLikeLoading] = useState(false);
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    setLikeLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
     setLiked(!liked);
     setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+    setLikeLoading(false);
   };
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Loading & Disabled States</CardTitle>
+        <CardDescription>Try liking the first comment to see loading indicator</CardDescription>
+      </CardHeader>
       <CardContent style={{ paddingTop: spacing[4] }}>
         <View style={{ gap: spacing[4] }}>
           <CommentItem
@@ -1177,6 +1143,7 @@ function CommentItemPreview() {
             time="2h ago"
             likes={likeCount}
             liked={liked}
+            likeLoading={likeLoading}
             onLike={handleLike}
             onReply={() => Alert.alert('Reply')}
           />
@@ -1189,18 +1156,15 @@ function CommentItemPreview() {
             time="1h ago"
             likes={5}
             isReply
+            disabled
             onLike={() => {}}
+            onReply={() => {}}
           />
         </View>
       </CardContent>
     </Card>
   );
 }
-
-// ============================================================================
-// Product Card Preview
-// ============================================================================
-
 function ProductCardPreview() {
   const { colors, spacing } = useTheme();
   const [wishlisted, setWishlisted] = useState(false);
@@ -1415,29 +1379,59 @@ function ReviewCardPreview() {
   };
 
   return (
-    <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <ReviewCard
-          author={{
-            name: 'Sarah Miller',
-            avatar: { uri: 'https://i.pravatar.cc/100?img=5' },
-            verified: true,
-          }}
-          rating={5}
-          title="Absolutely love it!"
-          content="This product exceeded my expectations. The quality is fantastic and it works perfectly. Highly recommend to anyone looking for a reliable option. Customer service was also excellent when I had questions."
-          date={new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()}
-          variant="Black / Large"
-          helpfulCount={helpfulCount}
-          isHelpful={helpful}
-          onHelpful={handleHelpful}
-          images={[
-            { uri: 'https://picsum.photos/100/100?random=20' },
-            { uri: 'https://picsum.photos/100/100?random=21' },
-          ]}
-        />
-      </CardContent>
-    </Card>
+    <View style={{ gap: spacing[4] }}>
+      <Card>
+        <CardHeader>
+          <CardTitle>With Images & Helpful Button</CardTitle>
+          <CardDescription>Full review with photos and interaction</CardDescription>
+        </CardHeader>
+        <CardContent style={{ paddingTop: spacing[4] }}>
+          <ReviewCard
+            author={{
+              name: 'Sarah Miller',
+              avatar: { uri: 'https://i.pravatar.cc/100?img=5' },
+              verified: true,
+            }}
+            rating={5}
+            title="Absolutely love it!"
+            content="This product exceeded my expectations. The quality is fantastic and it works perfectly. Highly recommend to anyone looking for a reliable option. Customer service was also excellent when I had questions."
+            date={new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()}
+            variant="Black / Large"
+            helpfulCount={helpfulCount}
+            isHelpful={helpful}
+            onHelpful={handleHelpful}
+            images={[
+              { uri: 'https://picsum.photos/100/100?random=20' },
+              { uri: 'https://picsum.photos/100/100?random=21' },
+              { uri: 'https://picsum.photos/100/100?random=22' },
+            ]}
+          />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Simple Review</CardTitle>
+          <CardDescription>Rating and text without images</CardDescription>
+        </CardHeader>
+        <CardContent style={{ paddingTop: spacing[4] }}>
+          <ReviewCard
+            author={{
+              name: 'John Davis',
+              avatar: { uri: 'https://i.pravatar.cc/100?img=8' },
+              verified: false,
+            }}
+            rating={4}
+            title="Great value for money"
+            content="Does exactly what it promises. Setup was easy and it's been working well for the past month."
+            date={new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()}
+            variant="White / Medium"
+            helpfulCount={12}
+            onHelpful={() => Alert.alert('Marked as helpful')}
+          />
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 
@@ -1483,9 +1477,13 @@ function EventCardPreview() {
   const { colors, spacing } = useTheme();
 
   return (
-    <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <View style={{ gap: spacing[3] }}>
+    <View style={{ gap: spacing[4] }}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Basic Event</CardTitle>
+          <CardDescription>Simple event with time and location</CardDescription>
+        </CardHeader>
+        <CardContent style={{ paddingTop: spacing[4] }}>
           <EventCard
             event={{
               id: '1',
@@ -1497,10 +1495,20 @@ function EventCardPreview() {
             }}
             onPress={() => Alert.alert('Event Details')}
           />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>With Attendees</CardTitle>
+          <CardDescription>Shows color indicator and avatar stack</CardDescription>
+        </CardHeader>
+        <CardContent style={{ paddingTop: spacing[4] }}>
           <EventCard
             event={{
               id: '2',
               title: 'Product Launch Party',
+              description: 'Celebrate our new product release with the team',
               startTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
               endTime: new Date(Date.now() + 27 * 60 * 60 * 1000).toISOString(),
               location: 'Main Office',
@@ -1509,13 +1517,15 @@ function EventCardPreview() {
                 { name: 'John', avatar: { uri: 'https://i.pravatar.cc/100?img=8' } },
                 { name: 'Sarah', avatar: { uri: 'https://i.pravatar.cc/100?img=5' } },
                 { name: 'Mike', avatar: { uri: 'https://i.pravatar.cc/100?img=12' } },
+                { name: 'Emma', avatar: { uri: 'https://i.pravatar.cc/100?img=15' } },
+                { name: 'Alex', avatar: { uri: 'https://i.pravatar.cc/100?img=20' } },
               ],
             }}
             onPress={() => Alert.alert('Event Details')}
           />
-        </View>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 
