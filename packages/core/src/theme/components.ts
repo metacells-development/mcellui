@@ -781,6 +781,142 @@ export const listTokens = {
 } as const;
 
 // =============================================================================
+// Tabs Component Tokens
+// =============================================================================
+
+export const TABS_CONSTANTS = {
+  /** Indicator animation spring config */
+  spring: { damping: 20, stiffness: 200 },
+  /** Indicator height for underline variant */
+  indicatorHeight: 2,
+  /** Container padding for pill variant */
+  pillPadding: 4,
+} as const;
+
+export const tabsTokens = {
+  trigger: {
+    fontSize: fontSize.base,
+    fontWeight: fontWeight.medium,
+    activeFontWeight: fontWeight.semibold,
+    paddingVertical: spacing[2],
+    paddingHorizontal: spacing[3],
+  },
+  triggerUnderline: {
+    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[4],
+  },
+  content: {
+    marginTop: spacing[4],
+  },
+  indicator: {
+    pillTop: 4,
+    pillBottom: 4,
+    underlineHeight: TABS_CONSTANTS.indicatorHeight,
+  },
+} as const;
+
+// =============================================================================
+// Accordion Component Tokens
+// =============================================================================
+
+export const ACCORDION_CONSTANTS = {
+  /** Spring animation config for smooth expand/collapse */
+  spring: { damping: 20, stiffness: 200, mass: 0.5 },
+  /** Chevron icon size */
+  chevronSize: 16,
+} as const;
+
+export const accordionTokens = {
+  trigger: {
+    fontSize: fontSize.md,
+    fontWeight: fontWeight.medium,
+    paddingVertical: spacing[4],
+    paddingHorizontal: spacing[4],
+    iconMargin: spacing[2],
+  },
+  content: {
+    paddingHorizontal: spacing[4],
+    paddingBottom: spacing[4],
+  },
+  item: {
+    borderWidth: 1,
+  },
+} as const;
+
+// =============================================================================
+// Collapsible Component Tokens
+// =============================================================================
+
+export const COLLAPSIBLE_CONSTANTS = {
+  /** Spring animation config (same as accordion for consistency) */
+  spring: { damping: 20, stiffness: 200, mass: 0.5 },
+  /** Chevron icon size */
+  chevronSize: 16,
+} as const;
+
+export const collapsibleTokens = {
+  trigger: {
+    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[4],
+    iconMargin: spacing[2],
+  },
+} as const;
+
+// =============================================================================
+// Carousel Component Tokens
+// =============================================================================
+
+export const CAROUSEL_CONSTANTS = {
+  /** Default autoplay interval in ms */
+  autoplayInterval: 4000,
+  /** Scroll event throttle (16ms = 60fps) */
+  scrollEventThrottle: 16,
+} as const;
+
+export const carouselTokens = {
+  indicator: {
+    dotSize: 8,
+    dotActiveWidth: 24,
+    dotActiveScale: 1,
+    dotInactiveScale: 0.8,
+    dotInactiveOpacity: 0.4,
+    gap: spacing[1.5],
+    paddingVertical: spacing[2],
+  },
+  lineIndicator: {
+    activeWidth: 24,
+    inactiveWidth: 8,
+  },
+} as const;
+
+// =============================================================================
+// SwipeableRow Component Tokens
+// =============================================================================
+
+export const SWIPEABLE_ROW_CONSTANTS = {
+  /** Default action button width */
+  actionWidth: 80,
+  /** Spring animation config */
+  spring: { damping: 20, stiffness: 200 },
+  /** Velocity threshold for snap decision (px/s) */
+  velocityThreshold: 500,
+  /** Full swipe trigger ratio (0.5 = 50% of screen width) */
+  fullSwipeRatio: 0.5,
+  /** Resistance factor when overswiping */
+  resistanceFactor: 0.3,
+} as const;
+
+export const swipeableRowTokens = {
+  action: {
+    width: SWIPEABLE_ROW_CONSTANTS.actionWidth,
+    paddingHorizontal: spacing[2],
+    iconMargin: spacing[1],
+    labelFontSize: fontSize.xs,
+    labelFontWeight: fontWeight.semibold,
+  },
+} as const;
+
+// =============================================================================
 // Export all component tokens
 // =============================================================================
 
@@ -812,6 +948,11 @@ export const components = {
   progress: progressTokens,
   circularProgress: circularProgressTokens,
   list: listTokens,
+  tabs: tabsTokens,
+  accordion: accordionTokens,
+  collapsible: collapsibleTokens,
+  carousel: carouselTokens,
+  swipeableRow: swipeableRowTokens,
   height: componentHeight,
   icon: iconSize,
 } as const;
