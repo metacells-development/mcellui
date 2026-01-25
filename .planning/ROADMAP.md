@@ -96,10 +96,13 @@ Plans:
   3. All progress components support determinate and indeterminate modes where applicable
   4. Loading states are accessible with proper screen reader announcements
   5. Demo shows all progress types and states with animation examples
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] TBD
+- [ ] 04-01-PLAN.md - Add Spinner, Skeleton, Progress, CircularProgress tokens to core
+- [ ] 04-02-PLAN.md - Migrate Spinner and Skeleton to centralized tokens
+- [ ] 04-03-PLAN.md - Migrate Progress and CircularProgress to tokens with reduce-motion
+- [ ] 04-04-PLAN.md - Enhance demos for all progress components
 
 ### Phase 5: Data Display
 **Goal**: All data display components have consistent styling and compose cleanly
@@ -235,7 +238,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 1. Form Inputs | 5/5 | ✓ Complete | 2026-01-24 |
 | 2. Buttons & Actions | 6/6 | ✓ Complete | 2026-01-24 |
 | 3. Feedback Components | 6/6 | ✓ Complete | 2026-01-25 |
-| 4. Progress & Loading | 0/TBD | Not started | - |
+| 4. Progress & Loading | 0/4 | Planned | - |
 | 5. Data Display | 0/5 | Planned | - |
 | 6. Layout & Structure | 0/TBD | Not started | - |
 | 7. Navigation & Interaction | 0/TBD | Not started | - |
