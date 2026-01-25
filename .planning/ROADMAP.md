@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Buttons & Actions** - Button, Icon Button, FAB, Segmented Control, Action Sheet
 - [x] **Phase 3: Feedback Components** - Toast, Dialog, Alert Dialog, Alert, Sheet, Popover, Tooltip
 - [ ] **Phase 4: Progress & Loading** - Spinner, Skeleton, Progress, Circular Progress, Pull to Refresh
-- [ ] **Phase 5: Data Display** - Card, Avatar, Avatar Stack, Badge, Chip, Label, Typography, Rating, Image
+- [x] **Phase 5: Data Display** - Card, Avatar, Avatar Stack, Badge, Chip, Label, Typography, Rating, Image
 - [ ] **Phase 6: Layout & Structure** - Separator, Row, Column, Screen, List, Horizontal List, Section Header
 - [ ] **Phase 7: Navigation & Interaction** - Tabs, Accordion, Collapsible, Carousel, Swipeable Row
 - [ ] **Phase 8: Advanced Components** - Calendar, DateTime Picker, Image Gallery, Pagination, Stories, Search Input, Form
@@ -117,11 +117,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 05-01-PLAN.md - Extend token system with data display component tokens
-- [ ] 05-02-PLAN.md - Migrate Chip and Label to centralized tokens
-- [ ] 05-03-PLAN.md - Migrate Rating and AvatarStack to centralized tokens
-- [ ] 05-04-PLAN.md - Add h5/h6 typography presets, migrate Image to componentRadius
-- [ ] 05-05-PLAN.md - Enhance demos for Chip, Label, Rating, AvatarStack, Image, Typography
+- [x] 05-01-PLAN.md - Extend token system with data display component tokens
+- [x] 05-02-PLAN.md - Migrate Chip and Label to centralized tokens
+- [x] 05-03-PLAN.md - Migrate Rating and AvatarStack to centralized tokens
+- [x] 05-04-PLAN.md - Add h5/h6 typography presets, migrate Image to componentRadius
+- [x] 05-05-PLAN.md - Enhance demos for Chip, Label, Rating, AvatarStack, Image, Typography
 
 ### Phase 6: Layout & Structure
 **Goal**: All layout primitives have consistent spacing and compose predictably
@@ -256,7 +256,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 2. Buttons & Actions | 6/6 | Complete | 2026-01-24 |
 | 3. Feedback Components | 6/6 | Complete | 2026-01-25 |
 | 4. Progress & Loading | 0/4 | Planned | - |
-| 5. Data Display | 0/5 | Planned | - |
+| 5. Data Display | 5/5 | ✓ Complete | 2026-01-25 |
 | 6. Layout & Structure | 0/5 | Planned | - |
 | 7. Navigation & Interaction | 0/5 | Planned | - |
 | 8. Advanced Components | 0/6 | Planned | - |
