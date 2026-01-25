@@ -945,6 +945,68 @@ export const authBlockTokens = {
 } as const;
 
 // =============================================================================
+// Calendar Component Tokens
+// =============================================================================
+
+export const calendarTokens = {
+  sm: {
+    daySize: 32,
+    fontSize: fontSize.sm,
+    headerFontSize: fontSize.base,
+    gap: spacing[0.5],  // was hardcoded 2
+    containerPadding: spacing[2],  // was hardcoded 8
+    weekNumberWidth: 24,
+    navButtonPadding: spacing[2],
+  },
+  md: {
+    daySize: 40,
+    fontSize: fontSize.base,
+    headerFontSize: fontSize.md,
+    gap: spacing[1],  // was hardcoded 4
+    containerPadding: spacing[2],
+    weekNumberWidth: 24,
+    navButtonPadding: spacing[2],
+  },
+} as const;
+
+// =============================================================================
+// DateTimePicker Component Tokens
+// =============================================================================
+
+export const dateTimePickerTokens = {
+  input: {
+    height: componentHeight.md,
+    paddingHorizontal: spacing[4],
+    paddingVertical: spacing[3],
+    iconMarginLeft: spacing[2],  // was hardcoded 8
+  },
+  sheet: {
+    borderRadius: 20,  // iOS convention
+    handlePaddingVertical: spacing[3],  // was hardcoded 12
+    handleWidth: 36,
+    handleHeight: 4,
+    headerPaddingHorizontal: spacing[4],
+    headerPaddingBottom: spacing[3],
+    pickerPaddingVertical: spacing[4],  // was hardcoded 16
+    pickerHeight: 200,
+  },
+  fallback: {
+    padding: spacing[6],  // was hardcoded 24
+    gap: spacing[3],  // was hardcoded 12
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    topWidth: 14,
+    topHeight: 3,
+    bodyWidth: 16,
+    bodyHeight: 14,
+    dotSize: 3,
+    dotGap: 3,  // intentional pixel value for icon detail
+  },
+} as const;
+
+// =============================================================================
 // Export all component tokens
 // =============================================================================
 
