@@ -159,7 +159,7 @@ export function Image({
   onError,
   ...props
 }: ImageProps) {
-  const { colors, radius } = useTheme();
+  const { colors, componentRadius } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const opacity = useSharedValue(0);
@@ -197,7 +197,7 @@ export function Image({
     width: width || '100%',
     height: height || '100%',
     aspectRatio,
-    borderRadius: borderRadius ?? radius.md,
+    borderRadius: borderRadius ?? componentRadius.image,
   };
 
   // Error state
@@ -210,7 +210,7 @@ export function Image({
             width,
             height,
             aspectRatio,
-            borderRadius: borderRadius ?? radius.md,
+            borderRadius: borderRadius ?? componentRadius.image,
             backgroundColor: colors.backgroundMuted,
           },
           containerStyle,
@@ -235,7 +235,7 @@ export function Image({
           width,
           height,
           aspectRatio,
-          borderRadius: borderRadius ?? radius.md,
+          borderRadius: borderRadius ?? componentRadius.image,
           overflow: 'hidden',
         },
         containerStyle,
