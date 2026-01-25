@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { AvatarStack } from '@/components/ui/avatar-stack';
 import { Section } from './section';
 import { useTheme } from '@metacells/mcellui-core';
@@ -22,99 +22,154 @@ const fallbackUsers = [
   { name: 'Eve Davis' },
 ];
 
+const mixedUsers = [
+  { name: 'Alice Johnson', source: { uri: 'https://i.pravatar.cc/150?img=1' } },
+  { name: 'Bob Smith' }, // fallback initials
+  { name: 'Carol White', source: { uri: 'https://i.pravatar.cc/150?img=3' } },
+  { name: 'David Brown' }, // fallback initials
+  { name: 'Eve Davis', source: { uri: 'https://i.pravatar.cc/150?img=5' } },
+];
+
 export function AvatarStackDemo() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, typography } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={{ gap: spacing[8] }}>
+      {/* Sizes Section */}
       <Section title="Sizes">
-        <View style={styles.row}>
-          <View style={styles.sizeItem}>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: spacing[6], flexWrap: 'wrap' }}>
+          <View style={{ alignItems: 'center', gap: spacing[2] }}>
             <AvatarStack avatars={sampleUsers.slice(0, 3)} size="sm" />
-            <Text style={[styles.label, { color: colors.foregroundMuted }]}>Small</Text>
+            <Text style={[typography.caption, { color: colors.foregroundMuted }]}>Small</Text>
           </View>
-          <View style={styles.sizeItem}>
+          <View style={{ alignItems: 'center', gap: spacing[2] }}>
             <AvatarStack avatars={sampleUsers.slice(0, 3)} size="md" />
-            <Text style={[styles.label, { color: colors.foregroundMuted }]}>Medium</Text>
+            <Text style={[typography.caption, { color: colors.foregroundMuted }]}>Medium</Text>
           </View>
-          <View style={styles.sizeItem}>
+          <View style={{ alignItems: 'center', gap: spacing[2] }}>
             <AvatarStack avatars={sampleUsers.slice(0, 3)} size="lg" />
-            <Text style={[styles.label, { color: colors.foregroundMuted }]}>Large</Text>
+            <Text style={[typography.caption, { color: colors.foregroundMuted }]}>Large</Text>
           </View>
-          <View style={styles.sizeItem}>
+          <View style={{ alignItems: 'center', gap: spacing[2] }}>
             <AvatarStack avatars={sampleUsers.slice(0, 3)} size="xl" />
-            <Text style={[styles.label, { color: colors.foregroundMuted }]}>XL</Text>
+            <Text style={[typography.caption, { color: colors.foregroundMuted }]}>XL</Text>
           </View>
         </View>
       </Section>
 
-      <Section title="With Overflow">
-        <View style={styles.column}>
-          <View style={styles.overflowRow}>
+      {/* Max Count Section */}
+      <Section title="Max Count">
+        <View style={{ gap: spacing[4] }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
+            <AvatarStack avatars={sampleUsers} max={2} />
+            <Text style={[typography.bodySm, { color: colors.foreground }]}>
+              max=2 ({sampleUsers.length} total)
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
             <AvatarStack avatars={sampleUsers} max={3} />
-            <Text style={[styles.overflowLabel, { color: colors.foreground }]}>
+            <Text style={[typography.bodySm, { color: colors.foreground }]}>
               max=3 ({sampleUsers.length} total)
             </Text>
           </View>
-          <View style={styles.overflowRow}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
             <AvatarStack avatars={sampleUsers} max={4} />
-            <Text style={[styles.overflowLabel, { color: colors.foreground }]}>
+            <Text style={[typography.bodySm, { color: colors.foreground }]}>
               max=4 ({sampleUsers.length} total)
             </Text>
           </View>
-          <View style={styles.overflowRow}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
             <AvatarStack avatars={sampleUsers} max={5} />
-            <Text style={[styles.overflowLabel, { color: colors.foreground }]}>
+            <Text style={[typography.bodySm, { color: colors.foreground }]}>
               max=5 ({sampleUsers.length} total)
             </Text>
           </View>
         </View>
       </Section>
 
-      <Section title="Fallback Initials">
-        <AvatarStack avatars={fallbackUsers} max={5} size="lg" />
-        <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
-          When no image is provided, initials are shown
-        </Text>
+      {/* Overflow Indicator Section */}
+      <Section title="Overflow Indicator">
+        <View style={{ gap: spacing[3] }}>
+          <AvatarStack avatars={sampleUsers} max={3} size="lg" />
+          <Text style={[typography.caption, { color: colors.foregroundMuted }]}>
+            Shows +{sampleUsers.length - 3} indicator when more avatars than max
+          </Text>
+        </View>
       </Section>
 
-      <Section title="Different Overlaps">
-        <View style={styles.column}>
-          <View style={styles.overflowRow}>
+      {/* Fallback Initials Section */}
+      <Section title="Fallback Initials">
+        <View style={{ gap: spacing[3] }}>
+          <AvatarStack avatars={fallbackUsers} max={5} size="lg" />
+          <Text style={[typography.caption, { color: colors.foregroundMuted }]}>
+            When no image is provided, initials are shown from name
+          </Text>
+        </View>
+      </Section>
+
+      {/* Mixed Avatars Section */}
+      <Section title="Mixed (Images + Initials)">
+        <View style={{ gap: spacing[3] }}>
+          <AvatarStack avatars={mixedUsers} max={5} size="md" />
+          <Text style={[typography.caption, { color: colors.foregroundMuted }]}>
+            Some avatars with images, some with fallback initials
+          </Text>
+        </View>
+      </Section>
+
+      {/* Overlap Variations Section */}
+      <Section title="Overlap Variations">
+        <View style={{ gap: spacing[4] }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
             <AvatarStack avatars={sampleUsers.slice(0, 4)} overlap={0.2} />
-            <Text style={[styles.overflowLabel, { color: colors.foreground }]}>
-              overlap=0.2
+            <Text style={[typography.bodySm, { color: colors.foreground }]}>
+              overlap=0.2 (less overlap)
             </Text>
           </View>
-          <View style={styles.overflowRow}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
+            <AvatarStack avatars={sampleUsers.slice(0, 4)} overlap={0.3} />
+            <Text style={[typography.bodySm, { color: colors.foreground }]}>
+              overlap=0.3 (default)
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
             <AvatarStack avatars={sampleUsers.slice(0, 4)} overlap={0.4} />
-            <Text style={[styles.overflowLabel, { color: colors.foreground }]}>
-              overlap=0.4
+            <Text style={[typography.bodySm, { color: colors.foreground }]}>
+              overlap=0.4 (more overlap)
             </Text>
           </View>
-          <View style={styles.overflowRow}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
             <AvatarStack avatars={sampleUsers.slice(0, 4)} overlap={0.5} />
-            <Text style={[styles.overflowLabel, { color: colors.foreground }]}>
-              overlap=0.5
+            <Text style={[typography.bodySm, { color: colors.foreground }]}>
+              overlap=0.5 (maximum)
             </Text>
           </View>
         </View>
       </Section>
 
+      {/* In Context Section */}
       <Section title="In Context">
         <View
-          style={[
-            styles.contextCard,
-            { backgroundColor: colors.card, borderRadius: radius.lg },
-          ]}
+          style={{
+            backgroundColor: colors.card,
+            borderRadius: radius.lg,
+            padding: spacing[4],
+          }}
         >
-          <View style={styles.contextHeader}>
-            <Text style={[styles.contextTitle, { color: colors.foreground }]}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: spacing[2],
+            }}
+          >
+            <Text style={[typography.label, { color: colors.foreground }]}>
               Project Team
             </Text>
             <AvatarStack avatars={sampleUsers.slice(0, 5)} size="sm" max={4} />
           </View>
-          <Text style={[styles.contextSubtitle, { color: colors.foregroundMuted }]}>
+          <Text style={[typography.bodySm, { color: colors.foregroundMuted }]}>
             5 members are working on this project
           </Text>
         </View>
@@ -122,18 +177,3 @@ export function AvatarStackDemo() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { gap: 32 },
-  row: { flexDirection: 'row', alignItems: 'flex-start', gap: 24, flexWrap: 'wrap' },
-  column: { gap: 16 },
-  sizeItem: { alignItems: 'center', gap: 8 },
-  label: { fontSize: 12 },
-  overflowRow: { flexDirection: 'row', alignItems: 'center', gap: 16 },
-  overflowLabel: { fontSize: 14 },
-  hint: { fontSize: 12, marginTop: 4 },
-  contextCard: { padding: 16 },
-  contextHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
-  contextTitle: { fontSize: 16, fontWeight: '600' },
-  contextSubtitle: { fontSize: 14 },
-});
