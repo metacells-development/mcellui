@@ -30,7 +30,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import Svg, { Path, Circle as SvgCircle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, cardBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -130,7 +130,7 @@ export function EventCard({
   onJoin,
   style,
 }: EventCardProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, platformShadow } = useTheme();
 
   const handlePress = () => {
     haptic('light');
@@ -223,9 +223,11 @@ export function EventCard({
             backgroundColor: colors.background,
             borderLeftWidth: 3,
             borderLeftColor: eventColor,
-            padding: spacing[3],
+            paddingVertical: cardBlockTokens.content.paddingVertical,
+            paddingHorizontal: cardBlockTokens.content.paddingHorizontal,
             borderRadius: radius.md,
           },
+          platformShadow(cardBlockTokens.shadow),
           style,
         ]}
       >
@@ -245,7 +247,10 @@ export function EventCard({
       onPress={onPress ? handlePress : undefined}
       style={style}
     >
-      <View style={{ padding: spacing[4] }}>
+      <View style={{
+        paddingVertical: cardBlockTokens.content.paddingVertical,
+        paddingHorizontal: cardBlockTokens.content.paddingHorizontal,
+      }}>
         {/* Header with date and status */}
         <View style={[styles.header, { marginBottom: spacing[3] }]}>
           <View
@@ -379,15 +384,15 @@ const styles = StyleSheet.create({
   },
   dateMonth: {
     fontSize: 11,
-    fontWeight: '600',
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
     textTransform: 'uppercase',
   },
   title: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: cardBlockTokens.typography.titleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
   description: {
-    fontSize: 14,
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
     lineHeight: 20,
   },
   infoSection: {},
@@ -396,14 +401,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   infoText: {
-    fontSize: 13,
+    fontSize: cardBlockTokens.typography.metaFontSize,
   },
   attendeesRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   moreAttendees: {
-    fontSize: 12,
+    fontSize: cardBlockTokens.typography.metaFontSize,
   },
   joinButton: {
     flexDirection: 'row',
@@ -411,17 +416,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   joinText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
   // Compact variant
   compactContainer: {},
   compactTitle: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
   compactTime: {
-    fontSize: 12,
+    fontSize: cardBlockTokens.typography.metaFontSize,
     marginTop: 2,
   },
   // Timeline variant
@@ -433,8 +438,8 @@ const styles = StyleSheet.create({
     width: 50,
   },
   timelineTime: {
-    fontSize: 12,
-    fontWeight: '500',
+    fontSize: cardBlockTokens.typography.metaFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
   colorBar: {
     width: 3,
