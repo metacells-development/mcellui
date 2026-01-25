@@ -46,7 +46,7 @@ import Animated, {
   runOnJS,
   interpolate,
 } from 'react-native-reanimated';
-import { useTheme, DIALOG_CONSTANTS, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, DIALOG_CONSTANTS, areAnimationsDisabled, overlayTypography } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -285,12 +285,14 @@ const styles = StyleSheet.create({
   },
   header: {},
   title: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: overlayTypography.title.fontSize,
+    fontWeight: overlayTypography.title.fontWeight,
+    lineHeight: overlayTypography.title.lineHeight,
   },
   description: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: overlayTypography.description.fontSize,
+    fontWeight: overlayTypography.description.fontWeight,
+    lineHeight: overlayTypography.description.lineHeight,
   },
   footer: {
     flexDirection: 'row',

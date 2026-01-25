@@ -42,6 +42,7 @@ import {
   TextStyle,
   ImageStyle,
   PressableProps,
+  GestureResponderEvent,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -81,7 +82,7 @@ export function Card({ children, onPress, disabled, style }: CardProps) {
   }, [isInteractive, springs.snappy]);
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       if (isInteractive) {
         haptic('light');
         onPress?.(e);
@@ -359,7 +360,7 @@ export function ImageCard({
   }, [isInteractive, springs.snappy]);
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       if (isInteractive) {
         haptic('light');
         onPress?.(e);
@@ -489,7 +490,7 @@ export function MediaCard({
   }, [isInteractive, springs.snappy]);
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       if (isInteractive) {
         haptic('light');
         onPress?.(e);

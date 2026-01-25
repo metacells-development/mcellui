@@ -70,25 +70,6 @@ export interface RatingProps {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Size configs
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SIZE_CONFIG = {
-  sm: {
-    starSize: 18,
-    gap: 2,
-  },
-  md: {
-    starSize: 26,
-    gap: 4,
-  },
-  lg: {
-    starSize: 34,
-    gap: 6,
-  },
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Star SVG Path (simplified 5-point star)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -236,8 +217,8 @@ export function Rating({
   activeColor,
   inactiveColor,
 }: RatingProps) {
-  const { colors } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, components } = useTheme();
+  const tokens = components.rating[size];
 
   const starActiveColor = activeColor || '#F59E0B'; // Amber/warning yellow
   const starInactiveColor = inactiveColor || colors.border;
@@ -262,7 +243,7 @@ export function Rating({
     <View
       style={[
         styles.container,
-        { gap: config.gap },
+        { gap: tokens.gap },
         style,
       ]}
       accessibilityRole="adjustable"
@@ -278,7 +259,7 @@ export function Rating({
           key={index}
           index={index}
           filled={getStarFill(index)}
-          size={config.starSize}
+          size={tokens.starSize}
           activeColor={starActiveColor}
           inactiveColor={starInactiveColor}
           readonly={readonly}

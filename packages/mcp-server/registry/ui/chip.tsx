@@ -16,6 +16,11 @@
  *   Sale
  * </Chip>
  *
+ * // Dismissible chip (tag input style)
+ * <Chip onRemove={() => removeTag(tag)}>
+ *   {tag.name}
+ * </Chip>
+ *
  * // Chip group
  * <ChipGroup>
  *   {categories.map(cat => (
@@ -46,7 +51,9 @@ import Animated, {
   withSpring,
   interpolateColor,
 } from 'react-native-reanimated';
+import Svg, { Path } from 'react-native-svg';
 import { useTheme } from '@metacells/mcellui-core';
+import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -72,10 +79,27 @@ export interface ChipProps {
   disabled?: boolean;
   /** Press handler */
   onPress?: () => void;
+  /** Remove handler - shows close button when provided */
+  onRemove?: () => void;
   /** Container style */
   style?: ViewStyle;
   /** Label style */
   labelStyle?: TextStyle;
+}
+
+// Close/X icon for dismissible chips
+function CloseIcon({ color, size }: { color: string; size: number }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M18 6L6 18M6 6l12 12"
+        stroke={color}
+        strokeWidth={2.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
 }
 
 export interface ChipGroupProps {
@@ -87,33 +111,6 @@ export interface ChipGroupProps {
   style?: ViewStyle;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Size configs
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SIZE_CONFIG = {
-  sm: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    fontSize: 12,
-    iconSize: 14,
-    radiusKey: 'md' as const,
-  },
-  md: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    fontSize: 14,
-    iconSize: 16,
-    radiusKey: 'lg' as const,
-  },
-  lg: {
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    fontSize: 16,
-    iconSize: 18,
-    radiusKey: 'xl' as const,
-  },
-};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Chip Component
@@ -127,11 +124,12 @@ export function Chip({
   icon,
   disabled = false,
   onPress,
+  onRemove,
   style,
   labelStyle,
 }: ChipProps) {
-  const { colors, fontWeight, radius } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, fontWeight, components, componentRadius } = useTheme();
+  const tokens = components.chip[size];
 
   const scale = useSharedValue(1);
   const selectedAnim = useSharedValue(selected ? 1 : 0);
@@ -187,18 +185,29 @@ export function Chip({
     scale.value = withSpring(1, { damping: 20, stiffness: 400 });
   };
 
+  const handleRemove = () => {
+    haptic('light');
+    onRemove?.();
+  };
+
+  // Adjust padding when there's a close button
+  const rightPadding = onRemove
+    ? tokens.paddingHorizontal - 4 // Less padding since close button has its own
+    : tokens.paddingHorizontal;
+
   return (
     <AnimatedPressable
       onPress={onPress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      disabled={disabled}
+      disabled={disabled || (!onPress && !onRemove)}
       style={[
         styles.chip,
         {
-          paddingHorizontal: config.paddingHorizontal,
-          paddingVertical: config.paddingVertical,
-          borderRadius: radius[config.radiusKey],
+          paddingLeft: tokens.paddingHorizontal,
+          paddingRight: rightPadding,
+          paddingVertical: tokens.paddingVertical,
+          borderRadius: componentRadius.chip,
           opacity: disabled ? 0.5 : 1,
         },
         animatedStyle,
@@ -211,8 +220,8 @@ export function Chip({
         <View style={{ marginRight: 6 }}>
           {React.isValidElement(icon)
             ? React.cloneElement(icon as React.ReactElement<{ width?: number; height?: number; color?: string }>, {
-                width: config.iconSize,
-                height: config.iconSize,
+                width: tokens.iconSize,
+                height: tokens.iconSize,
                 color: textColor,
               })
             : icon}
@@ -222,7 +231,7 @@ export function Chip({
         style={[
           styles.label,
           {
-            fontSize: config.fontSize,
+            fontSize: tokens.fontSize,
             fontWeight: fontWeight.medium,
             color: textColor,
           },
@@ -231,6 +240,27 @@ export function Chip({
       >
         {children}
       </Text>
+      {onRemove && (
+        <Pressable
+          onPress={handleRemove}
+          disabled={disabled}
+          style={({ pressed }) => [
+            styles.closeButton,
+            {
+              marginLeft: 4,
+              opacity: pressed ? 0.7 : 1,
+            },
+          ]}
+          accessibilityRole="button"
+          accessibilityLabel={`Remove ${children}`}
+          hitSlop={8}
+        >
+          <CloseIcon
+            color={textColor}
+            size={tokens.iconSize - 2}
+          />
+        </Pressable>
+      )}
     </AnimatedPressable>
   );
 }
@@ -263,6 +293,10 @@ const styles = StyleSheet.create({
   },
   label: {
     textAlign: 'center',
+  },
+  closeButton: {
+    padding: 2,
+    borderRadius: 4,
   },
   group: {
     flexDirection: 'row',

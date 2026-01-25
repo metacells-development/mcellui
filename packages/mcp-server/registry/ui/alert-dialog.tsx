@@ -36,6 +36,7 @@ import {
   Dimensions,
   Pressable,
   PressableProps,
+  GestureResponderEvent,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -45,7 +46,7 @@ import Animated, {
   runOnJS,
   interpolate,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, DIALOG_CONSTANTS, overlayTypography, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -233,7 +234,7 @@ export function AlertDialogCancel({
   const { onClose } = useAlertDialog();
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       haptic('light');
       onPress?.(e);
       onClose();
@@ -284,7 +285,7 @@ export function AlertDialogAction({
   const { onClose } = useAlertDialog();
 
   const handlePress = useCallback(
-    (e: any) => {
+    (e: GestureResponderEvent) => {
       haptic(destructive ? 'warning' : 'light');
       onPress?.(e);
       onClose();
@@ -329,16 +330,18 @@ const styles = StyleSheet.create({
   },
   dialog: {
     width: '100%',
-    padding: 24,
+    padding: DIALOG_CONSTANTS.contentPadding,
   },
   header: {},
   title: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: overlayTypography.title.fontSize,
+    fontWeight: overlayTypography.title.fontWeight,
+    lineHeight: overlayTypography.title.lineHeight,
   },
   description: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: overlayTypography.description.fontSize,
+    fontWeight: overlayTypography.description.fontWeight,
+    lineHeight: overlayTypography.description.lineHeight,
   },
   footer: {
     flexDirection: 'row',
@@ -349,7 +352,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: overlayTypography.description.fontSize,
+    fontWeight: fontWeight.semibold,
   },
 });

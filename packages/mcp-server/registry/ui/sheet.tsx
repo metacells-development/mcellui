@@ -47,7 +47,7 @@ import {
   GestureDetector,
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
-import { useTheme, SHEET_CONSTANTS, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, SHEET_CONSTANTS, areAnimationsDisabled, overlayTypography } from '@metacells/mcellui-core';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -290,7 +290,7 @@ export interface SheetFooterProps {
 export function SheetFooter({ children, style }: SheetFooterProps) {
   const { spacing } = useTheme();
   return (
-    <View style={[styles.footer, { paddingTop: spacing[4] }, style]}>
+    <View style={[styles.footer, { paddingTop: spacing[4], gap: spacing[2] }, style]}>
       {children}
     </View>
   );
@@ -355,17 +355,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: overlayTypography.title.fontSize,
+    fontWeight: overlayTypography.title.fontWeight,
+    lineHeight: overlayTypography.title.lineHeight,
     textAlign: 'center',
   },
   description: {
-    fontSize: 14,
+    fontSize: overlayTypography.description.fontSize,
+    fontWeight: overlayTypography.description.fontWeight,
+    lineHeight: overlayTypography.description.lineHeight,
     textAlign: 'center',
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    gap: 8,
   },
 });

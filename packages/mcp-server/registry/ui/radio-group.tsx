@@ -44,6 +44,7 @@ interface RadioGroupContextValue {
   size: 'sm' | 'md' | 'lg';
   colors: ThemeColors;
   springs: typeof themeSpringPresets;
+  components: typeof import('@metacells/mcellui-core').components;
 }
 
 const RadioGroupContext = createContext<RadioGroupContextValue | null>(null);
@@ -79,11 +80,11 @@ export function RadioGroup({
   children,
   style,
 }: RadioGroupProps) {
-  const { colors, springs } = useTheme();
+  const { colors, components, springs } = useTheme();
 
   return (
     <RadioGroupContext.Provider
-      value={{ value, onValueChange, disabled, size, colors, springs }}
+      value={{ value, onValueChange, disabled, size, colors, springs, components }}
     >
       <View
         style={[styles.group, style]}
@@ -121,7 +122,8 @@ export function RadioGroupItem({
   const context = useRadioGroup();
   const isSelected = context.value === value;
   const disabled = context.disabled || itemDisabled;
-  const { colors, springs } = context;
+  const { colors, springs, components } = context;
+  const tokens = components.radio[context.size];
 
   const progress = useSharedValue(isSelected ? 1 : 0);
   const [reduceMotion, setReduceMotion] = React.useState(false);
@@ -151,8 +153,6 @@ export function RadioGroupItem({
     haptic('selection');
     context.onValueChange(value);
   }, [disabled, context.onValueChange, value]);
-
-  const sizeStyles = sizes[context.size];
 
   const outerAnimatedStyle = useAnimatedStyle(() => ({
     borderColor: interpolateColor(
@@ -196,7 +196,12 @@ export function RadioGroupItem({
       <Animated.View
         style={[
           styles.outer,
-          sizeStyles.outer,
+          {
+            width: tokens.outerSize,
+            height: tokens.outerSize,
+            borderRadius: tokens.outerSize / 2,
+            borderWidth: tokens.borderWidth,
+          },
           outerAnimatedStyle,
           disabled && styles.disabled,
         ]}
@@ -204,19 +209,25 @@ export function RadioGroupItem({
         <Animated.View
           style={[
             styles.inner,
-            sizeStyles.inner,
-            { backgroundColor: colors.primary },
+            {
+              width: tokens.innerSize,
+              height: tokens.innerSize,
+              borderRadius: tokens.innerSize / 2,
+              backgroundColor: colors.primary,
+            },
             innerAnimatedStyle,
           ]}
         />
       </Animated.View>
 
-      <View style={styles.textContainer}>
+      <View style={[styles.textContainer, { gap: tokens.gap }]}>
         <Text
           style={[
             styles.label,
-            sizeStyles.label,
-            { color: disabled ? colors.foregroundMuted : colors.foreground },
+            {
+              fontSize: tokens.labelFontSize,
+              color: disabled ? colors.foregroundMuted : colors.foreground,
+            },
           ]}
         >
           {label}
@@ -225,8 +236,10 @@ export function RadioGroupItem({
           <Text
             style={[
               styles.description,
-              sizeStyles.description,
-              { color: disabled ? colors.foregroundMuted : colors.foregroundMuted },
+              {
+                fontSize: tokens.descriptionFontSize,
+                color: colors.foregroundMuted,
+              },
             ]}
           >
             {description}
@@ -236,28 +249,6 @@ export function RadioGroupItem({
     </Pressable>
   );
 }
-
-// Size-specific styles using StyleSheet
-const sizes = {
-  sm: StyleSheet.create({
-    outer: { width: 16, height: 16, borderRadius: 8 },
-    inner: { width: 8, height: 8, borderRadius: 4 },
-    label: { fontSize: 14 },
-    description: { fontSize: 12 },
-  }),
-  md: StyleSheet.create({
-    outer: { width: 20, height: 20, borderRadius: 10 },
-    inner: { width: 10, height: 10, borderRadius: 5 },
-    label: { fontSize: 16 },
-    description: { fontSize: 14 },
-  }),
-  lg: StyleSheet.create({
-    outer: { width: 24, height: 24, borderRadius: 12 },
-    inner: { width: 12, height: 12, borderRadius: 6 },
-    label: { fontSize: 18 },
-    description: { fontSize: 16 },
-  }),
-};
 
 const styles = StyleSheet.create({
   group: {
@@ -272,7 +263,6 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   outer: {
-    borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
@@ -283,7 +273,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    gap: 2,
   },
   label: {
     fontWeight: '500',

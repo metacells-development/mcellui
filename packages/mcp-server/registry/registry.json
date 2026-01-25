@@ -26,21 +26,21 @@
     {
       "name": "input",
       "type": "ui",
-      "description": "Text input with label, placeholder, and error states",
+      "description": "Text input with label, password toggle, clear button, and character count",
       "category": "Inputs",
       "status": "beta",
       "files": ["ui/input.tsx"],
-      "dependencies": [],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
       "registryDependencies": []
     },
     {
       "name": "badge",
       "type": "ui",
-      "description": "Small status indicator for labels and counts",
+      "description": "Small status indicator for labels, counts, dots, and notifications",
       "category": "Data Display",
       "status": "beta",
       "files": ["ui/badge.tsx"],
-      "dependencies": [],
+      "dependencies": ["react-native-reanimated"],
       "registryDependencies": []
     },
     {
@@ -396,11 +396,11 @@
     {
       "name": "chip",
       "type": "ui",
-      "description": "Selectable filter pills for filtering content or making selections",
+      "description": "Selectable filter pills with dismissible support",
       "category": "Inputs",
       "status": "beta",
       "files": ["ui/chip.tsx"],
-      "dependencies": ["react-native-reanimated"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
       "registryDependencies": []
     },
     {
@@ -594,6 +594,66 @@
       "registryDependencies": ["avatar", "icon-button", "separator"]
     },
     {
+      "name": "user-list-item",
+      "type": "block",
+      "description": "User row for follower lists, search results, and user selection",
+      "category": "Social",
+      "status": "beta",
+      "files": ["blocks/user-list-item.tsx"],
+      "dependencies": [],
+      "registryDependencies": ["avatar", "button", "badge"]
+    },
+    {
+      "name": "chat-bubble",
+      "type": "block",
+      "description": "Chat message bubble with status indicators for messaging interfaces",
+      "category": "Messaging",
+      "status": "beta",
+      "files": ["blocks/chat-bubble.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "comment-item",
+      "type": "block",
+      "description": "Comment display for posts, products, or discussions",
+      "category": "Social",
+      "status": "beta",
+      "files": ["blocks/comment-item.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "product-card",
+      "type": "block",
+      "description": "E-commerce product display card with image, price, rating, and actions",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["blocks/product-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["badge", "button", "rating"]
+    },
+    {
+      "name": "cart-item",
+      "type": "block",
+      "description": "Shopping cart line item with quantity controls and swipe actions",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["blocks/cart-item.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["stepper", "swipeable-row"]
+    },
+    {
+      "name": "banner-block",
+      "type": "block",
+      "description": "Promotional or announcement banner with action button",
+      "category": "Marketing",
+      "status": "beta",
+      "files": ["blocks/banner-block.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["button", "icon-button"]
+    },
+    {
       "name": "login-screen",
       "type": "screen",
       "description": "Complete login screen with email/password form, social login, and forgot password",
@@ -712,6 +772,246 @@
       "files": ["ui/screen.tsx"],
       "dependencies": ["react-native-safe-area-context"],
       "registryDependencies": []
+    },
+    {
+      "name": "typography",
+      "type": "ui",
+      "description": "Standardized text component with preset styles for consistent typography",
+      "category": "Data Display",
+      "status": "beta",
+      "files": ["ui/typography.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "alert",
+      "type": "ui",
+      "description": "Inline alert/banner for persistent messages with variant styles",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["ui/alert.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "collapsible",
+      "type": "ui",
+      "description": "Simple single-item expand/collapse with smooth animations",
+      "category": "Data Display",
+      "status": "beta",
+      "files": ["ui/collapsible.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "product-detail-screen",
+      "type": "screen",
+      "description": "Complete product page with image gallery, variants, reviews, and add to cart",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["screens/product-detail-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["button", "icon-button", "badge", "tabs", "rating", "separator", "avatar", "image-gallery"]
+    },
+    {
+      "name": "cart-screen",
+      "type": "screen",
+      "description": "Shopping cart screen with items, order summary, and checkout action",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["screens/cart-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["button", "icon-button", "separator", "cart-item", "empty-state-block"]
+    },
+    {
+      "name": "followers-screen",
+      "type": "screen",
+      "description": "Follower/following list with search, tabs, and user management",
+      "category": "Social",
+      "status": "beta",
+      "files": ["screens/followers-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["icon-button", "search-input", "tabs", "spinner", "user-list-item", "empty-state-block"]
+    },
+    {
+      "name": "comments-screen",
+      "type": "screen",
+      "description": "Full comments view with nested replies, input, and interactions",
+      "category": "Social",
+      "status": "beta",
+      "files": ["screens/comments-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["icon-button", "avatar", "spinner", "comment-item", "empty-state-block"]
+    },
+    {
+      "name": "toggle",
+      "type": "ui",
+      "description": "Button-style toggles with single and group selection modes",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/toggle.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "popover",
+      "type": "ui",
+      "description": "Positioned popup with interactive content and backdrop",
+      "category": "Overlay",
+      "status": "beta",
+      "files": ["ui/popover.tsx"],
+      "dependencies": ["react-native-reanimated"],
+      "registryDependencies": []
+    },
+    {
+      "name": "pagination",
+      "type": "ui",
+      "description": "Page navigation with dots, numbers, and simple variants",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["ui/pagination.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "calendar",
+      "type": "ui",
+      "description": "Date grid with single, range, and multiple selection modes",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/calendar.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "circular-progress",
+      "type": "ui",
+      "description": "Ring/donut style progress indicator with animated fill",
+      "category": "Feedback",
+      "status": "beta",
+      "files": ["ui/circular-progress.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "tag-input",
+      "type": "ui",
+      "description": "Input field for entering multiple tags with autocomplete",
+      "category": "Inputs",
+      "status": "beta",
+      "files": ["ui/tag-input.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": []
+    },
+    {
+      "name": "order-item",
+      "type": "block",
+      "description": "Order history line item with status, products, and actions",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["blocks/order-item.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["badge", "button"]
+    },
+    {
+      "name": "review-card",
+      "type": "block",
+      "description": "User review display with rating, images, and helpful votes",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["blocks/review-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar", "rating", "badge"]
+    },
+    {
+      "name": "task-item",
+      "type": "block",
+      "description": "Todo/task item with checkbox, priority, and due date",
+      "category": "Productivity",
+      "status": "beta",
+      "files": ["blocks/task-item.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": ["checkbox", "badge", "swipeable-row"]
+    },
+    {
+      "name": "event-card",
+      "type": "block",
+      "description": "Calendar event display with date, time, location, and attendees",
+      "category": "Productivity",
+      "status": "beta",
+      "files": ["blocks/event-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar", "avatar-stack", "badge", "card"]
+    },
+    {
+      "name": "article-card",
+      "type": "block",
+      "description": "Blog/news article preview with image, author, and metadata",
+      "category": "Content",
+      "status": "beta",
+      "files": ["blocks/article-card.tsx"],
+      "dependencies": ["react-native-svg"],
+      "registryDependencies": ["avatar", "badge", "card"]
+    },
+    {
+      "name": "pricing-card",
+      "type": "block",
+      "description": "Subscription plan display with features, price, and CTA",
+      "category": "Marketing",
+      "status": "beta",
+      "files": ["blocks/pricing-card.tsx"],
+      "dependencies": ["react-native-reanimated", "react-native-svg"],
+      "registryDependencies": ["button", "badge"]
+    },
+    {
+      "name": "checkout-screen",
+      "type": "screen",
+      "description": "Multi-step checkout flow with shipping, payment, and review",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["screens/checkout-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["button", "icon-button", "input", "separator", "progress", "radio-group"]
+    },
+    {
+      "name": "order-history-screen",
+      "type": "screen",
+      "description": "Past orders list with filtering, tabs, and order actions",
+      "category": "E-commerce",
+      "status": "beta",
+      "files": ["screens/order-history-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["icon-button", "tabs", "spinner", "order-item", "empty-state-block"]
+    },
+    {
+      "name": "home-screen",
+      "type": "screen",
+      "description": "Dashboard/landing screen with hero, stats, and featured content",
+      "category": "Navigation",
+      "status": "beta",
+      "files": ["screens/home-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["avatar", "icon-button", "search-input", "horizontal-list", "section-header", "stats-card", "hero-block", "content-card"]
+    },
+    {
+      "name": "account-screen",
+      "type": "screen",
+      "description": "User account management with profile and settings navigation",
+      "category": "Profile",
+      "status": "beta",
+      "files": ["screens/account-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["avatar", "button", "icon-button", "list", "separator", "badge"]
+    },
+    {
+      "name": "help-screen",
+      "type": "screen",
+      "description": "FAQ and support screen with searchable topics and contact options",
+      "category": "Support",
+      "status": "beta",
+      "files": ["screens/help-screen.tsx"],
+      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
+      "registryDependencies": ["icon-button", "search-input", "accordion", "separator", "card"]
     }
   ]
 }
