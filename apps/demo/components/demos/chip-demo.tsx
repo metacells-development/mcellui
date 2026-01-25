@@ -1,13 +1,45 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 import { Chip, ChipGroup } from '@/components/ui/chip';
 import { Section } from './section';
 import { useTheme } from '@metacells/mcellui-core';
 
+// Simple tag icon
+function TagIcon({ color, width = 16, height = 16 }: { color?: string; width?: number; height?: number }) {
+  return (
+    <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M12 2l-1 1H3a1 1 0 0 0-1 1v8l1 1 9 9a1 1 0 0 0 1.4 0l8-8a1 1 0 0 0 0-1.4L12 2zM7.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+        stroke={color || '#000'}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
+// Simple star icon
+function StarIcon({ color, width = 16, height = 16 }: { color?: string; width?: number; height?: number }) {
+  return (
+    <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+        stroke={color || '#000'}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
 export function ChipDemo() {
-  const { colors } = useTheme();
+  const { colors, spacing } = useTheme();
   const [selected1, setSelected1] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['electronics']);
+  const [tags, setTags] = useState(['React Native', 'TypeScript', 'Expo']);
 
   const categories = [
     { id: 'electronics', name: 'Electronics' },
@@ -23,9 +55,39 @@ export function ChipDemo() {
     );
   };
 
+  const removeTag = (tag: string) => {
+    setTags((prev) => prev.filter((t) => t !== tag));
+  };
+
   return (
-    <View style={styles.container}>
-      <Section title="Basic Chips">
+    <View style={{ gap: spacing[8] }}>
+      {/* Sizes Section */}
+      <Section title="Sizes">
+        <ChipGroup>
+          <Chip size="sm" selected>Small</Chip>
+          <Chip size="md" selected>Medium</Chip>
+          <Chip size="lg" selected>Large</Chip>
+        </ChipGroup>
+      </Section>
+
+      {/* Variants Section */}
+      <Section title="Variants">
+        <View style={{ gap: spacing[3] }}>
+          <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>Outline</Text>
+          <ChipGroup>
+            <Chip variant="outline" selected>Selected</Chip>
+            <Chip variant="outline">Unselected</Chip>
+          </ChipGroup>
+          <Text style={{ color: colors.foregroundMuted, fontSize: 12, marginTop: spacing[2] }}>Filled</Text>
+          <ChipGroup>
+            <Chip variant="filled" selected>Selected</Chip>
+            <Chip variant="filled">Unselected</Chip>
+          </ChipGroup>
+        </View>
+      </Section>
+
+      {/* States Section */}
+      <Section title="States">
         <ChipGroup>
           <Chip
             selected={selected1}
@@ -36,27 +98,39 @@ export function ChipDemo() {
           <Chip selected>Selected</Chip>
           <Chip>Unselected</Chip>
           <Chip disabled>Disabled</Chip>
+          <Chip selected disabled>Selected Disabled</Chip>
         </ChipGroup>
       </Section>
 
-      <Section title="Sizes">
+      {/* With Icons Section */}
+      <Section title="With Icons">
         <ChipGroup>
-          <Chip size="sm" selected>Small</Chip>
-          <Chip size="md" selected>Medium</Chip>
-          <Chip size="lg" selected>Large</Chip>
+          <Chip icon={<TagIcon />} selected>Sale</Chip>
+          <Chip icon={<StarIcon />} selected>Featured</Chip>
+          <Chip icon={<TagIcon />}>New</Chip>
         </ChipGroup>
       </Section>
 
-      <Section title="Variants">
-        <ChipGroup>
-          <Chip variant="outline" selected>Outline</Chip>
-          <Chip variant="outline">Outline</Chip>
-          <Chip variant="filled" selected>Filled</Chip>
-          <Chip variant="filled">Filled</Chip>
-        </ChipGroup>
+      {/* Dismissible Chips Section */}
+      <Section title="Dismissible Chips">
+        <View style={{ gap: spacing[2] }}>
+          <ChipGroup>
+            {tags.map((tag) => (
+              <Chip key={tag} onRemove={() => removeTag(tag)}>
+                {tag}
+              </Chip>
+            ))}
+          </ChipGroup>
+          {tags.length === 0 && (
+            <Text style={{ color: colors.foregroundMuted, fontSize: 14 }}>
+              All tags removed. Refresh to reset.
+            </Text>
+          )}
+        </View>
       </Section>
 
-      <Section title="Category Filter (Multi-select)">
+      {/* ChipGroup Multi-select */}
+      <Section title="Multi-select Filter">
         <ChipGroup>
           {categories.map((cat) => (
             <Chip
@@ -68,20 +142,37 @@ export function ChipDemo() {
             </Chip>
           ))}
         </ChipGroup>
+        <Text style={{ color: colors.foregroundMuted, fontSize: 12, marginTop: spacing[2] }}>
+          Selected: {selectedCategories.length > 0 ? selectedCategories.join(', ') : 'None'}
+        </Text>
       </Section>
 
-      <Section title="Filter Pills">
-        <ChipGroup>
-          <Chip variant="filled" selected>All</Chip>
-          <Chip variant="filled">New Arrivals</Chip>
-          <Chip variant="filled">On Sale</Chip>
-          <Chip variant="filled">Popular</Chip>
-        </ChipGroup>
+      {/* Size x Variant Matrix */}
+      <Section title="Size x Variant Matrix">
+        <View style={{ gap: spacing[4] }}>
+          <View style={{ gap: spacing[1] }}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>Small</Text>
+            <ChipGroup>
+              <Chip size="sm" variant="outline" selected>Outline</Chip>
+              <Chip size="sm" variant="filled" selected>Filled</Chip>
+            </ChipGroup>
+          </View>
+          <View style={{ gap: spacing[1] }}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>Medium</Text>
+            <ChipGroup>
+              <Chip size="md" variant="outline" selected>Outline</Chip>
+              <Chip size="md" variant="filled" selected>Filled</Chip>
+            </ChipGroup>
+          </View>
+          <View style={{ gap: spacing[1] }}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>Large</Text>
+            <ChipGroup>
+              <Chip size="lg" variant="outline" selected>Outline</Chip>
+              <Chip size="lg" variant="filled" selected>Filled</Chip>
+            </ChipGroup>
+          </View>
+        </View>
       </Section>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { gap: 32 },
-});
