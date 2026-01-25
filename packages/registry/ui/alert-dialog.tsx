@@ -46,7 +46,7 @@ import Animated, {
   runOnJS,
   interpolate,
 } from 'react-native-reanimated';
-import { useTheme, DIALOG_CONSTANTS, overlayTypography } from '@metacells/mcellui-core';
+import { useTheme, DIALOG_CONSTANTS, overlayTypography, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: overlayTypography.description.fontSize,
+    fontWeight: fontWeight.semibold,
   },
 });
