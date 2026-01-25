@@ -211,7 +211,7 @@ export function ChatScreen({
   placeholder = 'Type a message...',
   loading = false,
 }: ChatScreenProps) {
-  const { colors, spacing, radius, fontWeight } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight, lineHeight } = useTheme();
   const insets = useSafeAreaInsets();
   const [inputText, setInputText] = useState('');
   const scrollViewRef = useRef<ScrollView>(null);

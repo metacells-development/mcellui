@@ -25,7 +25,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 
 // Import your components
 import { Avatar } from '../ui/avatar';
@@ -68,6 +68,7 @@ export function NotificationItem({
   style,
 }: NotificationItemProps) {
   const { colors, spacing, radius } = useTheme();
+  const tokens = infoBlockTokens.notification;
 
   // Get initials from title
   const initials = title
@@ -96,6 +97,9 @@ export function NotificationItem({
             {
               backgroundColor: colors.primary,
               left: spacing[1],
+              width: tokens.unreadDotSize,
+              height: tokens.unreadDotSize,
+              borderRadius: tokens.unreadDotSize / 2,
             },
           ]}
         />
@@ -110,8 +114,8 @@ export function NotificationItem({
               {
                 backgroundColor: colors.secondary,
                 borderRadius: radius.full,
-                width: 44,
-                height: 44,
+                width: tokens.avatarSize,
+                height: tokens.avatarSize,
               },
             ]}
           >
@@ -129,10 +133,17 @@ export function NotificationItem({
       {/* Content */}
       <View style={styles.content}>
         <Text
-          style={[styles.text, { color: colors.foreground }]}
+          style={[
+            styles.text,
+            {
+              color: colors.foreground,
+              fontSize: tokens.textFontSize,
+              lineHeight: tokens.textLineHeight,
+            },
+          ]}
           numberOfLines={2}
         >
-          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.title, { fontWeight: tokens.titleFontWeight as any }]}>{title}</Text>
           {' '}
           <Text style={styles.message}>{message}</Text>
         </Text>
@@ -140,7 +151,11 @@ export function NotificationItem({
           <Text
             style={[
               styles.time,
-              { color: colors.foregroundMuted, marginTop: spacing[1] },
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[1],
+                fontSize: tokens.timeFontSize,
+              },
             ]}
           >
             {time}
@@ -178,9 +193,6 @@ const styles = StyleSheet.create({
   },
   unreadDot: {
     position: 'absolute',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
     top: '50%',
     marginTop: -4,
   },
@@ -195,17 +207,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  text: {
-    fontSize: 15,
-    lineHeight: 20,
-  },
-  title: {
-    fontWeight: '600',
-  },
+  text: {},
+  title: {},
   message: {
     fontWeight: '400',
   },
-  time: {
-    fontSize: 13,
-  },
+  time: {},
 });

@@ -207,7 +207,7 @@ export function AccountScreen({
   onHelp,
   onLogout,
 }: AccountScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   return (
@@ -216,7 +216,11 @@ export function AccountScreen({
       <View style={[styles.header, { paddingTop: insets.top, borderBottomColor: colors.border }]}>
         <View style={[styles.headerContent, { paddingHorizontal: spacing[4], paddingVertical: spacing[3] }]}>
           {onBack && <IconButton icon={<ChevronLeftIcon />} variant="ghost" onPress={onBack} />}
-          <Text style={[styles.headerTitle, { color: colors.foreground }]}>Account</Text>
+          <Text style={{
+            fontSize: fontSize.lg,
+            fontWeight: fontWeight.semibold,
+            color: colors.foreground,
+          }}>Account</Text>
           <View style={{ width: 44 }} />
         </View>
       </View>
@@ -253,7 +257,11 @@ export function AccountScreen({
 
           <View style={[styles.profileInfo, { marginTop: spacing[3] }]}>
             <View style={styles.nameRow}>
-              <Text style={[styles.userName, { color: colors.foreground }]}>
+              <Text style={{
+                fontSize: fontSize.xl,
+                fontWeight: fontWeight.bold,
+                color: colors.foreground,
+              }}>
                 {user.name}
               </Text>
               {user.isPremium && (
@@ -262,11 +270,19 @@ export function AccountScreen({
                 </Badge>
               )}
             </View>
-            <Text style={[styles.userEmail, { color: colors.foregroundMuted }]}>
+            <Text style={{
+              fontSize: fontSize.base,
+              color: colors.foregroundMuted,
+              marginTop: 2,
+            }}>
               {user.email}
             </Text>
             {user.memberSince && (
-              <Text style={[styles.memberSince, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
+              <Text style={{
+                fontSize: fontSize.xs,
+                color: colors.foregroundMuted,
+                marginTop: spacing[1],
+              }}>
                 Member since {user.memberSince}
               </Text>
             )}
@@ -299,10 +315,19 @@ export function AccountScreen({
             ]}
           >
             <PackageIcon size={24} color={colors.primary} />
-            <Text style={[styles.statValue, { color: colors.foreground }]}>
+            <Text style={{
+              fontSize: fontSize.xl,
+              fontWeight: fontWeight.bold,
+              color: colors.foreground,
+              marginTop: 4,
+            }}>
               {orderCount ?? 0}
             </Text>
-            <Text style={[styles.statLabel, { color: colors.foregroundMuted }]}>
+            <Text style={{
+              fontSize: fontSize.xs,
+              color: colors.foregroundMuted,
+              marginTop: 2,
+            }}>
               Orders
             </Text>
           </Pressable>
@@ -320,10 +345,19 @@ export function AccountScreen({
             ]}
           >
             <HeartIcon size={24} color={colors.destructive} />
-            <Text style={[styles.statValue, { color: colors.foreground }]}>
+            <Text style={{
+              fontSize: fontSize.xl,
+              fontWeight: fontWeight.bold,
+              color: colors.foreground,
+              marginTop: 4,
+            }}>
               {wishlistCount ?? 0}
             </Text>
-            <Text style={[styles.statLabel, { color: colors.foregroundMuted }]}>
+            <Text style={{
+              fontSize: fontSize.xs,
+              color: colors.foregroundMuted,
+              marginTop: 2,
+            }}>
               Wishlist
             </Text>
           </Pressable>
@@ -341,10 +375,19 @@ export function AccountScreen({
             ]}
           >
             <MapPinIcon size={24} color={colors.success} />
-            <Text style={[styles.statValue, { color: colors.foreground }]}>
+            <Text style={{
+              fontSize: fontSize.xl,
+              fontWeight: fontWeight.bold,
+              color: colors.foreground,
+              marginTop: 4,
+            }}>
               {addressCount ?? 0}
             </Text>
-            <Text style={[styles.statLabel, { color: colors.foregroundMuted }]}>
+            <Text style={{
+              fontSize: fontSize.xs,
+              color: colors.foregroundMuted,
+              marginTop: 2,
+            }}>
               Addresses
             </Text>
           </Pressable>
@@ -451,10 +494,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
   profileCard: {
     alignItems: 'center',
   },
@@ -477,30 +516,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  userName: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  userEmail: {
-    fontSize: 14,
-    marginTop: 2,
-  },
-  memberSince: {
-    fontSize: 12,
-  },
   statsRow: {
     flexDirection: 'row',
   },
   statCard: {
     alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: '700',
-    marginTop: 4,
-  },
-  statLabel: {
-    fontSize: 12,
-    marginTop: 2,
   },
 });

@@ -46,6 +46,24 @@ export function ImageGalleryDemo() {
 
   return (
     <View style={containerStyle}>
+      <Section title="Loading States">
+        <View style={{ gap: spacing[4] }}>
+          <View>
+            <Text style={labelStyle}>Skeleton Placeholders</Text>
+            <View style={{ marginHorizontal: -spacing[4] }}>
+              <ImageGallery
+                images={SAMPLE_IMAGES.slice(0, 6)}
+                columns={3}
+                spacing={4}
+              />
+            </View>
+            <Text style={hintStyle}>
+              Images show skeleton animation while loading from remote URLs
+            </Text>
+          </View>
+        </View>
+      </Section>
+
       <Section title="Grid Layouts">
         <View style={{ gap: spacing[4] }}>
           <View>
@@ -203,7 +221,7 @@ export function ImageGalleryDemo() {
               />
             </View>
             <Text style={hintStyle}>
-              Tap any image to view fullscreen. Pinch to zoom, swipe to navigate.
+              Skeleton placeholders shown while images load. Tap to view fullscreen with pinch-to-zoom.
             </Text>
           </View>
           <View>

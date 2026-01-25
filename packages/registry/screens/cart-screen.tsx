@@ -114,7 +114,7 @@ export function CartScreen({
   onContinueShopping,
   onApplyPromo,
 }: CartScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const formatPrice = (value: number) => `${currency}${value.toFixed(2)}`;
@@ -136,7 +136,7 @@ export function CartScreen({
         <View style={[styles.header, { paddingTop: insets.top, borderBottomColor: colors.border }]}>
           <View style={[styles.headerContent, { paddingHorizontal: spacing[4], paddingVertical: spacing[3] }]}>
             {onBack && <IconButton icon={<ChevronLeftIcon />} variant="ghost" onPress={onBack} />}
-            <Text style={[styles.headerTitle, { color: colors.foreground }]}>Cart</Text>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }}>Cart</Text>
             <View style={{ width: 44 }} />
           </View>
         </View>
@@ -160,7 +160,7 @@ export function CartScreen({
       <View style={[styles.header, { paddingTop: insets.top, borderBottomColor: colors.border }]}>
         <View style={[styles.headerContent, { paddingHorizontal: spacing[4], paddingVertical: spacing[3] }]}>
           {onBack && <IconButton icon={<ChevronLeftIcon />} variant="ghost" onPress={onBack} />}
-          <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+          <Text style={{ color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }}>
             Cart ({itemCount})
           </Text>
           <View style={{ width: 44 }} />
@@ -198,30 +198,30 @@ export function CartScreen({
 
         {/* Order Summary */}
         <View style={[styles.summarySection, { padding: spacing[4] }]}>
-          <Text style={[styles.summaryTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+          <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold, marginBottom: spacing[3] }}>
             Order Summary
           </Text>
 
           <View style={[styles.summaryRow, { marginBottom: spacing[2] }]}>
-            <Text style={[styles.summaryLabel, { color: colors.foregroundMuted }]}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>
               Subtotal ({itemCount} items)
             </Text>
-            <Text style={[styles.summaryValue, { color: colors.foreground }]}>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
               {formatPrice(subtotal)}
             </Text>
           </View>
 
           <View style={[styles.summaryRow, { marginBottom: spacing[2] }]}>
-            <Text style={[styles.summaryLabel, { color: colors.foregroundMuted }]}>Shipping</Text>
-            <Text style={[styles.summaryValue, { color: colors.foreground }]}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>Shipping</Text>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
               {shippingCost === undefined || shippingCost === 0 ? 'Free' : formatPrice(shippingCost)}
             </Text>
           </View>
 
           {taxAmount > 0 && (
             <View style={[styles.summaryRow, { marginBottom: spacing[2] }]}>
-              <Text style={[styles.summaryLabel, { color: colors.foregroundMuted }]}>Tax</Text>
-              <Text style={[styles.summaryValue, { color: colors.foreground }]}>
+              <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>Tax</Text>
+              <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
                 {formatPrice(taxAmount)}
               </Text>
             </View>
@@ -229,8 +229,8 @@ export function CartScreen({
 
           {discountAmount > 0 && (
             <View style={[styles.summaryRow, { marginBottom: spacing[2] }]}>
-              <Text style={[styles.summaryLabel, { color: colors.success }]}>Discount</Text>
-              <Text style={[styles.summaryValue, { color: colors.success }]}>
+              <Text style={{ color: colors.success, fontSize: fontSize.sm }}>Discount</Text>
+              <Text style={{ color: colors.success, fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
                 -{formatPrice(discountAmount)}
               </Text>
             </View>
@@ -239,8 +239,8 @@ export function CartScreen({
           <Separator style={{ marginVertical: spacing[3] }} />
 
           <View style={styles.summaryRow}>
-            <Text style={[styles.totalLabel, { color: colors.foreground }]}>Total</Text>
-            <Text style={[styles.totalValue, { color: colors.foreground }]}>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>Total</Text>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.xl, fontWeight: fontWeight.bold }}>
               {formatPrice(total)}
             </Text>
           </View>
@@ -265,8 +265,8 @@ export function CartScreen({
         ]}
       >
         <View style={styles.checkoutTotal}>
-          <Text style={[styles.checkoutLabel, { color: colors.foregroundMuted }]}>Total</Text>
-          <Text style={[styles.checkoutPrice, { color: colors.foreground }]}>{formatPrice(total)}</Text>
+          <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs }}>Total</Text>
+          <Text style={{ color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>{formatPrice(total)}</Text>
         </View>
         <Button variant="default" onPress={onCheckout} style={{ flex: 1 }}>
           Checkout
@@ -292,10 +292,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
   content: {
     flex: 1,
   },
@@ -307,29 +303,10 @@ const styles = StyleSheet.create({
   itemsSection: {},
   promoSection: {},
   summarySection: {},
-  summaryTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
   summaryRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  summaryLabel: {
-    fontSize: 14,
-  },
-  summaryValue: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  totalLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  totalValue: {
-    fontSize: 20,
-    fontWeight: '700',
   },
   bottomBar: {
     flexDirection: 'row',
@@ -338,12 +315,5 @@ const styles = StyleSheet.create({
   },
   checkoutTotal: {
     alignItems: 'flex-start',
-  },
-  checkoutLabel: {
-    fontSize: 12,
-  },
-  checkoutPrice: {
-    fontSize: 18,
-    fontWeight: '700',
   },
 });

@@ -31,6 +31,7 @@ import { SignupBlock } from '@/components/blocks/signup-block';
 import { SettingsListBlock } from '@/components/blocks/settings-list-block';
 import { EmptyStateBlock } from '@/components/blocks/empty-state-block';
 import { ErrorStateBlock } from '@/components/blocks/error-state-block';
+import { ProfileBlock } from '@/components/blocks/profile-block';
 
 // ============================================================================
 // Demo Component
@@ -166,84 +167,26 @@ export function BlocksDemo() {
 // ============================================================================
 
 function ProfileBlockPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { spacing } = useTheme();
 
   return (
     <Card>
       <CardContent style={{ paddingTop: spacing[6] }}>
-        <View style={[styles.profileContainer, { padding: spacing[4] }]}>
-          {/* Avatar and Name */}
-          <View style={[styles.profileHeader, { marginBottom: spacing[4] }]}>
-            <Avatar
-              size="xl"
-              fallback="JD"
-            />
-            <Text
-              style={[
-                styles.profileName,
-                { color: colors.foreground, marginTop: spacing[3] },
-              ]}
-            >
-              John Doe
-            </Text>
-            <Text
-              style={[
-                styles.profileSubtitle,
-                { color: colors.foregroundMuted, marginTop: spacing[1] },
-              ]}
-            >
-              @johndoe
-            </Text>
-          </View>
-
-          {/* Stats */}
-          <View
-            style={[
-              styles.profileStats,
-              {
-                marginBottom: spacing[4],
-                paddingVertical: spacing[3],
-                borderTopWidth: 1,
-                borderBottomWidth: 1,
-                borderColor: colors.border,
-              },
-            ]}
-          >
-            {[
-              { label: 'Posts', value: '128' },
-              { label: 'Followers', value: '1.2K' },
-              { label: 'Following', value: '456' },
-            ].map((stat, index, arr) => (
-              <View
-                key={stat.label}
-                style={[
-                  styles.profileStat,
-                  index < arr.length - 1 && {
-                    borderRightWidth: 1,
-                    borderRightColor: colors.border,
-                  },
-                ]}
-              >
-                <Text style={[styles.statValue, { color: colors.foreground }]}>
-                  {stat.value}
-                </Text>
-                <Text style={[styles.statLabel, { color: colors.foregroundMuted }]}>
-                  {stat.label}
-                </Text>
-              </View>
-            ))}
-          </View>
-
-          {/* Actions */}
-          <View style={[styles.profileActions, { gap: spacing[3] }]}>
-            <Button onPress={() => Alert.alert('Edit Profile')} fullWidth>
-              Edit Profile
-            </Button>
-            <Button variant="outline" onPress={() => Alert.alert('Settings')} fullWidth>
-              Settings
-            </Button>
-          </View>
-        </View>
+        <ProfileBlock
+          avatarUrl="https://i.pravatar.cc/150?img=68"
+          name="John Doe"
+          subtitle="@johndoe"
+          bio="Software developer passionate about mobile apps and great UX."
+          stats={[
+            { label: 'Posts', value: '128' },
+            { label: 'Followers', value: '1.2K' },
+            { label: 'Following', value: '456' },
+          ]}
+          primaryButtonText="Edit Profile"
+          onPrimaryAction={() => Alert.alert('Edit Profile')}
+          secondaryButtonText="Settings"
+          onSecondaryAction={() => Alert.alert('Settings')}
+        />
       </CardContent>
     </Card>
   );
@@ -1674,39 +1617,6 @@ const styles = StyleSheet.create({
   },
   sectionContent: {
     gap: 8,
-  },
-  // Profile Block
-  profileContainer: {
-    alignItems: 'center',
-  },
-  profileHeader: {
-    alignItems: 'center',
-  },
-  profileName: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  profileSubtitle: {
-    fontSize: 14,
-  },
-  profileStats: {
-    flexDirection: 'row',
-    width: '100%',
-  },
-  profileStat: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  statLabel: {
-    fontSize: 12,
-    marginTop: 2,
-  },
-  profileActions: {
-    width: '100%',
   },
   // Notification Item
   notificationItem: {

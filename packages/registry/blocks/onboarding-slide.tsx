@@ -29,7 +29,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Button } from '../ui/button';
@@ -90,6 +90,7 @@ export function OnboardingSlide({
 }: OnboardingSlideProps) {
   const { colors, spacing, radius } = useTheme();
   const insets = useSafeAreaInsets();
+  const tokens = infoBlockTokens.onboarding;
 
   const isLastStep = currentStep === totalSteps - 1;
   const buttonText = primaryText || (isLastStep ? 'Get Started' : 'Next');
@@ -127,7 +128,13 @@ export function OnboardingSlide({
         <Text
           style={[
             styles.title,
-            { color: colors.foreground, marginBottom: spacing[3] },
+            {
+              color: colors.foreground,
+              marginBottom: spacing[3],
+              fontSize: tokens.titleFontSize,
+              fontWeight: tokens.titleFontWeight,
+              lineHeight: tokens.titleLineHeight,
+            },
           ]}
         >
           {title}
@@ -135,7 +142,11 @@ export function OnboardingSlide({
         <Text
           style={[
             styles.description,
-            { color: colors.foregroundMuted },
+            {
+              color: colors.foregroundMuted,
+              fontSize: tokens.descriptionFontSize,
+              lineHeight: tokens.descriptionLineHeight,
+            },
           ]}
         >
           {description}
@@ -153,7 +164,8 @@ export function OnboardingSlide({
                 {
                   backgroundColor:
                     index === currentStep ? colors.primary : colors.border,
-                  width: index === currentStep ? 24 : 8,
+                  width: index === currentStep ? tokens.dotActiveWidth : tokens.dotSize,
+                  height: tokens.dotSize,
                   borderRadius: radius.full,
                   marginHorizontal: spacing[1],
                 },
@@ -207,14 +219,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
     textAlign: 'center',
-    lineHeight: 34,
   },
   description: {
-    fontSize: 16,
-    lineHeight: 24,
     textAlign: 'center',
   },
   pagination: {
@@ -223,9 +230,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 32,
   },
-  dot: {
-    height: 8,
-  },
+  dot: {},
   buttons: {
     alignItems: 'center',
   },

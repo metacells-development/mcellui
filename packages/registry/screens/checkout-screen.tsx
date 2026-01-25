@@ -175,23 +175,23 @@ function StepIndicator({
                   <CheckIcon size={12} color={colors.primaryForeground} />
                 ) : (
                   <Text
-                    style={[
-                      stepStyles.circleText,
-                      { color: isCurrent ? colors.primaryForeground : colors.foregroundMuted },
-                    ]}
+                    style={{
+                      color: isCurrent ? colors.primaryForeground : colors.foregroundMuted,
+                      fontSize: fontSize.xs,
+                      fontWeight: fontWeight.semibold,
+                    }}
                   >
                     {index + 1}
                   </Text>
                 )}
               </View>
               <Text
-                style={[
-                  stepStyles.label,
-                  {
-                    color: isCurrent ? colors.foreground : colors.foregroundMuted,
-                    fontWeight: isCurrent ? '600' : '400',
-                  },
-                ]}
+                style={{
+                  color: isCurrent ? colors.foreground : colors.foregroundMuted,
+                  fontSize: fontSize.xs,
+                  fontWeight: isCurrent ? fontWeight.semibold : fontWeight.normal,
+                  marginTop: 4,
+                }}
               >
                 {step.label}
               </Text>
@@ -228,14 +228,6 @@ const stepStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  circleText: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  label: {
-    fontSize: 11,
-    marginTop: 4,
-  },
   connector: {
     width: 40,
     height: 2,
@@ -259,7 +251,7 @@ export function CheckoutScreen({
   onPlaceOrder,
   onBack,
 }: CheckoutScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const [currentStep, setCurrentStep] = useState<CheckoutStep>('shipping');
@@ -324,7 +316,7 @@ export function CheckoutScreen({
 
   const renderShippingStep = () => (
     <View style={{ gap: spacing[4] }}>
-      <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+      <Text style={{ color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }}>
         Shipping Address
       </Text>
 
@@ -414,7 +406,7 @@ export function CheckoutScreen({
 
   const renderPaymentStep = () => (
     <View style={{ gap: spacing[4] }}>
-      <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+      <Text style={{ color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }}>
         Payment Method
       </Text>
 
@@ -468,7 +460,7 @@ export function CheckoutScreen({
 
       <View style={[styles.securityNote, { backgroundColor: colors.secondary, padding: spacing[3], borderRadius: radius.md }]}>
         <LockIcon size={14} color={colors.foregroundMuted} />
-        <Text style={[styles.securityText, { color: colors.foregroundMuted, marginLeft: spacing[2] }]}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginLeft: spacing[2], flex: 1 }}>
           Your payment information is secure and encrypted
         </Text>
       </View>
@@ -477,7 +469,7 @@ export function CheckoutScreen({
 
   const renderReviewStep = () => (
     <View style={{ gap: spacing[4] }}>
-      <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
+      <Text style={{ color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }}>
         Order Review
       </Text>
 
@@ -485,11 +477,11 @@ export function CheckoutScreen({
       <View style={[styles.summaryCard, { backgroundColor: colors.secondary, padding: spacing[3], borderRadius: radius.md }]}>
         <View style={styles.summaryHeader}>
           <TruckIcon size={16} color={colors.foreground} />
-          <Text style={[styles.summaryTitle, { color: colors.foreground, marginLeft: spacing[2] }]}>
+          <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.semibold, marginLeft: spacing[2] }}>
             Shipping Address
           </Text>
         </View>
-        <Text style={[styles.summaryText, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: 13, lineHeight: 20, marginTop: spacing[2] }}>
           {address.firstName} {address.lastName}{'\n'}
           {address.address}{'\n'}
           {address.city}, {address.state} {address.zipCode}{'\n'}
@@ -501,11 +493,11 @@ export function CheckoutScreen({
       <View style={[styles.summaryCard, { backgroundColor: colors.secondary, padding: spacing[3], borderRadius: radius.md }]}>
         <View style={styles.summaryHeader}>
           <CreditCardIcon size={16} color={colors.foreground} />
-          <Text style={[styles.summaryTitle, { color: colors.foreground, marginLeft: spacing[2] }]}>
+          <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.semibold, marginLeft: spacing[2] }}>
             Payment Method
           </Text>
         </View>
-        <Text style={[styles.summaryText, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: 13, lineHeight: 20, marginTop: spacing[2] }}>
           {paymentType === 'card' && `Card ending in ${cardNumber.slice(-4)}`}
           {paymentType === 'paypal' && 'PayPal'}
           {paymentType === 'applepay' && 'Apple Pay'}
@@ -514,15 +506,15 @@ export function CheckoutScreen({
 
       {/* Order Items */}
       <View>
-        <Text style={[styles.summaryTitle, { color: colors.foreground, marginBottom: spacing[2] }]}>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.semibold, marginBottom: spacing[2] }}>
           Order Items ({items.length})
         </Text>
         {items.map((item) => (
           <View key={item.id} style={[styles.itemRow, { paddingVertical: spacing[2] }]}>
-            <Text style={[styles.itemName, { color: colors.foreground }]}>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.sm }}>
               {item.name} x{item.quantity}
             </Text>
-            <Text style={[styles.itemPrice, { color: colors.foreground }]}>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
               {formatPrice(item.price * item.quantity)}
             </Text>
           </View>
@@ -540,7 +532,7 @@ export function CheckoutScreen({
       <View style={[styles.header, { paddingTop: insets.top, borderBottomColor: colors.border }]}>
         <View style={[styles.headerContent, { paddingHorizontal: spacing[4], paddingVertical: spacing[3] }]}>
           <IconButton icon={<ChevronLeftIcon />} variant="ghost" onPress={handleBack} />
-          <Text style={[styles.headerTitle, { color: colors.foreground }]}>Checkout</Text>
+          <Text style={{ color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }}>Checkout</Text>
           <View style={{ width: 44 }} />
         </View>
       </View>
@@ -564,25 +556,25 @@ export function CheckoutScreen({
         <View style={{ marginTop: spacing[6] }}>
           <Separator style={{ marginBottom: spacing[4] }} />
           <View style={[styles.totalRow, { marginBottom: spacing[1] }]}>
-            <Text style={[styles.totalLabel, { color: colors.foregroundMuted }]}>Subtotal</Text>
-            <Text style={[styles.totalValue, { color: colors.foreground }]}>{formatPrice(subtotal)}</Text>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>Subtotal</Text>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.sm }}>{formatPrice(subtotal)}</Text>
           </View>
           <View style={[styles.totalRow, { marginBottom: spacing[1] }]}>
-            <Text style={[styles.totalLabel, { color: colors.foregroundMuted }]}>Shipping</Text>
-            <Text style={[styles.totalValue, { color: colors.foreground }]}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>Shipping</Text>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.sm }}>
               {shipping === 0 ? 'Free' : formatPrice(shipping)}
             </Text>
           </View>
           {tax > 0 && (
             <View style={[styles.totalRow, { marginBottom: spacing[1] }]}>
-              <Text style={[styles.totalLabel, { color: colors.foregroundMuted }]}>Tax</Text>
-              <Text style={[styles.totalValue, { color: colors.foreground }]}>{formatPrice(tax)}</Text>
+              <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>Tax</Text>
+              <Text style={{ color: colors.foreground, fontSize: fontSize.sm }}>{formatPrice(tax)}</Text>
             </View>
           )}
           <Separator style={{ marginVertical: spacing[2] }} />
           <View style={styles.totalRow}>
-            <Text style={[styles.grandTotalLabel, { color: colors.foreground }]}>Total</Text>
-            <Text style={[styles.grandTotalValue, { color: colors.foreground }]}>{formatPrice(total)}</Text>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>Total</Text>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>{formatPrice(total)}</Text>
           </View>
         </View>
 
@@ -627,66 +619,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
   content: {
     flex: 1,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
   },
   securityNote: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  securityText: {
-    fontSize: 12,
-    flex: 1,
   },
   summaryCard: {},
   summaryHeader: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  summaryTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  summaryText: {
-    fontSize: 13,
-    lineHeight: 20,
-  },
   itemRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  itemName: {
-    fontSize: 14,
-  },
-  itemPrice: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  totalLabel: {
-    fontSize: 14,
-  },
-  totalValue: {
-    fontSize: 14,
-  },
-  grandTotalLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  grandTotalValue: {
-    fontSize: 18,
-    fontWeight: '700',
   },
   bottomBar: {},
 });

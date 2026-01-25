@@ -150,7 +150,7 @@ export function HomeScreen({
   onSeeAllFeatured,
   onStatPress,
 }: HomeScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const handleNotifications = () => {
@@ -180,10 +180,10 @@ export function HomeScreen({
               />
             )}
             <View style={{ marginLeft: spacing[3] }}>
-              <Text style={[styles.greeting, { color: colors.foregroundMuted }]}>
+              <Text style={[styles.greeting, { color: colors.foregroundMuted, fontSize: fontSize.xs }]}>
                 {greeting}
               </Text>
-              <Text style={[styles.userName, { color: colors.foreground }]}>
+              <Text style={[styles.userName, { color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }]}>
                 {user?.name ?? 'Guest'}
               </Text>
             </View>
@@ -204,7 +204,7 @@ export function HomeScreen({
                       { backgroundColor: colors.destructive },
                     ]}
                   >
-                    <Text style={styles.notificationCount}>
+                    <Text style={[styles.notificationCount, { fontSize: fontSize.xs, fontWeight: fontWeight.bold }]}>
                       {notificationCount > 9 ? '9+' : notificationCount}
                     </Text>
                   </View>
@@ -300,7 +300,7 @@ export function HomeScreen({
                   <View style={{ marginBottom: spacing[2] }}>
                     {action.icon}
                   </View>
-                  <Text style={[styles.quickActionLabel, { color: colors.foreground }]}>
+                  <Text style={[styles.quickActionLabel, { color: colors.foreground, fontSize: fontSize.xs, fontWeight: fontWeight.medium }]}>
                     {action.label}
                   </Text>
                 </Pressable>
@@ -360,13 +360,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  greeting: {
-    fontSize: 13,
-  },
-  userName: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
+  greeting: {},
+  userName: {},
   notificationBadge: {
     position: 'absolute',
     top: 6,
@@ -380,8 +375,6 @@ const styles = StyleSheet.create({
   },
   notificationCount: {
     color: '#fff',
-    fontSize: 10,
-    fontWeight: '700',
   },
   quickActionsGrid: {
     flexDirection: 'row',
@@ -392,8 +385,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   quickActionLabel: {
-    fontSize: 13,
-    fontWeight: '500',
     textAlign: 'center',
   },
 });

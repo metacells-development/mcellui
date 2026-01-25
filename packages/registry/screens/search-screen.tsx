@@ -235,7 +235,7 @@ export function SearchScreen({
   autoFocus = true,
   showCancel = true,
 }: SearchScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const [query, setQuery] = useState('');
@@ -314,7 +314,7 @@ export function SearchScreen({
           </View>
           {showCancel && onCancel && (
             <Pressable onPress={onCancel}>
-              <Text style={{ color: colors.primary, fontSize: 16, fontWeight: '500' }}>
+              <Text style={{ color: colors.primary, fontSize: fontSize.base, fontWeight: fontWeight.medium }}>
                 Cancel
               </Text>
             </Pressable>
@@ -379,7 +379,7 @@ export function SearchScreen({
         ) : showResults && hasResults ? (
           /* Results */
           <View style={{ padding: spacing[4], gap: spacing[3] }}>
-            <Text style={{ color: colors.foregroundMuted, fontSize: 13, marginBottom: spacing[1] }}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginBottom: spacing[1] }}>
               {results.length} results for "{query}"
             </Text>
             {results.map((item) => (
@@ -400,7 +400,7 @@ export function SearchScreen({
                 <Avatar fallback={item.avatar || item.user.substring(0, 2).toUpperCase()} size="md" />
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={{ color: colors.foreground, fontSize: 15, fontWeight: '500' }}
+                    style={{ color: colors.foreground, fontSize: fontSize.base, fontWeight: fontWeight.medium }}
                     numberOfLines={1}
                   >
                     {item.title}
@@ -419,7 +419,7 @@ export function SearchScreen({
                     >
                       {item.type}
                     </Badge>
-                    <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>
+                    <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>
                       {item.user}
                     </Text>
                   </View>
@@ -441,7 +441,7 @@ export function SearchScreen({
               style={{
                 color: colors.foregroundMuted,
                 marginTop: spacing[3],
-                fontSize: 15,
+                fontSize: fontSize.base,
               }}
             >
               No results for "{query}"
@@ -463,12 +463,12 @@ export function SearchScreen({
                 >
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[2] }}>
                     <ClockIcon size={18} color={colors.foregroundMuted} />
-                    <Text style={{ color: colors.foreground, fontSize: 16, fontWeight: '600' }}>
+                    <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
                       Recent Searches
                     </Text>
                   </View>
                   <Pressable onPress={clearAllRecent}>
-                    <Text style={{ color: colors.primary, fontSize: 14 }}>Clear all</Text>
+                    <Text style={{ color: colors.primary, fontSize: fontSize.sm }}>Clear all</Text>
                   </Pressable>
                 </View>
                 <View style={{ gap: spacing[1] }}>
@@ -488,7 +488,7 @@ export function SearchScreen({
                     >
                       <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[3] }}>
                         <SearchIcon size={18} color={colors.foregroundMuted} />
-                        <Text style={{ color: colors.foreground, fontSize: 15 }}>{search}</Text>
+                        <Text style={{ color: colors.foreground, fontSize: fontSize.base }}>{search}</Text>
                       </View>
                       <Pressable
                         onPress={() => removeRecentSearch(search)}
@@ -515,7 +515,7 @@ export function SearchScreen({
                   }}
                 >
                   <TrendingIcon size={18} color={colors.primary} />
-                  <Text style={{ color: colors.foreground, fontSize: 16, fontWeight: '600' }}>
+                  <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
                     Trending Now
                   </Text>
                 </View>
@@ -545,15 +545,15 @@ export function SearchScreen({
                           marginRight: spacing[3],
                         }}
                       >
-                        <Text style={{ color: colors.primary, fontWeight: '700', fontSize: 14 }}>
+                        <Text style={{ color: colors.primary, fontWeight: fontWeight.bold, fontSize: fontSize.sm }}>
                           {index + 1}
                         </Text>
                       </View>
                       <View style={{ flex: 1 }}>
-                        <Text style={{ color: colors.foreground, fontSize: 15, fontWeight: '500' }}>
+                        <Text style={{ color: colors.foreground, fontSize: fontSize.base, fontWeight: fontWeight.medium }}>
                           #{item.tag}
                         </Text>
-                        <Text style={{ color: colors.foregroundMuted, fontSize: 13, marginTop: 2 }}>
+                        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 2 }}>
                           {item.count} posts
                         </Text>
                       </View>
@@ -572,8 +572,8 @@ export function SearchScreen({
                 <Text
                   style={{
                     color: colors.foreground,
-                    fontSize: 16,
-                    fontWeight: '600',
+                    fontSize: fontSize.md,
+                    fontWeight: fontWeight.semibold,
                     marginBottom: spacing[3],
                   }}
                 >
@@ -594,8 +594,8 @@ export function SearchScreen({
                         backgroundColor: pressed ? colors.primary + '20' : colors.secondary,
                       })}
                     >
-                      <Text style={{ fontSize: 16 }}>{cat.icon}</Text>
-                      <Text style={{ color: colors.foreground, fontSize: 14, fontWeight: '500' }}>
+                      <Text style={{ fontSize: fontSize.md }}>{cat.icon}</Text>
+                      <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
                         {cat.label}
                       </Text>
                     </Pressable>

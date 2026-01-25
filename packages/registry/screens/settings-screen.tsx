@@ -144,7 +144,7 @@ export function SettingsScreen({
   footer,
   headerRight,
 }: SettingsScreenProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const renderItem = (item: SettingsItem, index: number) => {
@@ -231,7 +231,11 @@ export function SettingsScreen({
         ) : (
           <View style={{ width: 32 }} />
         )}
-        <Text style={[styles.headerTitle, { color: colors.foreground }]}>{title}</Text>
+        <Text style={{
+          fontSize: fontSize.lg,
+          fontWeight: fontWeight.semibold,
+          color: colors.foreground,
+        }}>{title}</Text>
         <View style={{ width: 32, alignItems: 'flex-end' }}>{headerRight}</View>
       </View>
 
@@ -250,14 +254,14 @@ export function SettingsScreen({
             {/* Section Title */}
             {section.title && (
               <Text
-                style={[
-                  styles.sectionTitle,
-                  {
-                    color: colors.foregroundMuted,
-                    marginBottom: spacing[2],
-                    marginLeft: spacing[2],
-                  },
-                ]}
+                style={{
+                  fontSize: fontSize.xs,
+                  fontWeight: fontWeight.semibold,
+                  letterSpacing: 0.5,
+                  color: colors.foregroundMuted,
+                  marginBottom: spacing[2],
+                  marginLeft: spacing[2],
+                }}
               >
                 {section.title.toUpperCase()}
               </Text>
@@ -274,14 +278,13 @@ export function SettingsScreen({
             {/* Section Footer */}
             {section.footer && (
               <Text
-                style={[
-                  styles.sectionFooter,
-                  {
-                    color: colors.foregroundMuted,
-                    marginTop: spacing[2],
-                    marginLeft: spacing[2],
-                  },
-                ]}
+                style={{
+                  fontSize: fontSize.sm,
+                  lineHeight: 18,
+                  color: colors.foregroundMuted,
+                  marginTop: spacing[2],
+                  marginLeft: spacing[2],
+                }}
               >
                 {section.footer}
               </Text>
@@ -310,23 +313,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomWidth: 1,
   },
-  headerTitle: {
-    fontSize: 17,
-    fontWeight: '600',
-  },
   scrollView: {
     flex: 1,
   },
   section: {},
-  sectionTitle: {
-    fontSize: 12,
-    fontWeight: '600',
-    letterSpacing: 0.5,
-  },
-  sectionFooter: {
-    fontSize: 13,
-    lineHeight: 18,
-  },
   footer: {
     alignItems: 'center',
   },

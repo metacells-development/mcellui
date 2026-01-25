@@ -33,7 +33,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, cardBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -134,7 +134,7 @@ export function ReviewCard({
   maxLines = 4,
   style,
 }: ReviewCardProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, platformShadow } = useTheme();
   const [expanded, setExpanded] = useState(false);
 
   const formatDate = (dateString: string) => {
@@ -161,8 +161,13 @@ export function ReviewCard({
         styles.container,
         {
           backgroundColor: colors.background,
-          padding: spacing[4],
+          paddingVertical: cardBlockTokens.content.paddingVertical,
+          paddingHorizontal: cardBlockTokens.content.paddingHorizontal,
+          borderRadius: radius.lg,
+          borderWidth: cardBlockTokens.borderWidth,
+          borderColor: colors.border,
         },
+        platformShadow(cardBlockTokens.shadow),
         style,
       ]}
     >
@@ -315,8 +320,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
   verifiedBadge: {
     width: 16,
@@ -326,7 +331,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   date: {
-    fontSize: 12,
+    fontSize: cardBlockTokens.typography.metaFontSize,
     marginTop: 1,
   },
   moreButton: {
@@ -337,20 +342,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   variant: {
-    fontSize: 13,
+    fontSize: cardBlockTokens.typography.metaFontSize,
     marginLeft: 4,
   },
   title: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: cardBlockTokens.typography.titleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
   content: {
-    fontSize: 14,
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
     lineHeight: 20,
   },
   readMore: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
     marginTop: 4,
   },
   images: {

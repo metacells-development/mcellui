@@ -42,7 +42,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Badge } from '../ui/badge';
@@ -142,6 +142,7 @@ export function MediaItem({
   style,
 }: MediaItemProps) {
   const { colors, spacing, radius } = useTheme();
+  const tokens = infoBlockTokens.media;
 
   const itemRadius = borderRadius ?? radius.md;
   const isVideo = type === 'video';
@@ -192,15 +193,25 @@ export function MediaItem({
       {/* Video Play Indicator */}
       {isVideo && !selectable && (
         <View style={styles.playButton}>
-          <View style={[styles.playButtonBg, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
-            <PlayIcon size={24} />
+          <View
+            style={[
+              styles.playButtonBg,
+              {
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                width: tokens.playButtonSize,
+                height: tokens.playButtonSize,
+                borderRadius: tokens.playButtonSize / 2,
+              },
+            ]}
+          >
+            <PlayIcon size={tokens.playIconSize} />
           </View>
         </View>
       )}
 
       {/* Video Duration Badge */}
       {isVideo && duration !== undefined && (
-        <View style={[styles.durationBadge, { margin: spacing[1] }]}>
+        <View style={[styles.durationBadge, { margin: tokens.durationBadgeMargin }]}>
           <Badge variant="secondary">{formatDuration(duration)}</Badge>
         </View>
       )}
@@ -219,7 +230,7 @@ export function MediaItem({
           )}
 
           {/* Checkbox */}
-          <View style={[styles.checkbox, { top: spacing[2], right: spacing[2] }]}>
+          <View style={[styles.checkbox, { top: tokens.checkboxOffset, right: tokens.checkboxOffset }]}>
             <View
               style={[
                 styles.checkboxInner,
@@ -227,10 +238,12 @@ export function MediaItem({
                   backgroundColor: selected ? colors.primary : 'rgba(255,255,255,0.8)',
                   borderColor: selected ? colors.primary : colors.border,
                   borderRadius: radius.full,
+                  width: tokens.checkboxSize,
+                  height: tokens.checkboxSize,
                 },
               ]}
             >
-              {selected && <CheckIcon size={14} />}
+              {selected && <CheckIcon size={tokens.checkIconSize} />}
             </View>
           </View>
         </>
@@ -262,9 +275,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   playButtonBg: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -281,8 +291,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   checkboxInner: {
-    width: 24,
-    height: 24,
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',

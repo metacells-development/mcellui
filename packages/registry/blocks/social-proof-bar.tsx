@@ -20,7 +20,7 @@
 
 import React from 'react';
 import { View, Text, Pressable, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Avatar } from '../ui/avatar';
@@ -57,13 +57,14 @@ export function SocialProofBar({
   style,
 }: SocialProofBarProps) {
   const { colors, spacing } = useTheme();
+  const tokens = infoBlockTokens.socialProof;
 
   const displayAvatars = avatars.slice(0, maxAvatars);
 
   // Get pixel size for overlap calculation
   const sizeMap = { xs: 24, sm: 32, md: 40 };
   const pixelSize = sizeMap[avatarSize];
-  const overlap = pixelSize * 0.3;
+  const overlap = pixelSize * tokens.avatarOverlapRatio;
 
   const content = (
     <View style={[styles.container, { gap: spacing[3] }, style]}>
@@ -104,7 +105,14 @@ export function SocialProofBar({
 
       {/* Text */}
       <Text
-        style={[styles.text, { color: colors.foregroundMuted }]}
+        style={[
+          styles.text,
+          {
+            color: colors.foregroundMuted,
+            fontSize: tokens.textFontSize,
+            lineHeight: tokens.textLineHeight,
+          },
+        ]}
         numberOfLines={2}
       >
         {text}
@@ -144,7 +152,5 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    fontSize: 14,
-    lineHeight: 18,
   },
 });
