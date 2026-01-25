@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 10 of 12 (Blocks: Content & Social) - IN PROGRESS
-Plans: 1 of 5 complete
-Status: Executing - token foundation complete
-Last activity: 2026-01-25 - Completed 10-01-PLAN.md
+Phase: 12 of 12 (Screens) - IN PROGRESS
+Plans: 1 of 6 complete
+Status: Executing - screen token foundation complete
+Last activity: 2026-01-25 - Completed 12-01-PLAN.md
 
-Progress: [███████░░░] 71%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 37
-- Average duration: 3.9 min
-- Total execution time: 2.52 hours
+- Total plans completed: 38
+- Average duration: 4.0 min
+- Total execution time: 2.65 hours
 
 **By Phase:**
 
@@ -37,10 +37,11 @@ Progress: [███████░░░] 71%
 | 08-advanced-components | 4/7 | 15.1 min | 3.8 min |
 | 09-blocks-auth-settings | 6/6 | 14.3 min | 2.9 min |
 | 10-blocks-content-social | 1/5 | 4 min | 4.0 min |
+| 12-screens | 1/6 | 7.7 min | 7.7 min |
 
 **Recent Trend:**
-- Last 5 plans: 10-01 (4 min), 09-06 (2 min), 09-05 (5.3 min), 08-07 (3 min), 08-06 (6 min)
-- Trend: Token foundation plans 3-4 min, gap closure plans 2-3 min, demo enhancement plans 5-6 min
+- Last 5 plans: 12-01 (7.7 min), 10-01 (4 min), 09-06 (2 min), 09-05 (5.3 min), 08-07 (3 min)
+- Trend: Screen migrations 7-8 min, token foundation plans 3-4 min, gap closure plans 2-3 min
 
 *Updated after each plan completion*
 
@@ -155,6 +156,9 @@ Recent decisions affecting current work:
 - **10-01**: cardBlockTokens.shadow uses 'sm' for unified shadow depth across all card blocks
 - **10-01**: socialBlockTokens.action.touchTarget = 44px for iOS-standard minimum touch target
 - **10-01**: Card block image aspect ratios vary per card type (product: 1, article: 1.78, event: 2.4, review: 1)
+- **12-01**: SCREEN_CONSTANTS provides two-tier token approach (constants + computed function)
+- **12-01**: Auth screens use inline dynamic styles for all theme-dependent properties
+- **12-01**: Logo placeholder text intentionally hardcoded (white on primary background)
 
 ### Pending Todos
 
@@ -167,7 +171,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 10-01-PLAN.md (Content & Social block token foundation)
+Stopped at: Completed 12-01-PLAN.md (Screen token foundation and auth screen migration)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -295,3 +299,18 @@ Resume file: None
 **Goal:** Content and social blocks have consistent card patterns and interaction states
 **Blocks:** ProductCard, CartItem, ArticleCard, EventCard, FeedPostCard, UserListItem, ChatBubble, CommentItem, ReviewCard (9 blocks)
 **Progress:** 1/5 plans complete - Token foundation established
+
+## Phase 12 In Progress
+
+| Plan | Wave | Description | Status |
+|------|------|-------------|--------|
+| 12-01 | 1 | Add SCREEN_CONSTANTS and migrate auth screens to theme tokens | ✅ Complete (7.7 min) |
+| 12-02 | 2 | Migrate remaining screens to theme tokens | Pending |
+| 12-03 | 2 | Screen demos enhancement | Pending |
+| 12-04 | 3 | Screen verification and refinement | Pending |
+| 12-05 | 3 | Additional screen enhancements | Pending |
+| 12-06 | 3 | Final screen polish | Pending |
+
+**Goal:** All screens use consistent theme tokens for typography, spacing, and visual language
+**Screens:** Login, Signup, OTP Verification, and additional screen components
+**Progress:** 1/6 plans complete - Screen token foundation and auth screens migrated
