@@ -32,7 +32,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, stateBlockTokens } from '@metacells/mcellui-core';
 
 // Import your components
 import { Button } from '../ui/button';
@@ -110,7 +110,9 @@ export function ErrorStateBlock({
 }: ErrorStateBlockProps) {
   const { colors, spacing } = useTheme();
 
-  const iconSize = compact ? 40 : 48;
+  const tokens = compact ? stateBlockTokens.compact : stateBlockTokens.default;
+  const errorTokens = stateBlockTokens.error;
+  const iconSize = compact ? 40 : 48; // Keep as is - this is the SVG icon size, not container
 
   return (
     <View
@@ -128,9 +130,9 @@ export function ErrorStateBlock({
           styles.iconContainer,
           {
             backgroundColor: colors.destructive + '15',
-            width: compact ? 72 : 88,
-            height: compact ? 72 : 88,
-            borderRadius: compact ? 36 : 44,
+            width: compact ? errorTokens.iconContainerSizeCompact : errorTokens.iconContainerSize,
+            height: compact ? errorTokens.iconContainerSizeCompact : errorTokens.iconContainerSize,
+            borderRadius: compact ? errorTokens.iconContainerRadiusCompact : errorTokens.iconContainerRadius,
             marginBottom: spacing[4],
           },
         ]}
@@ -144,7 +146,8 @@ export function ErrorStateBlock({
           styles.title,
           {
             color: colors.foreground,
-            fontSize: compact ? 18 : 20,
+            fontSize: compact ? stateBlockTokens.compact.titleFontSize : stateBlockTokens.default.titleFontSize,
+            fontWeight: stateBlockTokens.typography.titleFontWeight,
             marginBottom: spacing[2],
           },
         ]}
@@ -159,7 +162,7 @@ export function ErrorStateBlock({
             styles.description,
             {
               color: colors.foregroundMuted,
-              fontSize: compact ? 14 : 15,
+              fontSize: compact ? stateBlockTokens.compact.descriptionFontSize : stateBlockTokens.default.descriptionFontSize,
               marginBottom: spacing[2],
               paddingHorizontal: spacing[4],
             },
@@ -177,6 +180,7 @@ export function ErrorStateBlock({
             {
               color: colors.foregroundMuted,
               backgroundColor: colors.backgroundMuted,
+              fontSize: errorTokens.codeFontSize,
               paddingHorizontal: spacing[2],
               paddingVertical: spacing[1],
               borderRadius: 4,
@@ -230,7 +234,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontWeight: '600',
     textAlign: 'center',
   },
   description: {
@@ -238,7 +241,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   errorCode: {
-    fontSize: 12,
     fontFamily: 'monospace',
   },
   actions: {
