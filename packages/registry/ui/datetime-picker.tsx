@@ -151,7 +151,8 @@ export function DateTimePicker({
   is24Hour = false,
   formatValue,
 }: DateTimePickerProps) {
-  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight, components } = useTheme();
+  const tokens = components.dateTimePicker;
 
   const [isOpen, setIsOpen] = useState(false);
   const [tempValue, setTempValue] = useState(value);
@@ -270,11 +271,12 @@ export function DateTimePicker({
         style={({ pressed }) => [
           styles.input,
           {
+            height: tokens.input.height,
             backgroundColor: colors.background,
             borderColor: error ? colors.destructive : colors.border,
             borderRadius: radius.lg,
-            paddingHorizontal: spacing[4],
-            paddingVertical: spacing[3],
+            paddingHorizontal: tokens.input.paddingHorizontal,
+            paddingVertical: tokens.input.paddingVertical,
             opacity: disabled ? 0.5 : pressed ? 0.8 : 1,
           },
         ]}
@@ -293,8 +295,8 @@ export function DateTimePicker({
         >
           {displayValue || placeholder || defaultPlaceholder}
         </Text>
-        <View style={styles.iconContainer}>
-          <CalendarIcon color={colors.foregroundMuted} />
+        <View style={[styles.iconContainer, { marginLeft: tokens.input.iconMarginLeft }]}>
+          <CalendarIcon color={colors.foregroundMuted} tokens={tokens} />
         </View>
       </Pressable>
 
@@ -327,13 +329,22 @@ export function DateTimePicker({
                 {
                   backgroundColor: colors.card,
                   paddingBottom: spacing[8],
+                  borderTopLeftRadius: tokens.sheet.borderRadius,
+                  borderTopRightRadius: tokens.sheet.borderRadius,
                 },
                 sheetStyle,
               ]}
             >
               {/* Handle */}
-              <View style={styles.handleContainer}>
-                <View style={[styles.handle, { backgroundColor: colors.border }]} />
+              <View style={[styles.handleContainer, { paddingVertical: tokens.sheet.handlePaddingVertical }]}>
+                <View style={[
+                  styles.handle,
+                  {
+                    backgroundColor: colors.border,
+                    width: tokens.sheet.handleWidth,
+                    height: tokens.sheet.handleHeight,
+                  }
+                ]} />
               </View>
 
               {/* Header */}
@@ -341,8 +352,8 @@ export function DateTimePicker({
                 style={[
                   styles.header,
                   {
-                    paddingHorizontal: spacing[4],
-                    paddingBottom: spacing[3],
+                    paddingHorizontal: tokens.sheet.headerPaddingHorizontal,
+                    paddingBottom: tokens.sheet.headerPaddingBottom,
                     borderBottomWidth: 1,
                     borderBottomColor: colors.border,
                   },
@@ -393,7 +404,7 @@ export function DateTimePicker({
               </View>
 
               {/* Picker */}
-              <View style={styles.pickerContainer}>
+              <View style={[styles.pickerContainer, { paddingVertical: tokens.sheet.pickerPaddingVertical }]}>
                 {isNativePickerAvailable && DateTimePickerNative ? (
                   <DateTimePickerNative
                     value={tempValue}
@@ -403,11 +414,11 @@ export function DateTimePicker({
                     minimumDate={minimumDate}
                     maximumDate={maximumDate}
                     is24Hour={is24Hour}
-                    style={styles.picker}
+                    style={{ width: '100%', height: tokens.sheet.pickerHeight }}
                     textColor={colors.foreground}
                   />
                 ) : (
-                  <View style={styles.expoGoFallback}>
+                  <View style={[styles.expoGoFallback, { padding: tokens.fallback.padding, gap: tokens.fallback.gap }]}>
                     <Text
                       style={[
                         styles.expoGoTitle,
@@ -461,14 +472,42 @@ export function DateTimePicker({
 // Calendar Icon
 // ─────────────────────────────────────────────────────────────────────────────
 
-function CalendarIcon({ color }: { color: string }) {
+function CalendarIcon({ color, tokens }: { color: string; tokens: any }) {
   return (
-    <View style={styles.calendarIcon}>
-      <View style={[styles.calendarTop, { backgroundColor: color }]} />
-      <View style={[styles.calendarBody, { borderColor: color }]}>
-        <View style={styles.calendarDots}>
-          <View style={[styles.calendarDot, { backgroundColor: color }]} />
-          <View style={[styles.calendarDot, { backgroundColor: color }]} />
+    <View style={[styles.calendarIcon, { width: tokens.icon.width, height: tokens.icon.height }]}>
+      <View style={[
+        styles.calendarTop,
+        {
+          backgroundColor: color,
+          width: tokens.icon.topWidth,
+          height: tokens.icon.topHeight,
+        }
+      ]} />
+      <View style={[
+        styles.calendarBody,
+        {
+          borderColor: color,
+          width: tokens.icon.bodyWidth,
+          height: tokens.icon.bodyHeight,
+        }
+      ]}>
+        <View style={[styles.calendarDots, { gap: tokens.icon.dotGap }]}>
+          <View style={[
+            styles.calendarDot,
+            {
+              backgroundColor: color,
+              width: tokens.icon.dotSize,
+              height: tokens.icon.dotSize,
+            }
+          ]} />
+          <View style={[
+            styles.calendarDot,
+            {
+              backgroundColor: color,
+              width: tokens.icon.dotSize,
+              height: tokens.icon.dotSize,
+            }
+          ]} />
         </View>
       </View>
     </View>
@@ -490,9 +529,7 @@ const styles = StyleSheet.create({
   inputText: {
     flex: 1,
   },
-  iconContainer: {
-    marginLeft: 8,
-  },
+  iconContainer: {},
   error: {},
   modalContainer: {
     flex: 1,
@@ -502,17 +539,11 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  sheet: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
+  sheet: {},
   handleContainer: {
     alignItems: 'center',
-    paddingVertical: 12,
   },
   handle: {
-    width: 36,
-    height: 4,
     borderRadius: 2,
   },
   header: {
@@ -524,16 +555,9 @@ const styles = StyleSheet.create({
   headerTitle: {},
   pickerContainer: {
     alignItems: 'center',
-    paddingVertical: 16,
-  },
-  picker: {
-    width: '100%',
-    height: 200,
   },
   expoGoFallback: {
     alignItems: 'center',
-    padding: 24,
-    gap: 12,
   },
   expoGoTitle: {
     textAlign: 'center',
@@ -548,19 +572,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   calendarIcon: {
-    width: 20,
-    height: 20,
     alignItems: 'center',
   },
   calendarTop: {
-    width: 14,
-    height: 3,
     borderRadius: 1,
     marginBottom: 1,
   },
   calendarBody: {
-    width: 16,
-    height: 14,
     borderWidth: 1.5,
     borderRadius: 2,
     justifyContent: 'center',
@@ -568,11 +586,8 @@ const styles = StyleSheet.create({
   },
   calendarDots: {
     flexDirection: 'row',
-    gap: 3,
   },
   calendarDot: {
-    width: 3,
-    height: 3,
     borderRadius: 1.5,
   },
 });
