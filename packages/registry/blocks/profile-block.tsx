@@ -28,7 +28,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, profileBlockTokens } from '@metacells/mcellui-core';
 
 // Import your components
 import { Avatar } from '../ui/avatar';
@@ -223,16 +223,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    fontSize: 24,
-    fontWeight: '700',
+    fontSize: profileBlockTokens.name.fontSize,
+    fontWeight: profileBlockTokens.name.fontWeight,
   },
   subtitle: {
-    fontSize: 15,
+    fontSize: profileBlockTokens.subtitle.fontSize,
   },
   bio: {
-    fontSize: 15,
+    fontSize: profileBlockTokens.bio.fontSize,
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: profileBlockTokens.bio.lineHeight,
   },
   stats: {
     flexDirection: 'row',
@@ -243,11 +243,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statValue: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: profileBlockTokens.stat.valueFontSize,
+    fontWeight: profileBlockTokens.stat.valueFontWeight,
   },
   statLabel: {
-    fontSize: 13,
+    fontSize: profileBlockTokens.stat.labelFontSize,
   },
   actions: {
     width: '100%',

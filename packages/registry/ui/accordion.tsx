@@ -41,15 +41,13 @@ import Animated, {
   Extrapolation,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import {
+  useTheme,
+  areAnimationsDisabled,
+  accordionTokens,
+  ACCORDION_CONSTANTS,
+} from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
-
-// Smooth spring config for natural feel
-const SPRING_CONFIG = {
-  damping: 20,
-  stiffness: 200,
-  mass: 0.5,
-};
 
 // Accordion Context
 interface AccordionContextValue {
@@ -90,7 +88,13 @@ const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 function ChevronIcon({ color, style }: { color: string; style?: any }) {
   return (
-    <AnimatedSvg width={16} height={16} viewBox="0 0 24 24" fill="none" style={style}>
+    <AnimatedSvg
+      width={ACCORDION_CONSTANTS.chevronSize}
+      height={ACCORDION_CONSTANTS.chevronSize}
+      viewBox="0 0 24 24"
+      fill="none"
+      style={style}
+    >
       <Path
         d="M6 9l6 6 6-6"
         stroke={color}
@@ -127,7 +131,7 @@ export function Accordion({
   children,
   style,
 }: AccordionProps) {
-  const { colors, radius } = useTheme();
+  const { colors, componentRadius } = useTheme();
 
   // Normalize values to array
   const normalizeValue = (val: string | string[] | undefined): string[] => {
@@ -179,8 +183,8 @@ export function Accordion({
         style={[
           styles.container,
           {
-            borderRadius: radius.lg,
-            borderWidth: 1,
+            borderRadius: componentRadius.accordion,
+            borderWidth: accordionTokens.item.borderWidth,
             borderColor: colors.border,
             overflow: 'hidden',
           },
@@ -254,7 +258,7 @@ export function AccordionTrigger({
   style,
   textStyle,
 }: AccordionTriggerProps) {
-  const { colors, spacing } = useTheme();
+  const { colors } = useTheme();
   const { onValueChange } = useAccordionContext();
   const { value, isOpen } = useAccordionItemContext();
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
@@ -263,7 +267,7 @@ export function AccordionTrigger({
 
   React.useEffect(() => {
     if (animationsEnabled) {
-      progress.value = withSpring(isOpen ? 1 : 0, SPRING_CONFIG);
+      progress.value = withSpring(isOpen ? 1 : 0, ACCORDION_CONSTANTS.spring);
     } else {
       progress.value = isOpen ? 1 : 0;
     }
@@ -286,8 +290,8 @@ export function AccordionTrigger({
       style={({ pressed }) => [
         styles.trigger,
         {
-          paddingVertical: spacing[4],
-          paddingHorizontal: spacing[4],
+          paddingVertical: accordionTokens.trigger.paddingVertical,
+          paddingHorizontal: accordionTokens.trigger.paddingHorizontal,
           backgroundColor: pressed ? colors.secondary : colors.background,
         },
         style,
@@ -300,7 +304,11 @@ export function AccordionTrigger({
       <Text
         style={[
           styles.triggerText,
-          { color: colors.foreground },
+          {
+            color: colors.foreground,
+            fontSize: accordionTokens.trigger.fontSize,
+            fontWeight: accordionTokens.trigger.fontWeight,
+          },
           textStyle,
         ]}
       >
@@ -320,7 +328,7 @@ export interface AccordionContentProps {
 }
 
 export function AccordionContent({ children, style }: AccordionContentProps) {
-  const { colors, spacing } = useTheme();
+  const { colors } = useTheme();
   const { isOpen } = useAccordionItemContext();
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
 
@@ -349,7 +357,7 @@ export function AccordionContent({ children, style }: AccordionContentProps) {
   // Animate open/close
   React.useEffect(() => {
     if (animationsEnabled) {
-      progress.value = withSpring(isOpen ? 1 : 0, SPRING_CONFIG);
+      progress.value = withSpring(isOpen ? 1 : 0, ACCORDION_CONSTANTS.spring);
     } else {
       progress.value = isOpen ? 1 : 0;
     }
@@ -395,8 +403,8 @@ export function AccordionContent({ children, style }: AccordionContentProps) {
           {
             // Fix height after measurement to prevent text reflow during animation
             height: measuredHeight > 0 ? measuredHeight : undefined,
-            paddingHorizontal: spacing[4],
-            paddingBottom: spacing[4],
+            paddingHorizontal: accordionTokens.content.paddingHorizontal,
+            paddingBottom: accordionTokens.content.paddingBottom,
             backgroundColor: colors.background,
           },
           style,
@@ -417,10 +425,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   triggerText: {
-    fontSize: 15,
-    fontWeight: '500',
     flex: 1,
-    marginRight: 8,
+    marginRight: accordionTokens.trigger.iconMargin,
   },
   content: {},
 });

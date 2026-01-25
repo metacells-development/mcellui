@@ -96,21 +96,6 @@ export const BUTTON_CONSTANTS = {
 } as const;
 
 // ============================================
-// Accordion Constants
-// ============================================
-
-export const ACCORDION_CONSTANTS = {
-  /** Animation Dauer (ms) */
-  animationDuration: 250,
-  /** Trigger Text Font Size */
-  triggerFontSize: 15,
-  /** Chevron Font Size */
-  chevronFontSize: 10,
-  /** Chevron Margin Left */
-  chevronMarginLeft: 8,
-} as const;
-
-// ============================================
 // Swipeable Row Constants
 // ============================================
 
@@ -300,7 +285,6 @@ export type SheetConstants = typeof SHEET_CONSTANTS;
 export type DialogConstants = typeof DIALOG_CONSTANTS;
 export type ToastConstants = typeof TOAST_CONSTANTS;
 export type ButtonConstants = typeof BUTTON_CONSTANTS;
-export type AccordionConstants = typeof ACCORDION_CONSTANTS;
 export type SwipeableConstants = typeof SWIPEABLE_CONSTANTS;
 export type AnimationConstants = typeof ANIMATION_CONSTANTS;
 export type SliderConstants = typeof SLIDER_CONSTANTS;
