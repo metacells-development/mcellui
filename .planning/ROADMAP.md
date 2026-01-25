@@ -133,10 +133,14 @@ Plans:
   3. Screen component provides standard layout patterns with theme integration
   4. List components use optimized FlatList/SectionList patterns
   5. Demo shows layout composition patterns and spacing examples
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] TBD
+- [ ] 06-01-PLAN.md - Add LIST_CONSTANTS and listTokens to core theme
+- [ ] 06-02-PLAN.md - Migrate List and SectionHeader to centralized tokens
+- [ ] 06-03-PLAN.md - Migrate shared Section demo component to tokens
+- [ ] 06-04-PLAN.md - Migrate Row, Column, Screen demos to tokens
+- [ ] 06-05-PLAN.md - Migrate Separator, List, SectionHeader, HorizontalList demos to tokens
 
 ### Phase 7: Navigation & Interaction
 **Goal**: All navigation components have smooth animations and consistent interaction patterns
@@ -240,7 +244,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 3. Feedback Components | 6/6 | ✓ Complete | 2026-01-25 |
 | 4. Progress & Loading | 0/4 | Planned | - |
 | 5. Data Display | 0/5 | Planned | - |
-| 6. Layout & Structure | 0/TBD | Not started | - |
+| 6. Layout & Structure | 0/5 | Planned | - |
 | 7. Navigation & Interaction | 0/TBD | Not started | - |
 | 8. Advanced Components | 0/TBD | Not started | - |
 | 9. Blocks - Auth & Settings | 0/TBD | Not started | - |
