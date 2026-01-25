@@ -92,7 +92,7 @@ function OnboardingSlideComponent({
   scrollX,
   width,
 }: OnboardingSlideComponentProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight, lineHeight } = useTheme();
 
   // Parallax effect for illustration - moves slower than content
   const illustrationStyle = useAnimatedStyle(() => {
@@ -154,8 +154,8 @@ function OnboardingSlideComponent({
 
       {/* Content */}
       <View style={[styles.content, { paddingHorizontal: spacing[6] }]}>
-        <Text style={[styles.title, { color: colors.foreground }]}>{item.title}</Text>
-        <Text style={[styles.description, { color: colors.foregroundMuted, marginTop: spacing[3] }]}>
+        <Text style={[styles.title, { color: colors.foreground, fontSize: fontSize['2xl'], fontWeight: fontWeight.bold }]}>{item.title}</Text>
+        <Text style={[styles.description, { color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.base, lineHeight: lineHeight.relaxed }]}>
           {item.description}
         </Text>
       </View>
@@ -289,14 +289,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
     textAlign: 'center',
-    lineHeight: 34,
   },
   description: {
-    fontSize: 16,
-    lineHeight: 24,
     textAlign: 'center',
   },
   bottomSection: {},

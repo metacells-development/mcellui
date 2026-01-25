@@ -150,7 +150,7 @@ export function HelpScreen({
   onBack,
   onContactSupport,
 }: HelpScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight, lineHeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -248,7 +248,7 @@ export function HelpScreen({
       <View style={[styles.header, { paddingTop: insets.top, borderBottomColor: colors.border }]}>
         <View style={[styles.headerContent, { paddingHorizontal: spacing[4], paddingVertical: spacing[3] }]}>
           {onBack && <IconButton icon={<ChevronLeftIcon />} variant="ghost" onPress={onBack} />}
-          <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+          <Text style={[styles.headerTitle, { color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }]}>
             Help & Support
           </Text>
           <View style={{ width: 44 }} />
@@ -290,7 +290,7 @@ export function HelpScreen({
               <Text
                 style={[
                   styles.categoryText,
-                  { color: !selectedCategory ? colors.primaryForeground : colors.foreground },
+                  { color: !selectedCategory ? colors.primaryForeground : colors.foreground, fontSize: fontSize.xs, fontWeight: fontWeight.medium },
                 ]}
               >
                 All
@@ -313,7 +313,7 @@ export function HelpScreen({
                 <Text
                   style={[
                     styles.categoryText,
-                    { color: selectedCategory === category ? colors.primaryForeground : colors.foreground },
+                    { color: selectedCategory === category ? colors.primaryForeground : colors.foreground, fontSize: fontSize.xs, fontWeight: fontWeight.medium },
                   ]}
                 >
                   {category}
@@ -325,17 +325,17 @@ export function HelpScreen({
 
         {/* FAQs */}
         <View style={{ paddingHorizontal: spacing[4], marginTop: spacing[4] }}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+          <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.lg, fontWeight: fontWeight.semibold }]}>
             Frequently Asked Questions
           </Text>
 
           {filteredFaqs.length === 0 ? (
             <View style={[styles.emptyState, { padding: spacing[6] }]}>
               <SearchIcon size={48} color={colors.foregroundMuted} />
-              <Text style={[styles.emptyTitle, { color: colors.foreground, marginTop: spacing[3] }]}>
+              <Text style={[styles.emptyTitle, { color: colors.foreground, marginTop: spacing[3], fontSize: fontSize.md, fontWeight: fontWeight.semibold }]}>
                 No results found
               </Text>
-              <Text style={[styles.emptyDescription, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
+              <Text style={[styles.emptyDescription, { color: colors.foregroundMuted, marginTop: spacing[1], fontSize: fontSize.sm }]}>
                 Try searching with different keywords
               </Text>
             </View>
@@ -344,12 +344,12 @@ export function HelpScreen({
               {filteredFaqs.map((faq) => (
                 <AccordionItem key={faq.id} value={faq.id}>
                   <AccordionTrigger>
-                    <Text style={[styles.faqQuestion, { color: colors.foreground }]}>
+                    <Text style={[styles.faqQuestion, { color: colors.foreground, fontSize: fontSize.base, fontWeight: fontWeight.medium }]}>
                       {faq.question}
                     </Text>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Text style={[styles.faqAnswer, { color: colors.foregroundMuted }]}>
+                    <Text style={[styles.faqAnswer, { color: colors.foregroundMuted, fontSize: fontSize.sm, lineHeight: lineHeight.relaxed }]}>
                       {faq.answer}
                     </Text>
                   </AccordionContent>
@@ -365,7 +365,7 @@ export function HelpScreen({
             <Separator style={{ marginVertical: spacing[4] }} />
 
             <View style={{ paddingHorizontal: spacing[4] }}>
-              <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+              <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.lg, fontWeight: fontWeight.semibold }]}>
                 Contact Us
               </Text>
 
@@ -381,11 +381,11 @@ export function HelpScreen({
                         {option.icon}
                       </View>
                       <View style={styles.contactInfo}>
-                        <Text style={[styles.contactLabel, { color: colors.foreground }]}>
+                        <Text style={[styles.contactLabel, { color: colors.foreground, fontSize: fontSize.base, fontWeight: fontWeight.semibold }]}>
                           {option.label}
                         </Text>
                         {option.description && (
-                          <Text style={[styles.contactDescription, { color: colors.foregroundMuted }]}>
+                          <Text style={[styles.contactDescription, { color: colors.foregroundMuted, fontSize: fontSize.xs }]}>
                             {option.description}
                           </Text>
                         )}
@@ -421,37 +421,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
+  headerTitle: {},
+  sectionTitle: {},
   categoryChip: {},
-  categoryText: {
-    fontSize: 13,
-    fontWeight: '500',
-  },
+  categoryText: {},
   faqQuestion: {
-    fontSize: 15,
-    fontWeight: '500',
     flex: 1,
   },
-  faqAnswer: {
-    fontSize: 14,
-    lineHeight: 22,
-  },
+  faqAnswer: {},
   emptyState: {
     alignItems: 'center',
   },
-  emptyTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  emptyTitle: {},
   emptyDescription: {
-    fontSize: 14,
     textAlign: 'center',
   },
   contactOption: {
@@ -462,12 +444,8 @@ const styles = StyleSheet.create({
   contactInfo: {
     flex: 1,
   },
-  contactLabel: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
+  contactLabel: {},
   contactDescription: {
-    fontSize: 13,
     marginTop: 2,
   },
 });

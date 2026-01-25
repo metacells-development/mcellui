@@ -116,7 +116,7 @@ export function FollowersScreen({
   onUserPress,
   onRemoveFollower,
 }: FollowersScreenProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -230,7 +230,7 @@ export function FollowersScreen({
       <View style={[styles.header, { paddingTop: insets.top, borderBottomColor: colors.border }]}>
         <View style={[styles.headerContent, { paddingHorizontal: spacing[4], paddingVertical: spacing[3] }]}>
           {onBack && <IconButton icon={<ChevronLeftIcon />} variant="ghost" onPress={onBack} />}
-          <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+          <Text style={[styles.headerTitle, { color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }]}>
             {username || 'Connections'}
           </Text>
           <View style={{ width: 44 }} />
@@ -317,10 +317,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
+  headerTitle: {},
   tabContent: {
     flex: 1,
   },
