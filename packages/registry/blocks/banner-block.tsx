@@ -28,7 +28,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, ecommerceBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -96,34 +96,6 @@ export interface BannerBlockProps {
 }
 
 // ============================================================================
-// Size Configs
-// ============================================================================
-
-const SIZE_CONFIG = {
-  sm: {
-    padding: 12,
-    titleSize: 14,
-    subtitleSize: 12,
-    iconSize: 20,
-    minHeight: 56,
-  },
-  md: {
-    padding: 16,
-    titleSize: 16,
-    subtitleSize: 14,
-    iconSize: 24,
-    minHeight: 72,
-  },
-  lg: {
-    padding: 20,
-    titleSize: 20,
-    subtitleSize: 16,
-    iconSize: 32,
-    minHeight: 100,
-  },
-};
-
-// ============================================================================
 // Component
 // ============================================================================
 
@@ -145,7 +117,8 @@ export function BannerBlock({
   style,
 }: BannerBlockProps) {
   const { colors, spacing, radius } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const tokens = ecommerceBlockTokens.banner[size];
+  const sharedTokens = ecommerceBlockTokens.banner;
 
   const handlePress = () => {
     haptic('light');
@@ -200,8 +173,8 @@ export function BannerBlock({
       style={({ pressed }: { pressed?: boolean }) => [
         styles.container,
         {
-          minHeight: config.minHeight,
-          padding: config.padding,
+          minHeight: tokens.minHeight,
+          padding: tokens.padding,
           backgroundColor: bgColor,
           borderRadius: radius.lg,
           borderWidth: variant === 'outline' ? 1 : 0,
@@ -252,8 +225,8 @@ export function BannerBlock({
           <View style={{ marginRight: spacing[3] }}>
             {React.isValidElement(icon)
               ? React.cloneElement(icon as React.ReactElement<any>, {
-                  width: config.iconSize,
-                  height: config.iconSize,
+                  width: tokens.iconSize,
+                  height: tokens.iconSize,
                   color: txtColor,
                 })
               : icon}
@@ -265,7 +238,11 @@ export function BannerBlock({
           <Text
             style={[
               styles.title,
-              { fontSize: config.titleSize, color: txtColor },
+              {
+                fontSize: tokens.titleFontSize,
+                fontWeight: sharedTokens.titleFontWeight,
+                color: txtColor,
+              },
             ]}
             numberOfLines={2}
           >
@@ -276,10 +253,11 @@ export function BannerBlock({
               style={[
                 styles.subtitle,
                 {
-                  fontSize: config.subtitleSize,
+                  fontSize: tokens.subtitleFontSize,
                   color: txtColor,
                   opacity: 0.9,
                   marginTop: spacing[0.5],
+                  lineHeight: sharedTokens.subtitleLineHeight,
                 },
               ]}
               numberOfLines={2}
@@ -346,12 +324,8 @@ const styles = StyleSheet.create({
   textContent: {
     flex: 1,
   },
-  title: {
-    fontWeight: '700',
-  },
-  subtitle: {
-    lineHeight: 20,
-  },
+  title: {},
+  subtitle: {},
   dismissButton: {
     position: 'absolute',
     padding: 4,
