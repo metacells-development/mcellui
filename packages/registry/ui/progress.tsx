@@ -23,7 +23,7 @@ import Animated, {
   withSequence,
   Easing,
 } from 'react-native-reanimated';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, areAnimationsDisabled, progressTokens, PROGRESS_CONSTANTS } from '@metacells/mcellui-core';
 
 export type ProgressSize = 'sm' | 'md' | 'lg';
 export type ProgressColor = 'default' | 'primary' | 'success' | 'warning' | 'destructive';
@@ -47,12 +47,6 @@ export interface ProgressProps {
   fillStyle?: ViewStyle;
 }
 
-const sizeMap: Record<ProgressSize, number> = {
-  sm: 4,
-  md: 8,
-  lg: 12,
-};
-
 export function Progress({
   value = 0,
   max = 100,
@@ -75,7 +69,7 @@ export function Progress({
     if (!indeterminate) {
       if (animationsEnabled) {
         progress.value = withTiming(percentage, {
-          duration: 300,
+          duration: progressTokens.animation.determinateDuration,
           easing: Easing.out(Easing.ease),
         });
       } else {
@@ -88,8 +82,8 @@ export function Progress({
     if (indeterminate && animationsEnabled) {
       indeterminateProgress.value = withRepeat(
         withSequence(
-          withTiming(1, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
-          withTiming(0, { duration: 1000, easing: Easing.inOut(Easing.ease) })
+          withTiming(1, { duration: progressTokens.animation.indeterminateDuration, easing: Easing.inOut(Easing.ease) }),
+          withTiming(0, { duration: progressTokens.animation.indeterminateDuration, easing: Easing.inOut(Easing.ease) })
         ),
         -1,
         false
@@ -102,9 +96,9 @@ export function Progress({
       case 'primary':
         return colors.primary;
       case 'success':
-        return colors.success ?? '#22c55e';
+        return colors.success ?? PROGRESS_CONSTANTS.fallbackColors.success;
       case 'warning':
-        return colors.warning ?? '#f59e0b';
+        return colors.warning ?? PROGRESS_CONSTANTS.fallbackColors.warning;
       case 'destructive':
         return colors.destructive;
       case 'default':
@@ -118,11 +112,11 @@ export function Progress({
   }));
 
   const indeterminateStyle = useAnimatedStyle(() => ({
-    width: '30%',
-    left: `${indeterminateProgress.value * 70}%`,
+    width: `${PROGRESS_CONSTANTS.indeterminateWidth}%`,
+    left: `${indeterminateProgress.value * (100 - PROGRESS_CONSTANTS.indeterminateWidth)}%`,
   }));
 
-  const height = sizeMap[size];
+  const height = progressTokens[size].height;
   const fillColor = getFillColor();
 
   return (
