@@ -22,7 +22,7 @@
 
 import React from 'react';
 import { View, Text, Pressable, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, socialBlockTokens, fontSize } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -60,6 +60,8 @@ export interface UserListItemProps {
   actionVariant?: 'default' | 'outline' | 'secondary';
   /** Whether action is in loading state */
   actionLoading?: boolean;
+  /** Whether the item is disabled */
+  disabled?: boolean;
   /** Whether the item is selected */
   selected?: boolean;
   /** Badge content (e.g., notification count) */
@@ -85,6 +87,7 @@ export function UserListItem({
   actionLabel,
   actionVariant = 'outline',
   actionLoading,
+  disabled,
   selected,
   badge,
   onAction,
@@ -122,17 +125,21 @@ export function UserListItem({
           paddingVertical: spacing[3],
           paddingHorizontal: spacing[4],
           backgroundColor: pressed ? colors.secondary : selected ? colors.secondary : 'transparent',
+          opacity: disabled ? 0.5 : 1,
         },
         style,
       ]}
-      onPress={onPress ? handlePress : undefined}
+      onPress={onPress && !disabled ? handlePress : undefined}
+      disabled={disabled}
       accessibilityRole={onPress ? 'button' : undefined}
+      accessibilityLabel={`${user.name}${user.username ? `, ${user.username}` : ''}${user.subtitle ? `, ${user.subtitle}` : ''}`}
+      accessibilityState={{ disabled: disabled || false, selected: selected || false }}
     >
       {/* Avatar with status */}
       <Avatar
         source={user.avatarUrl ? { uri: user.avatarUrl } : undefined}
         fallback={initials}
-        size="md"
+        size={socialBlockTokens.avatar.listSize}
         status={status}
       />
 
@@ -140,7 +147,12 @@ export function UserListItem({
       <View style={[styles.info, { marginLeft: spacing[3] }]}>
         <View style={styles.nameRow}>
           <Text
-            style={[styles.name, { color: colors.foreground }]}
+            style={{
+              color: colors.foreground,
+              fontSize: socialBlockTokens.typography.authorFontSize,
+              fontWeight: String(socialBlockTokens.typography.authorFontWeight) as any,
+              flexShrink: 1,
+            }}
             numberOfLines={1}
           >
             {user.name}
@@ -154,7 +166,11 @@ export function UserListItem({
 
         {(user.username || user.subtitle) && (
           <Text
-            style={[styles.subtitle, { color: colors.foregroundMuted, marginTop: 2 }]}
+            style={{
+              color: colors.foregroundMuted,
+              fontSize: fontSize.sm,
+              marginTop: 2,
+            }}
             numberOfLines={1}
           >
             {user.username || user.subtitle}
@@ -175,7 +191,9 @@ export function UserListItem({
             variant={actionVariant}
             size="sm"
             loading={actionLoading}
+            disabled={disabled || actionLoading}
             onPress={handleAction}
+            accessibilityLabel={`${actionLabel} ${user.name}`}
           >
             {actionLabel}
           </Button>
@@ -201,20 +219,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  name: {
-    fontWeight: '600',
-    fontSize: 15,
-    flexShrink: 1,
-  },
   verifiedBadge: {
     width: 14,
     height: 14,
     borderRadius: 7,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  subtitle: {
-    fontSize: 13,
   },
   right: {
     flexDirection: 'row',
