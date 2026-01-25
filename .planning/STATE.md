@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 8 of 12 (Advanced Components)
-Plans: 08-04 of ? complete
-Status: In progress - ImageGallery, Pagination, Stories migrated to tokens
-Last activity: 2026-01-25 - Completed 08-04-PLAN.md
+Plans: 08-02 of ? complete
+Status: In progress - Calendar and DateTimePicker migrated to tokens
+Last activity: 2026-01-25 - Completed 08-02-PLAN.md
 
-Progress: [█████░░░░░] 55%
+Progress: [█████░░░░░] 54%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 33
-- Average duration: 3.8 min
-- Total execution time: 2.34 hours
+- Total plans completed: 30
+- Average duration: 4.0 min
+- Total execution time: 2.12 hours
 
 **By Phase:**
 
@@ -33,13 +33,13 @@ Progress: [█████░░░░░] 55%
 | 04-progress-loading | 4/4 | 12.8 min | 3.2 min |
 | 05-data-display | 5/5 | 10.1 min | 2.0 min |
 | 06-layout-structure | 5/5 | 17.6 min | 3.5 min |
-| 07-navigation-interaction | 2/5 | 5 min | 2.5 min |
-| 08-advanced-components | 2/? | 7.0 min | 3.5 min |
-| 09-blocks-auth-settings | 4/? | 9.05 min | 2.26 min |
+| 07-navigation-interaction | 1/5 | 2 min | 2.0 min |
+| 08-advanced-components | 2/? | 6.1 min | 3.05 min |
+| 09-blocks-auth-settings | 1/? | 3 min | 3.0 min |
 
 **Recent Trend:**
-- Last 5 plans: 08-04 (3.4 min), 09-02 (3.75 min), 09-04 (2.3 min), 07-02 (3 min), 08-01 (3.6 min)
-- Trend: Advanced component migrations consistently 3-4 min
+- Last 5 plans: 08-02 (2.5 min), 08-01 (3.6 min), 09-01 (3 min), 07-01 (2 min), 06-05 (6 min)
+- Trend: Token foundation plans 2-4 min, component migrations 2.5-3.5 min
 
 *Updated after each plan completion*
 
@@ -137,11 +137,9 @@ Recent decisions affecting current work:
 - **08-01**: Stories fontSize uses xs (12) instead of 11 (closest available scale value)
 - **08-01**: ImageGallery closeButtonTop uses platform-specific safe area values (iOS: 50, Android: 20)
 - **08-01**: Pagination simple variant has only gap token (no size variants needed for simple UI)
-- **08-04**: Export imageGalleryTokens, paginationTokens, storiesTokens from core/theme for component consumption
-- **08-04**: Platform-specific token pattern (iOS vs Android top positions) for fullscreen viewer close button
-- **08-04**: Row component token pattern (paddingHorizontal/gap) for StoriesRow horizontal layout
-- **09-04**: SVG icon sizes (40/48px) preserved as component logic in ErrorStateBlock (not tokens - icon detail sizing)
-- **09-04**: stateBlockTokens and profileBlockTokens exported from core/index for block consumption
+- **08-02**: Calendar migration already complete in commit 7d89c8b (previous session verification)
+- **08-02**: DateTimePicker CalendarIcon receives tokens as prop for dimension control
+- **08-02**: Micro-radii preserved (borderRadius: 1, 1.5, 2) for icon/handle details (too small for token scale)
 
 ### Pending Todos
 
@@ -154,7 +152,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 08-04-PLAN.md (ImageGallery, Pagination, Stories migrated to tokens)
+Stopped at: Completed 08-02-PLAN.md (Calendar and DateTimePicker migrated to tokens)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -241,10 +239,10 @@ Resume file: None
 | Plan | Wave | Description | Status |
 |------|------|-------------|--------|
 | 08-01 | 1 | Add centralized tokens for all Phase 08 advanced components | ✅ Complete (3.6 min) |
-| 08-02 | 2 | Migrate Calendar component to token system | ⏳ Pending |
-| 08-03 | 2 | Migrate DateTimePicker to tokens | ⏳ Pending |
-| 08-04 | 2 | Migrate Form components to tokens | ⏳ Pending |
-| 08-05 | 2 | Migrate ImageGallery, Pagination, Stories, SearchInput to tokens | ⏳ Pending |
+| 08-02 | 2 | Migrate Calendar and DateTimePicker to tokens | ✅ Complete (2.5 min) |
+| 08-03 | 2 | Migrate Form components to tokens | ⏳ Pending |
+| 08-04 | 2 | Migrate ImageGallery, Pagination to tokens | ⏳ Pending |
+| 08-05 | 2 | Migrate Stories and SearchInput to tokens | ⏳ Pending |
 
 ## Phase 9 In Progress
 
