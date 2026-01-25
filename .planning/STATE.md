@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 11 of 12 (Blocks: E-commerce & Info)
+Phase: 12 of 12 (Screens)
 Plans: 3 of 6 complete
-Status: In progress - E-commerce block token migration wave 2 complete
-Last activity: 2026-01-25 - Completed 11-03-PLAN.md
+Status: In progress - Wave 2 screen migrations complete (user mgmt + content/utility screens)
+Last activity: 2026-01-25 - Completed 12-05-PLAN.md
 
-Progress: [████████░░] 80%
+Progress: [████████░░] 81%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 42
+- Total plans completed: 43
 - Average duration: 4.1 min
-- Total execution time: 3.0 hours
+- Total execution time: 3.1 hours
 
 **By Phase:**
 
@@ -37,10 +37,10 @@ Progress: [████████░░] 80%
 | 08-advanced-components | 4/7 | 15.1 min | 3.8 min |
 | 09-blocks-auth-settings | 6/6 | 14.3 min | 2.9 min |
 | 10-blocks-content-social | 4/5 | 21.4 min | 5.4 min |
-| 12-screens | 2/6 | 11.7 min | 5.9 min |
+| 12-screens | 3/6 | 17.0 min | 5.7 min |
 
 **Recent Trend:**
-- Last 5 plans: 12-02 (4 min), 10-02 (7 min), 10-04 (5 min), 10-03 (5.4 min), 12-01 (7.7 min)
+- Last 5 plans: 12-05 (5.3 min), 12-02 (4 min), 10-02 (7 min), 10-04 (5 min), 10-03 (5.4 min)
 - Trend: Screen migrations 4-8 min, card block migrations 7 min, token foundation 3-4 min
 
 *Updated after each plan completion*
@@ -321,12 +321,12 @@ Resume file: None
 | Plan | Wave | Description | Status |
 |------|------|-------------|--------|
 | 12-01 | 1 | Add SCREEN_CONSTANTS and migrate auth screens to theme tokens | ✅ Complete (7.7 min) |
-| 12-02 | 2 | Migrate remaining screens to theme tokens | Pending |
-| 12-03 | 2 | Screen demos enhancement | Pending |
-| 12-04 | 3 | Screen verification and refinement | Pending |
-| 12-05 | 3 | Additional screen enhancements | Pending |
-| 12-06 | 3 | Final screen polish | Pending |
+| 12-02 | 2 | Migrate profile and settings screens to typography tokens | ✅ Complete (4 min) |
+| 12-03 | 2 | Migrate social screens to typography tokens | Pending |
+| 12-04 | 2 | Migrate commerce screens to typography tokens | Pending |
+| 12-05 | 2 | Migrate content/utility screens to typography tokens | ✅ Complete (5.3 min) |
+| 12-06 | 3 | Screen demos enhancement | Pending |
 
 **Goal:** All screens use consistent theme tokens for typography, spacing, and visual language
-**Screens:** Login, Signup, OTP Verification, and additional screen components
-**Progress:** 1/6 plans complete - Screen token foundation and auth screens migrated
+**Screens:** Login, Signup, OTP, Profile, Settings, Account, Home, Search, Followers, Onboarding, Help, and additional screen components
+**Progress:** 3/6 plans complete - Auth, user management, and content/utility screens migrated to tokens
