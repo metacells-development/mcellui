@@ -1526,45 +1526,62 @@ function EventCardPreview() {
 function ArticleCardPreview() {
   const { colors, spacing } = useTheme();
 
+  const articleData = {
+    id: '1',
+    title: 'Getting Started with React Native',
+    excerpt: 'Learn the basics of building mobile apps with React Native, from setup to deployment.',
+    image: { uri: 'https://picsum.photos/400/200?random=30' },
+    author: {
+      name: 'Sarah Miller',
+      avatar: { uri: 'https://i.pravatar.cc/100?img=5' },
+    },
+    publishedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    readTime: 8,
+    category: 'Tutorial',
+  };
+
   return (
-    <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <View style={{ gap: spacing[3] }}>
-          <ArticleCard
-            article={{
-              id: '1',
-              title: 'Getting Started with React Native',
-              excerpt: 'Learn the basics of building mobile apps with React Native, from setup to deployment.',
-              image: { uri: 'https://picsum.photos/400/200?random=30' },
-              author: {
-                name: 'Sarah Miller',
-                avatar: { uri: 'https://i.pravatar.cc/100?img=5' },
-              },
-              publishedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-              readTime: 8,
-              category: 'Tutorial',
-            }}
-            onPress={() => Alert.alert('Read Article')}
-          />
-          <ArticleCard
-            article={{
-              id: '2',
-              title: 'Design Systems for Mobile Apps',
-              excerpt: 'How to create and maintain a consistent design system across your mobile applications.',
-              author: {
-                name: 'John Davis',
-                avatar: { uri: 'https://i.pravatar.cc/100?img=8' },
-              },
-              publishedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-              readTime: 12,
-              category: 'Design',
-            }}
-            onPress={() => Alert.alert('Read Article')}
-            variant="horizontal"
-          />
-        </View>
-      </CardContent>
-    </Card>
+    <View style={{ gap: spacing[4] }}>
+      {/* Default variant */}
+      <View>
+        <Text style={[styles.sectionTitle, { marginBottom: spacing[3] }]}>DEFAULT</Text>
+        <ArticleCard
+          article={articleData}
+          onPress={() => Alert.alert('Read Article')}
+        />
+      </View>
+
+      {/* Horizontal variant */}
+      <View>
+        <Text style={[styles.sectionTitle, { marginBottom: spacing[3] }]}>HORIZONTAL</Text>
+        <ArticleCard
+          article={{
+            ...articleData,
+            id: '2',
+            title: 'Design Systems for Mobile Apps',
+            category: 'Design',
+          }}
+          variant="horizontal"
+          onPress={() => Alert.alert('Read Article')}
+        />
+      </View>
+
+      {/* Featured variant */}
+      <View>
+        <Text style={[styles.sectionTitle, { marginBottom: spacing[3] }]}>FEATURED</Text>
+        <ArticleCard
+          article={{
+            ...articleData,
+            id: '3',
+            title: 'Building Scalable Mobile Architecture',
+            excerpt: 'Best practices for creating maintainable and scalable mobile app architectures.',
+            category: 'Architecture',
+          }}
+          variant="featured"
+          onPress={() => Alert.alert('Read Article')}
+        />
+      </View>
+    </View>
   );
 }
 
