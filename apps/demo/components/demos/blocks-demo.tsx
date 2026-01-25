@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert, ScrollView, Image, TextInput, Pressable, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { useTheme } from '@metacells/mcellui-core';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Avatar } from '@/components/ui/avatar';
-import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
-import { Rating } from '@/components/ui/rating';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-import Svg, { Circle, Path, Rect } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 
 // Import blocks from registry
 import { UserListItem } from '@/components/blocks/user-list-item';
@@ -33,6 +27,16 @@ import { EmptyStateBlock } from '@/components/blocks/empty-state-block';
 import { ErrorStateBlock } from '@/components/blocks/error-state-block';
 import { ProfileBlock } from '@/components/blocks/profile-block';
 import { FeedPostCard } from '@/components/blocks/feed-post-card';
+// Phase 11 e-commerce and info blocks
+import { HeroBlock } from '@/components/blocks/hero-block';
+import { StatsCard } from '@/components/blocks/stats-card';
+import { FeatureCard } from '@/components/blocks/feature-card';
+import { ContentCard } from '@/components/blocks/content-card';
+import { OnboardingSlide } from '@/components/blocks/onboarding-slide';
+import { SocialProofBar } from '@/components/blocks/social-proof-bar';
+import { NotificationItem as NotificationItemBlock } from '@/components/blocks/notification-item';
+import { MediaItem as MediaItemBlock } from '@/components/blocks/media-item';
+import { SearchHeader } from '@/components/blocks/search-header';
 
 // ============================================================================
 // Demo Component
@@ -373,65 +377,62 @@ function ErrorStateBlockPreview() {
 // ============================================================================
 
 function NotificationItemPreview() {
-  const { colors, spacing, radius } = useTheme();
-
-  const notifications = [
-    {
-      avatar: 'https://i.pravatar.cc/100?img=1',
-      title: 'Sarah liked your post',
-      message: '"Great photo from the weekend!"',
-      time: '2m ago',
-      unread: true,
-    },
-    {
-      avatar: 'https://i.pravatar.cc/100?img=2',
-      title: 'New follower',
-      message: 'Mike started following you',
-      time: '1h ago',
-      unread: true,
-    },
-    {
-      avatar: 'https://i.pravatar.cc/100?img=3',
-      title: 'Comment on your post',
-      message: 'This looks amazing!',
-      time: '3h ago',
-      unread: false,
-    },
-  ];
+  const { colors, spacing } = useTheme();
 
   return (
     <Card style={{ overflow: 'hidden' }}>
-      {/* No padding wrapper - backgrounds extend to card edges */}
-      {notifications.map((item, index) => (
-        <View key={index}>
-          <Pressable
-            style={[
-              styles.notificationItem,
-              { padding: spacing[4], backgroundColor: item.unread ? colors.primary + '10' : 'transparent' },
-            ]}
-              onPress={() => Alert.alert(item.title)}
-            >
-              <Avatar size="md" source={{ uri: item.avatar }} fallback={item.title[0]} />
-              <View style={[styles.notificationContent, { marginLeft: spacing[3] }]}>
-                <View style={styles.notificationHeader}>
-                  <Text style={[styles.notificationTitle, { color: colors.foreground }]} numberOfLines={1}>
-                    {item.title}
-                  </Text>
-                  <Text style={[styles.notificationTime, { color: colors.foregroundMuted }]}>
-                    {item.time}
-                  </Text>
-                </View>
-                <Text style={[styles.notificationMessage, { color: colors.foregroundMuted }]} numberOfLines={1}>
-                  {item.message}
-                </Text>
-              </View>
-              {item.unread && (
-                <View style={[styles.unreadDot, { backgroundColor: colors.primary }]} />
-              )}
-            </Pressable>
-            {index < notifications.length - 1 && <Separator style={{ marginLeft: 56 + spacing[4] }} />}
-          </View>
-        ))}
+      <CardHeader>
+        <CardTitle>Notification Types</CardTitle>
+        <CardDescription>Unread states, with/without avatar, icon support</CardDescription>
+      </CardHeader>
+      <View>
+        {/* Unread with avatar */}
+        <NotificationItemBlock
+          avatarUrl="https://i.pravatar.cc/100?img=1"
+          title="Sarah Miller"
+          message="liked your post"
+          time="2m ago"
+          unread
+          onPress={() => Alert.alert('Notification', 'Navigate to post')}
+        />
+        <Separator style={{ marginLeft: 72 }} />
+
+        {/* Unread with avatar - different action */}
+        <NotificationItemBlock
+          avatarUrl="https://i.pravatar.cc/100?img=2"
+          title="Mike Johnson"
+          message="started following you"
+          time="1h ago"
+          unread
+          onPress={() => Alert.alert('Notification', 'Navigate to profile')}
+        />
+        <Separator style={{ marginLeft: 72 }} />
+
+        {/* Read state */}
+        <NotificationItemBlock
+          avatarUrl="https://i.pravatar.cc/100?img=3"
+          title="Emma Wilson"
+          message="commented on your post"
+          time="3h ago"
+          unread={false}
+          onPress={() => Alert.alert('Notification', 'Navigate to comments')}
+        />
+        <Separator style={{ marginLeft: 72 }} />
+
+        {/* System notification without avatar - uses icon fallback */}
+        <NotificationItemBlock
+          title="System"
+          message="Your order has been shipped!"
+          time="5h ago"
+          unread={false}
+          icon={
+            <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
+              <Path d="M5 8h14M5 8a2 2 0 01-2-2V4a2 2 0 012-2h14a2 2 0 012 2v2a2 2 0 01-2 2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" stroke={colors.foregroundMuted} strokeWidth="2" strokeLinecap="round" />
+            </Svg>
+          }
+          onPress={() => Alert.alert('Notification', 'Track order')}
+        />
+      </View>
     </Card>
   );
 }
@@ -441,27 +442,37 @@ function NotificationItemPreview() {
 // ============================================================================
 
 function ContentCardPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { spacing } = useTheme();
 
   return (
-    <Card>
-      <View style={[styles.contentCardImage, { backgroundColor: colors.secondary, height: 160 }]}>
-        <Svg width={48} height={48} viewBox="0 0 24 24" fill="none">
-          <Rect x="3" y="3" width="18" height="18" rx="2" stroke={colors.foregroundMuted} strokeWidth="2" />
-          <Circle cx="8.5" cy="8.5" r="1.5" fill={colors.foregroundMuted} />
-          <Path d="M21 15l-5-5L5 21" stroke={colors.foregroundMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </Svg>
-      </View>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <Text style={[styles.contentCardTitle, { color: colors.foreground, marginBottom: spacing[1] }]}>
-          Discover Amazing Places
-        </Text>
-        <Text style={[styles.contentCardSubtitle, { color: colors.foregroundMuted, marginBottom: spacing[3] }]}>
-          Explore the world's most beautiful destinations with our curated travel guides.
-        </Text>
-        <Button onPress={() => Alert.alert('Explore')}>Explore Now</Button>
-      </CardContent>
-    </Card>
+    <View style={{ gap: spacing[4] }}>
+      {/* Default with action button */}
+      <ContentCard
+        imageUrl="https://picsum.photos/400/225?random=1"
+        title="Discover Amazing Places"
+        subtitle="Explore the world's most beautiful destinations with our curated travel guides."
+        actionText="Explore Now"
+        onAction={() => Alert.alert('Action', 'Explore pressed')}
+      />
+
+      {/* Tappable card without action button */}
+      <ContentCard
+        imageUrl="https://picsum.photos/400/300?random=2"
+        title="Quick Article"
+        subtitle="A brief overview of the latest trends in mobile app development."
+        aspectRatio={4 / 3}
+        onPress={() => Alert.alert('Press', 'Card pressed')}
+      />
+
+      {/* Wide aspect ratio */}
+      <ContentCard
+        imageUrl="https://picsum.photos/400/180?random=3"
+        title="Panoramic View"
+        subtitle="Showcasing the beautiful landscape."
+        aspectRatio={21 / 9}
+        onPress={() => Alert.alert('Press', 'Wide card pressed')}
+      />
+    </View>
   );
 }
 
@@ -470,43 +481,75 @@ function ContentCardPreview() {
 // ============================================================================
 
 function FeatureCardPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing } = useTheme();
 
-  const features = [
-    { icon: '⚡', title: 'Lightning Fast', description: 'Optimized for speed and performance' },
-    { icon: '🔒', title: 'Secure', description: 'Enterprise-grade security built in' },
-    { icon: '🎨', title: 'Beautiful', description: 'Stunning UI that users love' },
-  ];
+  // Icon components for feature cards
+  const ShieldIcon = () => (
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth={2}>
+      <Path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </Svg>
+  );
+
+  const ZapIcon = () => (
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth={2}>
+      <Path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+    </Svg>
+  );
+
+  const PaletteIcon = () => (
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth={2}>
+      <Circle cx="12" cy="12" r="10" />
+      <Circle cx="12" cy="8" r="2" fill={colors.primary} />
+      <Circle cx="8" cy="14" r="2" fill={colors.primary} />
+      <Circle cx="16" cy="14" r="2" fill={colors.primary} />
+    </Svg>
+  );
 
   return (
-    <View style={{ gap: spacing[3] }}>
-      {features.map((feature, index) => (
-        <Card key={index}>
-          <CardContent style={{ paddingTop: spacing[4] }}>
-            <View style={[styles.featureCard, { gap: spacing[3] }]}>
-              <View
-                style={[
-                  styles.featureIcon,
-                  {
-                    backgroundColor: colors.primary + '15',
-                    width: 48,
-                    height: 48,
-                    borderRadius: radius.lg,
-                  },
-                ]}
-              >
-                <Text style={{ fontSize: 24 }}>{feature.icon}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.featureTitle, { color: colors.foreground }]}>{feature.title}</Text>
-                <Text style={[styles.featureDescription, { color: colors.foregroundMuted }]}>
-                  {feature.description}
-                </Text>
-              </View>
-            </View>
-          </CardContent>
-        </Card>
-      ))}
+    <View style={{ gap: spacing[4] }}>
+      {/* Vertical layout (default) */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Vertical Layout</CardTitle>
+          <CardDescription>Icon centered above text</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <View style={{ gap: spacing[3] }}>
+            <FeatureCard
+              icon={<ShieldIcon />}
+              title="Secure Payments"
+              description="Your data is encrypted with bank-level security."
+              onPress={() => Alert.alert('Feature', 'Secure Payments')}
+            />
+          </View>
+        </CardContent>
+      </Card>
+
+      {/* Horizontal layout */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Horizontal Layout</CardTitle>
+          <CardDescription>Icon on the left, text on the right</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <View style={{ gap: spacing[3] }}>
+            <FeatureCard
+              icon={<ZapIcon />}
+              title="Lightning Fast"
+              description="Optimized for speed and performance."
+              horizontal
+              onPress={() => Alert.alert('Feature', 'Lightning Fast')}
+            />
+            <FeatureCard
+              icon={<PaletteIcon />}
+              title="Beautiful Design"
+              description="Stunning UI that users love."
+              horizontal
+              onPress={() => Alert.alert('Feature', 'Beautiful Design')}
+            />
+          </View>
+        </CardContent>
+      </Card>
     </View>
   );
 }
@@ -516,38 +559,68 @@ function FeatureCardPreview() {
 // ============================================================================
 
 function StatsCardPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing } = useTheme();
 
-  const stats = [
-    { value: '$12,450', label: 'Revenue', trend: 12.5, trendLabel: 'vs last month' },
-    { value: '1,234', label: 'Users', trend: -2.3, trendLabel: 'vs last week' },
-  ];
+  // Icon component for stats
+  const DollarIcon = () => (
+    <Svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke={colors.success} strokeWidth={2}>
+      <Path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+    </Svg>
+  );
+
+  const UsersIcon = () => (
+    <Svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth={2}>
+      <Path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+    </Svg>
+  );
 
   return (
-    <View style={{ gap: spacing[3] }}>
-      {stats.map((stat, index) => {
-        const isPositive = stat.trend >= 0;
-        const trendColor = isPositive ? colors.success : colors.destructive;
+    <View style={{ gap: spacing[4] }}>
+      {/* Grid layout with two cards */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Dashboard Stats</CardTitle>
+          <CardDescription>Cards with trend indicators and icons</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <View style={{ flexDirection: 'row', gap: spacing[3] }}>
+            <View style={{ flex: 1 }}>
+              <StatsCard
+                value="$12,450"
+                label="Revenue"
+                trend={12.5}
+                trendLabel="vs last month"
+                icon={<DollarIcon />}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <StatsCard
+                value="1,234"
+                label="Users"
+                trend={-3.2}
+                trendLabel="vs last week"
+                icon={<UsersIcon />}
+              />
+            </View>
+          </View>
+        </CardContent>
+      </Card>
 
-        return (
-          <Card key={index}>
-            <CardContent style={{ paddingTop: spacing[4] }}>
-              <Text style={[styles.statsLabel, { color: colors.foregroundMuted }]}>{stat.label}</Text>
-              <Text style={[styles.statsValue, { color: colors.foreground, marginTop: spacing[1] }]}>
-                {stat.value}
-              </Text>
-              <View style={[styles.statsTrend, { marginTop: spacing[2] }]}>
-                <Text style={[styles.statsTrendValue, { color: trendColor }]}>
-                  {isPositive ? '+' : ''}{stat.trend.toFixed(1)}%
-                </Text>
-                <Text style={[styles.statsTrendLabel, { color: colors.foregroundMuted, marginLeft: spacing[1] }]}>
-                  {stat.trendLabel}
-                </Text>
-              </View>
-            </CardContent>
-          </Card>
-        );
-      })}
+      {/* Single full-width card with interaction */}
+      <StatsCard
+        value="89%"
+        label="Satisfaction Rate"
+        trend={5.0}
+        trendLabel="vs previous quarter"
+        onPress={() => Alert.alert('Stats', 'View satisfaction details')}
+      />
+
+      {/* No trend (static stat) */}
+      <StatsCard
+        value="24/7"
+        label="Support Available"
+        onPress={() => Alert.alert('Stats', 'Contact support')}
+      />
     </View>
   );
 }
@@ -557,57 +630,55 @@ function StatsCardPreview() {
 // ============================================================================
 
 function HeroBlockPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { spacing } = useTheme();
 
   return (
-    <View
-      style={[
-        styles.heroBlock,
-        {
-          borderRadius: radius.lg,
-          height: 200,
-          overflow: 'hidden',
-        },
-      ]}
-    >
-      {/* Mesh gradient simulation with overlapping gradients */}
-      <View style={StyleSheet.absoluteFill}>
-        <View style={[StyleSheet.absoluteFill, { backgroundColor: '#667eea' }]} />
-        <View
-          style={[
-            StyleSheet.absoluteFill,
-            {
-              backgroundColor: 'transparent',
-              // Simulate gradient with opacity overlay
-              opacity: 0.8,
-            },
-          ]}
-        >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: '#764ba2',
-              opacity: 0.7,
-              transform: [{ skewY: '-10deg' }, { scale: 1.5 }],
-            }}
-          />
-        </View>
-      </View>
-      {/* Content */}
-      <View style={{ flex: 1, justifyContent: 'flex-end', padding: spacing[6] }}>
-        <Text style={[styles.heroTitle, { color: '#FFFFFF', marginBottom: spacing[2] }]}>
-          Welcome Back!
-        </Text>
-        <Text style={[styles.heroSubtitle, { color: 'rgba(255,255,255,0.9)', marginBottom: spacing[4] }]}>
-          Mesh gradient background option
-        </Text>
-        <Button
-          variant="secondary"
-          onPress={() => Alert.alert('Get Started')}
-        >
-          Get Started
-        </Button>
-      </View>
+    <View style={{ gap: spacing[4], marginHorizontal: -16 }}>
+      {/* Purple mesh gradient */}
+      <HeroBlock
+        background="mesh"
+        meshPreset="purple"
+        title="Welcome to the App"
+        subtitle="Discover amazing features and connect with others"
+        ctaText="Get Started"
+        onCtaPress={() => Alert.alert('CTA', 'Get Started pressed')}
+        height={280}
+      />
+
+      {/* Sunset mesh with secondary button */}
+      <HeroBlock
+        background="mesh"
+        meshPreset="sunset"
+        title="Summer Collection"
+        subtitle="Explore our latest arrivals with exclusive offers"
+        ctaText="Shop Now"
+        secondaryText="Learn More"
+        onCtaPress={() => Alert.alert('CTA', 'Shop Now pressed')}
+        onSecondaryPress={() => Alert.alert('Secondary', 'Learn More pressed')}
+        height={280}
+      />
+
+      {/* Left-aligned with gradient background */}
+      <HeroBlock
+        background="gradient"
+        title="Premium Features"
+        subtitle="Unlock the full potential with our premium subscription"
+        ctaText="Upgrade Now"
+        onCtaPress={() => Alert.alert('CTA', 'Upgrade pressed')}
+        textAlign="left"
+        height={240}
+      />
+
+      {/* Ocean mesh preset */}
+      <HeroBlock
+        background="mesh"
+        meshPreset="ocean"
+        title="Dive Into Adventure"
+        subtitle="Explore new horizons and discover possibilities"
+        ctaText="Start Exploring"
+        onCtaPress={() => Alert.alert('CTA', 'Explore pressed')}
+        height={260}
+      />
     </View>
   );
 }
@@ -617,44 +688,69 @@ function HeroBlockPreview() {
 // ============================================================================
 
 function SocialProofBarPreview() {
-  const { colors, spacing } = useTheme();
-
-  const avatars = [
-    'https://i.pravatar.cc/100?img=10',
-    'https://i.pravatar.cc/100?img=11',
-    'https://i.pravatar.cc/100?img=12',
-  ];
+  const { spacing } = useTheme();
 
   return (
-    <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <Pressable
-          style={[styles.socialProofBar, { gap: spacing[3] }]}
-          onPress={() => Alert.alert('View all')}
-        >
-          {/* Avatar Stack */}
-          <View style={styles.avatarStack}>
-            {avatars.map((url, index) => (
-              <Image
-                key={index}
-                source={{ uri: url }}
-                style={[
-                  styles.stackedAvatar,
-                  {
-                    left: index * 20,
-                    zIndex: avatars.length - index,
-                    borderColor: colors.background,
-                  },
-                ]}
-              />
-            ))}
-          </View>
-          <Text style={[styles.socialProofText, { color: colors.foregroundMuted, marginLeft: 40 }]}>
-            Sarah, Mike, and 42 others liked this
-          </Text>
-        </Pressable>
-      </CardContent>
-    </Card>
+    <View style={{ gap: spacing[4] }}>
+      {/* Default size with press action */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Default Size</CardTitle>
+          <CardDescription>Small avatars with engagement text</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SocialProofBar
+            avatars={[
+              'https://i.pravatar.cc/100?img=10',
+              'https://i.pravatar.cc/100?img=11',
+              'https://i.pravatar.cc/100?img=12',
+            ]}
+            text="Sarah, Mike, and 42 others liked this"
+            onPress={() => Alert.alert('Social Proof', 'View all likes')}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Medium avatar size */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Medium Avatars</CardTitle>
+          <CardDescription>Larger avatar stack for prominent display</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SocialProofBar
+            avatars={[
+              'https://i.pravatar.cc/100?img=4',
+              'https://i.pravatar.cc/100?img=5',
+              'https://i.pravatar.cc/100?img=6',
+              'https://i.pravatar.cc/100?img=7',
+            ]}
+            text="Join 1,000+ happy customers"
+            avatarSize="md"
+            maxAvatars={4}
+            onPress={() => Alert.alert('Social Proof', 'View testimonials')}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Extra small for compact areas */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Compact (XS Avatars)</CardTitle>
+          <CardDescription>Smaller avatars for tight spaces</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SocialProofBar
+            avatars={[
+              'https://i.pravatar.cc/100?img=15',
+              'https://i.pravatar.cc/100?img=16',
+            ]}
+            text="Alex and Emma are using this"
+            avatarSize="xs"
+          />
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 
@@ -663,62 +759,78 @@ function SocialProofBarPreview() {
 // ============================================================================
 
 function SearchHeaderPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { spacing } = useTheme();
   const [searchValue, setSearchValue] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSearch = (query: string) => {
+    setSearchValue(query);
+  };
+
+  const handleSubmit = async (query: string) => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 1000));
+    setLoading(false);
+    Alert.alert('Search', `Searched for: ${query}`);
+  };
 
   return (
-    <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <View style={[styles.searchHeader, { gap: spacing[3] }]}>
-          {/* Search Input */}
-          <View
-            style={[
-              styles.searchInput,
-              {
-                flex: 1,
-                backgroundColor: colors.secondary,
-                borderRadius: radius.lg,
-                paddingHorizontal: spacing[3],
-                height: 44,
-              },
-            ]}
-          >
-            <Svg width={18} height={18} viewBox="0 0 24 24" fill="none">
-              <Circle cx="11" cy="11" r="7" stroke={colors.foregroundMuted} strokeWidth="2" />
-              <Path d="M20 20L16.5 16.5" stroke={colors.foregroundMuted} strokeWidth="2" strokeLinecap="round" />
-            </Svg>
-            <TextInput
-              style={[styles.searchTextInput, { color: colors.foreground, marginLeft: spacing[2] }]}
-              placeholder="Search..."
-              placeholderTextColor={colors.foregroundMuted}
-              value={searchValue}
-              onChangeText={setSearchValue}
-            />
-          </View>
+    <View style={{ gap: spacing[4] }}>
+      {/* Full featured */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Full Featured</CardTitle>
+          <CardDescription>Search input, filter button with badge, avatar</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SearchHeader
+            placeholder="Search products..."
+            value={searchValue}
+            onSearch={handleSearch}
+            onSubmit={handleSubmit}
+            loading={loading}
+            onFilterPress={() => Alert.alert('Filters', 'Open filter panel')}
+            filterCount={3}
+            avatarUrl="https://i.pravatar.cc/100?img=20"
+            onAvatarPress={() => Alert.alert('Profile', 'Open profile')}
+          />
+        </CardContent>
+      </Card>
 
-          {/* Filter Button */}
-          <Pressable
-            style={[
-              styles.filterButton,
-              {
-                backgroundColor: colors.secondary,
-                borderRadius: radius.lg,
-                width: 44,
-                height: 44,
-              },
-            ]}
-            onPress={() => Alert.alert('Filters')}
-          >
-            <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
-              <Path d="M4 6h16M6 12h12M8 18h8" stroke={colors.foreground} strokeWidth="2" strokeLinecap="round" />
-            </Svg>
-          </Pressable>
+      {/* Without avatar */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Without Avatar</CardTitle>
+          <CardDescription>Just search and filter</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SearchHeader
+            placeholder="Search articles..."
+            onSearch={(q) => console.log('Search:', q)}
+            onSubmit={(q) => Alert.alert('Search', q)}
+            onFilterPress={() => Alert.alert('Filters')}
+            showAvatar={false}
+          />
+        </CardContent>
+      </Card>
 
-          {/* Avatar */}
-          <Avatar size="md" fallback="U" />
-        </View>
-      </CardContent>
-    </Card>
+      {/* Search only */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Search Only</CardTitle>
+          <CardDescription>Minimal variant without filter and avatar</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SearchHeader
+            placeholder="Search..."
+            onSearch={(q) => console.log('Search:', q)}
+            onSubmit={(q) => Alert.alert('Search', q)}
+            showFilter={false}
+            showAvatar={false}
+          />
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 
@@ -734,7 +846,7 @@ function OnboardingSlidePreview() {
   const slides = [
     {
       title: 'Welcome to MyApp',
-      description: 'Discover amazing features that will change how you work and connect.',
+      description: 'Discover amazing features that will change how you work and connect with others.',
     },
     {
       title: 'Stay Organized',
@@ -748,57 +860,53 @@ function OnboardingSlidePreview() {
 
   const current = slides[currentStep];
 
+  // Custom illustration component
+  const CustomIllustration = () => (
+    <View
+      style={{
+        width: 160,
+        height: 160,
+        backgroundColor: colors.primaryMuted,
+        borderRadius: radius.xl,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Svg width={80} height={80} viewBox="0 0 24 24" fill="none">
+        <Circle cx="12" cy="8" r="4" fill={colors.primary} />
+        <Path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill={colors.primary} />
+      </Svg>
+    </View>
+  );
+
   return (
     <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        {/* Mini Onboarding Preview */}
-        <View style={[styles.onboardingPreview, { backgroundColor: colors.secondary, borderRadius: radius.lg }]}>
-          {/* Illustration placeholder */}
-          <View
-            style={[
-              styles.onboardingIllustration,
-              { backgroundColor: colors.primary + '20', borderRadius: radius.md },
-            ]}
-          >
-            <Svg width={48} height={48} viewBox="0 0 24 24" fill="none">
-              <Circle cx="12" cy="8" r="4" fill={colors.primary} />
-              <Path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill={colors.primary} />
-            </Svg>
-          </View>
-
-          {/* Content */}
-          <Text style={[styles.onboardingTitle, { color: colors.foreground }]}>
-            {current.title}
-          </Text>
-          <Text style={[styles.onboardingDescription, { color: colors.foregroundMuted }]}>
-            {current.description}
-          </Text>
-
-          {/* Pagination */}
-          <View style={[styles.onboardingPagination, { marginTop: spacing[4], marginBottom: spacing[3] }]}>
-            {Array.from({ length: totalSteps }).map((_, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.onboardingDot,
-                  {
-                    backgroundColor: index === currentStep ? colors.primary : colors.border,
-                    width: index === currentStep ? 20 : 8,
-                    borderRadius: radius.full,
-                    marginHorizontal: spacing[1],
-                  },
-                ]}
-              />
-            ))}
-          </View>
-
-          {/* Button */}
-          <Button
-            size="sm"
-            onPress={() => setCurrentStep((currentStep + 1) % totalSteps)}
-          >
-            {currentStep === totalSteps - 1 ? 'Get Started' : 'Next'}
-          </Button>
+      <CardHeader>
+        <CardTitle>Interactive Onboarding</CardTitle>
+        <CardDescription>Try navigating through the slides</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {/* Constrained height preview of the actual OnboardingSlide */}
+        <View style={{ height: 480, marginHorizontal: -16, marginBottom: -16 }}>
+          <OnboardingSlide
+            illustration={<CustomIllustration />}
+            title={current.title}
+            description={current.description}
+            currentStep={currentStep}
+            totalSteps={totalSteps}
+            onPrimary={() => {
+              if (currentStep === totalSteps - 1) {
+                Alert.alert('Complete', 'Onboarding finished!');
+                setCurrentStep(0);
+              } else {
+                setCurrentStep(currentStep + 1);
+              }
+            }}
+            onSecondary={() => {
+              Alert.alert('Skip', 'Skipped onboarding');
+              setCurrentStep(0);
+            }}
+          />
         </View>
       </CardContent>
     </Card>
@@ -810,17 +918,8 @@ function OnboardingSlidePreview() {
 // ============================================================================
 
 function MediaItemPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing } = useTheme();
   const [selectedIds, setSelectedIds] = useState<number[]>([1]);
-
-  const mediaItems = [
-    { id: 0, type: 'image' as const, uri: 'https://picsum.photos/200/200?random=1' },
-    { id: 1, type: 'image' as const, uri: 'https://picsum.photos/200/200?random=2' },
-    { id: 2, type: 'video' as const, uri: 'https://picsum.photos/200/200?random=3', duration: 45 },
-    { id: 3, type: 'image' as const, uri: 'https://picsum.photos/200/200?random=4' },
-    { id: 4, type: 'video' as const, uri: 'https://picsum.photos/200/200?random=5', duration: 125 },
-    { id: 5, type: 'image' as const, uri: 'https://picsum.photos/200/200?random=6' },
-  ];
 
   const toggleSelect = (id: number) => {
     setSelectedIds((prev) =>
@@ -828,64 +927,128 @@ function MediaItemPreview() {
     );
   };
 
-  const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
   return (
-    <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <Text style={[styles.mediaLabel, { color: colors.foregroundMuted, marginBottom: spacing[3] }]}>
-          Tap to select • {selectedIds.length} selected
-        </Text>
-        <View style={styles.mediaGrid}>
-          {mediaItems.map((item) => (
-            <Pressable
-              key={item.id}
-              onPress={() => toggleSelect(item.id)}
-              style={[
-                styles.mediaItem,
-                {
-                  borderRadius: radius.md,
-                  borderWidth: selectedIds.includes(item.id) ? 3 : 0,
-                  borderColor: colors.primary,
-                },
-              ]}
-            >
-              <Image
-                source={{ uri: item.uri }}
-                style={[styles.mediaThumbnail, { borderRadius: radius.md - 2 }]}
-              />
-              {/* Video duration badge */}
-              {item.type === 'video' && item.duration && (
-                <View style={[styles.durationBadge, { backgroundColor: 'rgba(0,0,0,0.7)', borderRadius: radius.sm }]}>
-                  <Text style={styles.durationText}>{formatDuration(item.duration)}</Text>
-                </View>
-              )}
-              {/* Selection checkbox */}
-              <View
-                style={[
-                  styles.mediaCheckbox,
-                  {
-                    backgroundColor: selectedIds.includes(item.id) ? colors.primary : 'rgba(255,255,255,0.8)',
-                    borderRadius: radius.full,
-                    borderColor: selectedIds.includes(item.id) ? colors.primary : colors.border,
-                  },
-                ]}
-              >
-                {selectedIds.includes(item.id) && (
-                  <Svg width={12} height={12} viewBox="0 0 24 24" fill="none">
-                    <Path d="M20 6L9 17l-5-5" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                  </Svg>
-                )}
-              </View>
-            </Pressable>
-          ))}
-        </View>
-      </CardContent>
-    </Card>
+    <View style={{ gap: spacing[4] }}>
+      {/* Selectable media grid */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Selectable Media Grid</CardTitle>
+          <CardDescription>Tap to select - {selectedIds.length} selected</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing[2] }}>
+            <MediaItemBlock
+              type="image"
+              source={{ uri: 'https://picsum.photos/200/200?random=1' }}
+              selectable
+              selected={selectedIds.includes(0)}
+              onSelect={() => toggleSelect(0)}
+            />
+            <MediaItemBlock
+              type="image"
+              source={{ uri: 'https://picsum.photos/200/200?random=2' }}
+              selectable
+              selected={selectedIds.includes(1)}
+              onSelect={() => toggleSelect(1)}
+            />
+            <MediaItemBlock
+              type="video"
+              source={{ uri: 'https://picsum.photos/200/200?random=3' }}
+              duration={45}
+              selectable
+              selected={selectedIds.includes(2)}
+              onSelect={() => toggleSelect(2)}
+            />
+            <MediaItemBlock
+              type="image"
+              source={{ uri: 'https://picsum.photos/200/200?random=4' }}
+              selectable
+              selected={selectedIds.includes(3)}
+              onSelect={() => toggleSelect(3)}
+            />
+          </View>
+        </CardContent>
+      </Card>
+
+      {/* Media types: image, video, file */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Media Types</CardTitle>
+          <CardDescription>Image, video with duration, file with type badge</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing[2] }}>
+            {/* Image - tap to view */}
+            <MediaItemBlock
+              type="image"
+              source={{ uri: 'https://picsum.photos/200/200?random=10' }}
+              onPress={() => Alert.alert('Image', 'Open image viewer')}
+            />
+
+            {/* Video with duration badge and play icon */}
+            <MediaItemBlock
+              type="video"
+              source={{ uri: 'https://picsum.photos/200/200?random=11' }}
+              duration={125}
+              onPress={() => Alert.alert('Video', 'Play video')}
+            />
+
+            {/* File with type badge */}
+            <MediaItemBlock
+              type="file"
+              source={{ uri: '' }}
+              fileType="pdf"
+              onPress={() => Alert.alert('File', 'Open PDF document')}
+            />
+
+            {/* Another file type */}
+            <MediaItemBlock
+              type="file"
+              source={{ uri: '' }}
+              fileType="doc"
+              onPress={() => Alert.alert('File', 'Open Word document')}
+            />
+          </View>
+        </CardContent>
+      </Card>
+
+      {/* Different sizes */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Custom Sizes</CardTitle>
+          <CardDescription>Adjustable dimensions for different layouts</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: spacing[2] }}>
+            <MediaItemBlock
+              type="image"
+              source={{ uri: 'https://picsum.photos/80/80?random=20' }}
+              size={60}
+              onPress={() => Alert.alert('Small', '60px')}
+            />
+            <MediaItemBlock
+              type="image"
+              source={{ uri: 'https://picsum.photos/100/100?random=21' }}
+              size={80}
+              onPress={() => Alert.alert('Medium', '80px')}
+            />
+            <MediaItemBlock
+              type="image"
+              source={{ uri: 'https://picsum.photos/120/120?random=22' }}
+              size={100}
+              onPress={() => Alert.alert('Default', '100px')}
+            />
+            <MediaItemBlock
+              type="video"
+              source={{ uri: 'https://picsum.photos/150/150?random=23' }}
+              size={120}
+              duration={67}
+              onPress={() => Alert.alert('Large', '120px')}
+            />
+          </View>
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 // ============================================================================
@@ -1712,242 +1875,5 @@ const styles = StyleSheet.create({
   },
   sectionContent: {
     gap: 8,
-  },
-  // Notification Item
-  notificationItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  notificationContent: {
-    flex: 1,
-  },
-  notificationHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  notificationTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-    flex: 1,
-  },
-  notificationTime: {
-    fontSize: 12,
-    marginLeft: 8,
-  },
-  notificationMessage: {
-    fontSize: 14,
-    marginTop: 2,
-  },
-  unreadDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginLeft: 8,
-  },
-  // Content Card
-  contentCardImage: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  contentCardTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  contentCardSubtitle: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  // Feature Card
-  featureCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  featureIcon: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  featureTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  featureDescription: {
-    fontSize: 14,
-    marginTop: 2,
-  },
-  // Stats Card
-  statsLabel: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  statsValue: {
-    fontSize: 32,
-    fontWeight: '700',
-  },
-  statsTrend: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  statsTrendValue: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  statsTrendLabel: {
-    fontSize: 13,
-  },
-  // Hero Block
-  heroBlock: {
-    justifyContent: 'flex-end',
-  },
-  heroTitle: {
-    fontSize: 28,
-    fontWeight: '800',
-  },
-  heroSubtitle: {
-    fontSize: 16,
-  },
-  // Social Proof Bar
-  socialProofBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  avatarStack: {
-    width: 68,
-    height: 28,
-    position: 'relative',
-  },
-  stackedAvatar: {
-    position: 'absolute',
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 2,
-  },
-  socialProofText: {
-    flex: 1,
-    fontSize: 14,
-  },
-  // Search Header
-  searchHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  searchInput: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  searchTextInput: {
-    flex: 1,
-    fontSize: 16,
-    height: '100%',
-  },
-  filterButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  // Onboarding Slide
-  onboardingPreview: {
-    padding: 24,
-    alignItems: 'center',
-  },
-  onboardingIllustration: {
-    width: 100,
-    height: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
-  },
-  onboardingTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 8,
-  },
-  onboardingDescription: {
-    fontSize: 14,
-    textAlign: 'center',
-    lineHeight: 20,
-  },
-  onboardingPagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  onboardingDot: {
-    height: 8,
-  },
-  // Media Item
-  mediaLabel: {
-    fontSize: 13,
-    fontWeight: '500',
-  },
-  mediaGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  mediaItem: {
-    width: 100,
-    height: 100,
-    overflow: 'hidden',
-  },
-  mediaThumbnail: {
-    width: '100%',
-    height: '100%',
-  },
-  durationBadge: {
-    position: 'absolute',
-    bottom: 4,
-    right: 4,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-  },
-  durationText: {
-    color: '#FFFFFF',
-    fontSize: 11,
-    fontWeight: '600',
-  },
-  mediaCheckbox: {
-    position: 'absolute',
-    top: 6,
-    right: 6,
-    width: 22,
-    height: 22,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  // Feed Post Card
-  feedHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  feedAuthor: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  feedTime: {
-    fontSize: 13,
-  },
-  feedContent: {
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  feedImage: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  feedActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  feedAction: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  feedActionText: {
-    fontSize: 14,
-    fontWeight: '500',
   },
 });
