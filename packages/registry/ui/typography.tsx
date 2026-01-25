@@ -17,7 +17,7 @@ import React from 'react';
 import { Text, TextProps, TextStyle, StyleSheet } from 'react-native';
 import { useTheme, ThemeColors, TypographyKey } from '@metacells/mcellui-core';
 
-export type TypographyVariant = TypographyKey | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2';
+export type TypographyVariant = TypographyKey | 'subtitle1' | 'subtitle2' | 'body1' | 'body2';
 
 export interface TypographyProps extends Omit<TextProps, 'style'> {
   /** Typography preset variant */
@@ -57,21 +57,11 @@ export function Typography({
   // Map variant to typography preset
   const getVariantStyle = (): TextStyle => {
     switch (variant) {
-      // Additional heading aliases
+      // h5 and h6 now use typography tokens
       case 'h5':
-        return {
-          fontFamily: fonts.heading,
-          fontSize: 16,
-          fontWeight: '600',
-          lineHeight: 22,
-        };
+        return typography.h5;
       case 'h6':
-        return {
-          fontFamily: fonts.heading,
-          fontSize: 14,
-          fontWeight: '600',
-          lineHeight: 20,
-        };
+        return typography.h6;
       // Subtitle variants (maps to label styles)
       case 'subtitle1':
         return typography.label;
