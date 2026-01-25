@@ -39,6 +39,19 @@ export function SkeletonDemo() {
         <SkeletonText lines={3} />
       </Section>
 
+      <Section title="Animation Control">
+        <View style={styles.animationControl}>
+          <View style={styles.animationRow}>
+            <Text style={{ color: colors.foreground, flex: 1 }}>With Animation</Text>
+            <Skeleton width={100} height={20} animate={true} />
+          </View>
+          <View style={styles.animationRow}>
+            <Text style={{ color: colors.foreground, flex: 1 }}>Static (no shimmer)</Text>
+            <Skeleton width={100} height={20} animate={false} />
+          </View>
+        </View>
+      </Section>
+
       <Section title="Card Example">
         <View style={[styles.card, { backgroundColor: colors.card, borderRadius: radius.lg }]}>
           <View style={styles.cardHeader}>
@@ -50,6 +63,23 @@ export function SkeletonDemo() {
           </View>
           <Skeleton width="100%" height={160} radius="md" style={{ marginTop: 16 }} />
           <SkeletonText lines={2} style={{ marginTop: 16 }} />
+        </View>
+      </Section>
+
+      <Section title="Profile Card Loading">
+        <View style={[styles.profileCard, { backgroundColor: colors.card, borderRadius: radius.lg }]}>
+          {/* Cover image placeholder */}
+          <Skeleton width="100%" height={80} radius="none" />
+          {/* Avatar overlapping cover */}
+          <View style={styles.profileAvatarContainer}>
+            <Skeleton circle size={64} />
+          </View>
+          {/* Profile info */}
+          <View style={styles.profileInfo}>
+            <Skeleton width={140} height={18} />
+            <Skeleton width={100} height={14} style={{ marginTop: 6 }} />
+            <SkeletonText lines={2} style={{ marginTop: 12 }} />
+          </View>
         </View>
       </Section>
 
@@ -78,6 +108,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 16,
   },
+  animationControl: {
+    gap: 16,
+  },
+  animationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   card: {
     padding: 16,
   },
@@ -88,6 +125,17 @@ const styles = StyleSheet.create({
   cardHeaderText: {
     flex: 1,
     marginLeft: 12,
+  },
+  profileCard: {
+    overflow: 'hidden',
+  },
+  profileAvatarContainer: {
+    marginTop: -32,
+    marginLeft: 16,
+  },
+  profileInfo: {
+    padding: 16,
+    paddingTop: 8,
   },
   list: {
     gap: 16,
