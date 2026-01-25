@@ -184,11 +184,12 @@ export interface FormItemProps {
 
 export function FormItem({ children, style }: FormItemProps) {
   const id = useId();
-  const { spacing } = useTheme();
+  const { components } = useTheme();
+  const formTokens = components.form;
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <View style={[styles.formItem, { marginBottom: spacing[4] }, style]}>
+      <View style={[styles.formItem, { marginBottom: formTokens.item.marginBottom }, style]}>
         {children}
       </View>
     </FormItemContext.Provider>
@@ -209,16 +210,18 @@ export interface FormLabelProps {
 }
 
 export function FormLabel({ children, required, style }: FormLabelProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, components } = useTheme();
+  const formTokens = components.form;
   const { error } = useFormField();
 
   return (
     <Text
       style={[
-        styles.formLabel,
         {
+          fontSize: formTokens.label.fontSize,
+          fontWeight: formTokens.label.fontWeight,
           color: error ? colors.destructive : colors.foreground,
-          marginBottom: spacing[1.5],
+          marginBottom: formTokens.label.marginBottom,
         },
         style,
       ]}
@@ -243,15 +246,16 @@ export interface FormDescriptionProps {
 }
 
 export function FormDescription({ children, style }: FormDescriptionProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, components } = useTheme();
+  const formTokens = components.form;
 
   return (
     <Text
       style={[
-        styles.formDescription,
         {
+          fontSize: formTokens.description.fontSize,
           color: colors.foregroundMuted,
-          marginTop: spacing[1],
+          marginTop: formTokens.description.marginTop,
         },
         style,
       ]}
@@ -273,7 +277,8 @@ export interface FormMessageProps {
 }
 
 export function FormMessage({ children, style }: FormMessageProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, components } = useTheme();
+  const formTokens = components.form;
   const { error } = useFormField();
   const message = error?.message;
 
@@ -285,10 +290,11 @@ export function FormMessage({ children, style }: FormMessageProps) {
   return (
     <Text
       style={[
-        styles.formMessage,
         {
+          fontSize: formTokens.message.fontSize,
+          fontWeight: formTokens.message.fontWeight,
           color: colors.destructive,
-          marginTop: spacing[1],
+          marginTop: formTokens.message.marginTop,
         },
         style,
       ]}
@@ -308,16 +314,5 @@ const styles = StyleSheet.create({
   },
   formItem: {
     width: '100%',
-  },
-  formLabel: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  formDescription: {
-    fontSize: 12,
-  },
-  formMessage: {
-    fontSize: 12,
-    fontWeight: '500',
   },
 });
