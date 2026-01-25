@@ -106,6 +106,9 @@ Recent decisions affecting current work:
 - **05-05**: Demo files use inline theme token styles instead of StyleSheet.create
 - **05-05**: Typography tokens (typography.bodySm, typography.caption) used for all text styling
 - **05-05**: Section component pattern used for consistent demo organization
+- **04-04**: Use Cases section pattern shows components in realistic UI contexts (buttons, cards, inline)
+- **04-04**: Animation Control section pattern demonstrates animated vs static states explicitly
+- **04-04**: Profile card loading uses cover image with negative-margin avatar overlay (-32px)
 
 ### Pending Todos
 
@@ -118,7 +121,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 06-02-PLAN.md (List and SectionHeader token migration)
+Stopped at: Completed 04-04-PLAN.md (Progress/loading demo enhancements)
 Resume file: None
 
 ## Phase 1 Complete ✓
