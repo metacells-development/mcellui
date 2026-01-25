@@ -175,6 +175,10 @@ Recent decisions affecting current work:
 - **12-01**: SCREEN_CONSTANTS provides two-tier token approach (constants + computed function)
 - **12-01**: Auth screens use inline dynamic styles for all theme-dependent properties
 - **12-01**: Logo placeholder text intentionally hardcoded (white on primary background)
+- **12-04**: E-commerce summary line items use fontSize.sm for consistent transactional data readability
+- **12-04**: Checkout step indicator uses fontSize.xs (12px) instead of original 11px for token consistency
+- **12-04**: Product price uses fontSize["2xl"] for strong visual hierarchy and primary CTA emphasis
+- **12-04**: Non-standard font sizes (11px, 13px, 15px, 22px) rounded to nearest available tokens
 
 ### Pending Todos
 
