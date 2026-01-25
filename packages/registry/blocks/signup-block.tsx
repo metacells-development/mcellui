@@ -28,7 +28,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, authBlockTokens, fontWeight } from '@metacells/mcellui-core';
 
 // Import your components
 import { Button } from '../ui/button';
@@ -127,12 +127,25 @@ export function SignupBlock({
           <Text
             style={[
               styles.title,
-              { color: colors.foreground, marginBottom: spacing[2] },
+              {
+                color: colors.foreground,
+                marginBottom: spacing[2],
+                fontSize: authBlockTokens.header.titleFontSize,
+                fontWeight: authBlockTokens.header.titleFontWeight,
+              },
             ]}
           >
             {title}
           </Text>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.subtitle,
+              {
+                color: colors.foregroundMuted,
+                fontSize: authBlockTokens.header.subtitleFontSize,
+              },
+            ]}
+          >
             {subtitle}
           </Text>
         </View>
@@ -199,7 +212,11 @@ export function SignupBlock({
                 <Text
                   style={[
                     styles.passwordHint,
-                    { color: colors.foregroundMuted, marginTop: spacing[1] },
+                    {
+                      color: colors.foregroundMuted,
+                      marginTop: spacing[1],
+                      fontSize: authBlockTokens.form.passwordHintFontSize,
+                    },
                   ]}
                 >
                   Min 8 characters, 1 uppercase, 1 number
@@ -222,19 +239,35 @@ export function SignupBlock({
                   <Text
                     style={[
                       styles.termsText,
-                      { color: colors.foregroundMuted, marginLeft: spacing[2] },
+                      {
+                        color: colors.foregroundMuted,
+                        marginLeft: spacing[2],
+                        fontSize: authBlockTokens.footer.textFontSize,
+                      },
                     ]}
                   >
                     I agree to the{' '}
                     <Text
-                      style={[styles.termsLink, { color: colors.primary }]}
+                      style={[
+                        styles.termsLink,
+                        {
+                          color: colors.primary,
+                          fontWeight: authBlockTokens.footer.linkFontWeight,
+                        },
+                      ]}
                       onPress={onTermsPress}
                     >
                       Terms of Service
                     </Text>
                     {' and '}
                     <Text
-                      style={[styles.termsLink, { color: colors.primary }]}
+                      style={[
+                        styles.termsLink,
+                        {
+                          color: colors.primary,
+                          fontWeight: authBlockTokens.footer.linkFontWeight,
+                        },
+                      ]}
                       onPress={onPrivacyPress}
                     >
                       Privacy Policy
@@ -245,7 +278,12 @@ export function SignupBlock({
                   <Text
                     style={[
                       styles.errorText,
-                      { color: colors.destructive, marginTop: spacing[1] },
+                      {
+                        color: colors.destructive,
+                        marginTop: spacing[1],
+                        fontSize: authBlockTokens.form.passwordHintFontSize,
+                        fontWeight: fontWeight.medium,
+                      },
                     ]}
                   >
                     {fieldState.error.message}
@@ -263,11 +301,28 @@ export function SignupBlock({
         {/* Login Link */}
         {onLogin && (
           <View style={[styles.footer, { marginTop: spacing[8] }]}>
-            <Text style={[styles.footerText, { color: colors.foregroundMuted }]}>
+            <Text
+              style={[
+                styles.footerText,
+                {
+                  color: colors.foregroundMuted,
+                  fontSize: authBlockTokens.footer.textFontSize,
+                },
+              ]}
+            >
               Already have an account?{' '}
             </Text>
             <Pressable onPress={onLogin}>
-              <Text style={[styles.footerLink, { color: colors.primary }]}>
+              <Text
+                style={[
+                  styles.footerLink,
+                  {
+                    color: colors.primary,
+                    fontSize: authBlockTokens.footer.linkFontSize,
+                    fontWeight: authBlockTokens.footer.linkFontWeight,
+                  },
+                ]}
+              >
                 Sign in
               </Text>
             </Pressable>
@@ -294,42 +349,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
     textAlign: 'center',
   },
   passwordHint: {
-    fontSize: 12,
   },
   checkboxRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
   termsText: {
-    fontSize: 14,
     flex: 1,
     lineHeight: 20,
   },
   termsLink: {
-    fontWeight: '600',
   },
   errorText: {
-    fontSize: 12,
-    fontWeight: '500',
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
   footerText: {
-    fontSize: 14,
   },
   footerLink: {
-    fontSize: 14,
-    fontWeight: '600',
   },
 });
