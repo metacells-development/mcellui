@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 11 of 12 (Blocks: E-commerce & Info)
-Plans: 5 of 6 complete
-Status: In progress - Info block token migration complete, verification pending
-Last activity: 2026-01-25 - Completed 11-05-PLAN.md
+Phase: 10 of 12 (Blocks: Content & Social)
+Plans: 5/6 complete
+Status: In progress - Social and swipeable block demos enhanced
+Last activity: 2026-01-25 - Completed 10-06-PLAN.md
 
 Progress: [█████████░] 86%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 46
+- Total plans completed: 47
 - Average duration: 4.2 min
-- Total execution time: 3.5 hours
+- Total execution time: 3.6 hours
 
 **By Phase:**
 
@@ -36,13 +36,13 @@ Progress: [█████████░] 86%
 | 07-navigation-interaction | 5/5 | 10.3 min | 2.1 min |
 | 08-advanced-components | 4/7 | 15.1 min | 3.8 min |
 | 09-blocks-auth-settings | 6/6 | 14.3 min | 2.9 min |
-| 10-blocks-content-social | 5/5 | 26.4 min | 5.3 min |
+| 10-blocks-content-social | 5/6 | 33.4 min | 5.6 min |
 | 11-blocks-ecommerce-info | 5/6 | 13.0 min | 2.6 min |
 | 12-screens | 4/6 | 28.0 min | 7.0 min |
 
 **Recent Trend:**
-- Last 5 plans: 11-05 (13 min), 10-05 (5 min), 12-04 (11 min), 12-05 (5.3 min), 12-02 (4 min)
-- Trend: Multi-block token migrations 13 min, demo enhancements 5 min, complex screen migrations 8-11 min
+- Last 5 plans: 10-06 (7 min), 11-05 (13 min), 10-05 (5 min), 12-04 (11 min), 12-05 (5.3 min)
+- Trend: Demo enhancements 5-7 min, multi-block migrations 13 min, complex screen migrations 8-11 min
 
 *Updated after each plan completion*
 
@@ -160,6 +160,10 @@ Recent decisions affecting current work:
 - **10-04**: Stepper disabled during quantityLoading using disabled prop (no loading prop exists)
 - **10-04**: Swipe actions show ActivityIndicator when removeLoading=true instead of icons
 - **10-04**: SwipeableRow actionWidth set to productBlockTokens.cart.swipeActionWidth (80px)
+- **10-06**: FeedPostCard demo uses actual registry component instead of inline preview for real behavior demonstration
+- **10-06**: Loading state delays vary by action type (like: 800ms, comment: 600ms, follow: 500ms, quantity: 300ms)
+- **10-06**: CommentItem demo includes disabled nested reply to show disabled state handling
+- **10-06**: CartItem demo adds swipe hint text in CardDescription for interaction discoverability
 - **10-04**: Missing block token exports fixed as blocking issue (Rule 3)
 - **10-03**: ActivityIndicator replaces action buttons during loading (no layout shift with 32px width)
 - **10-03**: Disabled opacity set to 0.5 for consistent visual feedback across social blocks
@@ -307,7 +311,7 @@ Resume file: None
 **Gap Closure:** 09-06 replaced manual ProfileBlockPreview with actual ProfileBlock import
 **Report:** .planning/phases/09-blocks-auth-settings/09-VERIFICATION.md
 
-## Phase 10 Complete ✓
+## Phase 10 In Progress
 
 | Plan | Wave | Description | Status |
 |------|------|-------------|--------|
@@ -315,11 +319,12 @@ Resume file: None
 | 10-02 | 2 | Card blocks visual consistency (ProductCard, ArticleCard, EventCard, ReviewCard) | ✅ Complete (7 min) |
 | 10-03 | 2 | Social blocks interaction states (FeedPostCard, ChatBubble, CommentItem) | ✅ Complete (5.4 min) |
 | 10-04 | 2 | Swipeable blocks enhancement (UserListItem, CartItem) | ✅ Complete (5 min) |
-| 10-05 | 3 | Demo enhancement with loading states and all variants | ✅ Complete (5 min) |
+| 10-05 | 3 | Card and content block demos enhancement | ✅ Complete (5 min) |
+| 10-06 | 3 | Social and swipeable block demos enhancement | ✅ Complete (7 min) |
 
 **Goal:** Content and social blocks have consistent card patterns and interaction states
 **Blocks:** ProductCard, CartItem, ArticleCard, EventCard, FeedPostCard, UserListItem, ChatBubble, CommentItem, ReviewCard (9 blocks)
-**Progress:** 5/5 plans complete - All card and social blocks have comprehensive demos
+**Progress:** 6/6 plans complete - All card, social, and swipeable blocks have comprehensive demos with loading states
 
 ## Phase 12 In Progress
 
