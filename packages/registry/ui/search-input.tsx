@@ -129,7 +129,8 @@ export function SearchInput({
   autoFocus = false,
   ...props
 }: SearchInputProps) {
-  const { colors, spacing, radius, springs } = useTheme();
+  const { colors, spacing, radius, springs, components } = useTheme();
+  const tokens = components.searchInput;
   const inputRef = useRef<TextInput>(null);
 
   // Controlled/uncontrolled state
@@ -196,16 +197,16 @@ export function SearchInput({
           borderRadius: radius.lg,
           borderWidth: 1,
           borderColor: colors.border,
-          paddingHorizontal: spacing[3],
-          height: 44,
+          paddingHorizontal: tokens.paddingHorizontal,
+          height: tokens.height,
         },
         containerAnimatedStyle,
         style,
       ]}
     >
       {/* Search Icon */}
-      <View style={[styles.iconContainer, { marginRight: spacing[2] }]}>
-        <SearchIcon color={colors.foregroundMuted} />
+      <View style={[styles.iconContainer, { marginRight: tokens.iconMarginRight }]}>
+        <SearchIcon color={colors.foregroundMuted} size={tokens.iconSize} />
       </View>
 
       {/* Input */}
@@ -215,7 +216,7 @@ export function SearchInput({
           styles.input,
           {
             color: colors.foreground,
-            fontSize: 16,
+            fontSize: tokens.fontSize,
           },
           inputStyle,
         ]}
@@ -236,7 +237,10 @@ export function SearchInput({
       />
 
       {/* Loading / Clear Button */}
-      <View style={[styles.rightContainer, { marginLeft: spacing[2] }]}>
+      <View style={[
+        styles.rightContainer,
+        { width: tokens.rightContainerWidth, marginLeft: tokens.rightContainerMarginLeft }
+      ]}>
         {loading && (
           <ActivityIndicator size="small" color={colors.foregroundMuted} />
         )}
@@ -247,7 +251,7 @@ export function SearchInput({
             accessibilityRole="button"
             accessibilityLabel="Clear search"
           >
-            <ClearIcon color={colors.foregroundMuted} />
+            <ClearIcon color={colors.foregroundMuted} size={tokens.clearSize} />
           </Pressable>
         )}
       </View>
@@ -274,7 +278,6 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flexShrink: 0,
-    width: 24,
     alignItems: 'center',
     justifyContent: 'center',
   },

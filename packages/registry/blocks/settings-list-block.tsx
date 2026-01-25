@@ -37,7 +37,7 @@ import {
   Pressable,
   ViewStyle,
 } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, settingsBlockTokens } from '@metacells/mcellui-core';
 
 // Import your components
 import { Switch } from '../ui/switch';
@@ -182,8 +182,8 @@ function SettingsItemComponent({ item }: { item: SettingsItem }) {
       style={[
         styles.item,
         {
-          paddingVertical: spacing[3.5],
-          paddingHorizontal: spacing[4],
+          paddingVertical: settingsBlockTokens.item.paddingVertical,
+          paddingHorizontal: settingsBlockTokens.item.paddingHorizontal,
           opacity: item.disabled ? 0.5 : 1,
         },
       ]}
@@ -268,12 +268,12 @@ const styles = StyleSheet.create({
   group: {},
   groupHeader: {},
   groupTitle: {
-    fontSize: 12,
-    fontWeight: '600',
-    letterSpacing: 0.5,
+    fontSize: settingsBlockTokens.group.titleFontSize,
+    fontWeight: settingsBlockTokens.group.titleFontWeight,
+    letterSpacing: settingsBlockTokens.group.titleLetterSpacing,
   },
   groupDescription: {
-    fontSize: 13,
+    fontSize: settingsBlockTokens.group.descriptionFontSize,
   },
   groupContent: {
     overflow: 'hidden',
@@ -286,20 +286,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemLabel: {
-    fontSize: 16,
+    fontSize: settingsBlockTokens.item.labelFontSize,
   },
   itemDescription: {
-    fontSize: 13,
+    fontSize: settingsBlockTokens.item.descriptionFontSize,
   },
   navigationRight: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   displayValue: {
-    fontSize: 15,
+    fontSize: settingsBlockTokens.item.displayValueFontSize,
   },
   chevron: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: settingsBlockTokens.item.chevronFontSize,
+    fontWeight: settingsBlockTokens.item.chevronFontWeight,
   },
 });
