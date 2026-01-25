@@ -1564,6 +1564,7 @@ export const components = {
   socialBlock: socialBlockTokens,
   productBlock: productBlockTokens,
   ecommerceBlock: ecommerceBlockTokens,
+  infoBlock: infoBlockTokens,
   calendar: calendarTokens,
   dateTimePicker: dateTimePickerTokens,
   form: formTokens,
