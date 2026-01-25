@@ -293,6 +293,31 @@ const MOCK_ORDERS: MockOrder[] = [
   },
 ];
 
+const MOCK_CATEGORIES = [
+  { id: '1', name: 'Electronics', icon: '📱' },
+  { id: '2', name: 'Fashion', icon: '👕' },
+  { id: '3', name: 'Home', icon: '🏠' },
+  { id: '4', name: 'Sports', icon: '⚽' },
+];
+
+const MOCK_FAQ_ITEMS = [
+  {
+    id: '1',
+    question: 'How do I reset my password?',
+    answer: 'You can reset your password by clicking on "Forgot Password" on the login screen.',
+  },
+  {
+    id: '2',
+    question: 'How do I track my order?',
+    answer: 'Go to Order History and click on the order you want to track.',
+  },
+  {
+    id: '3',
+    question: 'What payment methods do you accept?',
+    answer: 'We accept credit cards, debit cards, and PayPal.',
+  },
+];
+
 // ============================================================================
 // Demo Component
 // ============================================================================
@@ -307,6 +332,13 @@ export function ScreensDemo() {
   const [signupLoading, setSignupLoading] = useState(false);
   const [feedPosts, setFeedPosts] = useState(MOCK_FEED_POSTS);
   const [feedEmpty, setFeedEmpty] = useState(false);
+  const [feedRefreshing, setFeedRefreshing] = useState(false);
+  const [cartItems, setCartItems] = useState(MOCK_CART_ITEMS);
+  const [cartLoading, setCartLoading] = useState<string>();
+  const [checkoutStep, setCheckoutStep] = useState(1);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [profileFollowing, setProfileFollowing] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(false);
 
   const screens = [
     { key: 'login', title: 'Login Screen', description: 'Email/password with social login' },
@@ -358,15 +390,57 @@ export function ScreensDemo() {
   // Handler for feed refresh
   const handleFeedRefresh = async () => {
     // Simulate refresh - toggle between empty and populated
+    setFeedRefreshing(true);
     return new Promise<void>((resolve) => {
       setTimeout(() => {
         if (feedEmpty) {
           setFeedPosts(MOCK_FEED_POSTS);
           setFeedEmpty(false);
         }
+        setFeedRefreshing(false);
         resolve();
       }, 1000);
     });
+  };
+
+  // Handler for cart quantity change
+  const handleCartQuantityChange = (itemId: string, quantity: number) => {
+    setCartLoading(itemId);
+    setTimeout(() => {
+      setCartItems((items) =>
+        items.map((item) =>
+          item.id === itemId ? { ...item, quantity } : item
+        )
+      );
+      setCartLoading(undefined);
+    }, 300);
+  };
+
+  // Handler for cart item removal
+  const handleCartRemove = (itemId: string) => {
+    setCartLoading(itemId);
+    setTimeout(() => {
+      setCartItems((items) => items.filter((item) => item.id !== itemId));
+      setCartLoading(undefined);
+    }, 500);
+  };
+
+  // Handler for profile follow toggle
+  const handleProfileFollow = () => {
+    setProfileLoading(true);
+    setTimeout(() => {
+      setProfileFollowing(!profileFollowing);
+      setProfileLoading(false);
+    }, 800);
+  };
+
+  // Handler for checkout step navigation
+  const handleCheckoutNext = () => {
+    setCheckoutStep((prev) => Math.min(prev + 1, 3));
+  };
+
+  const handleCheckoutPrevious = () => {
+    setCheckoutStep((prev) => Math.max(prev - 1, 1));
   };
 
   return (
@@ -458,13 +532,13 @@ export function ScreensDemo() {
           }}
           stats={{
             posts: 234,
-            followers: 12500,
+            followers: profileFollowing ? 12501 : 12500,
             following: 432,
           }}
           isOwnProfile={false}
-          following={false}
+          following={profileFollowing}
           onBack={() => setActiveScreen(null)}
-          onFollow={() => console.log('Follow')}
+          onFollow={handleProfileFollow}
           onMessage={() => console.log('Message')}
           onPostPress={(postId) => console.log('Post pressed:', postId)}
         />
@@ -544,14 +618,17 @@ export function ScreensDemo() {
 
       <Modal visible={activeScreen === 'cart'} animationType="slide">
         <CartScreen
-          items={MOCK_CART_ITEMS}
+          items={cartItems}
           currency="$"
           shippingCost={9.99}
           tax={45.99}
           onBack={() => setActiveScreen(null)}
-          onQuantityChange={(id, qty) => console.log('Quantity:', id, qty)}
-          onRemoveItem={(id) => console.log('Remove:', id)}
-          onCheckout={() => console.log('Checkout')}
+          onQuantityChange={handleCartQuantityChange}
+          onRemoveItem={handleCartRemove}
+          onCheckout={() => {
+            setActiveScreen('checkout');
+            setCheckoutStep(1);
+          }}
           onContinueShopping={() => setActiveScreen(null)}
         />
       </Modal>
