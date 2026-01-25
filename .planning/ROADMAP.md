@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Form Inputs** - Input, Textarea, Select, Slider, Stepper, Checkbox, Switch, Radio, Tag Input
 - [x] **Phase 2: Buttons & Actions** - Button, Icon Button, FAB, Segmented Control, Action Sheet
 - [x] **Phase 3: Feedback Components** - Toast, Dialog, Alert Dialog, Alert, Sheet, Popover, Tooltip
-- [ ] **Phase 4: Progress & Loading** - Spinner, Skeleton, Progress, Circular Progress, Pull to Refresh
+- [x] **Phase 4: Progress & Loading** - Spinner, Skeleton, Progress, Circular Progress, Pull to Refresh
 - [x] **Phase 5: Data Display** - Card, Avatar, Avatar Stack, Badge, Chip, Label, Typography, Rating, Image
 - [ ] **Phase 6: Layout & Structure** - Separator, Row, Column, Screen, List, Horizontal List, Section Header
 - [ ] **Phase 7: Navigation & Interaction** - Tabs, Accordion, Collapsible, Carousel, Swipeable Row
@@ -99,10 +99,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 04-01-PLAN.md - Add Spinner, Skeleton, Progress, CircularProgress tokens to core
-- [ ] 04-02-PLAN.md - Migrate Spinner and Skeleton to centralized tokens
-- [ ] 04-03-PLAN.md - Migrate Progress and CircularProgress to tokens with reduce-motion
-- [ ] 04-04-PLAN.md - Enhance demos for all progress components
+- [x] 04-01-PLAN.md - Add Spinner, Skeleton, Progress, CircularProgress tokens to core
+- [x] 04-02-PLAN.md - Migrate Spinner and Skeleton to centralized tokens
+- [x] 04-03-PLAN.md - Migrate Progress and CircularProgress to tokens with reduce-motion
+- [x] 04-04-PLAN.md - Enhance demos for all progress components
 
 ### Phase 5: Data Display
 **Goal**: All data display components have consistent styling and compose cleanly
@@ -255,7 +255,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 1. Form Inputs | 5/5 | Complete | 2026-01-24 |
 | 2. Buttons & Actions | 6/6 | Complete | 2026-01-24 |
 | 3. Feedback Components | 6/6 | Complete | 2026-01-25 |
-| 4. Progress & Loading | 0/4 | Planned | - |
+| 4. Progress & Loading | 4/4 | ✓ Complete | 2026-01-25 |
 | 5. Data Display | 5/5 | ✓ Complete | 2026-01-25 |
 | 6. Layout & Structure | 0/5 | Planned | - |
 | 7. Navigation & Interaction | 0/5 | Planned | - |
