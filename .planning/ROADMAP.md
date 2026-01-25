@@ -152,10 +152,14 @@ Plans:
   3. All interactive components support disabled state and keyboard navigation
   4. Gesture-based components (Swipeable Row, Carousel) handle edge cases smoothly
   5. Demo shows all navigation patterns with transition animations
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] TBD
+- [ ] 07-01-PLAN.md - Add navigation component tokens (Tabs, Accordion, Collapsible, Carousel, SwipeableRow)
+- [ ] 07-02-PLAN.md - Migrate Tabs to centralized tokens with componentRadius
+- [ ] 07-03-PLAN.md - Migrate Accordion and Collapsible to centralized tokens
+- [ ] 07-04-PLAN.md - Migrate Carousel and SwipeableRow to centralized tokens
+- [ ] 07-05-PLAN.md - Enhance all navigation demos with comprehensive coverage
 
 ### Phase 8: Advanced Components
 **Goal**: Complex components have complete functionality and consistent integration
@@ -245,7 +249,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 4. Progress & Loading | 0/4 | Planned | - |
 | 5. Data Display | 0/5 | Planned | - |
 | 6. Layout & Structure | 0/5 | Planned | - |
-| 7. Navigation & Interaction | 0/TBD | Not started | - |
+| 7. Navigation & Interaction | 0/5 | Planned | - |
 | 8. Advanced Components | 0/TBD | Not started | - |
 | 9. Blocks - Auth & Settings | 0/TBD | Not started | - |
 | 10. Blocks - Content & Social | 0/TBD | Not started | - |
