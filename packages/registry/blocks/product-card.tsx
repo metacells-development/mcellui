@@ -31,7 +31,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import Svg, { Path, Rect, Circle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, cardBlockTokens, productBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -209,14 +209,17 @@ export function ProductCard({
             <ImagePlaceholderIcon size={40} color={colors.foregroundMuted} />
           )}
           {badge && (
-            <View style={[styles.badge, { top: spacing[2], left: spacing[2] }]}>
+            <View style={[styles.badge, productBlockTokens.product.badgePosition]}>
               <Badge variant={badgeVariant} size="sm">{badge}</Badge>
             </View>
           )}
         </View>
 
         {/* Content */}
-        <View style={[styles.horizontalContent, { padding: spacing[3] }]}>
+        <View style={[styles.horizontalContent, {
+          paddingVertical: cardBlockTokens.content.paddingVertical,
+          paddingHorizontal: cardBlockTokens.content.paddingHorizontal,
+        }]}>
           <Text
             style={[styles.title, { color: colors.foreground }]}
             numberOfLines={2}
@@ -291,7 +294,7 @@ export function ProductCard({
 
         {/* Badge */}
         {badge && (
-          <View style={[styles.badge, { top: spacing[2], left: spacing[2] }]}>
+          <View style={[styles.badge, productBlockTokens.product.badgePosition]}>
             <Badge variant={badgeVariant} size="sm">{badge}</Badge>
           </View>
         )}
@@ -302,13 +305,12 @@ export function ProductCard({
             onPress={handleWishlist}
             style={[
               styles.wishlistButton,
+              productBlockTokens.product.wishlistPosition,
               {
-                top: spacing[2],
-                right: spacing[2],
                 backgroundColor: colors.background,
                 borderRadius: radius.full,
               },
-              platformShadow('sm'),
+              platformShadow(cardBlockTokens.shadow),
             ]}
           >
             <HeartIcon
@@ -328,7 +330,10 @@ export function ProductCard({
       </View>
 
       {/* Content section */}
-      <View style={[styles.content, { padding: spacing[3] }]}>
+      <View style={[styles.content, {
+        paddingVertical: cardBlockTokens.content.paddingVertical,
+        paddingHorizontal: cardBlockTokens.content.paddingHorizontal,
+      }]}>
         {/* Title */}
         <Text
           style={[styles.title, { color: colors.foreground }]}
@@ -427,8 +432,8 @@ const styles = StyleSheet.create({
   },
   outOfStockText: {
     color: '#fff',
-    fontWeight: '600',
-    fontSize: 14,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
   },
   content: {},
   horizontalContent: {
@@ -436,8 +441,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
     lineHeight: 20,
   },
   ratingRow: {
@@ -446,7 +451,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   reviewCount: {
-    fontSize: 12,
+    fontSize: cardBlockTokens.typography.metaFontSize,
   },
   priceRow: {
     flexDirection: 'row',
@@ -455,15 +460,15 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   price: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: cardBlockTokens.typography.priceFontSize,
+    fontWeight: cardBlockTokens.typography.priceFontWeight,
   },
   originalPrice: {
-    fontSize: 14,
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
     textDecorationLine: 'line-through',
   },
   outOfStock: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: cardBlockTokens.typography.metaFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
 });
