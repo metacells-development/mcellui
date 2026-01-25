@@ -23,7 +23,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, stateBlockTokens } from '@metacells/mcellui-core';
 
 // Import your components
 import { Button } from '../ui/button';
@@ -87,9 +87,9 @@ export function EmptyStateBlock({
             styles.iconContainer,
             {
               backgroundColor: colors.backgroundMuted,
-              width: compact ? 64 : 80,
-              height: compact ? 64 : 80,
-              borderRadius: compact ? 32 : 40,
+              width: compact ? stateBlockTokens.compact.iconContainerSize : stateBlockTokens.default.iconContainerSize,
+              height: compact ? stateBlockTokens.compact.iconContainerSize : stateBlockTokens.default.iconContainerSize,
+              borderRadius: compact ? stateBlockTokens.compact.iconContainerRadius : stateBlockTokens.default.iconContainerRadius,
               marginBottom: spacing[4],
             },
           ]}
@@ -104,7 +104,8 @@ export function EmptyStateBlock({
           styles.title,
           {
             color: colors.foreground,
-            fontSize: compact ? 18 : 20,
+            fontSize: compact ? stateBlockTokens.compact.titleFontSize : stateBlockTokens.default.titleFontSize,
+            fontWeight: stateBlockTokens.typography.titleFontWeight,
             marginBottom: spacing[2],
           },
         ]}
@@ -119,7 +120,7 @@ export function EmptyStateBlock({
             styles.description,
             {
               color: colors.foregroundMuted,
-              fontSize: compact ? 14 : 15,
+              fontSize: compact ? stateBlockTokens.compact.descriptionFontSize : stateBlockTokens.default.descriptionFontSize,
               marginBottom: spacing[6],
               paddingHorizontal: spacing[4],
             },
@@ -161,7 +162,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontWeight: '600',
     textAlign: 'center',
   },
   description: {
