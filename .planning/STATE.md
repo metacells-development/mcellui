@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 6 of 12 (Layout & Structure)
-Plans: 06-01, 06-02, 06-03, 06-04 complete
-Status: In progress
-Last activity: 2026-01-25 - Completed 06-04-PLAN.md
+Plans: 06-01, 06-02, 06-03, 06-04, 06-05 complete
+Status: Phase complete - All layout & structure plans finished
+Last activity: 2026-01-25 - Completed 06-05-PLAN.md
 
-Progress: [████░░░░░░] 46%
+Progress: [█████░░░░░] 48%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 24
-- Average duration: 4.6 min
-- Total execution time: 1.89 hours
+- Total plans completed: 25
+- Average duration: 4.5 min
+- Total execution time: 1.99 hours
 
 **By Phase:**
 
@@ -32,11 +32,11 @@ Progress: [████░░░░░░] 46%
 | 03-feedback-components | 6/6 | 9.75 min | 1.6 min |
 | 04-progress-loading | 4/4 | 12.8 min | 3.2 min |
 | 05-data-display | 5/5 | 10.1 min | 2.0 min |
-| 06-layout-structure | 4/4 | 11.6 min | 2.9 min |
+| 06-layout-structure | 5/5 | 17.6 min | 3.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 06-04 (5 min), 06-01 (2.5 min), 06-03 (2 min), 05-05 (4.7 min), 04-04 (3.5 min)
-- Trend: Demo migration plans slightly longer (5 min) than component migrations (2-2.5 min)
+- Last 5 plans: 06-05 (6 min), 06-04 (5 min), 06-01 (2.5 min), 06-03 (2 min), 05-05 (4.7 min)
+- Trend: Demo migration plans consistently 5-6 min, component migrations 2-2.5 min
 
 *Updated after each plan completion*
 
@@ -112,6 +112,10 @@ Recent decisions affecting current work:
 - **05-05**: Section component pattern used for consistent demo organization
 - **04-04**: Use Cases section pattern shows components in realistic UI contexts (buttons, cards, inline)
 - **04-04**: Animation Control section pattern demonstrates animated vs static states explicitly
+- **06-05**: Semantic dimensions (card widths, heights, avatar sizes) intentionally preserved as hardcoded values
+- **06-05**: Intentional white colors preserved for contrast on colored backgrounds (not theme colors)
+- **06-05**: Dynamic inline styles pattern with px-equivalent comments for token documentation
+- **06-05**: Unused StyleSheet styles removed to eliminate all hardcoded values from demo files
 - **04-04**: Profile card loading uses cover image with negative-margin avatar overlay (-32px)
 
 ### Pending Todos
@@ -125,7 +129,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 06-04-PLAN.md (Row, Column, Screen demo token migration)
+Stopped at: Completed 06-05-PLAN.md (Layout demo token migration - Phase 6 complete)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -187,7 +191,7 @@ Resume file: None
 | 05-04 | 2 | Migrate Typography h5/h6 and Image to tokens | ✅ Complete (1.4 min) |
 | 05-05 | 3 | Enhance data display component demos | ✅ Complete (4.7 min) |
 
-## Phase 6 In Progress
+## Phase 6 Complete ✓
 
 | Plan | Wave | Description | Status |
 |------|------|-------------|--------|
@@ -195,3 +199,4 @@ Resume file: None
 | 06-02 | 2 | Migrate List component to token system | ✅ Complete (2.1 min) |
 | 06-03 | 2 | Migrate Section demo component to token system | ✅ Complete (2 min) |
 | 06-04 | 3 | Migrate Row, Column, Screen demos to theme tokens | ✅ Complete (5 min) |
+| 06-05 | 3 | Migrate Separator, List, SectionHeader, HorizontalList demos to tokens | ✅ Complete (6 min) |
