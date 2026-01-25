@@ -143,7 +143,7 @@ export function CommentsScreen({
   onDeleteComment,
   onReportComment,
 }: CommentsScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
   const inputRef = useRef<TextInput>(null);
 
@@ -239,7 +239,13 @@ export function CommentsScreen({
       <View style={[styles.header, { paddingTop: insets.top, borderBottomColor: colors.border }]}>
         <View style={[styles.headerContent, { paddingHorizontal: spacing[4], paddingVertical: spacing[3] }]}>
           {onBack && <IconButton icon={<ChevronLeftIcon />} variant="ghost" onPress={onBack} />}
-          <Text style={[styles.headerTitle, { color: colors.foreground }]}>
+          <Text
+            style={{
+              color: colors.foreground,
+              fontSize: fontSize.lg,
+              fontWeight: fontWeight.semibold,
+            }}
+          >
             {title} {commentsCount > 0 && `(${commentsCount})`}
           </Text>
           <View style={{ width: 44 }} />
@@ -281,11 +287,19 @@ export function CommentsScreen({
         {/* Reply indicator */}
         {replyingTo && (
           <View style={[styles.replyIndicator, { marginBottom: spacing[2] }]}>
-            <Text style={[styles.replyText, { color: colors.foregroundMuted }]}>
-              Replying to <Text style={{ fontWeight: '600' }}>@{replyingTo.name}</Text>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>
+              Replying to <Text style={{ fontWeight: fontWeight.semibold }}>@{replyingTo.name}</Text>
             </Text>
             <Pressable onPress={cancelReply}>
-              <Text style={[styles.cancelReply, { color: colors.primary }]}>Cancel</Text>
+              <Text
+                style={{
+                  color: colors.primary,
+                  fontSize: fontSize.sm,
+                  fontWeight: fontWeight.semibold,
+                }}
+              >
+                Cancel
+              </Text>
             </Pressable>
           </View>
         )}
@@ -313,7 +327,11 @@ export function CommentsScreen({
           >
             <TextInput
               ref={inputRef}
-              style={[styles.textInput, { color: colors.foreground }]}
+              style={{
+                color: colors.foreground,
+                fontSize: fontSize.base,
+                maxHeight: 80,
+              }}
               placeholder={placeholder}
               placeholderTextColor={colors.foregroundMuted}
               value={inputText}
@@ -366,10 +384,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
   loadingContainer: {
     flex: 1,
     alignItems: 'center',
@@ -392,13 +406,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  replyText: {
-    fontSize: 13,
-  },
-  cancelReply: {
-    fontSize: 13,
-    fontWeight: '600',
-  },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -408,11 +415,6 @@ const styles = StyleSheet.create({
     minHeight: 40,
     maxHeight: 100,
     justifyContent: 'center',
-  },
-  textInput: {
-    fontSize: 15,
-    lineHeight: 20,
-    maxHeight: 80,
   },
   sendButton: {
     width: 40,

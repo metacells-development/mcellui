@@ -128,10 +128,14 @@ function MessageBubble({
   message,
   colors,
   radius,
+  fontSize,
+  lineHeight,
 }: {
   message: ChatMessage;
   colors: any;
   radius: any;
+  fontSize: any;
+  lineHeight: any;
 }) {
   const bubbleStyle = message.isMe
     ? {
@@ -163,7 +167,15 @@ function MessageBubble({
           },
         ]}
       >
-        <Text style={[styles.messageText, { color: textColor }]}>{message.text}</Text>
+        <Text
+          style={{
+            color: textColor,
+            fontSize: fontSize.base,
+            lineHeight: lineHeight.normal,
+          }}
+        >
+          {message.text}
+        </Text>
       </View>
       <View
         style={[
@@ -171,11 +183,11 @@ function MessageBubble({
           { alignSelf: message.isMe ? 'flex-end' : 'flex-start' },
         ]}
       >
-        <Text style={[styles.messageTime, { color: colors.foregroundMuted }]}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs }}>
           {message.time}
         </Text>
         {message.isMe && message.status && (
-          <Text style={[styles.messageStatus, { color: colors.foregroundMuted }]}>
+          <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs }}>
             {message.status === 'read' ? ' ✓✓' : message.status === 'delivered' ? ' ✓✓' : ' ✓'}
           </Text>
         )}
@@ -280,14 +292,15 @@ export function ChatScreen({
           <Avatar fallback={recipient.avatar || recipient.name.substring(0, 2)} size="sm" />
           <View style={{ marginLeft: spacing[3] }}>
             <Text
-              style={[
-                styles.recipientName,
-                { color: colors.foreground, fontWeight: fontWeight.semibold },
-              ]}
+              style={{
+                color: colors.foreground,
+                fontSize: fontSize.base,
+                fontWeight: fontWeight.semibold,
+              }}
             >
               {recipient.name}
             </Text>
-            <Text style={[styles.recipientStatus, { color: getStatusColor() }]}>
+            <Text style={{ color: getStatusColor(), fontSize: fontSize.xs }}>
               {getStatusText()}
             </Text>
           </View>
@@ -314,6 +327,8 @@ export function ChatScreen({
             message={message}
             colors={colors}
             radius={radius}
+            fontSize={fontSize}
+            lineHeight={lineHeight}
           />
         ))}
 
@@ -350,14 +365,13 @@ export function ChatScreen({
           ]}
         >
           <TextInput
-            style={[
-              styles.textInput,
-              {
-                color: colors.foreground,
-                paddingHorizontal: spacing[4],
-                paddingVertical: spacing[3],
-              },
-            ]}
+            style={{
+              color: colors.foreground,
+              fontSize: fontSize.base,
+              paddingHorizontal: spacing[4],
+              paddingVertical: spacing[3],
+              maxHeight: 80,
+            }}
             placeholder={placeholder}
             placeholderTextColor={colors.foregroundMuted}
             value={inputText}
@@ -408,12 +422,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  recipientName: {
-    fontSize: 16,
-  },
-  recipientStatus: {
-    fontSize: 12,
-  },
   moreButton: {},
   messagesList: {
     flex: 1,
@@ -428,19 +436,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
-  messageText: {
-    fontSize: 15,
-    lineHeight: 20,
-  },
   messageFooter: {
     flexDirection: 'row',
     marginTop: 4,
-  },
-  messageTime: {
-    fontSize: 11,
-  },
-  messageStatus: {
-    fontSize: 11,
   },
   typingBubble: {
     alignSelf: 'flex-start',
@@ -463,10 +461,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
     maxHeight: 100,
-  },
-  textInput: {
-    fontSize: 15,
-    maxHeight: 80,
   },
   sendButton: {
     alignItems: 'center',
