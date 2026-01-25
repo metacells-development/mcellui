@@ -41,11 +41,6 @@ export interface LabelProps extends Omit<TextProps, 'style'> {
   style?: TextStyle;
 }
 
-const sizeTokens: Record<LabelSize, { fontSize: number; lineHeight: number }> = {
-  sm: { fontSize: 12, lineHeight: 16 },
-  md: { fontSize: 14, lineHeight: 20 },
-  lg: { fontSize: 16, lineHeight: 24 },
-};
 
 export function Label({
   children,
@@ -56,8 +51,8 @@ export function Label({
   style,
   ...props
 }: LabelProps) {
-  const { colors } = useTheme();
-  const tokens = sizeTokens[size];
+  const { colors, components } = useTheme();
+  const tokens = components.label[size];
 
   const textColor = error
     ? colors.destructive
@@ -72,6 +67,7 @@ export function Label({
         {
           fontSize: tokens.fontSize,
           lineHeight: tokens.lineHeight,
+          fontWeight: tokens.fontWeight,
           color: textColor,
         },
         style,
@@ -90,9 +86,7 @@ export function Label({
 }
 
 const styles = StyleSheet.create({
-  label: {
-    fontWeight: '500',
-  },
+  label: {},
   required: {
     fontWeight: '400',
   },
