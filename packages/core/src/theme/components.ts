@@ -533,6 +533,99 @@ export const tagInputTokens = {
 } as const;
 
 // =============================================================================
+// Chip Component Tokens
+// =============================================================================
+
+export const chipTokens = {
+  sm: {
+    paddingHorizontal: spacing[2.5],
+    paddingVertical: spacing[1],
+    fontSize: fontSize.sm,
+    iconSize: iconSize.sm,
+  },
+  md: {
+    paddingHorizontal: spacing[3.5],
+    paddingVertical: spacing[1.5],
+    fontSize: fontSize.base,
+    iconSize: iconSize.sm,
+  },
+  lg: {
+    paddingHorizontal: spacing[5],  // closest to 18 (was 4.5)
+    paddingVertical: spacing[2],
+    fontSize: fontSize.md,
+    iconSize: iconSize.md,
+  },
+} as const;
+
+// =============================================================================
+// Label Component Tokens
+// =============================================================================
+
+export const labelTokens = {
+  sm: {
+    fontSize: fontSize.sm,
+    lineHeight: 16,
+    fontWeight: fontWeight.medium,
+  },
+  md: {
+    fontSize: fontSize.base,
+    lineHeight: 20,
+    fontWeight: fontWeight.medium,
+  },
+  lg: {
+    fontSize: fontSize.md,
+    lineHeight: 24,
+    fontWeight: fontWeight.medium,
+  },
+} as const;
+
+// =============================================================================
+// Rating Component Tokens
+// =============================================================================
+
+export const ratingTokens = {
+  sm: {
+    starSize: 18,
+    gap: spacing[0.5],
+  },
+  md: {
+    starSize: 26,
+    gap: spacing[1],
+  },
+  lg: {
+    starSize: 34,
+    gap: spacing[1.5],
+  },
+} as const;
+
+// =============================================================================
+// AvatarStack Component Tokens
+// =============================================================================
+
+export const avatarStackTokens = {
+  sm: {
+    size: 28,
+    fontSize: fontSize['2xs'],
+    borderWidth: 2,
+  },
+  md: {
+    size: 36,
+    fontSize: fontSize.sm,
+    borderWidth: 2,
+  },
+  lg: {
+    size: 44,
+    fontSize: fontSize.base,
+    borderWidth: 3,
+  },
+  xl: {
+    size: 56,
+    fontSize: fontSize.lg,
+    borderWidth: 3,
+  },
+} as const;
+
+// =============================================================================
 // Card Component Tokens
 // =============================================================================
 
@@ -566,6 +659,97 @@ export const overlayTypography = {
 } as const;
 
 // =============================================================================
+// Spinner Component Tokens
+// =============================================================================
+
+export const spinnerTokens = {
+  sm: {
+    containerSize: 16,
+    indicatorSize: 'small' as const,
+  },
+  md: {
+    containerSize: 24,
+    indicatorSize: 'small' as const,
+  },
+  lg: {
+    containerSize: 36,
+    indicatorSize: 'large' as const,
+  },
+} as const;
+
+// =============================================================================
+// Skeleton Component Tokens
+// =============================================================================
+
+export const skeletonTokens = {
+  radius: {
+    none: 0,
+    sm: 4,
+    md: 8,
+    lg: 12,
+    full: 9999,
+  },
+  animation: {
+    duration: 1500,
+    minOpacity: 0.3,
+    maxOpacity: 0.6,
+  },
+  text: {
+    defaultLines: 3,
+    defaultGap: 8,
+    defaultLineHeight: 16,
+    lastLineWidth: '60%',
+  },
+} as const;
+
+// =============================================================================
+// Progress Component Tokens
+// =============================================================================
+
+export const progressTokens = {
+  sm: {
+    height: 4,
+  },
+  md: {
+    height: 8,
+  },
+  lg: {
+    height: 12,
+  },
+  animation: {
+    determinateDuration: 300,
+    indeterminateDuration: 1000,
+  },
+} as const;
+
+// =============================================================================
+// CircularProgress Component Tokens
+// =============================================================================
+
+export const circularProgressTokens = {
+  sm: {
+    size: 40,
+    strokeWidth: 4,
+    labelSize: 10,
+  },
+  md: {
+    size: 64,
+    strokeWidth: 6,
+    labelSize: 14,
+  },
+  lg: {
+    size: 96,
+    strokeWidth: 8,
+    labelSize: 20,
+  },
+  animation: {
+    rotationDuration: 1200,
+    springDamping: 20,
+    springStiffness: 100,
+  },
+} as const;
+
+// =============================================================================
 // Export all component tokens
 // =============================================================================
 
@@ -586,8 +770,16 @@ export const components = {
   tagInput: tagInputTokens,
   badge: badgeTokens,
   avatar: avatarTokens,
+  chip: chipTokens,
+  label: labelTokens,
+  rating: ratingTokens,
+  avatarStack: avatarStackTokens,
   card: cardTokens,
   overlayTypography,
+  spinner: spinnerTokens,
+  skeleton: skeletonTokens,
+  progress: progressTokens,
+  circularProgress: circularProgressTokens,
   height: componentHeight,
   icon: iconSize,
 } as const;
