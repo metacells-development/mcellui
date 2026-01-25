@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Spinner } from '@/components/ui/spinner';
+import { useTheme } from '@metacells/mcellui-core';
 import { Section } from './section';
 
 export function SpinnerDemo() {
+  const { colors, radius } = useTheme();
+
   return (
     <View style={styles.container}>
       <Section title="Sizes">
@@ -30,6 +33,37 @@ export function SpinnerDemo() {
           <Spinner size="lg" color="muted" />
         </View>
       </Section>
+
+      <Section title="Use Cases">
+        <View style={styles.useCases}>
+          {/* Button loading state */}
+          <View style={styles.useCase}>
+            <View style={[styles.loadingButton, { backgroundColor: colors.primary, borderRadius: radius.md }]}>
+              <Spinner size="sm" color="default" style={{ marginRight: 8 }} />
+              <Text style={{ color: colors.primaryForeground, fontWeight: '500' }}>Loading...</Text>
+            </View>
+            <Text style={[styles.useCaseLabel, { color: colors.foregroundMuted }]}>Button loading</Text>
+          </View>
+
+          {/* Inline loading */}
+          <View style={styles.useCase}>
+            <View style={styles.inlineRow}>
+              <Text style={{ color: colors.foreground }}>Saving changes</Text>
+              <Spinner size="sm" color="primary" />
+            </View>
+            <Text style={[styles.useCaseLabel, { color: colors.foregroundMuted }]}>Inline indicator</Text>
+          </View>
+
+          {/* Full screen loading placeholder */}
+          <View style={styles.useCase}>
+            <View style={[styles.loadingCard, { backgroundColor: colors.card, borderRadius: radius.lg }]}>
+              <Spinner size="lg" color="muted" />
+              <Text style={[styles.loadingText, { color: colors.foregroundMuted }]}>Loading content...</Text>
+            </View>
+            <Text style={[styles.useCaseLabel, { color: colors.foregroundMuted }]}>Card loading</Text>
+          </View>
+        </View>
+      </Section>
     </View>
   );
 }
@@ -40,5 +74,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 24,
+  },
+  useCases: {
+    gap: 20,
+  },
+  useCase: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  useCaseLabel: {
+    fontSize: 12,
+  },
+  loadingButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  inlineRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  loadingCard: {
+    padding: 24,
+    alignItems: 'center',
+    gap: 12,
+    width: 160,
+  },
+  loadingText: {
+    fontSize: 13,
   },
 });
