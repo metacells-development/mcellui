@@ -254,127 +254,64 @@ function ProfileBlockPreview() {
 // ============================================================================
 
 function SettingsListBlockPreview() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing } = useTheme();
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  const [haptics, setHaptics] = useState(true);
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Settings List</CardTitle>
+        <CardDescription>All item types: switch, navigation, destructive</CardDescription>
+      </CardHeader>
       <CardContent style={{ paddingTop: spacing[4] }}>
-        {/* Group 1: Preferences */}
-        <View style={{ marginBottom: spacing[4] }}>
-          <Text
-            style={[
-              styles.groupTitle,
-              { color: colors.foregroundMuted, paddingHorizontal: spacing[2], marginBottom: spacing[2] },
-            ]}
-          >
-            PREFERENCES
-          </Text>
-          <View
-            style={[
-              styles.settingsGroup,
-              { backgroundColor: colors.backgroundMuted, borderRadius: radius.lg },
-            ]}
-          >
-            <SettingsItem
-              label="Push Notifications"
-              value={notifications}
-              onValueChange={setNotifications}
-            />
-            <Separator style={{ marginLeft: spacing[4] }} />
-            <SettingsItem
-              label="Dark Mode"
-              value={darkMode}
-              onValueChange={setDarkMode}
-            />
-            <Separator style={{ marginLeft: spacing[4] }} />
-            <SettingsItem
-              label="Haptic Feedback"
-              value={haptics}
-              onValueChange={setHaptics}
-            />
-          </View>
-        </View>
-
-        {/* Group 2: Account */}
-        <View>
-          <Text
-            style={[
-              styles.groupTitle,
-              { color: colors.foregroundMuted, paddingHorizontal: spacing[2], marginBottom: spacing[2] },
-            ]}
-          >
-            ACCOUNT
-          </Text>
-          <View
-            style={[
-              styles.settingsGroup,
-              { backgroundColor: colors.backgroundMuted, borderRadius: radius.lg },
-            ]}
-          >
-            <SettingsNavItem label="Email" value="john@example.com" />
-            <Separator style={{ marginLeft: spacing[4] }} />
-            <SettingsNavItem label="Change Password" />
-            <Separator style={{ marginLeft: spacing[4] }} />
-            <SettingsNavItem label="Log Out" destructive />
-          </View>
-        </View>
+        <SettingsListBlock
+          groups={[
+            {
+              title: 'PREFERENCES',
+              items: [
+                {
+                  type: 'switch',
+                  label: 'Push Notifications',
+                  description: 'Receive alerts about activity',
+                  value: notifications,
+                  onValueChange: setNotifications,
+                },
+                {
+                  type: 'switch',
+                  label: 'Dark Mode',
+                  value: darkMode,
+                  onValueChange: setDarkMode,
+                },
+              ],
+            },
+            {
+              title: 'ACCOUNT',
+              description: 'Manage your account settings',
+              items: [
+                {
+                  type: 'navigation',
+                  label: 'Email',
+                  displayValue: 'john@example.com',
+                  onPress: () => Alert.alert('Edit Email'),
+                },
+                {
+                  type: 'navigation',
+                  label: 'Change Password',
+                  onPress: () => Alert.alert('Change Password'),
+                },
+                {
+                  type: 'button',
+                  label: 'Log Out',
+                  variant: 'destructive',
+                  onPress: () => Alert.alert('Logout'),
+                },
+              ],
+            },
+          ]}
+        />
       </CardContent>
     </Card>
-  );
-}
-
-function SettingsItem({
-  label,
-  value,
-  onValueChange,
-}: {
-  label: string;
-  value: boolean;
-  onValueChange: (v: boolean) => void;
-}) {
-  const { colors, spacing } = useTheme();
-
-  return (
-    <View style={[styles.settingsItem, { padding: spacing[3.5] }]}>
-      <Text style={[styles.settingsLabel, { color: colors.foreground }]}>{label}</Text>
-      <Switch checked={value} onCheckedChange={onValueChange} />
-    </View>
-  );
-}
-
-function SettingsNavItem({
-  label,
-  value,
-  destructive,
-}: {
-  label: string;
-  value?: string;
-  destructive?: boolean;
-}) {
-  const { colors, spacing } = useTheme();
-
-  return (
-    <View style={[styles.settingsItem, { padding: spacing[3.5] }]}>
-      <Text
-        style={[
-          styles.settingsLabel,
-          { color: destructive ? colors.destructive : colors.foreground },
-        ]}
-      >
-        {label}
-      </Text>
-      <View style={styles.settingsNavRight}>
-        {value && (
-          <Text style={[styles.settingsValue, { color: colors.foregroundMuted }]}>
-            {value}
-          </Text>
-        )}
-        <Text style={[styles.chevron, { color: colors.foregroundMuted }]}>{'>'}</Text>
-      </View>
-    </View>
   );
 }
 
@@ -386,48 +323,49 @@ function EmptyStateBlockPreview() {
   const { colors, spacing } = useTheme();
 
   return (
-    <Card>
-      <CardContent>
-        <View style={[styles.emptyState, { padding: spacing[6] }]}>
-          <View
-            style={[
-              styles.emptyIcon,
-              {
-                backgroundColor: colors.backgroundMuted,
-                width: 64,
-                height: 64,
-                borderRadius: 32,
-                marginBottom: spacing[4],
-              },
-            ]}
-          >
-            <Svg width={28} height={28} viewBox="0 0 24 24" fill="none">
-              <Path
-                d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"
-                stroke={colors.foregroundMuted}
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-          </View>
-          <Text style={[styles.emptyTitle, { color: colors.foreground, marginBottom: spacing[2] }]}>
-            No messages
-          </Text>
-          <Text
-            style={[
-              styles.emptyDescription,
-              { color: colors.foregroundMuted, marginBottom: spacing[4] },
-            ]}
-          >
-            You don't have any messages yet. Start a conversation!
-          </Text>
-          <Button onPress={() => Alert.alert('New Message')}>
-            New Message
-          </Button>
-        </View>
-      </CardContent>
-    </Card>
+    <View style={{ gap: spacing[4] }}>
+      {/* Default variant */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Default</CardTitle>
+          <CardDescription>Full-size with icon and action</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <EmptyStateBlock
+            icon={
+              <Svg width={28} height={28} viewBox="0 0 24 24" fill="none">
+                <Path
+                  d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"
+                  stroke={colors.foregroundMuted}
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </Svg>
+            }
+            title="No messages"
+            description="You don't have any messages yet. Start a conversation!"
+            actionText="New Message"
+            onAction={() => Alert.alert('New Message')}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Compact variant */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Compact</CardTitle>
+          <CardDescription>Smaller size for inline states</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <EmptyStateBlock
+            title="No results"
+            description="Try adjusting your search"
+            compact
+          />
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 
@@ -441,76 +379,48 @@ function ErrorStateBlockPreview() {
 
   const handleRetry = async () => {
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
+    await new Promise((r) => setTimeout(r, 1500));
     setLoading(false);
-    Alert.alert('Retried', 'Request completed');
+    Alert.alert('Retry Complete');
   };
 
   return (
-    <Card>
-      <CardContent>
-        <View style={[styles.errorState, { padding: spacing[6] }]}>
-          <View
-            style={[
-              styles.errorIcon,
-              {
-                backgroundColor: colors.destructive + '15',
-                width: 72,
-                height: 72,
-                borderRadius: 36,
-                marginBottom: spacing[4],
-              },
-            ]}
-          >
-            <Svg width={36} height={36} viewBox="0 0 24 24" fill="none">
-              <Circle
-                cx="12"
-                cy="12"
-                r="10"
-                stroke={colors.destructive}
-                strokeWidth="2"
-              />
-              <Path
-                d="M12 8v4"
-                stroke={colors.destructive}
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              <Circle cx="12" cy="16" r="1" fill={colors.destructive} />
-            </Svg>
-          </View>
-          <Text style={[styles.errorTitle, { color: colors.foreground, marginBottom: spacing[2] }]}>
-            Something went wrong
-          </Text>
-          <Text
-            style={[
-              styles.errorDescription,
-              { color: colors.foregroundMuted, marginBottom: spacing[2] },
-            ]}
-          >
-            We couldn't load your data. Please try again.
-          </Text>
-          <Text
-            style={[
-              styles.errorCode,
-              {
-                color: colors.foregroundMuted,
-                backgroundColor: colors.backgroundMuted,
-                paddingHorizontal: spacing[2],
-                paddingVertical: spacing[1],
-                borderRadius: 4,
-                marginBottom: spacing[4],
-              },
-            ]}
-          >
-            Error: NETWORK_ERROR
-          </Text>
-          <Button onPress={handleRetry} loading={loading}>
-            Retry
-          </Button>
-        </View>
-      </CardContent>
-    </Card>
+    <View style={{ gap: spacing[4] }}>
+      {/* With retry loading */}
+      <Card>
+        <CardHeader>
+          <CardTitle>With Retry Loading</CardTitle>
+          <CardDescription>Shows loading state during retry</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ErrorStateBlock
+            title="Something went wrong"
+            description="We couldn't load your data. Please try again."
+            errorCode="ERROR_NETWORK_TIMEOUT"
+            onRetry={handleRetry}
+            retryLoading={loading}
+            onCancel={() => Alert.alert('Cancel')}
+            cancelText="Go Back"
+          />
+        </CardContent>
+      </Card>
+
+      {/* Compact variant */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Compact</CardTitle>
+          <CardDescription>Smaller size for inline errors</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ErrorStateBlock
+            title="Failed to load"
+            description="Check your connection"
+            compact
+            onRetry={() => Alert.alert('Retry')}
+          />
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 
@@ -1798,77 +1708,6 @@ const styles = StyleSheet.create({
   profileActions: {
     width: '100%',
   },
-  // Settings Block
-  groupTitle: {
-    fontSize: 12,
-    fontWeight: '600',
-    letterSpacing: 0.5,
-  },
-  settingsGroup: {
-    overflow: 'hidden',
-  },
-  settingsItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  settingsLabel: {
-    fontSize: 15,
-  },
-  settingsNavRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  settingsValue: {
-    fontSize: 14,
-  },
-  chevron: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  // Empty State
-  emptyState: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emptyIcon: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emptyTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  emptyDescription: {
-    fontSize: 14,
-    textAlign: 'center',
-    lineHeight: 20,
-  },
-  // Error State
-  errorState: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  errorIcon: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  errorTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  errorDescription: {
-    fontSize: 14,
-    textAlign: 'center',
-    lineHeight: 20,
-  },
-  errorCode: {
-    fontSize: 11,
-    fontFamily: 'monospace',
-  },
   // Notification Item
   notificationItem: {
     flexDirection: 'row',
@@ -2105,69 +1944,5 @@ const styles = StyleSheet.create({
   feedActionText: {
     fontSize: 14,
     fontWeight: '500',
-  },
-  // Login/Signup Block
-  loginContainer: {
-    width: '100%',
-  },
-  loginHeader: {
-    alignItems: 'center',
-  },
-  loginTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    marginBottom: 4,
-  },
-  loginSubtitle: {
-    fontSize: 15,
-  },
-  inputLabel: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  loginInput: {
-    borderWidth: 1,
-    fontSize: 16,
-  },
-  passwordHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  forgotPassword: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  loginDivider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  dividerText: {
-    fontSize: 13,
-    fontWeight: '500',
-  },
-  loginFooter: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  passwordHint: {
-    fontSize: 12,
-  },
-  termsRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 2,
-  },
-  termsText: {
-    fontSize: 13,
-    lineHeight: 18,
   },
 });
