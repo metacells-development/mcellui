@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 7 of 12 (Navigation & Interaction)
-Plans: 07-05 of 5 complete
-Status: Phase 07 complete - All navigation demos enhanced
-Last activity: 2026-01-25 - Completed 07-05-PLAN.md
+Phase: 8 of 12 (Advanced Components)
+Plans: 08-06 of ? complete
+Status: In progress - Advanced component demos enhanced
+Last activity: 2026-01-25 - Completed 08-06-PLAN.md
 
-Progress: [██████░░░░] 56%
+Progress: [██████░░░░] 58%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 33
+- Total plans completed: 34
 - Average duration: 3.9 min
-- Total execution time: 2.21 hours
+- Total execution time: 2.31 hours
 
 **By Phase:**
 
@@ -34,12 +34,12 @@ Progress: [██████░░░░] 56%
 | 05-data-display | 5/5 | 10.1 min | 2.0 min |
 | 06-layout-structure | 5/5 | 17.6 min | 3.5 min |
 | 07-navigation-interaction | 5/5 | 10.3 min | 2.1 min |
-| 08-advanced-components | 2/? | 6.1 min | 3.05 min |
+| 08-advanced-components | 3/? | 12.1 min | 4.0 min |
 | 09-blocks-auth-settings | 1/? | 3 min | 3.0 min |
 
 **Recent Trend:**
-- Last 5 plans: 07-05 (5.3 min), 08-02 (2.5 min), 08-01 (3.6 min), 09-01 (3 min), 07-01 (2 min)
-- Trend: Demo enhancement plans 3-5.3 min, token foundation plans 2-4 min, component migrations 2.5-3.5 min
+- Last 5 plans: 08-06 (6 min), 07-05 (5.3 min), 08-02 (2.5 min), 08-01 (3.6 min), 09-01 (3 min)
+- Trend: Demo enhancement plans 5-6 min, token foundation plans 2-4 min, component migrations 2.5-3.5 min
 
 *Updated after each plan completion*
 
@@ -140,6 +140,9 @@ Recent decisions affecting current work:
 - **08-02**: Calendar migration already complete in commit 7d89c8b (previous session verification)
 - **08-02**: DateTimePicker CalendarIcon receives tokens as prop for dimension control
 - **08-02**: Micro-radii preserved (borderRadius: 1, 1.5, 2) for icon/handle details (too small for token scale)
+- **08-06**: Calendar type guards required for value change handlers to handle union types (Date | DateRange | Date[])
+- **08-06**: Select component uses 'options' prop not 'items' for consistency
+- **08-06**: Demo structure consistently follows Sizes → Features → States → Use Cases pattern
 - **07-05**: Demo section titles renamed for clarity (Basic Collapsible, Disabled State, Custom Trigger)
 - **07-05**: Carousel ref uses scrollToIndex(n) for programmatic control (not goToNext/goToPrevious)
 - **07-05**: Carousel indicatorStyle prop accepts 'dot' and 'line' values (not indicatorVariant)
@@ -155,7 +158,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 07-05-PLAN.md (Phase 7 navigation demos enhanced with comprehensive coverage)
+Stopped at: Completed 08-06-PLAN.md (All 7 advanced component demos enhanced)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -248,6 +251,7 @@ Resume file: None
 | 08-03 | 2 | Migrate Form components to tokens | ⏳ Pending |
 | 08-04 | 2 | Migrate ImageGallery, Pagination to tokens | ⏳ Pending |
 | 08-05 | 2 | Migrate Stories and SearchInput to tokens | ⏳ Pending |
+| 08-06 | 3 | Enhance all 7 advanced component demos | ✅ Complete (6 min) |
 
 ## Phase 9 In Progress
 
