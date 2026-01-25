@@ -31,7 +31,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -130,6 +130,7 @@ export function OrderItem({
   style,
 }: OrderItemProps) {
   const { colors, spacing, radius } = useTheme();
+  const tokens = infoBlockTokens.order;
 
   const handlePress = () => {
     haptic('light');
@@ -177,10 +178,27 @@ export function OrderItem({
       {/* Header */}
       <View style={[styles.header, { marginBottom: spacing[3] }]}>
         <View style={styles.headerLeft}>
-          <Text style={[styles.orderId, { color: colors.foreground }]}>
+          <Text
+            style={[
+              styles.orderId,
+              {
+                color: colors.foreground,
+                fontSize: tokens.orderIdFontSize,
+                fontWeight: tokens.orderIdFontWeight as any,
+              },
+            ]}
+          >
             Order #{order.orderNumber ?? order.id}
           </Text>
-          <Text style={[styles.date, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.date,
+              {
+                color: colors.foregroundMuted,
+                fontSize: tokens.dateFontSize,
+              },
+            ]}
+          >
             {formatDate(order.date)}
           </Text>
         </View>
@@ -198,6 +216,8 @@ export function OrderItem({
                 backgroundColor: colors.secondary,
                 borderRadius: radius.md,
                 marginRight: index < displayItems.length - 1 ? spacing[2] : 0,
+                width: tokens.productImageSize,
+                height: tokens.productImageSize,
               },
             ]}
           >
@@ -216,10 +236,21 @@ export function OrderItem({
               {
                 backgroundColor: colors.secondary,
                 borderRadius: radius.md,
+                width: tokens.productImageSize,
+                height: tokens.productImageSize,
               },
             ]}
           >
-            <Text style={[styles.moreText, { color: colors.foregroundMuted }]}>
+            <Text
+              style={[
+                styles.moreText,
+                {
+                  color: colors.foregroundMuted,
+                  fontSize: tokens.moreTextFontSize,
+                  fontWeight: tokens.moreTextFontWeight as any,
+                },
+              ]}
+            >
               +{remainingCount}
             </Text>
           </View>
@@ -228,10 +259,27 @@ export function OrderItem({
 
       {/* Summary */}
       <View style={[styles.summary, { marginBottom: showActions ? spacing[3] : 0 }]}>
-        <Text style={[styles.itemCount, { color: colors.foregroundMuted }]}>
+        <Text
+          style={[
+            styles.itemCount,
+            {
+              color: colors.foregroundMuted,
+              fontSize: tokens.itemCountFontSize,
+            },
+          ]}
+        >
           {totalQuantity} {totalQuantity === 1 ? 'item' : 'items'}
         </Text>
-        <Text style={[styles.total, { color: colors.foreground }]}>
+        <Text
+          style={[
+            styles.total,
+            {
+              color: colors.foreground,
+              fontSize: tokens.totalFontSize,
+              fontWeight: tokens.totalFontWeight as any,
+            },
+          ]}
+        >
           {formatPrice(order.total)}
         </Text>
       </View>
@@ -296,12 +344,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   headerLeft: {},
-  orderId: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
+  orderId: {},
   date: {
-    fontSize: 13,
     marginTop: 2,
   },
   products: {
@@ -309,8 +353,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   productImage: {
-    width: 48,
-    height: 48,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
@@ -320,27 +362,17 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   moreProducts: {
-    width: 48,
-    height: 48,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  moreText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  moreText: {},
   summary: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  itemCount: {
-    fontSize: 14,
-  },
-  total: {
-    fontSize: 16,
-    fontWeight: '700',
-  },
+  itemCount: {},
+  total: {},
   actions: {
     flexDirection: 'row',
   },

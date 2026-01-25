@@ -19,7 +19,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 import Svg, { Path } from 'react-native-svg';
 
 // Import UI primitives
@@ -101,6 +101,7 @@ export function SearchHeader({
   style,
 }: SearchHeaderProps) {
   const { colors, spacing } = useTheme();
+  const tokens = infoBlockTokens.searchHeader;
   const [internalValue, setInternalValue] = useState('');
   const value = controlledValue ?? internalValue;
 
@@ -144,7 +145,15 @@ export function SearchHeader({
             accessibilityLabel="Filter"
           />
           {filterCount > 0 && (
-            <View style={styles.badgeWrapper}>
+            <View
+              style={[
+                styles.badgeWrapper,
+                {
+                  top: tokens.filterBadgeOffset,
+                  right: tokens.filterBadgeOffset,
+                },
+              ]}
+            >
               <Badge variant="default" size="sm">
                 {String(filterCount)}
               </Badge>
@@ -179,7 +188,5 @@ const styles = StyleSheet.create({
   },
   badgeWrapper: {
     position: 'absolute',
-    top: -4,
-    right: -4,
   },
 });

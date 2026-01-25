@@ -34,7 +34,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -142,6 +142,7 @@ export function TaskItem({
   style,
 }: TaskItemProps) {
   const { colors, spacing, radius } = useTheme();
+  const tokens = infoBlockTokens.task;
 
   const scale = useSharedValue(1);
 
@@ -233,7 +234,7 @@ export function TaskItem({
           {/* Priority flag */}
           {priorityConfig && !task.completed && (
             <View style={{ marginRight: spacing[1.5] }}>
-              <FlagIcon size={12} color={priorityConfig.color} />
+              <FlagIcon size={tokens.flagIconSize} color={priorityConfig.color} />
             </View>
           )}
 
@@ -243,6 +244,9 @@ export function TaskItem({
               {
                 color: colors.foreground,
                 textDecorationLine: task.completed ? 'line-through' : 'none',
+                fontSize: tokens.titleFontSize,
+                fontWeight: tokens.titleFontWeight as any,
+                lineHeight: tokens.titleLineHeight,
               },
             ]}
             numberOfLines={2}
@@ -254,7 +258,14 @@ export function TaskItem({
         {/* Description */}
         {task.description && !task.completed && (
           <Text
-            style={[styles.description, { color: colors.foregroundMuted, marginTop: spacing[0.5] }]}
+            style={[
+              styles.description,
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[0.5],
+                fontSize: tokens.descriptionFontSize,
+              },
+            ]}
             numberOfLines={1}
           >
             {task.description}
@@ -266,13 +277,14 @@ export function TaskItem({
           {/* Due date */}
           {task.dueDate && !task.completed && (
             <View style={styles.dueDateRow}>
-              <CalendarIcon size={12} color={isOverdue ? colors.destructive : colors.foregroundMuted} />
+              <CalendarIcon size={tokens.calendarIconSize} color={isOverdue ? colors.destructive : colors.foregroundMuted} />
               <Text
                 style={[
                   styles.dueDate,
                   {
                     color: isOverdue ? colors.destructive : colors.foregroundMuted,
                     marginLeft: spacing[0.5],
+                    fontSize: tokens.dueDateFontSize,
                   },
                 ]}
               >
@@ -290,7 +302,15 @@ export function TaskItem({
                 </Badge>
               ))}
               {task.tags.length > 2 && (
-                <Text style={[styles.moreTags, { color: colors.foregroundMuted }]}>
+                <Text
+                  style={[
+                    styles.moreTags,
+                    {
+                      color: colors.foregroundMuted,
+                      fontSize: tokens.moreTagsFontSize,
+                    },
+                  ]}
+                >
                   +{task.tags.length - 2}
                 </Text>
               )}
@@ -330,13 +350,8 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    fontSize: 15,
-    fontWeight: '500',
-    lineHeight: 20,
   },
-  description: {
-    fontSize: 13,
-  },
+  description: {},
   metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -346,14 +361,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  dueDate: {
-    fontSize: 12,
-  },
+  dueDate: {},
   tags: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  moreTags: {
-    fontSize: 12,
-  },
+  moreTags: {},
 });
