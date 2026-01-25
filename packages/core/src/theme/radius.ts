@@ -149,6 +149,8 @@ export interface ComponentRadiusTokens {
   switch: number;
   modal: number;
   tooltip: number;
+  chip: number;
+  image: number;
 }
 
 export type ComponentRadiusKey = keyof ComponentRadiusTokens;
@@ -196,6 +198,10 @@ export function createComponentRadius(radiusTokens: RadiusTokens): ComponentRadi
     switch: PILL_RADIUS,
     modal: radiusTokens.xl,
     tooltip: radiusTokens.md,
+    // Chip: uses lg radius for pill-like but not full circular
+    chip: radiusTokens.lg,
+    // Image: uses md radius for default image corners
+    image: radiusTokens.md,
   };
 }
 
