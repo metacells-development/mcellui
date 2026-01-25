@@ -17,7 +17,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, ecommerceBlockTokens } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Card, CardContent } from '../ui/card';
@@ -57,6 +57,7 @@ export function StatsCard({
   style,
 }: StatsCardProps) {
   const { colors, spacing, radius } = useTheme();
+  const statsTokens = ecommerceBlockTokens.stats;
 
   const isPositive = trend !== undefined && trend >= 0;
   const trendColor = trend !== undefined
@@ -70,7 +71,16 @@ export function StatsCard({
       <CardContent style={{ paddingTop: spacing[4] }}>
         {/* Header with icon */}
         <View style={styles.header}>
-          <Text style={[styles.label, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.label,
+              {
+                color: colors.foregroundMuted,
+                fontSize: statsTokens.labelFontSize,
+                fontWeight: statsTokens.labelFontWeight,
+              },
+            ]}
+          >
             {label}
           </Text>
           {icon && (
@@ -93,7 +103,12 @@ export function StatsCard({
         <Text
           style={[
             styles.value,
-            { color: colors.foreground, marginTop: spacing[2] },
+            {
+              color: colors.foreground,
+              marginTop: spacing[2],
+              fontSize: statsTokens.valueFontSize,
+              fontWeight: statsTokens.valueFontWeight,
+            },
           ]}
         >
           {value}
@@ -102,14 +117,27 @@ export function StatsCard({
         {/* Trend */}
         {trend !== undefined && (
           <View style={[styles.trendContainer, { marginTop: spacing[2] }]}>
-            <Text style={[styles.trend, { color: trendColor }]}>
+            <Text
+              style={[
+                styles.trend,
+                {
+                  color: trendColor,
+                  fontSize: statsTokens.trendFontSize,
+                  fontWeight: statsTokens.trendFontWeight,
+                },
+              ]}
+            >
               {isPositive ? '+' : ''}{trend.toFixed(1)}%
             </Text>
             {trendLabel && (
               <Text
                 style={[
                   styles.trendLabel,
-                  { color: colors.foregroundMuted, marginLeft: spacing[1] },
+                  {
+                    color: colors.foregroundMuted,
+                    marginLeft: spacing[1],
+                    fontSize: statsTokens.trendLabelFontSize,
+                  },
                 ]}
               >
                 {trendLabel}
@@ -132,24 +160,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
+  label: {},
   iconContainer: {},
-  value: {
-    fontSize: 32,
-    fontWeight: '700',
-  },
+  value: {},
   trendContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  trend: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  trendLabel: {
-    fontSize: 13,
-  },
+  trend: {},
+  trendLabel: {},
 });
