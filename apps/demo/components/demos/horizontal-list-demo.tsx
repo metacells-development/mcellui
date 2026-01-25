@@ -7,11 +7,15 @@ import { useTheme } from '@metacells/mcellui-core';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export function HorizontalListDemo() {
-  const { colors, spacing, radius, platformShadow } = useTheme();
+  const { colors, spacing, radius, platformShadow, fontSize, fontWeight } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const containerStyle = {
+    gap: spacing[8], // 32px
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <Section title="Product Cards">
         <HorizontalList
           contentInset={16}
@@ -27,6 +31,7 @@ export function HorizontalListDemo() {
                   {
                     backgroundColor: colors.card,
                     borderRadius: radius.xl,
+                    padding: spacing[3], // 12px
                     opacity: pressed ? 0.9 : 1,
                     transform: [{ scale: pressed ? 0.98 : 1 }],
                   },
@@ -39,16 +44,28 @@ export function HorizontalListDemo() {
                     {
                       backgroundColor: colors.backgroundMuted,
                       borderRadius: radius.lg,
+                      marginBottom: spacing[2.5], // 10px
                     },
                   ]}
                 />
                 <Text
-                  style={[styles.productTitle, { color: colors.foreground }]}
+                  style={{
+                    color: colors.foreground,
+                    fontSize: fontSize.sm, // 14px
+                    fontWeight: fontWeight.semibold, // 600
+                    marginBottom: spacing[1], // 4px
+                  }}
                   numberOfLines={1}
                 >
                   {item}
                 </Text>
-                <Text style={[styles.productPrice, { color: colors.primary }]}>
+                <Text
+                  style={{
+                    color: colors.primary,
+                    fontSize: fontSize.md, // 16px
+                    fontWeight: fontWeight.bold, // 700
+                  }}
+                >
                   ${(19.99 + index * 10).toFixed(2)}
                 </Text>
               </Pressable>
@@ -78,16 +95,45 @@ export function HorizontalListDemo() {
                   width: SCREEN_WIDTH - 32,
                   backgroundColor: banner.bg,
                   borderRadius: radius.xl,
+                  padding: spacing[5], // 20px
                 },
               ]}
             >
-              <Text style={styles.bannerTitle}>{banner.title}</Text>
-              <Text style={styles.bannerSubtitle}>{banner.subtitle}</Text>
+              <Text
+                style={[
+                  styles.bannerTitle,
+                  {
+                    fontSize: fontSize['2xl'], // 24px
+                    fontWeight: fontWeight.bold, // 700
+                    marginBottom: spacing[1], // 4px
+                  },
+                ]}
+              >
+                {banner.title}
+              </Text>
+              <Text
+                style={[
+                  styles.bannerSubtitle,
+                  {
+                    fontSize: fontSize.sm, // 14px
+                    fontWeight: fontWeight.medium, // 500
+                  },
+                ]}
+              >
+                {banner.subtitle}
+              </Text>
             </View>
           ))}
         </HorizontalList>
         {/* Pagination dots */}
-        <View style={styles.pagination}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            gap: spacing[1.5], // 6px
+            marginTop: spacing[3], // 12px
+          }}
+        >
           {[0, 1, 2, 3].map((i) => (
             <View
               key={i}
@@ -115,18 +161,24 @@ export function HorizontalListDemo() {
           ].map((cat, index) => (
             <Pressable
               key={index}
-              style={({ pressed }) => [
-                styles.categoryChip,
-                {
-                  backgroundColor: colors.secondary,
-                  borderRadius: radius.full,
-                  opacity: pressed ? 0.8 : 1,
-                },
-              ]}
+              style={({ pressed }) => ({
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: colors.secondary,
+                borderRadius: radius.full,
+                paddingHorizontal: spacing[3.5], // 14px
+                paddingVertical: spacing[2.5], // 10px
+                gap: spacing[1.5], // 6px
+                opacity: pressed ? 0.8 : 1,
+              })}
             >
-              <Text style={styles.categoryEmoji}>{cat.emoji}</Text>
+              <Text style={{ fontSize: fontSize.md }}>{cat.emoji}</Text>
               <Text
-                style={[styles.categoryName, { color: colors.secondaryForeground }]}
+                style={{
+                  color: colors.secondaryForeground,
+                  fontSize: fontSize.sm, // 14px
+                  fontWeight: fontWeight.medium, // 500
+                }}
               >
                 {cat.name}
               </Text>
@@ -152,6 +204,7 @@ export function HorizontalListDemo() {
                     {
                       borderColor: index === 0 ? colors.border : colors.primary,
                       borderWidth: index === 0 ? 1 : 2,
+                      padding: spacing[0.5], // 2px
                     },
                   ]}
                 >
@@ -163,13 +216,26 @@ export function HorizontalListDemo() {
                       },
                     ]}
                   >
-                    <Text style={styles.storyInitial}>
+                    <Text
+                      style={[
+                        styles.storyInitial,
+                        {
+                          fontSize: fontSize['2xl'], // 22px
+                          fontWeight: fontWeight.semibold, // 600
+                        },
+                      ]}
+                    >
                       {index === 0 ? '+' : name[0]}
                     </Text>
                   </View>
                 </View>
                 <Text
-                  style={[styles.storyName, { color: colors.foreground }]}
+                  style={{
+                    color: colors.foreground,
+                    fontSize: fontSize.xs, // 12px
+                    marginTop: spacing[1.5], // 6px
+                    textAlign: 'center',
+                  }}
                   numberOfLines={1}
                 >
                   {name}
@@ -203,104 +269,57 @@ export function HorizontalListDemo() {
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 32 },
-
-  // Product Cards
+  // Product Cards - semantic dimensions kept
   productCard: {
-    width: 150,
-    padding: 12,
+    width: 150, // Semantic card width
   },
   productImage: {
     width: '100%',
     aspectRatio: 1,
-    marginBottom: 10,
-  },
-  productTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  productPrice: {
-    fontSize: 16,
-    fontWeight: '700',
   },
 
-  // Banner Cards
+  // Banner Cards - semantic dimensions kept
   bannerCard: {
-    height: 140,
-    padding: 20,
+    height: 140, // Semantic banner height
     justifyContent: 'flex-end',
   },
   bannerTitle: {
-    color: '#fff',
-    fontSize: 24,
-    fontWeight: '700',
-    marginBottom: 4,
+    color: '#fff', // Intentional contrast on colored backgrounds
   },
   bannerSubtitle: {
-    color: 'rgba(255,255,255,0.85)',
-    fontSize: 14,
-    fontWeight: '500',
+    color: 'rgba(255,255,255,0.85)', // Intentional contrast
   },
-  pagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 6,
-    marginTop: 12,
-  },
+
+  // Pagination
   dot: {
-    width: 6,
+    width: 6, // Semantic micro element
     height: 6,
     borderRadius: 3,
   },
 
-  // Categories
-  categoryChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    gap: 6,
-  },
-  categoryEmoji: {
-    fontSize: 16,
-  },
-  categoryName: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-
-  // Stories
+  // Stories - semantic dimensions kept
   storyContainer: {
     alignItems: 'center',
-    width: 68,
+    width: 68, // Semantic story width
   },
   storyRing: {
-    width: 64,
+    width: 64, // Semantic ring size
     height: 64,
     borderRadius: 32,
-    padding: 2,
   },
   storyAvatar: {
     flex: 1,
-    borderRadius: 30,
+    borderRadius: 30, // Semantic circle
     justifyContent: 'center',
     alignItems: 'center',
   },
   storyInitial: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: '600',
-  },
-  storyName: {
-    fontSize: 12,
-    marginTop: 6,
-    textAlign: 'center',
+    color: '#fff', // Intentional white on colored avatar
   },
 
-  // Gallery
+  // Gallery - semantic dimensions kept
   galleryImage: {
-    width: 120,
+    width: 120, // Semantic image dimensions
     height: 160,
   },
 });

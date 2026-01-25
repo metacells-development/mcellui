@@ -1,20 +1,58 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Row } from '@/components/ui/row';
 import { useTheme } from '@metacells/mcellui-core';
+import { Section } from './section';
 
 function Box({ children }: { children?: React.ReactNode }) {
-  const { colors } = useTheme();
+  const { colors, radius } = useTheme();
   return (
-    <View style={[styles.box, { backgroundColor: colors.primary }]}>
+    <View style={[styles.box, { backgroundColor: colors.primary, borderRadius: radius.md }]}>
       <Text style={[styles.boxText, { color: colors.primaryForeground }]}>{children}</Text>
     </View>
   );
 }
 
-export function RowDemo() {
+function TallBox({ children }: { children?: React.ReactNode }) {
+  const { colors, radius, fontSize, fontWeight } = useTheme();
+
+  const tallBoxStyle: ViewStyle = {
+    width: 44,
+    height: 64,
+    borderRadius: radius.md,
+    backgroundColor: colors.secondary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
+  const tallBoxTextStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    fontWeight: fontWeight.semibold,
+    color: colors.secondaryForeground,
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={tallBoxStyle}>
+      <Text style={tallBoxTextStyle}>{children}</Text>
+    </View>
+  );
+}
+
+export function RowDemo() {
+  const { colors, spacing, fontSize } = useTheme();
+
+  const containerStyle: ViewStyle = {
+    gap: spacing[6], // 24px
+  };
+
+  const labelStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    color: colors.foregroundMuted,
+    marginTop: 4,
+  };
+
+  return (
+    <View style={containerStyle}>
       <Section title="Basic Row">
         <Row gap="md">
           <Box>A</Box>
@@ -24,25 +62,25 @@ export function RowDemo() {
       </Section>
 
       <Section title="Gap Variants">
-        <Text style={styles.label}>gap="xs" (8px)</Text>
+        <Text style={labelStyle}>gap="xs" (8px)</Text>
         <Row gap="xs">
           <Box>1</Box>
           <Box>2</Box>
           <Box>3</Box>
         </Row>
-        <Text style={styles.label}>gap="md" (16px)</Text>
+        <Text style={labelStyle}>gap="md" (16px)</Text>
         <Row gap="md">
           <Box>1</Box>
           <Box>2</Box>
           <Box>3</Box>
         </Row>
-        <Text style={styles.label}>gap="xl" (32px)</Text>
+        <Text style={labelStyle}>gap="xl" (32px)</Text>
         <Row gap="xl">
           <Box>1</Box>
           <Box>2</Box>
           <Box>3</Box>
         </Row>
-        <Text style={styles.label}>gap={6} (spacing[6] = 24px)</Text>
+        <Text style={labelStyle}>gap={6} (spacing[6] = 24px)</Text>
         <Row gap={6}>
           <Box>1</Box>
           <Box>2</Box>
@@ -51,28 +89,28 @@ export function RowDemo() {
       </Section>
 
       <Section title="Justify Content">
-        <Text style={styles.label}>justify="start"</Text>
+        <Text style={labelStyle}>justify="start"</Text>
         <DemoContainer>
           <Row gap="sm" justify="start">
             <Box>A</Box>
             <Box>B</Box>
           </Row>
         </DemoContainer>
-        <Text style={styles.label}>justify="center"</Text>
+        <Text style={labelStyle}>justify="center"</Text>
         <DemoContainer>
           <Row gap="sm" justify="center">
             <Box>A</Box>
             <Box>B</Box>
           </Row>
         </DemoContainer>
-        <Text style={styles.label}>justify="end"</Text>
+        <Text style={labelStyle}>justify="end"</Text>
         <DemoContainer>
           <Row gap="sm" justify="end">
             <Box>A</Box>
             <Box>B</Box>
           </Row>
         </DemoContainer>
-        <Text style={styles.label}>justify="between"</Text>
+        <Text style={labelStyle}>justify="between"</Text>
         <DemoContainer>
           <Row gap="sm" justify="between">
             <Box>A</Box>
@@ -82,25 +120,25 @@ export function RowDemo() {
       </Section>
 
       <Section title="Align Items">
-        <Text style={styles.label}>align="start"</Text>
+        <Text style={labelStyle}>align="start"</Text>
         <DemoContainer style={{ height: 80 }}>
           <Row gap="sm" align="start" style={{ height: '100%' }}>
             <Box>A</Box>
-            <View style={styles.tallBox}><Text style={styles.tallBoxText}>Tall</Text></View>
+            <TallBox>Tall</TallBox>
           </Row>
         </DemoContainer>
-        <Text style={styles.label}>align="center"</Text>
+        <Text style={labelStyle}>align="center"</Text>
         <DemoContainer style={{ height: 80 }}>
           <Row gap="sm" align="center" style={{ height: '100%' }}>
             <Box>A</Box>
-            <View style={styles.tallBox}><Text style={styles.tallBoxText}>Tall</Text></View>
+            <TallBox>Tall</TallBox>
           </Row>
         </DemoContainer>
-        <Text style={styles.label}>align="end"</Text>
+        <Text style={labelStyle}>align="end"</Text>
         <DemoContainer style={{ height: 80 }}>
           <Row gap="sm" align="end" style={{ height: '100%' }}>
             <Box>A</Box>
-            <View style={styles.tallBox}><Text style={styles.tallBoxText}>Tall</Text></View>
+            <TallBox>Tall</TallBox>
           </Row>
         </DemoContainer>
       </Section>
@@ -121,16 +159,16 @@ export function RowDemo() {
       </Section>
 
       <Section title="Padding">
-        <Text style={styles.label}>p="md" (padding all sides)</Text>
+        <Text style={labelStyle}>p="md" (padding all sides)</Text>
         <DemoContainer>
-          <Row gap="sm" p="md" style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}>
+          <Row gap="sm" p="md" style={{ backgroundColor: colors.backgroundMuted }}>
             <Box>A</Box>
             <Box>B</Box>
           </Row>
         </DemoContainer>
-        <Text style={styles.label}>px="lg" (horizontal padding)</Text>
+        <Text style={labelStyle}>px="lg" (horizontal padding)</Text>
         <DemoContainer>
-          <Row gap="sm" px="lg" style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}>
+          <Row gap="sm" px="lg" style={{ backgroundColor: colors.backgroundMuted }}>
             <Box>A</Box>
             <Box>B</Box>
           </Row>
@@ -140,58 +178,32 @@ export function RowDemo() {
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      <View style={styles.sectionContent}>{children}</View>
-    </View>
-  );
-}
-
 function DemoContainer({ children, style }: { children: React.ReactNode; style?: any }) {
-  const { colors } = useTheme();
+  const { colors, spacing, radius } = useTheme();
+
+  const demoContainerStyle: ViewStyle = {
+    borderWidth: 1,
+    borderRadius: radius.md,
+    borderStyle: 'dashed',
+    padding: spacing[2],
+    borderColor: colors.border,
+  };
+
   return (
-    <View style={[styles.demoContainer, { borderColor: colors.border }, style]}>
+    <View style={[demoContainerStyle, style]}>
       {children}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 24 },
-  section: { gap: 12 },
-  sectionTitle: { fontSize: 14, fontWeight: '600', color: '#737373', textTransform: 'uppercase', letterSpacing: 0.5 },
-  sectionContent: { gap: 8 },
-  label: { fontSize: 12, color: '#737373', marginTop: 4 },
   box: {
     width: 44,
     height: 44,
-    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   boxText: {
-    fontSize: 16,
     fontWeight: '600',
-  },
-  tallBox: {
-    width: 44,
-    height: 64,
-    borderRadius: 8,
-    backgroundColor: '#10b981',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tallBoxText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#ffffff',
-  },
-  demoContainer: {
-    borderWidth: 1,
-    borderRadius: 8,
-    borderStyle: 'dashed',
-    padding: 8,
   },
 });
