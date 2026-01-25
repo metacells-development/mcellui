@@ -378,17 +378,18 @@ const styles = StyleSheet.create({
   },
   moreImagesText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: cardBlockTokens.typography.titleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
   footer: {},
   helpfulButton: {
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'flex-start',
+    minHeight: 44,
   },
   helpfulText: {
-    fontSize: 13,
-    fontWeight: '500',
+    fontSize: cardBlockTokens.typography.metaFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
 });
