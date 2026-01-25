@@ -111,33 +111,6 @@ export interface ChipGroupProps {
   style?: ViewStyle;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Size configs
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SIZE_CONFIG = {
-  sm: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    fontSize: 12,
-    iconSize: 14,
-    radiusKey: 'md' as const,
-  },
-  md: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    fontSize: 14,
-    iconSize: 16,
-    radiusKey: 'lg' as const,
-  },
-  lg: {
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    fontSize: 16,
-    iconSize: 18,
-    radiusKey: 'xl' as const,
-  },
-};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Chip Component
@@ -155,8 +128,8 @@ export function Chip({
   style,
   labelStyle,
 }: ChipProps) {
-  const { colors, fontWeight, radius } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, fontWeight, components, componentRadius } = useTheme();
+  const tokens = components.chip[size];
 
   const scale = useSharedValue(1);
   const selectedAnim = useSharedValue(selected ? 1 : 0);
@@ -219,8 +192,8 @@ export function Chip({
 
   // Adjust padding when there's a close button
   const rightPadding = onRemove
-    ? config.paddingHorizontal - 4 // Less padding since close button has its own
-    : config.paddingHorizontal;
+    ? tokens.paddingHorizontal - 4 // Less padding since close button has its own
+    : tokens.paddingHorizontal;
 
   return (
     <AnimatedPressable
@@ -231,10 +204,10 @@ export function Chip({
       style={[
         styles.chip,
         {
-          paddingLeft: config.paddingHorizontal,
+          paddingLeft: tokens.paddingHorizontal,
           paddingRight: rightPadding,
-          paddingVertical: config.paddingVertical,
-          borderRadius: radius[config.radiusKey],
+          paddingVertical: tokens.paddingVertical,
+          borderRadius: componentRadius.chip,
           opacity: disabled ? 0.5 : 1,
         },
         animatedStyle,
@@ -247,8 +220,8 @@ export function Chip({
         <View style={{ marginRight: 6 }}>
           {React.isValidElement(icon)
             ? React.cloneElement(icon as React.ReactElement<{ width?: number; height?: number; color?: string }>, {
-                width: config.iconSize,
-                height: config.iconSize,
+                width: tokens.iconSize,
+                height: tokens.iconSize,
                 color: textColor,
               })
             : icon}
@@ -258,7 +231,7 @@ export function Chip({
         style={[
           styles.label,
           {
-            fontSize: config.fontSize,
+            fontSize: tokens.fontSize,
             fontWeight: fontWeight.medium,
             color: textColor,
           },
@@ -284,7 +257,7 @@ export function Chip({
         >
           <CloseIcon
             color={textColor}
-            size={config.iconSize - 2}
+            size={tokens.iconSize - 2}
           />
         </Pressable>
       )}
