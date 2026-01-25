@@ -1025,9 +1025,21 @@ function SignupBlockPreview() {
 function UserListItemPreview() {
   const { colors, spacing } = useTheme();
   const [following, setFollowing] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
+
+  const handleFollow = async () => {
+    setActionLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
+    setFollowing(!following);
+    setActionLoading(false);
+  };
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Action Loading State</CardTitle>
+        <CardDescription>Try following the first user to see loading indicator</CardDescription>
+      </CardHeader>
       <CardContent style={{ paddingTop: spacing[4] }}>
         <View style={{ gap: spacing[3] }}>
           <UserListItem
@@ -1039,7 +1051,8 @@ function UserListItemPreview() {
             verified
             actionLabel={following ? 'Following' : 'Follow'}
             actionVariant={following ? 'secondary' : 'default'}
-            onAction={() => setFollowing(!following)}
+            actionLoading={actionLoading}
+            onAction={handleFollow}
             onPress={() => Alert.alert('Profile', 'Navigate to profile')}
           />
           <UserListItem
@@ -1064,9 +1077,6 @@ function UserListItemPreview() {
     </Card>
   );
 }
-
-// ============================================================================
-// Chat Bubble Preview
 // ============================================================================
 
 function ChatBubblePreview() {
@@ -1243,9 +1253,29 @@ function ProductCardPreview() {
 function CartItemPreview() {
   const { colors, spacing } = useTheme();
   const [quantity, setQuantity] = useState(2);
+  const [quantityLoading, setQuantityLoading] = useState(false);
+  const [removeLoading, setRemoveLoading] = useState(false);
+
+  const handleQuantityChange = async (newQuantity: number) => {
+    setQuantityLoading(true);
+    await new Promise((r) => setTimeout(r, 300));
+    setQuantity(newQuantity);
+    setQuantityLoading(false);
+  };
+
+  const handleRemove = async () => {
+    setRemoveLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
+    setRemoveLoading(false);
+    Alert.alert('Remove', 'Remove item from cart?');
+  };
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Swipe & Loading States</CardTitle>
+        <CardDescription>Swipe left to see actions. Try changing quantity.</CardDescription>
+      </CardHeader>
       <CardContent style={{ paddingTop: spacing[4] }}>
         <View style={{ gap: spacing[3] }}>
           <CartItem
@@ -1256,8 +1286,12 @@ function CartItemPreview() {
               variant: 'Black',
             }}
             quantity={quantity}
-            onQuantityChange={setQuantity}
-            onRemove={() => Alert.alert('Remove', 'Remove item from cart?')}
+            quantityLoading={quantityLoading}
+            removeLoading={removeLoading}
+            onQuantityChange={handleQuantityChange}
+            onRemove={handleRemove}
+            showSaveForLater
+            onSaveForLater={() => Alert.alert('Saved for later')}
           />
           <CartItem
             product={{
@@ -1275,8 +1309,6 @@ function CartItemPreview() {
     </Card>
   );
 }
-
-// ============================================================================
 // Banner Block Preview
 // ============================================================================
 
