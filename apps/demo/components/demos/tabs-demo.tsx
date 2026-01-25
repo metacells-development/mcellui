@@ -1,20 +1,35 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { useTheme } from '@metacells/mcellui-core';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
+import { Section } from './section';
 
 export function TabsDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [controlled, setControlled] = useState('account');
+
+  const contentTitleStyle: TextStyle = {
+    fontSize: fontSize.md, // 16px
+    fontWeight: fontWeight.semibold,
+    color: colors.foreground,
+    marginBottom: spacing[1], // 4px
+  };
+
+  const contentTextStyle: TextStyle = {
+    fontSize: fontSize.sm, // 14px
+    color: colors.foregroundMuted,
+  };
+
+  const descriptionStyle: TextStyle = {
+    fontSize: fontSize.sm, // 14px
+    color: colors.foregroundMuted,
+    marginBottom: spacing[3], // 12px
+  };
 
   return (
     <View style={styles.container}>
-      {/* Pill Variant (Default) */}
-      <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
-          Pill Variant (Default)
-        </Text>
+      <Section title="Pill Variant (Default)">
         <Tabs defaultValue="account">
           <TabsList>
             <TabsTrigger value="account">Account</TabsTrigger>
@@ -22,32 +37,24 @@ export function TabsDemo() {
           </TabsList>
           <TabsContent value="account">
             <Card>
-              <Text style={[styles.contentTitle, { color: colors.foreground }]}>
-                Account Settings
-              </Text>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
+              <Text style={contentTitleStyle}>Account Settings</Text>
+              <Text style={contentTextStyle}>
                 Manage your account settings and preferences.
               </Text>
             </Card>
           </TabsContent>
           <TabsContent value="password">
             <Card>
-              <Text style={[styles.contentTitle, { color: colors.foreground }]}>
-                Password Settings
-              </Text>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
+              <Text style={contentTitleStyle}>Password Settings</Text>
+              <Text style={contentTextStyle}>
                 Change your password and security settings.
               </Text>
             </Card>
           </TabsContent>
         </Tabs>
-      </View>
+      </Section>
 
-      {/* Three Tabs */}
-      <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
-          Three Tabs
-        </Text>
+      <Section title="Three Tabs">
         <Tabs defaultValue="overview">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -56,34 +63,24 @@ export function TabsDemo() {
           </TabsList>
           <TabsContent value="overview">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Overview content goes here.
-              </Text>
+              <Text style={contentTextStyle}>Overview content goes here.</Text>
             </Card>
           </TabsContent>
           <TabsContent value="analytics">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Analytics data and charts.
-              </Text>
+              <Text style={contentTextStyle}>Analytics data and charts.</Text>
             </Card>
           </TabsContent>
           <TabsContent value="reports">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Generated reports list.
-              </Text>
+              <Text style={contentTextStyle}>Generated reports list.</Text>
             </Card>
           </TabsContent>
         </Tabs>
-      </View>
+      </Section>
 
-      {/* Underline Variant */}
-      <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
-          Underline Variant
-        </Text>
-        <Text style={[styles.sectionSubtitle, { color: colors.foregroundMuted, marginBottom: spacing[3] }]}>
+      <Section title="Underline Variant">
+        <Text style={descriptionStyle}>
           Perfect for profile pages and content tabs
         </Text>
         <Tabs defaultValue="posts">
@@ -94,36 +91,24 @@ export function TabsDemo() {
           </TabsList>
           <TabsContent value="posts">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                User posts and activity feed.
-              </Text>
+              <Text style={contentTextStyle}>User posts and activity feed.</Text>
             </Card>
           </TabsContent>
           <TabsContent value="media">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Photos and videos gallery.
-              </Text>
+              <Text style={contentTextStyle}>Photos and videos gallery.</Text>
             </Card>
           </TabsContent>
           <TabsContent value="likes">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Liked posts and content.
-              </Text>
+              <Text style={contentTextStyle}>Liked posts and content.</Text>
             </Card>
           </TabsContent>
         </Tabs>
-      </View>
+      </Section>
 
-      {/* Controlled Tabs */}
-      <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
-          Controlled Tabs
-        </Text>
-        <Text style={[styles.sectionSubtitle, { color: colors.foregroundMuted, marginBottom: spacing[3] }]}>
-          Current: {controlled}
-        </Text>
+      <Section title="Controlled Tabs">
+        <Text style={descriptionStyle}>Current: {controlled}</Text>
         <Tabs value={controlled} onValueChange={setControlled}>
           <TabsList>
             <TabsTrigger value="account">Account</TabsTrigger>
@@ -132,77 +117,97 @@ export function TabsDemo() {
           </TabsList>
           <TabsContent value="account">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Your account information.
-              </Text>
+              <Text style={contentTextStyle}>Your account information.</Text>
             </Card>
           </TabsContent>
           <TabsContent value="billing">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
+              <Text style={contentTextStyle}>
                 Billing and subscription details.
               </Text>
             </Card>
           </TabsContent>
           <TabsContent value="team">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Team members and roles.
-              </Text>
+              <Text style={contentTextStyle}>Team members and roles.</Text>
             </Card>
           </TabsContent>
         </Tabs>
-      </View>
+      </Section>
 
-      {/* With Disabled Tab */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
-          With Disabled Tab
-        </Text>
+      <Section title="With Disabled Tab">
         <Tabs defaultValue="active">
           <TabsList>
             <TabsTrigger value="active">Active</TabsTrigger>
-            <TabsTrigger value="disabled" disabled>Disabled</TabsTrigger>
+            <TabsTrigger value="disabled" disabled>
+              Disabled
+            </TabsTrigger>
             <TabsTrigger value="other">Other</TabsTrigger>
           </TabsList>
           <TabsContent value="active">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
+              <Text style={contentTextStyle}>
                 This tab is active and selectable.
               </Text>
             </Card>
           </TabsContent>
           <TabsContent value="other">
             <Card>
-              <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
-                Another tab content.
-              </Text>
+              <Text style={contentTextStyle}>Another tab content.</Text>
             </Card>
           </TabsContent>
         </Tabs>
-      </View>
+      </Section>
+
+      <Section title="Many Tabs (Scrollable)">
+        <Text style={descriptionStyle}>Tab list scrolls horizontally when overflow</Text>
+        <Tabs defaultValue="tab1">
+          <TabsList>
+            <TabsTrigger value="tab1">First</TabsTrigger>
+            <TabsTrigger value="tab2">Second</TabsTrigger>
+            <TabsTrigger value="tab3">Third</TabsTrigger>
+            <TabsTrigger value="tab4">Fourth</TabsTrigger>
+            <TabsTrigger value="tab5">Fifth</TabsTrigger>
+            <TabsTrigger value="tab6">Sixth</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab1">
+            <Card>
+              <Text style={contentTextStyle}>First tab content</Text>
+            </Card>
+          </TabsContent>
+          <TabsContent value="tab2">
+            <Card>
+              <Text style={contentTextStyle}>Second tab content</Text>
+            </Card>
+          </TabsContent>
+          <TabsContent value="tab3">
+            <Card>
+              <Text style={contentTextStyle}>Third tab content</Text>
+            </Card>
+          </TabsContent>
+          <TabsContent value="tab4">
+            <Card>
+              <Text style={contentTextStyle}>Fourth tab content</Text>
+            </Card>
+          </TabsContent>
+          <TabsContent value="tab5">
+            <Card>
+              <Text style={contentTextStyle}>Fifth tab content</Text>
+            </Card>
+          </TabsContent>
+          <TabsContent value="tab6">
+            <Card>
+              <Text style={contentTextStyle}>Sixth tab content</Text>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </Section>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  section: {},
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  sectionSubtitle: {
-    fontSize: 14,
-  },
-  contentTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  contentText: {
-    fontSize: 14,
+    gap: 24, // spacing[6]
   },
 });
