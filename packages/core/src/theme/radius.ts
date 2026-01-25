@@ -151,6 +151,10 @@ export interface ComponentRadiusTokens {
   tooltip: number;
   chip: number;
   image: number;
+  tabs: number;
+  tabsIndicator: number;
+  accordion: number;
+  carousel: number;
 }
 
 export type ComponentRadiusKey = keyof ComponentRadiusTokens;
@@ -202,6 +206,13 @@ export function createComponentRadius(radiusTokens: RadiusTokens): ComponentRadi
     chip: radiusTokens.lg,
     // Image: uses md radius for default image corners
     image: radiusTokens.md,
+    // Tabs: container uses lg for pill variant, indicator uses md
+    tabs: radiusTokens.lg,
+    tabsIndicator: radiusTokens.md,
+    // Accordion: container uses lg for rounded card look
+    accordion: radiusTokens.lg,
+    // Carousel: indicator dots use full for perfect circles
+    carousel: PILL_RADIUS,
   };
 }
 
