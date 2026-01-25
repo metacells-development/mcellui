@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Feedback Components** - Toast, Dialog, Alert Dialog, Alert, Sheet, Popover, Tooltip
 - [x] **Phase 4: Progress & Loading** - Spinner, Skeleton, Progress, Circular Progress, Pull to Refresh
 - [x] **Phase 5: Data Display** - Card, Avatar, Avatar Stack, Badge, Chip, Label, Typography, Rating, Image
-- [ ] **Phase 6: Layout & Structure** - Separator, Row, Column, Screen, List, Horizontal List, Section Header
+- [x] **Phase 6: Layout & Structure** - Separator, Row, Column, Screen, List, Horizontal List, Section Header
 - [ ] **Phase 7: Navigation & Interaction** - Tabs, Accordion, Collapsible, Carousel, Swipeable Row
 - [ ] **Phase 8: Advanced Components** - Calendar, DateTime Picker, Image Gallery, Pagination, Stories, Search Input, Form
 - [ ] **Phase 9: Blocks - Auth & Settings** - Login, Signup, Profile, Settings List, Empty State, Error State
@@ -136,11 +136,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 06-01-PLAN.md - Add LIST_CONSTANTS and listTokens to core theme
-- [ ] 06-02-PLAN.md - Migrate List and SectionHeader to centralized tokens
-- [ ] 06-03-PLAN.md - Migrate shared Section demo component to tokens
-- [ ] 06-04-PLAN.md - Verify Row/Column/Screen token compliance, migrate demos
-- [ ] 06-05-PLAN.md - Migrate Separator, List, SectionHeader, HorizontalList demos to tokens
+- [x] 06-01-PLAN.md - Add LIST_CONSTANTS and listTokens to core theme
+- [x] 06-02-PLAN.md - Migrate List and SectionHeader to centralized tokens
+- [x] 06-03-PLAN.md - Migrate shared Section demo component to tokens
+- [x] 06-04-PLAN.md - Verify Row/Column/Screen token compliance, migrate demos
+- [x] 06-05-PLAN.md - Migrate Separator, List, SectionHeader, HorizontalList demos to tokens
 
 ### Phase 7: Navigation & Interaction
 **Goal**: All navigation components have smooth animations and consistent interaction patterns
@@ -257,7 +257,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 3. Feedback Components | 6/6 | Complete | 2026-01-25 |
 | 4. Progress & Loading | 4/4 | ✓ Complete | 2026-01-25 |
 | 5. Data Display | 5/5 | ✓ Complete | 2026-01-25 |
-| 6. Layout & Structure | 0/5 | Planned | - |
+| 6. Layout & Structure | 5/5 | ✓ Complete | 2026-01-25 |
 | 7. Navigation & Interaction | 0/5 | Planned | - |
 | 8. Advanced Components | 0/6 | Planned | - |
 | 9. Blocks - Auth & Settings | 0/5 | Planned | - |
