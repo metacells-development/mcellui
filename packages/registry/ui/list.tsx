@@ -49,7 +49,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, LIST_CONSTANTS, componentHeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -183,7 +183,9 @@ export function List({
                   styles.divider,
                   {
                     backgroundColor: colors.border,
-                    marginLeft: insetDividers ? 56 : 0,
+                    // Divider inset aligns with text content after icon slot
+                    // = padding (16) + icon (24) + gap (12) + buffer (4) = 56px
+                    marginLeft: insetDividers ? LIST_CONSTANTS.dividerInset : 0,
                   },
                 ]}
               />
@@ -420,7 +422,7 @@ export function ListItem({
     {
       paddingHorizontal: spacing[4],
       paddingVertical: spacing[3],
-      minHeight: variant === 'thumbnail' ? thumbnailSize + spacing[3] * 2 : 56,
+      minHeight: variant === 'thumbnail' ? thumbnailSize + spacing[3] * 2 : componentHeight.lg,
     },
     variant === 'thumbnail' && styles.thumbnailItem,
     disabled && styles.disabled,
