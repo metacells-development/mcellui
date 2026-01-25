@@ -50,7 +50,11 @@ import Animated, {
   Extrapolation,
   SharedValue,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import {
+  useTheme,
+  carouselTokens,
+  CAROUSEL_CONSTANTS,
+} from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -151,21 +155,23 @@ function AnimatedDot({
     const dotWidth = interpolate(
       scrollX.value,
       inputRange,
-      variant === 'line' ? [8, 24, 8] : [8, 12, 8],
+      variant === 'line'
+        ? [carouselTokens.indicator.dotSize, carouselTokens.lineIndicator.activeWidth, carouselTokens.indicator.dotSize]
+        : [carouselTokens.indicator.dotSize, carouselTokens.indicator.dotSize * 1.5, carouselTokens.indicator.dotSize],
       Extrapolation.CLAMP
     );
 
     const opacity = interpolate(
       scrollX.value,
       inputRange,
-      [0.4, 1, 0.4],
+      [carouselTokens.indicator.dotInactiveOpacity, 1, carouselTokens.indicator.dotInactiveOpacity],
       Extrapolation.CLAMP
     );
 
     const scale = interpolate(
       scrollX.value,
       inputRange,
-      [0.8, 1, 0.8],
+      [carouselTokens.indicator.dotInactiveScale, carouselTokens.indicator.dotActiveScale, carouselTokens.indicator.dotInactiveScale],
       Extrapolation.CLAMP
     );
 
@@ -194,7 +200,7 @@ function CarouselInner<T = any>(
     data,
     renderItem,
     autoplay = false,
-    autoplayInterval = 4000,
+    autoplayInterval = CAROUSEL_CONSTANTS.autoplayInterval,
     showIndicators = true,
     indicatorPosition = 'bottom',
     onSlideChange,
@@ -205,7 +211,7 @@ function CarouselInner<T = any>(
   }: CarouselProps<T>,
   ref: React.ForwardedRef<CarouselRef>
 ) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, componentRadius } = useTheme();
   const flatListRef = useRef<FlatList>(null);
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [containerWidth, setContainerWidth] = useState(SCREEN_WIDTH);
@@ -371,7 +377,7 @@ function CarouselInner<T = any>(
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        scrollEventThrottle={16}
+        scrollEventThrottle={CAROUSEL_CONSTANTS.scrollEventThrottle}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         onScrollBeginDrag={handleScrollBeginDrag}
         onScrollEndDrag={handleScrollEndDrag}
@@ -419,13 +425,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 6,
-    paddingVertical: 8,
+    gap: carouselTokens.indicator.gap,
+    paddingVertical: carouselTokens.indicator.paddingVertical,
   },
   indicatorsTop: {},
   indicatorsBottom: {},
   dot: {
-    height: 8,
-    borderRadius: 4,
+    height: carouselTokens.indicator.dotSize,
+    borderRadius: carouselTokens.indicator.dotSize / 2,
   },
 });
