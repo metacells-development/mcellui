@@ -111,10 +111,14 @@ Plans:
   3. Avatar, Badge, and Chip have consistent size scales matching design system
   4. Card component serves as gold standard reference (already high quality)
   5. Demo shows all variants, sizes, and composition examples
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] TBD
+- [ ] 05-01-PLAN.md - Extend token system with data display component tokens
+- [ ] 05-02-PLAN.md - Migrate Chip and Label to centralized tokens
+- [ ] 05-03-PLAN.md - Migrate Rating and AvatarStack to centralized tokens
+- [ ] 05-04-PLAN.md - Add h5/h6 typography presets, migrate Image to componentRadius
+- [ ] 05-05-PLAN.md - Enhance demos for Chip, Label, Rating, AvatarStack, Image, Typography
 
 ### Phase 6: Layout & Structure
 **Goal**: All layout primitives have consistent spacing and compose predictably
@@ -232,7 +236,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 2. Buttons & Actions | 6/6 | ✓ Complete | 2026-01-24 |
 | 3. Feedback Components | 6/6 | ✓ Complete | 2026-01-25 |
 | 4. Progress & Loading | 0/TBD | Not started | - |
-| 5. Data Display | 0/TBD | Not started | - |
+| 5. Data Display | 0/5 | Planned | - |
 | 6. Layout & Structure | 0/TBD | Not started | - |
 | 7. Navigation & Interaction | 0/TBD | Not started | - |
 | 8. Advanced Components | 0/TBD | Not started | - |
