@@ -38,7 +38,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, ecommerceBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -123,6 +123,7 @@ export function PricingCard({
   style,
 }: PricingCardProps) {
   const { colors, spacing, radius } = useTheme();
+  const pricingTokens = ecommerceBlockTokens.pricing;
 
   const scale = useSharedValue(1);
 
@@ -188,7 +189,7 @@ export function PricingCard({
     >
       {/* Popular badge */}
       {(popular || badgeText) && (
-        <View style={[styles.badgeContainer, { top: -12 }]}>
+        <View style={[styles.badgeContainer, { top: pricingTokens.badgeTopOffset }]}>
           <Badge variant="default">
             {badgeText ?? 'Popular'}
           </Badge>
@@ -196,13 +197,31 @@ export function PricingCard({
       )}
 
       {/* Plan name */}
-      <Text style={[styles.planName, { color: colors.foreground }]}>
+      <Text
+        style={[
+          styles.planName,
+          {
+            color: colors.foreground,
+            fontSize: pricingTokens.planNameFontSize,
+            fontWeight: pricingTokens.planNameFontWeight,
+          },
+        ]}
+      >
         {plan.name}
       </Text>
 
       {/* Description */}
       {plan.description && (
-        <Text style={[styles.description, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
+        <Text
+          style={[
+            styles.description,
+            {
+              color: colors.foregroundMuted,
+              marginTop: spacing[1],
+              fontSize: pricingTokens.descriptionFontSize,
+            },
+          ]}
+        >
           {plan.description}
         </Text>
       )}
@@ -210,22 +229,57 @@ export function PricingCard({
       {/* Price */}
       <View style={[styles.priceContainer, { marginTop: spacing[4] }]}>
         {plan.originalPrice && plan.originalPrice > plan.price && (
-          <Text style={[styles.originalPrice, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.originalPrice,
+              {
+                color: colors.foregroundMuted,
+                fontSize: pricingTokens.originalPriceFontSize,
+              },
+            ]}
+          >
             {formatPrice(plan.originalPrice)}
           </Text>
         )}
         <View style={styles.priceRow}>
-          <Text style={[styles.price, { color: colors.foreground }]}>
+          <Text
+            style={[
+              styles.price,
+              {
+                color: colors.foreground,
+                fontSize: pricingTokens.priceFontSize,
+                fontWeight: pricingTokens.priceFontWeight,
+              },
+            ]}
+          >
             {formatPrice(plan.price)}
           </Text>
           {plan.price > 0 && (
-            <Text style={[styles.interval, { color: colors.foregroundMuted }]}>
+            <Text
+              style={[
+                styles.interval,
+                {
+                  color: colors.foregroundMuted,
+                  fontSize: pricingTokens.intervalFontSize,
+                  fontWeight: pricingTokens.intervalFontWeight,
+                },
+              ]}
+            >
               {formatInterval(plan.interval)}
             </Text>
           )}
         </View>
         {plan.originalPrice && plan.originalPrice > plan.price && (
-          <Text style={[styles.savings, { color: colors.success }]}>
+          <Text
+            style={[
+              styles.savings,
+              {
+                color: colors.success,
+                fontSize: pricingTokens.savingsFontSize,
+                fontWeight: pricingTokens.savingsFontWeight,
+              },
+            ]}
+          >
             Save {Math.round((1 - plan.price / plan.originalPrice) * 100)}%
           </Text>
         )}
@@ -254,13 +308,15 @@ export function PricingCard({
                     ? colors.success + '20'
                     : colors.foregroundMuted + '20',
                   borderRadius: radius.full,
+                  width: pricingTokens.featureIconSize,
+                  height: pricingTokens.featureIconSize,
                 },
               ]}
             >
               {feature.included ? (
-                <CheckIcon size={12} color={colors.success} />
+                <CheckIcon size={pricingTokens.featureIconInnerSize} color={colors.success} />
               ) : (
-                <XIcon size={12} color={colors.foregroundMuted} />
+                <XIcon size={pricingTokens.featureIconInnerSize} color={colors.foregroundMuted} />
               )}
             </View>
             <Text
@@ -269,6 +325,7 @@ export function PricingCard({
                 {
                   color: feature.included ? colors.foreground : colors.foregroundMuted,
                   textDecorationLine: feature.included ? 'none' : 'line-through',
+                  fontSize: pricingTokens.featureTextFontSize,
                 },
               ]}
             >
@@ -295,12 +352,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   planName: {
-    fontSize: 20,
-    fontWeight: '700',
     textAlign: 'center',
   },
   description: {
-    fontSize: 14,
     textAlign: 'center',
   },
   priceContainer: {
@@ -311,24 +365,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   price: {
-    fontSize: 40,
-    fontWeight: '800',
     lineHeight: 48,
   },
   interval: {
-    fontSize: 16,
-    fontWeight: '500',
     marginBottom: 6,
     marginLeft: 2,
   },
   originalPrice: {
-    fontSize: 16,
     textDecorationLine: 'line-through',
     marginBottom: 4,
   },
   savings: {
-    fontSize: 13,
-    fontWeight: '600',
     marginTop: 4,
   },
   features: {
@@ -339,13 +386,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   featureIcon: {
-    width: 20,
-    height: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   featureText: {
-    fontSize: 14,
     marginLeft: 10,
     flex: 1,
   },

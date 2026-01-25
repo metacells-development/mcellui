@@ -37,7 +37,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, ecommerceBlockTokens } from '@metacells/mcellui-core';
 
 // Import your components
 import { Button } from '../ui/button';
@@ -124,6 +124,7 @@ export function HeroBlock({
   style,
 }: HeroBlockProps) {
   const { colors, spacing } = useTheme();
+  const heroTokens = ecommerceBlockTokens.hero;
 
   // Determine background type
   const backgroundType = background || (imageUrl ? 'image' : 'gradient');
@@ -165,6 +166,9 @@ export function HeroBlock({
         style={[
           styles.title,
           {
+            fontSize: heroTokens.titleFontSize,
+            fontWeight: String(heroTokens.titleFontWeight) as any,
+            lineHeight: heroTokens.titleLineHeight,
             color: '#FFFFFF',
             textAlign,
             marginBottom: spacing[2],
@@ -178,6 +182,8 @@ export function HeroBlock({
           style={[
             styles.subtitle,
             {
+              fontSize: heroTokens.subtitleFontSize,
+              lineHeight: heroTokens.subtitleLineHeight,
               color: 'rgba(255,255,255,0.9)',
               textAlign,
               marginBottom: spacing[6],
@@ -267,15 +273,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   content: {},
-  title: {
-    fontSize: 32,
-    fontWeight: '800',
-    lineHeight: 38,
-  },
-  subtitle: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
+  title: {},
+  subtitle: {},
   buttons: {
     flexDirection: 'row',
     flexWrap: 'wrap',
