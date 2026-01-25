@@ -171,10 +171,15 @@ Plans:
   3. Search Input supports loading and error states with proper feedback
   4. Image Gallery handles async loading with skeleton states
   5. Demo shows complete workflows for each advanced component
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] TBD
+- [ ] 08-01-PLAN.md - Add centralized tokens for Calendar, DateTimePicker, Form, ImageGallery, Pagination, Stories, SearchInput
+- [ ] 08-02-PLAN.md - Migrate Calendar and DateTimePicker to token system
+- [ ] 08-03-PLAN.md - Migrate Form compound components to formTokens
+- [ ] 08-04-PLAN.md - Migrate ImageGallery, Pagination, Stories to token system
+- [ ] 08-05-PLAN.md - Migrate SearchInput to token system
+- [ ] 08-06-PLAN.md - Enhance all 7 advanced component demos
 
 ### Phase 9: Blocks - Auth & Settings
 **Goal**: Authentication and settings blocks are production-ready with complete state coverage
@@ -247,14 +252,14 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Form Inputs | 5/5 | ✓ Complete | 2026-01-24 |
-| 2. Buttons & Actions | 6/6 | ✓ Complete | 2026-01-24 |
-| 3. Feedback Components | 6/6 | ✓ Complete | 2026-01-25 |
+| 1. Form Inputs | 5/5 | Complete | 2026-01-24 |
+| 2. Buttons & Actions | 6/6 | Complete | 2026-01-24 |
+| 3. Feedback Components | 6/6 | Complete | 2026-01-25 |
 | 4. Progress & Loading | 0/4 | Planned | - |
 | 5. Data Display | 0/5 | Planned | - |
 | 6. Layout & Structure | 0/5 | Planned | - |
 | 7. Navigation & Interaction | 0/5 | Planned | - |
-| 8. Advanced Components | 0/TBD | Not started | - |
+| 8. Advanced Components | 0/6 | Planned | - |
 | 9. Blocks - Auth & Settings | 0/5 | Planned | - |
 | 10. Blocks - Content & Social | 0/TBD | Not started | - |
 | 11. Blocks - E-commerce & Info | 0/TBD | Not started | - |
