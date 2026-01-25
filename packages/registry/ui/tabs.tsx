@@ -57,7 +57,12 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import {
+  useTheme,
+  areAnimationsDisabled,
+  tabsTokens,
+  TABS_CONSTANTS,
+} from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Context
@@ -138,7 +143,7 @@ export interface TabsListProps {
 }
 
 export function TabsList({ children, variant = 'pill', style }: TabsListProps) {
-  const { colors, radius } = useTheme();
+  const { colors, componentRadius } = useTheme();
   const { value } = useTabsContext();
   const tabLayouts = useRef(new Map<string, LayoutRectangle>()).current;
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
@@ -153,11 +158,8 @@ export function TabsList({ children, variant = 'pill', style }: TabsListProps) {
       // Update indicator if this is the active tab
       if (tabValue === value) {
         if (animationsEnabled) {
-          indicatorX.value = withSpring(layout.x, { damping: 20, stiffness: 200 });
-          indicatorWidth.value = withSpring(layout.width, {
-            damping: 20,
-            stiffness: 200,
-          });
+          indicatorX.value = withSpring(layout.x, TABS_CONSTANTS.spring);
+          indicatorWidth.value = withSpring(layout.width, TABS_CONSTANTS.spring);
         } else {
           indicatorX.value = layout.x;
           indicatorWidth.value = layout.width;
@@ -172,11 +174,8 @@ export function TabsList({ children, variant = 'pill', style }: TabsListProps) {
     const layout = tabLayouts.get(value);
     if (layout) {
       if (animationsEnabled) {
-        indicatorX.value = withSpring(layout.x, { damping: 20, stiffness: 200 });
-        indicatorWidth.value = withSpring(layout.width, {
-          damping: 20,
-          stiffness: 200,
-        });
+        indicatorX.value = withSpring(layout.x, TABS_CONSTANTS.spring);
+        indicatorWidth.value = withSpring(layout.width, TABS_CONSTANTS.spring);
       } else {
         indicatorX.value = layout.x;
         indicatorWidth.value = layout.width;
@@ -199,8 +198,8 @@ export function TabsList({ children, variant = 'pill', style }: TabsListProps) {
           isPill
             ? {
                 backgroundColor: colors.backgroundMuted,
-                borderRadius: radius.lg,
-                padding: 4,
+                borderRadius: componentRadius.tabs,
+                padding: TABS_CONSTANTS.pillPadding,
               }
             : {
                 backgroundColor: 'transparent',
@@ -217,7 +216,7 @@ export function TabsList({ children, variant = 'pill', style }: TabsListProps) {
             isPill
               ? {
                   backgroundColor: colors.background,
-                  borderRadius: radius.md,
+                  borderRadius: componentRadius.tabsIndicator,
                 }
               : {
                   backgroundColor: colors.primary,
@@ -246,7 +245,7 @@ export function TabsTrigger({
   style,
   textStyle,
 }: TabsTriggerProps) {
-  const { colors, spacing } = useTheme();
+  const { colors } = useTheme();
   const { value, onValueChange } = useTabsContext();
   const listContext = useContext(TabsListContext);
   const isActive = value === tabValue;
@@ -268,8 +267,12 @@ export function TabsTrigger({
       style={[
         styles.trigger,
         {
-          paddingVertical: isUnderline ? spacing[3] : spacing[2],
-          paddingHorizontal: isUnderline ? spacing[4] : spacing[3],
+          paddingVertical: isUnderline
+            ? tabsTokens.triggerUnderline.paddingVertical
+            : tabsTokens.trigger.paddingVertical,
+          paddingHorizontal: isUnderline
+            ? tabsTokens.triggerUnderline.paddingHorizontal
+            : tabsTokens.trigger.paddingHorizontal,
           opacity: disabled ? 0.5 : 1,
         },
         style,
@@ -289,7 +292,9 @@ export function TabsTrigger({
                 ? colors.primary
                 : colors.foreground
               : colors.foregroundMuted,
-            fontWeight: isActive ? '600' : '500',
+            fontWeight: isActive
+              ? tabsTokens.trigger.activeFontWeight
+              : tabsTokens.trigger.fontWeight,
           },
           textStyle,
         ]}
@@ -309,14 +314,13 @@ export interface TabsContentProps {
 
 export function TabsContent({ value: tabValue, children, style }: TabsContentProps) {
   const { value } = useTabsContext();
-  const { spacing } = useTheme();
 
   if (value !== tabValue) {
     return null;
   }
 
   return (
-    <View style={[styles.content, { marginTop: spacing[4] }, style]}>
+    <View style={[styles.content, { marginTop: tabsTokens.content.marginTop }, style]}>
       {children}
     </View>
   );
@@ -332,8 +336,8 @@ const styles = StyleSheet.create({
   },
   indicatorPill: {
     position: 'absolute',
-    top: 4,
-    bottom: 4,
+    top: tabsTokens.indicator.pillTop,
+    bottom: tabsTokens.indicator.pillBottom,
     left: 0,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -345,7 +349,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    height: 2,
+    height: TABS_CONSTANTS.indicatorHeight,
   },
   trigger: {
     flex: 1,
@@ -354,7 +358,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   triggerText: {
-    fontSize: 14,
+    fontSize: tabsTokens.trigger.fontSize,
   },
   content: {},
 });
