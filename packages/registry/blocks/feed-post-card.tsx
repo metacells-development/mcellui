@@ -21,9 +21,9 @@
  */
 
 import React from 'react';
-import { View, Text, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
 import Svg, { Path, Rect, Circle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, socialBlockTokens } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Avatar } from '../ui/avatar';
@@ -131,6 +131,14 @@ export interface FeedPostCardProps {
   comments?: number;
   /** Whether current user has liked the post */
   liked?: boolean;
+  /** Whether like action is loading */
+  likeLoading?: boolean;
+  /** Whether comment action is loading */
+  commentLoading?: boolean;
+  /** Whether share action is loading */
+  shareLoading?: boolean;
+  /** Whether all actions are disabled */
+  disabled?: boolean;
   /** Called when like button is pressed */
   onLike?: () => void;
   /** Called when comment button is pressed */
@@ -157,6 +165,10 @@ export function FeedPostCard({
   likes = 0,
   comments = 0,
   liked = false,
+  likeLoading = false,
+  commentLoading = false,
+  shareLoading = false,
+  disabled = false,
   onLike,
   onComment,
   onShare,
@@ -181,14 +193,29 @@ export function FeedPostCard({
           <Avatar
             source={user.avatarUrl ? { uri: user.avatarUrl } : undefined}
             fallback={initials}
-            size="md"
+            size={socialBlockTokens.avatar.postSize}
           />
           <View style={styles.headerText}>
-            <Text style={[styles.userName, { color: colors.foreground }]}>
+            <Text
+              style={[
+                {
+                  fontSize: socialBlockTokens.typography.authorFontSize,
+                  fontWeight: socialBlockTokens.typography.authorFontWeight,
+                  color: colors.foreground,
+                },
+              ]}
+            >
               {user.name}
             </Text>
             {time && (
-              <Text style={[styles.time, { color: colors.foregroundMuted }]}>
+              <Text
+                style={[
+                  {
+                    fontSize: socialBlockTokens.typography.timeFontSize,
+                    color: colors.foregroundMuted,
+                  },
+                ]}
+              >
                 {time}
               </Text>
             )}
@@ -198,8 +225,12 @@ export function FeedPostCard({
         {/* Post Content */}
         <Text
           style={[
-            styles.content,
-            { color: colors.foreground, marginTop: spacing[3] },
+            {
+              fontSize: socialBlockTokens.typography.contentFontSize,
+              lineHeight: socialBlockTokens.typography.contentLineHeight,
+              color: colors.foreground,
+              marginTop: spacing[3],
+            },
           ]}
         >
           {content}
@@ -224,45 +255,98 @@ export function FeedPostCard({
         {/* Post Actions */}
         <View style={[styles.actions, { marginTop: spacing[3], gap: spacing[4] }]}>
           {/* Like Button */}
-          <View style={[styles.actionItem, { gap: spacing[1] }]}>
-            <IconButton
-              icon={<HeartIcon filled={liked} activeColor={colors.destructive} />}
-              variant="ghost"
-              size="sm"
-              onPress={onLike}
-              accessibilityLabel={liked ? 'Unlike post' : 'Like post'}
-            />
+          <View
+            style={[
+              styles.actionItem,
+              { gap: spacing[1], opacity: disabled || likeLoading ? 0.5 : 1 },
+            ]}
+          >
+            {likeLoading ? (
+              <View style={{ width: 32, height: 32, alignItems: 'center', justifyContent: 'center' }}>
+                <ActivityIndicator size="small" color={colors.foregroundMuted} />
+              </View>
+            ) : (
+              <IconButton
+                icon={<HeartIcon filled={liked} activeColor={colors.destructive} />}
+                variant="ghost"
+                size="sm"
+                onPress={onLike}
+                disabled={disabled || likeLoading}
+                accessibilityRole="button"
+                accessibilityLabel={liked ? 'Unlike post' : 'Like post'}
+                accessibilityState={{ disabled: disabled || likeLoading }}
+              />
+            )}
             {likes > 0 && (
-              <Text style={[styles.actionCount, { color: colors.foregroundMuted }]}>
+              <Text
+                style={[
+                  {
+                    fontSize: socialBlockTokens.typography.actionFontSize,
+                    color: colors.foregroundMuted,
+                  },
+                ]}
+              >
                 {likes}
               </Text>
             )}
           </View>
 
           {/* Comment Button */}
-          <View style={[styles.actionItem, { gap: spacing[1] }]}>
-            <IconButton
-              icon={<CommentIcon />}
-              variant="ghost"
-              size="sm"
-              onPress={onComment}
-              accessibilityLabel="Comment on post"
-            />
+          <View
+            style={[
+              styles.actionItem,
+              { gap: spacing[1], opacity: disabled || commentLoading ? 0.5 : 1 },
+            ]}
+          >
+            {commentLoading ? (
+              <View style={{ width: 32, height: 32, alignItems: 'center', justifyContent: 'center' }}>
+                <ActivityIndicator size="small" color={colors.foregroundMuted} />
+              </View>
+            ) : (
+              <IconButton
+                icon={<CommentIcon />}
+                variant="ghost"
+                size="sm"
+                onPress={onComment}
+                disabled={disabled || commentLoading}
+                accessibilityRole="button"
+                accessibilityLabel="Comment on post"
+                accessibilityState={{ disabled: disabled || commentLoading }}
+              />
+            )}
             {comments > 0 && (
-              <Text style={[styles.actionCount, { color: colors.foregroundMuted }]}>
+              <Text
+                style={[
+                  {
+                    fontSize: socialBlockTokens.typography.actionFontSize,
+                    color: colors.foregroundMuted,
+                  },
+                ]}
+              >
                 {comments}
               </Text>
             )}
           </View>
 
           {/* Share Button */}
-          <IconButton
-            icon={<ShareIcon />}
-            variant="ghost"
-            size="sm"
-            onPress={onShare}
-            accessibilityLabel="Share post"
-          />
+          <View style={{ opacity: disabled || shareLoading ? 0.5 : 1 }}>
+            {shareLoading ? (
+              <View style={{ width: 32, height: 32, alignItems: 'center', justifyContent: 'center' }}>
+                <ActivityIndicator size="small" color={colors.foregroundMuted} />
+              </View>
+            ) : (
+              <IconButton
+                icon={<ShareIcon />}
+                variant="ghost"
+                size="sm"
+                onPress={onShare}
+                disabled={disabled || shareLoading}
+                accessibilityRole="button"
+                accessibilityLabel="Share post"
+                accessibilityState={{ disabled: disabled || shareLoading }}
+              />
+            )}
+          </View>
         </View>
       </View>
 
@@ -285,17 +369,6 @@ const styles = StyleSheet.create({
   headerText: {
     flex: 1,
   },
-  userName: {
-    fontWeight: '600',
-    fontSize: 15,
-  },
-  time: {
-    fontSize: 13,
-  },
-  content: {
-    fontSize: 15,
-    lineHeight: 22,
-  },
   imagePlaceholder: {
     height: 200,
     alignItems: 'center',
@@ -308,8 +381,5 @@ const styles = StyleSheet.create({
   actionItem: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  actionCount: {
-    fontSize: 14,
   },
 });
