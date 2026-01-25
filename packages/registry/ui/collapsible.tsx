@@ -40,15 +40,13 @@ import Animated, {
   Extrapolation,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import {
+  useTheme,
+  areAnimationsDisabled,
+  collapsibleTokens,
+  COLLAPSIBLE_CONSTANTS,
+} from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
-
-// Smooth spring config for natural feel
-const SPRING_CONFIG = {
-  damping: 20,
-  stiffness: 200,
-  mass: 0.5,
-};
 
 // Context
 interface CollapsibleContextValue {
@@ -72,7 +70,13 @@ const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 function ChevronIcon({ color, style }: { color: string; style?: any }) {
   return (
-    <AnimatedSvg width={16} height={16} viewBox="0 0 24 24" fill="none" style={style}>
+    <AnimatedSvg
+      width={COLLAPSIBLE_CONSTANTS.chevronSize}
+      height={COLLAPSIBLE_CONSTANTS.chevronSize}
+      viewBox="0 0 24 24"
+      fill="none"
+      style={style}
+    >
       <Path
         d="M6 9l6 6 6-6"
         stroke={color}
@@ -145,7 +149,7 @@ export function CollapsibleTrigger({
   style,
   asChild = false,
 }: CollapsibleTriggerProps) {
-  const { colors, spacing } = useTheme();
+  const { colors } = useTheme();
   const { open, onOpenChange, disabled } = useCollapsibleContext();
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
 
@@ -153,7 +157,7 @@ export function CollapsibleTrigger({
 
   React.useEffect(() => {
     if (animationsEnabled) {
-      progress.value = withSpring(open ? 1 : 0, SPRING_CONFIG);
+      progress.value = withSpring(open ? 1 : 0, COLLAPSIBLE_CONSTANTS.spring);
     } else {
       progress.value = open ? 1 : 0;
     }
@@ -186,8 +190,8 @@ export function CollapsibleTrigger({
       style={({ pressed }) => [
         styles.trigger,
         {
-          paddingVertical: spacing[3],
-          paddingHorizontal: spacing[4],
+          paddingVertical: collapsibleTokens.trigger.paddingVertical,
+          paddingHorizontal: collapsibleTokens.trigger.paddingHorizontal,
           backgroundColor: pressed ? colors.secondary : 'transparent',
           opacity: disabled ? 0.5 : 1,
         },
@@ -251,7 +255,7 @@ export function CollapsibleContent({
   // Animate open/close
   React.useEffect(() => {
     if (animationsEnabled) {
-      progress.value = withSpring(open ? 1 : 0, SPRING_CONFIG);
+      progress.value = withSpring(open ? 1 : 0, COLLAPSIBLE_CONSTANTS.spring);
     } else {
       progress.value = open ? 1 : 0;
     }
@@ -318,7 +322,7 @@ const styles = StyleSheet.create({
   },
   triggerContent: {
     flex: 1,
-    marginRight: 8,
+    marginRight: collapsibleTokens.trigger.iconMargin,
   },
   content: {},
 });
