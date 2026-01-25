@@ -1,33 +1,64 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, ViewStyle, TextStyle } from 'react-native';
 import { Screen } from '@/components/ui/screen';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@metacells/mcellui-core';
+import { Section } from './section';
 
 export function ScreenDemo() {
-  const { colors } = useTheme();
+  const { colors, spacing, fontSize, radius } = useTheme();
   const [showFullScreen, setShowFullScreen] = useState<string | null>(null);
 
   // Full screen preview
   if (showFullScreen) {
+    const fullScreenContentStyle: ViewStyle = {
+      flex: 1,
+      gap: spacing[4],
+      paddingTop: spacing[10],
+    };
+
+    const fullScreenTitleStyle: TextStyle = {
+      fontSize: fontSize['2xl'],
+      fontWeight: '700',
+      color: colors.foreground,
+    };
+
+    const fullScreenSubtitleStyle: TextStyle = {
+      fontSize: fontSize.md,
+      color: colors.foregroundMuted,
+    };
+
+    const scrollContentStyle: ViewStyle = {
+      gap: spacing[2],
+      marginVertical: spacing[4],
+    };
+
+    const scrollItemStyle: ViewStyle = {
+      padding: spacing[4],
+      borderRadius: radius.md,
+      borderWidth: 1,
+      backgroundColor: colors.card,
+      borderColor: colors.border,
+    };
+
     return (
       <Screen
         variant={showFullScreen as any}
         scroll={showFullScreen === 'scroll'}
         padded
       >
-        <View style={styles.fullScreenContent}>
-          <Text style={[styles.fullScreenTitle, { color: colors.foreground }]}>
+        <View style={fullScreenContentStyle}>
+          <Text style={fullScreenTitleStyle}>
             {showFullScreen === 'scroll' ? 'Scrollable Screen' : `${showFullScreen.charAt(0).toUpperCase() + showFullScreen.slice(1)} Variant`}
           </Text>
-          <Text style={[styles.fullScreenSubtitle, { color: colors.foregroundMuted }]}>
+          <Text style={fullScreenSubtitleStyle}>
             This is a full-screen preview
           </Text>
 
           {showFullScreen === 'scroll' && (
-            <View style={styles.scrollContent}>
+            <View style={scrollContentStyle}>
               {Array.from({ length: 20 }).map((_, i) => (
-                <View key={i} style={[styles.scrollItem, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                <View key={i} style={scrollItemStyle}>
                   <Text style={{ color: colors.foreground }}>Item {i + 1}</Text>
                 </View>
               ))}
@@ -42,10 +73,49 @@ export function ScreenDemo() {
     );
   }
 
+  const containerStyle: ViewStyle = {
+    gap: spacing[6],
+  };
+
+  const descriptionStyle: TextStyle = {
+    fontSize: fontSize.sm,
+    lineHeight: 20,
+    color: colors.foregroundMuted,
+  };
+
+  const labelStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    marginBottom: 4,
+    color: colors.foregroundMuted,
+  };
+
+  const variantGridStyle: ViewStyle = {
+    flexDirection: 'row',
+    gap: spacing[3],
+  };
+
+  const buttonGridStyle: ViewStyle = {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing[2],
+  };
+
+  const codeBlockStyle: ViewStyle = {
+    padding: spacing[3],
+    borderRadius: radius.md,
+    backgroundColor: colors.backgroundMuted,
+  };
+
+  const codeStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    fontFamily: 'monospace',
+    color: colors.foreground,
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <Section title="About Screen">
-        <Text style={[styles.description, { color: colors.foregroundMuted }]}>
+        <Text style={descriptionStyle}>
           Screen is a container component that handles safe area insets,
           background colors, and optional scrolling. Use it as the root
           component for your app screens.
@@ -53,10 +123,10 @@ export function ScreenDemo() {
       </Section>
 
       <Section title="Variants">
-        <Text style={[styles.label, { color: colors.foregroundMuted }]}>
+        <Text style={labelStyle}>
           Three background variants available
         </Text>
-        <View style={styles.variantGrid}>
+        <View style={variantGridStyle}>
           <VariantPreview variant="default" label="default" />
           <VariantPreview variant="surface" label="surface" />
           <VariantPreview variant="muted" label="muted" />
@@ -64,19 +134,14 @@ export function ScreenDemo() {
       </Section>
 
       <Section title="Props Overview">
-        <View style={[styles.propsTable, { borderColor: colors.border }]}>
-          <PropRow name="scroll" type="boolean" description="Enable scrolling" />
-          <PropRow name="padded" type="boolean" description="Add horizontal padding (16px)" />
-          <PropRow name="variant" type="'default' | 'surface' | 'muted'" description="Background color" />
-          <PropRow name="edges" type="Edge[]" description="Safe area edges to respect" />
-        </View>
+        <PropsTable />
       </Section>
 
       <Section title="Try Full Screen">
-        <Text style={[styles.label, { color: colors.foregroundMuted }]}>
+        <Text style={labelStyle}>
           Tap a button to see the Screen component in action
         </Text>
-        <View style={styles.buttonGrid}>
+        <View style={buttonGridStyle}>
           <Button variant="outline" onPress={() => setShowFullScreen('default')}>
             Default
           </Button>
@@ -93,8 +158,8 @@ export function ScreenDemo() {
       </Section>
 
       <Section title="Usage Example">
-        <View style={[styles.codeBlock, { backgroundColor: colors.backgroundMuted }]}>
-          <Text style={[styles.code, { color: colors.foreground }]}>
+        <View style={codeBlockStyle}>
+          <Text style={codeStyle}>
 {`<Screen
   scroll
   padded
@@ -109,11 +174,11 @@ export function ScreenDemo() {
       </Section>
 
       <Section title="Safe Area Edges">
-        <Text style={[styles.label, { color: colors.foregroundMuted }]}>
+        <Text style={labelStyle}>
           Control which edges respect safe area insets
         </Text>
-        <View style={[styles.codeBlock, { backgroundColor: colors.backgroundMuted }]}>
-          <Text style={[styles.code, { color: colors.foreground }]}>
+        <View style={codeBlockStyle}>
+          <Text style={codeStyle}>
 {`// Only top and bottom safe area
 <Screen edges={['top', 'bottom']}>
 
@@ -130,81 +195,114 @@ export function ScreenDemo() {
 }
 
 function VariantPreview({ variant, label }: { variant: 'default' | 'surface' | 'muted'; label: string }) {
-  const { colors } = useTheme();
+  const { colors, spacing, radius, fontSize } = useTheme();
 
   const backgroundColor =
     variant === 'default' ? colors.background :
     variant === 'surface' ? colors.backgroundSubtle :
     colors.backgroundMuted;
 
+  const variantItemStyle: ViewStyle = {
+    flex: 1,
+    gap: spacing[1],
+  };
+
+  const variantBoxStyle: ViewStyle = {
+    height: 100,
+    borderRadius: radius.xl,
+    borderWidth: 1,
+    padding: spacing[3],
+    justifyContent: 'center',
+    backgroundColor,
+    borderColor: colors.border,
+  };
+
+  const variantContentStyle: ViewStyle = {
+    flex: 1,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.card,
+    borderColor: colors.border,
+  };
+
+  const variantContentTextStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    color: colors.foreground,
+  };
+
+  const variantLabelStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    textAlign: 'center',
+    fontWeight: '500',
+    color: colors.foreground,
+  };
+
   return (
-    <View style={styles.variantItem}>
-      <View style={[styles.variantBox, { backgroundColor, borderColor: colors.border }]}>
-        <View style={[styles.variantContent, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Text style={[styles.variantContentText, { color: colors.foreground }]}>Content</Text>
+    <View style={variantItemStyle}>
+      <View style={variantBoxStyle}>
+        <View style={variantContentStyle}>
+          <Text style={variantContentTextStyle}>Content</Text>
         </View>
       </View>
-      <Text style={[styles.variantLabel, { color: colors.foreground }]}>{label}</Text>
+      <Text style={variantLabelStyle}>{label}</Text>
+    </View>
+  );
+}
+
+function PropsTable() {
+  const { colors, radius } = useTheme();
+
+  const propsTableStyle: ViewStyle = {
+    borderWidth: 1,
+    borderRadius: radius.md,
+    overflow: 'hidden',
+    borderColor: colors.border,
+  };
+
+  return (
+    <View style={propsTableStyle}>
+      <PropRow name="scroll" type="boolean" description="Enable scrolling" />
+      <PropRow name="padded" type="boolean" description="Add horizontal padding (16px)" />
+      <PropRow name="variant" type="'default' | 'surface' | 'muted'" description="Background color" />
+      <PropRow name="edges" type="Edge[]" description="Safe area edges to respect" />
     </View>
   );
 }
 
 function PropRow({ name, type, description }: { name: string; type: string; description: string }) {
-  const { colors } = useTheme();
+  const { colors, spacing, fontSize } = useTheme();
+
+  const propRowStyle: ViewStyle = {
+    padding: spacing[2.5],
+    borderBottomWidth: 1,
+    gap: 2,
+    borderColor: colors.border,
+  };
+
+  const propNameStyle: TextStyle = {
+    fontSize: fontSize.sm,
+    fontWeight: '600',
+    color: colors.primary,
+  };
+
+  const propTypeStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    fontFamily: 'monospace',
+    color: colors.foregroundMuted,
+  };
+
+  const propDescStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    color: colors.foreground,
+  };
+
   return (
-    <View style={[styles.propRow, { borderColor: colors.border }]}>
-      <Text style={[styles.propName, { color: colors.primary }]}>{name}</Text>
-      <Text style={[styles.propType, { color: colors.foregroundMuted }]}>{type}</Text>
-      <Text style={[styles.propDesc, { color: colors.foreground }]}>{description}</Text>
+    <View style={propRowStyle}>
+      <Text style={propNameStyle}>{name}</Text>
+      <Text style={propTypeStyle}>{type}</Text>
+      <Text style={propDescStyle}>{description}</Text>
     </View>
   );
 }
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      <View style={styles.sectionContent}>{children}</View>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: { gap: 24 },
-  section: { gap: 12 },
-  sectionTitle: { fontSize: 14, fontWeight: '600', color: '#737373', textTransform: 'uppercase', letterSpacing: 0.5 },
-  sectionContent: { gap: 8 },
-  description: { fontSize: 14, lineHeight: 20 },
-  label: { fontSize: 12, marginBottom: 4 },
-  variantGrid: { flexDirection: 'row', gap: 12 },
-  variantItem: { flex: 1, gap: 4 },
-  variantBox: {
-    height: 100,
-    borderRadius: 12,
-    borderWidth: 1,
-    padding: 12,
-    justifyContent: 'center',
-  },
-  variantContent: {
-    flex: 1,
-    borderRadius: 8,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  variantContentText: { fontSize: 11 },
-  variantLabel: { fontSize: 12, textAlign: 'center', fontWeight: '500' },
-  propsTable: { borderWidth: 1, borderRadius: 8, overflow: 'hidden' },
-  propRow: { padding: 10, borderBottomWidth: 1, gap: 2 },
-  propName: { fontSize: 13, fontWeight: '600' },
-  propType: { fontSize: 11, fontFamily: 'monospace' },
-  propDesc: { fontSize: 12 },
-  buttonGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  codeBlock: { padding: 12, borderRadius: 8 },
-  code: { fontSize: 12, fontFamily: 'monospace' },
-  fullScreenContent: { flex: 1, gap: 16, paddingTop: 40 },
-  fullScreenTitle: { fontSize: 24, fontWeight: '700' },
-  fullScreenSubtitle: { fontSize: 16 },
-  scrollContent: { gap: 8, marginVertical: 16 },
-  scrollItem: { padding: 16, borderRadius: 8, borderWidth: 1 },
-});
