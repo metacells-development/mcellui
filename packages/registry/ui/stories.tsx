@@ -50,7 +50,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useTheme, haptic } from '@metacells/mcellui-core';
+import { useTheme, haptic, storiesTokens } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -90,36 +90,6 @@ export interface StoriesRowProps {
   contentContainerStyle?: ViewStyle;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Size configs
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SIZE_CONFIG = {
-  sm: {
-    outer: 56,
-    inner: 50,
-    avatar: 46,
-    borderWidth: 3,
-    fontSize: 10,
-    plusSize: 14,
-  },
-  md: {
-    outer: 72,
-    inner: 64,
-    avatar: 60,
-    borderWidth: 3,
-    fontSize: 11,
-    plusSize: 18,
-  },
-  lg: {
-    outer: 88,
-    inner: 80,
-    avatar: 74,
-    borderWidth: 4,
-    fontSize: 12,
-    plusSize: 22,
-  },
-};
 
 // Default Instagram-like gradient
 const DEFAULT_GRADIENT: [string, string, ...string[]] = ['#F58529', '#DD2A7B', '#8134AF', '#515BD4'];
@@ -152,7 +122,8 @@ export function StoryAvatar({
   style,
 }: StoryAvatarProps) {
   const { colors, fontWeight } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const tokens = storiesTokens;
+  const config = tokens[size];
 
   const scale = useSharedValue(1);
 
@@ -362,6 +333,7 @@ export function StoryAvatar({
           style={[
             styles.name,
             {
+              marginTop: config.nameMarginTop,
               fontSize: config.fontSize,
               color: colors.foreground,
               maxWidth: config.outer + 8,
@@ -385,7 +357,7 @@ export function StoriesRow({
   style,
   contentContainerStyle,
 }: StoriesRowProps) {
-  const { spacing } = useTheme();
+  const tokens = storiesTokens;
 
   return (
     <ScrollView
@@ -394,7 +366,7 @@ export function StoriesRow({
       style={[styles.row, style]}
       contentContainerStyle={[
         styles.rowContent,
-        { paddingHorizontal: spacing[4], gap: spacing[3] },
+        { paddingHorizontal: tokens.row.paddingHorizontal, gap: tokens.row.gap },
         contentContainerStyle,
       ]}
     >
@@ -450,7 +422,6 @@ const styles = StyleSheet.create({
     marginTop: -1,
   },
   name: {
-    marginTop: 4,
     textAlign: 'center',
   },
   row: {
