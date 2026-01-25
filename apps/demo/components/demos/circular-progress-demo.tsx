@@ -40,13 +40,17 @@ export function CircularProgressDemo() {
           <CardContent style={{ paddingTop: spacing[4] }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
               <CircularProgress value={progress} showLabel />
-              <CircularProgress value={progress} showLabel labelFormat="fraction" max={100} />
+              <CircularProgress value={60} showLabel label={
+                <Text style={{ color: colors.foreground, fontSize: 12, fontWeight: '600' }}>
+                  60/100
+                </Text>
+              } />
               <View style={{ alignItems: 'center' }}>
-                <CircularProgress value={3} max={5}>
+                <CircularProgress value={60} label={
                   <Text style={{ color: colors.foreground, fontSize: 12, fontWeight: '600' }}>
                     3/5
                   </Text>
-                </CircularProgress>
+                } />
                 <Text style={[styles.caption, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
                   Custom
                 </Text>
@@ -127,10 +131,37 @@ export function CircularProgressDemo() {
         <Card>
           <CardContent style={{ paddingTop: spacing[4] }}>
             <View style={{ alignItems: 'center' }}>
-              <CircularProgress value={animated} size="lg" showLabel animated />
+              <CircularProgress value={animated} size="lg" showLabel />
               <Text style={[styles.hint, { color: colors.foregroundMuted, marginTop: spacing[3] }]}>
                 Animates on value change
               </Text>
+            </View>
+          </CardContent>
+        </Card>
+      </Section>
+
+      <Section title="Indeterminate">
+        <Card>
+          <CardContent style={{ paddingTop: spacing[4] }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+              <View style={{ alignItems: 'center' }}>
+                <CircularProgress indeterminate size="sm" />
+                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                  Small
+                </Text>
+              </View>
+              <View style={{ alignItems: 'center' }}>
+                <CircularProgress indeterminate size="md" />
+                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                  Medium
+                </Text>
+              </View>
+              <View style={{ alignItems: 'center' }}>
+                <CircularProgress indeterminate size="lg" />
+                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                  Large
+                </Text>
+              </View>
             </View>
           </CardContent>
         </Card>

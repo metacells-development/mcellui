@@ -80,8 +80,21 @@ export function ProgressDemo() {
         </View>
       </Section>
 
-      <Section title="Indeterminate">
-        <Progress indeterminate />
+      <Section title="Indeterminate Colors">
+        <View style={styles.colors}>
+          <View style={styles.colorRow}>
+            <Text style={[styles.colorLabel, { color: colors.foregroundMuted }]}>default</Text>
+            <Progress indeterminate color="default" />
+          </View>
+          <View style={styles.colorRow}>
+            <Text style={[styles.colorLabel, { color: colors.foregroundMuted }]}>primary</Text>
+            <Progress indeterminate color="primary" />
+          </View>
+          <View style={styles.colorRow}>
+            <Text style={[styles.colorLabel, { color: colors.foregroundMuted }]}>success</Text>
+            <Progress indeterminate color="success" />
+          </View>
+        </View>
       </Section>
 
       <Section title="Interactive">
@@ -128,4 +141,13 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   interactive: { gap: 16 },
+  colorRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  colorLabel: {
+    width: 60,
+    fontSize: 12,
+  },
 });
