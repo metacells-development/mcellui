@@ -158,7 +158,7 @@ export function SectionHeader({
       ]}
     >
       {/* Title & Subtitle */}
-      <View style={styles.titleContainer}>
+      <View style={[styles.titleContainer, { marginRight: spacing[4] }]}>
         <Text
           style={[
             styles.title,
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    marginRight: 16,
+    // marginRight moved to dynamic style (spacing[4]) for token usage
   },
   title: {
     // Dynamic styles applied inline
