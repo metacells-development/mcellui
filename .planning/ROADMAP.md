@@ -139,7 +139,7 @@ Plans:
 - [ ] 06-01-PLAN.md - Add LIST_CONSTANTS and listTokens to core theme
 - [ ] 06-02-PLAN.md - Migrate List and SectionHeader to centralized tokens
 - [ ] 06-03-PLAN.md - Migrate shared Section demo component to tokens
-- [ ] 06-04-PLAN.md - Migrate Row, Column, Screen demos to tokens
+- [ ] 06-04-PLAN.md - Verify Row/Column/Screen token compliance, migrate demos
 - [ ] 06-05-PLAN.md - Migrate Separator, List, SectionHeader, HorizontalList demos to tokens
 
 ### Phase 7: Navigation & Interaction
