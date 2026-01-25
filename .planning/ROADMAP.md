@@ -155,11 +155,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 07-01-PLAN.md - Add navigation component tokens (Tabs, Accordion, Collapsible, Carousel, SwipeableRow)
-- [ ] 07-02-PLAN.md - Migrate Tabs to centralized tokens with componentRadius
-- [ ] 07-03-PLAN.md - Migrate Accordion and Collapsible to centralized tokens
-- [ ] 07-04-PLAN.md - Migrate Carousel and SwipeableRow to centralized tokens
-- [ ] 07-05-PLAN.md - Enhance all navigation demos with comprehensive coverage
+- [x] 07-01-PLAN.md - Add navigation component tokens (Tabs, Accordion, Collapsible, Carousel, SwipeableRow)
+- [x] 07-02-PLAN.md - Migrate Tabs to centralized tokens with componentRadius
+- [x] 07-03-PLAN.md - Migrate Accordion and Collapsible to centralized tokens
+- [x] 07-04-PLAN.md - Migrate Carousel and SwipeableRow to centralized tokens
+- [x] 07-05-PLAN.md - Enhance all navigation demos with comprehensive coverage
 
 ### Phase 8: Advanced Components
 **Goal**: Complex components have complete functionality and consistent integration
@@ -171,15 +171,16 @@ Plans:
   3. Search Input supports loading and error states with proper feedback
   4. Image Gallery handles async loading with skeleton states
   5. Demo shows complete workflows for each advanced component
-**Plans**: 6 plans
+**Plans**: 7 plans
 
 Plans:
-- [ ] 08-01-PLAN.md - Add centralized tokens for Calendar, DateTimePicker, Form, ImageGallery, Pagination, Stories, SearchInput
-- [ ] 08-02-PLAN.md - Migrate Calendar and DateTimePicker to token system
-- [ ] 08-03-PLAN.md - Migrate Form compound components to formTokens
-- [ ] 08-04-PLAN.md - Migrate ImageGallery, Pagination, Stories to token system
-- [ ] 08-05-PLAN.md - Migrate SearchInput to token system
-- [ ] 08-06-PLAN.md - Enhance all 7 advanced component demos
+- [x] 08-01-PLAN.md - Add centralized tokens for Calendar, DateTimePicker, Form, ImageGallery, Pagination, Stories, SearchInput
+- [x] 08-02-PLAN.md - Migrate Calendar and DateTimePicker to token system
+- [x] 08-03-PLAN.md - Migrate Form compound components to formTokens
+- [x] 08-04-PLAN.md - Migrate ImageGallery, Pagination, Stories to token system
+- [x] 08-05-PLAN.md - Migrate SearchInput to token system
+- [x] 08-06-PLAN.md - Enhance all 7 advanced component demos
+- [x] 08-07-PLAN.md - Gap closure: Add async loading states to ImageGallery
 
 ### Phase 9: Blocks - Auth & Settings
 **Goal**: Authentication and settings blocks are production-ready with complete state coverage
@@ -246,10 +247,15 @@ Plans:
   3. All screens follow platform navigation conventions (iOS/Android)
   4. Authentication flows (Login, Signup, OTP) demonstrate form validation patterns
   5. Demo app showcases all screens with realistic data and navigation
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] TBD
+- [ ] 12-01-PLAN.md - Add screen tokens to core, migrate auth screens (Login, Signup, OTP)
+- [ ] 12-02-PLAN.md - Migrate Profile, Settings, Account screens to theme tokens
+- [ ] 12-03-PLAN.md - Migrate Feed, Chat, Notifications, Comments screens to theme tokens
+- [ ] 12-04-PLAN.md - Migrate Cart, Checkout, ProductDetail, OrderHistory screens to theme tokens
+- [ ] 12-05-PLAN.md - Migrate Home, Search, Followers, Onboarding, Help screens to theme tokens
+- [ ] 12-06-PLAN.md - Enhance screens demo with actual registry components and state coverage
 
 ## Progress
 
@@ -265,8 +271,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 5. Data Display | 5/5 | ✓ Complete | 2026-01-25 |
 | 6. Layout & Structure | 5/5 | ✓ Complete | 2026-01-25 |
 | 7. Navigation & Interaction | 5/5 | ✓ Complete | 2026-01-25 |
-| 8. Advanced Components | 0/6 | Planned | - |
+| 8. Advanced Components | 7/7 | ✓ Complete | 2026-01-25 |
 | 9. Blocks - Auth & Settings | 6/6 | ✓ Complete | 2026-01-25 |
 | 10. Blocks - Content & Social | 0/TBD | Not started | - |
 | 11. Blocks - E-commerce & Info | 0/6 | Planned | - |
-| 12. Screens | 0/TBD | Not started | - |
+| 12. Screens | 0/6 | Planned | - |
