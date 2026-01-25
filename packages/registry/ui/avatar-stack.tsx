@@ -69,33 +69,6 @@ export interface AvatarStackProps {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Size configs
-// ─────────────────────────────────────────────────────────────────────────────
-
-const SIZE_CONFIG = {
-  sm: {
-    size: 28,
-    fontSize: 10,
-    borderWidth: 2,
-  },
-  md: {
-    size: 36,
-    fontSize: 12,
-    borderWidth: 2,
-  },
-  lg: {
-    size: 44,
-    fontSize: 14,
-    borderWidth: 3,
-  },
-  xl: {
-    size: 56,
-    fontSize: 18,
-    borderWidth: 3,
-  },
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Helper functions
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -130,15 +103,15 @@ export function AvatarStack({
   overlap = 0.3,
   style,
 }: AvatarStackProps) {
-  const { colors, fontWeight } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, fontWeight, components } = useTheme();
+  const tokens = components.avatarStack[size];
 
   const visibleAvatars = avatars.slice(0, max);
   const overflowCount = avatars.length - max;
   const hasOverflow = overflowCount > 0;
 
   // Calculate overlap offset
-  const overlapOffset = config.size * overlap;
+  const overlapOffset = tokens.size * overlap;
 
   return (
     <View
@@ -159,10 +132,10 @@ export function AvatarStack({
             style={[
               styles.avatarWrapper,
               {
-                width: config.size,
-                height: config.size,
-                borderRadius: config.size / 2,
-                borderWidth: config.borderWidth,
+                width: tokens.size,
+                height: tokens.size,
+                borderRadius: tokens.size / 2,
+                borderWidth: tokens.borderWidth,
                 borderColor: colors.background,
                 marginLeft: index === 0 ? 0 : -overlapOffset,
                 zIndex: visibleAvatars.length - index,
@@ -175,9 +148,9 @@ export function AvatarStack({
                 style={[
                   styles.avatarImage,
                   {
-                    width: config.size - config.borderWidth * 2,
-                    height: config.size - config.borderWidth * 2,
-                    borderRadius: (config.size - config.borderWidth * 2) / 2,
+                    width: tokens.size - tokens.borderWidth * 2,
+                    height: tokens.size - tokens.borderWidth * 2,
+                    borderRadius: (tokens.size - tokens.borderWidth * 2) / 2,
                   },
                 ]}
               />
@@ -186,9 +159,9 @@ export function AvatarStack({
                 style={[
                   styles.avatarFallback,
                   {
-                    width: config.size - config.borderWidth * 2,
-                    height: config.size - config.borderWidth * 2,
-                    borderRadius: (config.size - config.borderWidth * 2) / 2,
+                    width: tokens.size - tokens.borderWidth * 2,
+                    height: tokens.size - tokens.borderWidth * 2,
+                    borderRadius: (tokens.size - tokens.borderWidth * 2) / 2,
                     backgroundColor: bgColor,
                   },
                 ]}
@@ -197,7 +170,7 @@ export function AvatarStack({
                   style={[
                     styles.initials,
                     {
-                      fontSize: config.fontSize,
+                      fontSize: tokens.fontSize,
                       fontWeight: fontWeight.semibold,
                       color: '#ffffff',
                     },
@@ -218,10 +191,10 @@ export function AvatarStack({
             styles.avatarWrapper,
             styles.overflowBadge,
             {
-              width: config.size,
-              height: config.size,
-              borderRadius: config.size / 2,
-              borderWidth: config.borderWidth,
+              width: tokens.size,
+              height: tokens.size,
+              borderRadius: tokens.size / 2,
+              borderWidth: tokens.borderWidth,
               borderColor: colors.background,
               backgroundColor: colors.secondary,
               marginLeft: -overlapOffset,
@@ -233,7 +206,7 @@ export function AvatarStack({
             style={[
               styles.overflowText,
               {
-                fontSize: config.fontSize,
+                fontSize: tokens.fontSize,
                 fontWeight: fontWeight.semibold,
                 color: colors.secondaryForeground,
               },
