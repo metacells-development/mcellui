@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Form Inputs** - Input, Textarea, Select, Slider, Stepper, Checkbox, Switch, Radio, Tag Input
 - [x] **Phase 2: Buttons & Actions** - Button, Icon Button, FAB, Segmented Control, Action Sheet
-- [ ] **Phase 3: Feedback Components** - Toast, Dialog, Alert Dialog, Alert, Sheet, Popover, Tooltip
+- [x] **Phase 3: Feedback Components** - Toast, Dialog, Alert Dialog, Alert, Sheet, Popover, Tooltip
 - [ ] **Phase 4: Progress & Loading** - Spinner, Skeleton, Progress, Circular Progress, Pull to Refresh
 - [ ] **Phase 5: Data Display** - Card, Avatar, Avatar Stack, Badge, Chip, Label, Typography, Rating, Image
 - [ ] **Phase 6: Layout & Structure** - Separator, Row, Column, Screen, List, Horizontal List, Section Header
@@ -76,14 +76,15 @@ Plans:
   3. All feedback components support variants (info, success, warning, error) where applicable
   4. All modal-style components handle backdrop, gestures, and keyboard consistently
   5. Demo shows all feedback types and interaction patterns
-**Plans**: 5 plans
+**Plans**: 6 plans
 
 Plans:
-- [ ] 03-01-PLAN.md - Extend token system with feedback component constants
-- [ ] 03-02-PLAN.md - Migrate Dialog, AlertDialog, Sheet to overlayTypography tokens
-- [ ] 03-03-PLAN.md - Migrate Alert to ALERT_CONSTANTS
-- [ ] 03-04-PLAN.md - Migrate Popover and Tooltip to centralized constants
-- [ ] 03-05-PLAN.md - Enhance Dialog, Sheet, Popover, Tooltip demos
+- [x] 03-01-PLAN.md - Extend token system with feedback component constants
+- [x] 03-02-PLAN.md - Migrate Dialog, AlertDialog, Sheet to overlayTypography tokens
+- [x] 03-03-PLAN.md - Migrate Alert to ALERT_CONSTANTS
+- [x] 03-04-PLAN.md - Migrate Popover and Tooltip to centralized constants
+- [x] 03-05-PLAN.md - Enhance Dialog, Sheet, Popover, Tooltip demos
+- [x] 03-06-PLAN.md - Fix AlertDialog buttonText hardcoded typography (gap closure)
 
 ### Phase 4: Progress & Loading
 **Goal**: All loading and progress components have smooth animations and consistent visual language
@@ -229,7 +230,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|----------------|--------|-----------|
 | 1. Form Inputs | 5/5 | ✓ Complete | 2026-01-24 |
 | 2. Buttons & Actions | 6/6 | ✓ Complete | 2026-01-24 |
-| 3. Feedback Components | 0/5 | Planned | - |
+| 3. Feedback Components | 6/6 | ✓ Complete | 2026-01-25 |
 | 4. Progress & Loading | 0/TBD | Not started | - |
 | 5. Data Display | 0/TBD | Not started | - |
 | 6. Layout & Structure | 0/TBD | Not started | - |
