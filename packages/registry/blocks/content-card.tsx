@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Card, CardContent, CardImage } from '../ui/card';
@@ -62,6 +62,7 @@ export function ContentCard({
   style,
 }: ContentCardProps) {
   const { colors, spacing } = useTheme();
+  const tokens = infoBlockTokens.content;
 
   return (
     <Card onPress={onPress} style={style}>
@@ -74,7 +75,15 @@ export function ContentCard({
       {/* Content */}
       <CardContent style={{ paddingTop: spacing[4] }}>
         <Text
-          style={[styles.title, { color: colors.foreground }]}
+          style={[
+            styles.title,
+            {
+              color: colors.foreground,
+              fontSize: tokens.titleFontSize,
+              fontWeight: tokens.titleFontWeight,
+              lineHeight: tokens.titleLineHeight,
+            },
+          ]}
           numberOfLines={2}
         >
           {title}
@@ -83,7 +92,12 @@ export function ContentCard({
           <Text
             style={[
               styles.subtitle,
-              { color: colors.foregroundMuted, marginTop: spacing[1] },
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[1],
+                fontSize: tokens.subtitleFontSize,
+                lineHeight: tokens.subtitleLineHeight,
+              },
             ]}
             numberOfLines={2}
           >
@@ -107,13 +121,6 @@ export function ContentCard({
 // ============================================================================
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    lineHeight: 24,
-  },
-  subtitle: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
+  title: {},
+  subtitle: {},
 });

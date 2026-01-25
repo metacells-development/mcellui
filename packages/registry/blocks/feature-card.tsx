@@ -17,7 +17,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, infoBlockTokens } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Card, CardContent } from '../ui/card';
@@ -54,6 +54,7 @@ export function FeatureCard({
   style,
 }: FeatureCardProps) {
   const { colors, spacing, radius } = useTheme();
+  const tokens = infoBlockTokens.feature;
 
   return (
     <Card onPress={onPress} style={style}>
@@ -70,8 +71,8 @@ export function FeatureCard({
             {
               backgroundColor: colors.primaryMuted,
               borderRadius: radius.md,
-              width: horizontal ? 48 : 56,
-              height: horizontal ? 48 : 56,
+              width: horizontal ? 48 : tokens.iconContainerSize,
+              height: horizontal ? 48 : tokens.iconContainerSize,
               marginBottom: horizontal ? 0 : spacing[3],
               marginRight: horizontal ? spacing[4] : 0,
             },
@@ -86,7 +87,11 @@ export function FeatureCard({
             style={[
               styles.title,
               horizontal && styles.titleHorizontal,
-              { color: colors.foreground },
+              {
+                color: colors.foreground,
+                fontSize: tokens.titleFontSize,
+                fontWeight: tokens.titleFontWeight,
+              },
             ]}
             numberOfLines={horizontal ? 1 : 2}
           >
@@ -97,7 +102,12 @@ export function FeatureCard({
               style={[
                 styles.description,
                 horizontal && styles.descriptionHorizontal,
-                { color: colors.foregroundMuted, marginTop: spacing[1] },
+                {
+                  color: colors.foregroundMuted,
+                  marginTop: spacing[1],
+                  fontSize: tokens.descriptionFontSize,
+                  lineHeight: tokens.descriptionLineHeight,
+                },
               ]}
               numberOfLines={horizontal ? 2 : 3}
             >
@@ -130,16 +140,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 16,
-    fontWeight: '600',
     textAlign: 'center',
   },
   titleHorizontal: {
     textAlign: 'left',
   },
   description: {
-    fontSize: 14,
-    lineHeight: 20,
     textAlign: 'center',
   },
   descriptionHorizontal: {
