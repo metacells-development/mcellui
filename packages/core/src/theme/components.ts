@@ -917,6 +917,34 @@ export const swipeableRowTokens = {
 } as const;
 
 // =============================================================================
+// Auth Block Tokens (Login, Signup)
+// =============================================================================
+
+export const authBlockTokens = {
+  header: {
+    titleFontSize: fontSize['2xl'],    // 28 - matches existing
+    titleFontWeight: fontWeight.bold,
+    subtitleFontSize: fontSize.md,     // 16
+  },
+  form: {
+    forgotLinkFontSize: fontSize.base, // 14
+    forgotLinkFontWeight: fontWeight.medium,
+    passwordHintFontSize: fontSize.xs, // 12
+  },
+  divider: {
+    fontSize: fontSize.base,           // 14
+  },
+  footer: {
+    textFontSize: fontSize.base,       // 14
+    linkFontSize: fontSize.base,       // 14
+    linkFontWeight: fontWeight.semibold,
+  },
+  social: {
+    gap: spacing[3],
+  },
+} as const;
+
+// =============================================================================
 // Export all component tokens
 // =============================================================================
 
@@ -953,6 +981,7 @@ export const components = {
   collapsible: collapsibleTokens,
   carousel: carouselTokens,
   swipeableRow: swipeableRowTokens,
+  authBlock: authBlockTokens,
   height: componentHeight,
   icon: iconSize,
 } as const;
