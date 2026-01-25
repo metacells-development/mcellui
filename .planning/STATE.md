@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 6 of 12 (Layout & Structure)
-Plans: 06-01, 06-02, 06-03 complete
+Plans: 06-01, 06-02, 06-03, 06-04 complete
 Status: In progress
-Last activity: 2026-01-25 - Completed 06-02-PLAN.md
+Last activity: 2026-01-25 - Completed 06-04-PLAN.md
 
-Progress: [████░░░░░░] 44%
+Progress: [████░░░░░░] 46%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
-- Average duration: 4.7 min
-- Total execution time: 1.81 hours
+- Total plans completed: 24
+- Average duration: 4.6 min
+- Total execution time: 1.89 hours
 
 **By Phase:**
 
@@ -32,11 +32,11 @@ Progress: [████░░░░░░] 44%
 | 03-feedback-components | 6/6 | 9.75 min | 1.6 min |
 | 04-progress-loading | 4/4 | 12.8 min | 3.2 min |
 | 05-data-display | 5/5 | 10.1 min | 2.0 min |
-| 06-layout-structure | 3/4 | 6.6 min | 2.2 min |
+| 06-layout-structure | 4/4 | 11.6 min | 2.9 min |
 
 **Recent Trend:**
-- Last 5 plans: 06-01 (2.5 min), 06-03 (2 min), 05-05 (4.7 min), 04-04 (3.5 min)
-- Trend: Token migration plans consistently fast (2-2.5 min), demo plans longer (4-5 min)
+- Last 5 plans: 06-04 (5 min), 06-01 (2.5 min), 06-03 (2 min), 05-05 (4.7 min), 04-04 (3.5 min)
+- Trend: Demo migration plans slightly longer (5 min) than component migrations (2-2.5 min)
 
 *Updated after each plan completion*
 
@@ -103,6 +103,10 @@ Recent decisions affecting current work:
 - **06-01**: listTokens.item includes iconSize and iconMargin for standard icon layout
 - **06-03**: Section demo component uses dynamic token-based styles instead of static StyleSheet
 - **06-03**: letterSpacing: 0.5 remains hardcoded in Section as minor typographic detail
+- **06-04**: Shared Section component import pattern replaces inline Section definitions in demos
+- **06-04**: Component extraction pattern (TallBox, VariantPreview, PropsTable) for complex demo clarity
+- **06-04**: Dynamic ViewStyle/TextStyle preferred over static StyleSheet for theme-aware demos
+- **06-04**: spacing[0.5] used for very small gaps (2px) to maintain complete token consistency
 - **05-05**: Demo files use inline theme token styles instead of StyleSheet.create
 - **05-05**: Typography tokens (typography.bodySm, typography.caption) used for all text styling
 - **05-05**: Section component pattern used for consistent demo organization
@@ -121,7 +125,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 04-04-PLAN.md (Progress/loading demo enhancements)
+Stopped at: Completed 06-04-PLAN.md (Row, Column, Screen demo token migration)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -190,4 +194,4 @@ Resume file: None
 | 06-01 | 1 | Extend core token system with List and layout component tokens | ✅ Complete (2.5 min) |
 | 06-02 | 2 | Migrate List component to token system | ✅ Complete (2.1 min) |
 | 06-03 | 2 | Migrate Section demo component to token system | ✅ Complete (2 min) |
-| 06-04 | 3 | Enhance List and SectionHeader demos | Pending |
+| 06-04 | 3 | Migrate Row, Column, Screen demos to theme tokens | ✅ Complete (5 min) |
