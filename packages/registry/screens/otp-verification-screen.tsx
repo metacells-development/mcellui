@@ -147,6 +147,8 @@ function OTPInput({ value, onChange, length, error, disabled }: OTPInputProps) {
               style={[
                 styles.otpBox,
                 {
+                  width: spacing[12],  // 48px
+                  height: spacing[14],  // 56px
                   borderRadius: radius.lg,
                   borderColor: error
                     ? colors.destructive
@@ -299,7 +301,7 @@ export function OTPVerificationScreen({
       )}
 
       {/* Content */}
-      <View style={[styles.content, { paddingHorizontal: spacing[6] }]}>
+      <View style={[styles.content, { paddingHorizontal: spacing[6], paddingTop: spacing[6] }]}>
         <Text
           style={[
             styles.title,
@@ -415,7 +417,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingTop: 24,
   },
   title: {
     textAlign: 'center',
@@ -429,8 +430,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   otpBox: {
-    width: 48,
-    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
   },
