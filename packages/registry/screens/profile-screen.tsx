@@ -157,7 +157,7 @@ export function ProfileScreen({
   onBackPress,
   headerActions,
 }: ProfileScreenProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight, lineHeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const [activeTab, setActiveTab] = useState(tabs[0]?.key || '');
@@ -224,7 +224,11 @@ export function ProfileScreen({
           {/* Name & Username */}
           <View style={[styles.nameContainer, { marginTop: spacing[4] }]}>
             <View style={styles.nameRow}>
-              <Text style={[styles.name, { color: colors.foreground }]}>{user.name}</Text>
+              <Text style={{
+                fontSize: fontSize['2xl'],
+                fontWeight: fontWeight.bold,
+                color: colors.foreground,
+              }}>{user.name}</Text>
               {user.verified && (
                 <View style={{ marginLeft: spacing[1] }}>
                   <VerifiedIcon color={colors.primary} />
@@ -232,7 +236,11 @@ export function ProfileScreen({
               )}
             </View>
             {user.username && (
-              <Text style={[styles.username, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
+              <Text style={{
+                fontSize: fontSize.base,
+                color: colors.foregroundMuted,
+                marginTop: spacing[1],
+              }}>
                 {user.username}
               </Text>
             )}
@@ -240,7 +248,13 @@ export function ProfileScreen({
 
           {/* Bio */}
           {user.bio && (
-            <Text style={[styles.bio, { color: colors.foreground, marginTop: spacing[3] }]}>
+            <Text style={{
+              fontSize: fontSize.base,
+              lineHeight: lineHeight.relaxed,
+              textAlign: 'center',
+              color: colors.foreground,
+              marginTop: spacing[3],
+            }}>
               {user.bio}
             </Text>
           )}
@@ -254,10 +268,18 @@ export function ProfileScreen({
                   onPress={() => onStatPress?.(key)}
                   style={styles.statItem}
                 >
-                  <Text style={[styles.statValue, { color: colors.foreground }]}>
+                  <Text style={{
+                    fontSize: fontSize.xl,
+                    fontWeight: fontWeight.bold,
+                    color: colors.foreground,
+                  }}>
                     {formatNumber(value!)}
                   </Text>
-                  <Text style={[styles.statLabel, { color: colors.foregroundMuted }]}>
+                  <Text style={{
+                    fontSize: fontSize.xs,
+                    color: colors.foregroundMuted,
+                    marginTop: 2,
+                  }}>
                     {key.charAt(0).toUpperCase() + key.slice(1)}
                   </Text>
                 </Pressable>
@@ -347,32 +369,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  name: {
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  username: {
-    fontSize: 15,
-  },
-  bio: {
-    fontSize: 15,
-    lineHeight: 22,
-    textAlign: 'center',
-  },
   stats: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
   statItem: {
     alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  statLabel: {
-    fontSize: 13,
-    marginTop: 2,
   },
   actions: {
     flexDirection: 'row',
