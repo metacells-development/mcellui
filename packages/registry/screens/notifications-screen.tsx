@@ -191,16 +191,42 @@ function EmptyState({
   title,
   message,
   colors,
+  fontSize,
+  fontWeight,
+  lineHeight,
 }: {
   title: string;
   message: string;
   colors: any;
+  fontSize: any;
+  fontWeight: any;
+  lineHeight: any;
 }) {
   return (
     <View style={styles.emptyContainer}>
       <BellOffIcon size={64} color={colors.foregroundMuted} />
-      <Text style={[styles.emptyTitle, { color: colors.foreground }]}>{title}</Text>
-      <Text style={[styles.emptyMessage, { color: colors.foregroundMuted }]}>{message}</Text>
+      <Text
+        style={{
+          color: colors.foreground,
+          fontSize: fontSize.xl,
+          fontWeight: fontWeight.semibold,
+          marginTop: 16,
+          textAlign: 'center',
+        }}
+      >
+        {title}
+      </Text>
+      <Text
+        style={{
+          color: colors.foregroundMuted,
+          fontSize: fontSize.base,
+          lineHeight: lineHeight.relaxed,
+          marginTop: 8,
+          textAlign: 'center',
+        }}
+      >
+        {message}
+      </Text>
     </View>
   );
 }
@@ -220,7 +246,7 @@ export function NotificationsScreen({
   emptyTitle = 'No notifications',
   emptyMessage = 'You\'re all caught up! Check back later for new updates.',
 }: NotificationsScreenProps) {
-  const { colors, spacing, fontWeight } = useTheme();
+  const { colors, spacing, fontSize, fontWeight, lineHeight } = useTheme();
   const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
 
@@ -272,10 +298,11 @@ export function NotificationsScreen({
 
         <View style={styles.headerCenter}>
           <Text
-            style={[
-              styles.headerTitle,
-              { color: colors.foreground, fontWeight: fontWeight.semibold },
-            ]}
+            style={{
+              color: colors.foreground,
+              fontSize: fontSize.lg,
+              fontWeight: fontWeight.semibold,
+            }}
           >
             Notifications
           </Text>
@@ -286,7 +313,13 @@ export function NotificationsScreen({
                 { backgroundColor: colors.primary, marginLeft: spacing[2] },
               ]}
             >
-              <Text style={[styles.badgeText, { color: colors.primaryForeground }]}>
+              <Text
+                style={{
+                  color: colors.primaryForeground,
+                  fontSize: fontSize.xs,
+                  fontWeight: fontWeight.semibold,
+                }}
+              >
                 {unreadCount}
               </Text>
             </View>
@@ -295,7 +328,7 @@ export function NotificationsScreen({
 
         {onMarkAllRead && unreadCount > 0 && (
           <Pressable onPress={onMarkAllRead} hitSlop={8}>
-            <Text style={[styles.markAllRead, { color: colors.primary }]}>
+            <Text style={{ color: colors.primary, fontSize: fontSize.sm }}>
               Mark all read
             </Text>
           </Pressable>
@@ -308,7 +341,14 @@ export function NotificationsScreen({
 
       {/* Notifications List */}
       {notifications.length === 0 ? (
-        <EmptyState title={emptyTitle} message={emptyMessage} colors={colors} />
+        <EmptyState
+          title={emptyTitle}
+          message={emptyMessage}
+          colors={colors}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          lineHeight={lineHeight}
+        />
       ) : (
         <ScrollView
           style={styles.list}
@@ -379,22 +419,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  headerTitle: {
-    fontSize: 18,
-  },
   badge: {
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 10,
     minWidth: 20,
     alignItems: 'center',
-  },
-  badgeText: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  markAllRead: {
-    fontSize: 14,
   },
   list: {
     flex: 1,
@@ -404,17 +434,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 32,
-  },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginTop: 16,
-    textAlign: 'center',
-  },
-  emptyMessage: {
-    fontSize: 15,
-    marginTop: 8,
-    textAlign: 'center',
-    lineHeight: 22,
   },
 });

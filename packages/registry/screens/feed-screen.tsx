@@ -172,24 +172,50 @@ function EmptyState({
   title,
   message,
   colors,
+  fontSize,
+  fontWeight,
+  lineHeight,
 }: {
   title: string;
   message: string;
   colors: any;
+  fontSize: any;
+  fontWeight: any;
+  lineHeight: any;
 }) {
   return (
     <View style={styles.emptyContainer}>
       <FeedEmptyIcon size={64} color={colors.foregroundMuted} />
-      <Text style={[styles.emptyTitle, { color: colors.foreground }]}>{title}</Text>
-      <Text style={[styles.emptyMessage, { color: colors.foregroundMuted }]}>{message}</Text>
+      <Text
+        style={{
+          color: colors.foreground,
+          fontSize: fontSize.xl,
+          fontWeight: fontWeight.semibold,
+          marginTop: 16,
+          textAlign: 'center',
+        }}
+      >
+        {title}
+      </Text>
+      <Text
+        style={{
+          color: colors.foregroundMuted,
+          fontSize: fontSize.base,
+          lineHeight: lineHeight.relaxed,
+          marginTop: 8,
+          textAlign: 'center',
+        }}
+      >
+        {message}
+      </Text>
     </View>
   );
 }
 
-function LoadingFooter({ colors }: { colors: any }) {
+function LoadingFooter({ colors, fontSize }: { colors: any; fontSize: any }) {
   return (
     <View style={styles.loadingFooter}>
-      <Text style={[styles.loadingText, { color: colors.foregroundMuted }]}>
+      <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>
         Loading more posts...
       </Text>
     </View>
@@ -216,7 +242,7 @@ export function FeedScreen({
   emptyTitle = 'No posts yet',
   emptyMessage = 'Follow people or create your first post to see content here.',
 }: FeedScreenProps) {
-  const { colors, spacing, radius, fontWeight } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight, lineHeight } = useTheme();
   const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
 
@@ -280,10 +306,11 @@ export function FeedScreen({
         )}
 
         <Text
-          style={[
-            styles.headerTitle,
-            { color: colors.foreground, fontWeight: fontWeight.bold },
-          ]}
+          style={{
+            color: colors.foreground,
+            fontSize: fontSize.lg,
+            fontWeight: fontWeight.bold,
+          }}
         >
           {title}
         </Text>
@@ -299,7 +326,14 @@ export function FeedScreen({
 
       {/* Posts */}
       {posts.length === 0 ? (
-        <EmptyState title={emptyTitle} message={emptyMessage} colors={colors} />
+        <EmptyState
+          title={emptyTitle}
+          message={emptyMessage}
+          colors={colors}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          lineHeight={lineHeight}
+        />
       ) : optimized ? (
         <FlatList
           data={posts}
@@ -309,7 +343,7 @@ export function FeedScreen({
           onEndReached={onEndReached}
           onEndReachedThreshold={0.5}
           ListFooterComponent={
-            loadingMore ? <LoadingFooter colors={colors} /> : null
+            loadingMore ? <LoadingFooter colors={colors} fontSize={fontSize} /> : null
           }
           contentContainerStyle={{ paddingBottom: insets.bottom }}
           showsVerticalScrollIndicator={false}
@@ -338,7 +372,7 @@ export function FeedScreen({
             />
           ))}
 
-          {loadingMore && <LoadingFooter colors={colors} />}
+          {loadingMore && <LoadingFooter colors={colors} fontSize={fontSize} />}
 
           {/* Bottom padding */}
           <View style={{ height: insets.bottom + spacing[4] }} />
@@ -361,9 +395,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  headerTitle: {
-    fontSize: 18,
-  },
   list: {
     flex: 1,
   },
@@ -373,23 +404,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 32,
   },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginTop: 16,
-    textAlign: 'center',
-  },
-  emptyMessage: {
-    fontSize: 15,
-    marginTop: 8,
-    textAlign: 'center',
-    lineHeight: 22,
-  },
   loadingFooter: {
     padding: 16,
     alignItems: 'center',
-  },
-  loadingText: {
-    fontSize: 14,
   },
 });
