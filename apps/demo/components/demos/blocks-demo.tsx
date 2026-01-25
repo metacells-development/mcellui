@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert, ScrollView, Image, TextInput, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Alert, ScrollView, Image, TextInput, Pressable, ActivityIndicator } from 'react-native';
 import { useTheme } from '@metacells/mcellui-core';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
@@ -32,6 +32,7 @@ import { SettingsListBlock } from '@/components/blocks/settings-list-block';
 import { EmptyStateBlock } from '@/components/blocks/empty-state-block';
 import { ErrorStateBlock } from '@/components/blocks/error-state-block';
 import { ProfileBlock } from '@/components/blocks/profile-block';
+import { FeedPostCard } from '@/components/blocks/feed-post-card';
 
 // ============================================================================
 // Demo Component
@@ -1203,11 +1204,23 @@ function CommentItemPreview() {
 function ProductCardPreview() {
   const { colors, spacing } = useTheme();
   const [wishlisted, setWishlisted] = useState(false);
+  const [addingToCart, setAddingToCart] = useState<string | null>(null);
+
+  const handleAddToCart = async (productId: string) => {
+    setAddingToCart(productId);
+    await new Promise((r) => setTimeout(r, 1000));
+    setAddingToCart(null);
+    Alert.alert('Added to Cart');
+  };
 
   return (
-    <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <View style={{ gap: spacing[3] }}>
+    <View style={{ gap: spacing[4] }}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Loading State</CardTitle>
+          <CardDescription>Shows loading during "Add to Cart"</CardDescription>
+        </CardHeader>
+        <CardContent style={{ paddingTop: spacing[4] }}>
           <ProductCard
             title="Wireless Headphones"
             price={149.99}
@@ -1216,23 +1229,46 @@ function ProductCardPreview() {
             reviewCount={128}
             wishlisted={wishlisted}
             onPress={() => Alert.alert('Product Details')}
-            onAddToCart={() => Alert.alert('Added to Cart')}
+            onAddToCart={() => handleAddToCart('1')}
             onWishlist={() => setWishlisted(!wishlisted)}
           />
-          <ProductCard
-            title="Smart Watch Pro"
-            price={299.99}
-            originalPrice={349.99}
-            image={{ uri: 'https://picsum.photos/200/200?random=11' }}
-            rating={4.8}
-            reviewCount={256}
-            badge="Sale"
-            onPress={() => Alert.alert('Product Details')}
-            onAddToCart={() => Alert.alert('Added to Cart')}
-          />
-        </View>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Sale & Disabled States</CardTitle>
+          <CardDescription>Shows discount badge and out of stock</CardDescription>
+        </CardHeader>
+        <CardContent style={{ paddingTop: spacing[4] }}>
+          <View style={{ gap: spacing[3] }}>
+            <ProductCard
+              title="Smart Watch Pro"
+              price={299.99}
+              originalPrice={349.99}
+              image={{ uri: 'https://picsum.photos/200/200?random=11' }}
+              rating={4.8}
+              reviewCount={256}
+              badge="Sale"
+              onPress={() => Alert.alert('Product Details')}
+              onAddToCart={() => Alert.alert('Added to Cart')}
+            />
+            <ProductCard
+              title="Gaming Keyboard"
+              price={129.99}
+              image={{ uri: 'https://picsum.photos/200/200?random=12' }}
+              rating={4.3}
+              reviewCount={89}
+              badge="Sold Out"
+              badgeVariant="secondary"
+              outOfStock
+              onPress={() => Alert.alert('Product Details')}
+              onAddToCart={() => Alert.alert('Notify Me')}
+            />
+          </View>
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 
