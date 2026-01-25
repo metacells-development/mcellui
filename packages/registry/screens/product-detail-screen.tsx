@@ -167,7 +167,7 @@ export function ProductDetailScreen({
   onReviewPress,
   onWriteReview,
 }: ProductDetailScreenProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -218,7 +218,7 @@ export function ProductDetailScreen({
                 <IconButton icon={<CartIcon />} variant="ghost" onPress={onCartPress} />
                 {cartCount !== undefined && cartCount > 0 && (
                   <View style={[styles.cartBadge, { backgroundColor: colors.destructive }]}>
-                    <Text style={styles.cartBadgeText}>{cartCount > 9 ? '9+' : cartCount}</Text>
+                    <Text style={{ color: '#fff', fontSize: fontSize.xs - 2, fontWeight: fontWeight.bold }}>{cartCount > 9 ? '9+' : cartCount}</Text>
                   </View>
                 )}
               </View>
@@ -276,13 +276,13 @@ export function ProductDetailScreen({
 
         {/* Product Info */}
         <View style={[styles.productInfo, { padding: spacing[4] }]}>
-          <Text style={[styles.productName, { color: colors.foreground }]}>{product.name}</Text>
+          <Text style={{ color: colors.foreground, fontSize: fontSize.xl, fontWeight: fontWeight.bold, lineHeight: 28 }}>{product.name}</Text>
 
           {/* Rating */}
           {product.rating !== undefined && (
             <Pressable style={[styles.ratingRow, { marginTop: spacing[2] }]} onPress={onWriteReview}>
               <Rating value={product.rating} size="sm" readOnly />
-              <Text style={[styles.reviewCount, { color: colors.foregroundMuted }]}>
+              <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>
                 ({product.reviewCount || 0} reviews)
               </Text>
             </Pressable>
@@ -290,10 +290,10 @@ export function ProductDetailScreen({
 
           {/* Price */}
           <View style={[styles.priceRow, { marginTop: spacing[3] }]}>
-            <Text style={[styles.price, { color: colors.foreground }]}>{formatPrice(product.price)}</Text>
+            <Text style={{ color: colors.foreground, fontSize: fontSize['2xl'], fontWeight: fontWeight.bold }}>{formatPrice(product.price)}</Text>
             {product.originalPrice && (
               <>
-                <Text style={[styles.originalPrice, { color: colors.foregroundMuted }]}>
+                <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.md, textDecorationLine: 'line-through' }}>
                   {formatPrice(product.originalPrice)}
                 </Text>
                 <Badge variant="success" size="sm">-{discountPercent}%</Badge>
@@ -303,7 +303,7 @@ export function ProductDetailScreen({
 
           {/* Stock status */}
           {product.inStock === false && (
-            <Text style={[styles.outOfStock, { color: colors.destructive, marginTop: spacing[2] }]}>
+            <Text style={{ color: colors.destructive, fontSize: fontSize.sm, fontWeight: fontWeight.semibold, marginTop: spacing[2] }}>
               Out of Stock
             </Text>
           )}
@@ -316,7 +316,7 @@ export function ProductDetailScreen({
           <View style={[styles.section, { padding: spacing[4] }]}>
             {product.variants.map((variant) => (
               <View key={variant.type} style={{ marginBottom: spacing[4] }}>
-                <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[2] }]}>
+                <Text style={{ color: colors.foreground, fontSize: fontSize.base, fontWeight: fontWeight.semibold, marginBottom: spacing[2] }}>
                   {variant.type}: {selectedVariants[variant.type] || 'Select'}
                 </Text>
                 <ChipGroup>
@@ -345,7 +345,7 @@ export function ProductDetailScreen({
 
           <TabsContent value="description">
             <View style={{ padding: spacing[4] }}>
-              <Text style={[styles.description, { color: colors.foreground }]}>
+              <Text style={{ color: colors.foreground, fontSize: fontSize.base, lineHeight: 22 }}>
                 {product.description || 'No description available.'}
               </Text>
             </View>
@@ -356,7 +356,7 @@ export function ProductDetailScreen({
               {product.features?.map((feature, index) => (
                 <View key={index} style={[styles.featureItem, { marginBottom: spacing[2] }]}>
                   <View style={[styles.featureBullet, { backgroundColor: colors.primary }]} />
-                  <Text style={[styles.featureText, { color: colors.foreground }]}>{feature}</Text>
+                  <Text style={{ color: colors.foreground, fontSize: fontSize.base, lineHeight: 22, flex: 1 }}>{feature}</Text>
                 </View>
               ))}
             </View>
@@ -365,7 +365,7 @@ export function ProductDetailScreen({
           <TabsContent value="reviews">
             <View style={{ padding: spacing[4] }}>
               {reviews.length === 0 ? (
-                <Text style={{ color: colors.foregroundMuted, textAlign: 'center' }}>
+                <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.base, textAlign: 'center' }}>
                   No reviews yet. Be the first to review!
                 </Text>
               ) : (
@@ -376,11 +376,11 @@ export function ProductDetailScreen({
                     onPress={() => onReviewPress?.(review)}
                   >
                     <View style={styles.reviewHeader}>
-                      <Text style={[styles.reviewerName, { color: colors.foreground }]}>{review.user.name}</Text>
-                      <Text style={[styles.reviewDate, { color: colors.foregroundMuted }]}>{review.date}</Text>
+                      <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>{review.user.name}</Text>
+                      <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs }}>{review.date}</Text>
                     </View>
                     <Rating value={review.rating} size="sm" readOnly style={{ marginTop: spacing[1] }} />
-                    <Text style={[styles.reviewComment, { color: colors.foreground, marginTop: spacing[2] }]} numberOfLines={3}>
+                    <Text style={{ color: colors.foreground, fontSize: fontSize.sm, lineHeight: 20, marginTop: spacing[2] }} numberOfLines={3}>
                       {review.comment}
                     </Text>
                   </Pressable>
@@ -471,11 +471,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cartBadgeText: {
-    color: '#fff',
-    fontSize: 10,
-    fontWeight: '700',
-  },
   content: {
     flex: 1,
   },
@@ -510,45 +505,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   productInfo: {},
-  productName: {
-    fontSize: 22,
-    fontWeight: '700',
-    lineHeight: 28,
-  },
   ratingRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  },
-  reviewCount: {
-    fontSize: 14,
   },
   priceRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
   },
-  price: {
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  originalPrice: {
-    fontSize: 16,
-    textDecorationLine: 'line-through',
-  },
-  outOfStock: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
   section: {},
-  sectionTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  description: {
-    fontSize: 15,
-    lineHeight: 22,
-  },
   featureItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -560,27 +527,11 @@ const styles = StyleSheet.create({
     marginTop: 7,
     marginRight: 10,
   },
-  featureText: {
-    flex: 1,
-    fontSize: 15,
-    lineHeight: 22,
-  },
   reviewItem: {},
   reviewHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  reviewerName: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  reviewDate: {
-    fontSize: 12,
-  },
-  reviewComment: {
-    fontSize: 14,
-    lineHeight: 20,
   },
   bottomBar: {
     flexDirection: 'row',
