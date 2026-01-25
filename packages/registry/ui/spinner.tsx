@@ -21,7 +21,7 @@ import {
   ViewStyle,
   ActivityIndicatorProps,
 } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, spinnerTokens } from '@metacells/mcellui-core';
 
 export type SpinnerSize = 'sm' | 'md' | 'lg';
 export type SpinnerColor = 'default' | 'primary' | 'secondary' | 'muted';
@@ -35,18 +35,6 @@ export interface SpinnerProps extends Omit<ActivityIndicatorProps, 'size' | 'col
   style?: ViewStyle;
 }
 
-const sizeMap: Record<SpinnerSize, 'small' | 'large'> = {
-  sm: 'small',
-  md: 'small',
-  lg: 'large',
-};
-
-const containerSizes: Record<SpinnerSize, number> = {
-  sm: 16,
-  md: 24,
-  lg: 36,
-};
-
 export function Spinner({
   size = 'md',
   color = 'default',
@@ -54,6 +42,7 @@ export function Spinner({
   ...props
 }: SpinnerProps) {
   const { colors } = useTheme();
+  const tokens = spinnerTokens[size];
 
   const getColor = (): string => {
     switch (color) {
@@ -74,8 +63,8 @@ export function Spinner({
       style={[
         styles.container,
         {
-          width: containerSizes[size],
-          height: containerSizes[size],
+          width: tokens.containerSize,
+          height: tokens.containerSize,
         },
         style,
       ]}
@@ -84,7 +73,7 @@ export function Spinner({
       accessibilityState={{ busy: true }}
     >
       <ActivityIndicator
-        size={sizeMap[size]}
+        size={tokens.indicatorSize}
         color={getColor()}
         {...props}
       />
