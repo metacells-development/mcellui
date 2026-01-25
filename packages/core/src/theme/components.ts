@@ -1146,6 +1146,107 @@ export const ecommerceBlockTokens = {
 } as const;
 
 // =============================================================================
+// Content & Social Block Tokens (Phase 10)
+// =============================================================================
+
+/**
+ * Shared card block visual tokens
+ * Used by: ProductCard, ArticleCard, EventCard, ReviewCard
+ */
+export const cardBlockTokens = {
+  shadow: 'sm' as const,
+  borderWidth: 1,
+  image: {
+    productAspectRatio: 1,
+    articleAspectRatio: 1.78,
+    eventAspectRatio: 2.4,
+    reviewAspectRatio: 1,
+  },
+  header: {
+    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[4],
+    gap: spacing[2],
+  },
+  content: {
+    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[4],
+    gap: spacing[1.5],
+  },
+  footer: {
+    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[4],
+    gap: spacing[2],
+  },
+  typography: {
+    titleFontSize: fontSize.md,
+    titleFontWeight: fontWeight.semibold,
+    subtitleFontSize: fontSize.base,
+    priceFontSize: fontSize.lg,
+    priceFontWeight: fontWeight.bold,
+    metaFontSize: fontSize.sm,
+  },
+} as const;
+
+/**
+ * Social interaction block tokens
+ * Used by: FeedPostCard, ChatBubble, CommentItem, UserListItem
+ */
+export const socialBlockTokens = {
+  action: {
+    iconSize: iconSize.md,
+    gap: spacing[1],
+    touchTarget: 44,
+  },
+  avatar: {
+    postSize: 'md' as const,
+    commentSize: 'sm' as const,
+    chatSize: 'sm' as const,
+    listSize: 'md' as const,
+  },
+  bubble: {
+    maxWidth: '75%',
+    paddingVertical: spacing[2],
+    paddingHorizontal: spacing[3],
+    ownBackground: 'primary' as const,
+    otherBackground: 'secondary' as const,
+  },
+  comment: {
+    indentPerLevel: spacing[6],
+    maxNestingLevels: 3,
+  },
+  typography: {
+    authorFontSize: fontSize.base,
+    authorFontWeight: fontWeight.semibold,
+    contentFontSize: fontSize.md,
+    contentLineHeight: 22,
+    timeFontSize: fontSize.sm,
+    actionFontSize: fontSize.sm,
+  },
+} as const;
+
+/**
+ * Product block tokens (Phase 10 - Product cards and cart items)
+ * Used by: ProductCard, CartItem
+ */
+export const productBlockTokens = {
+  product: {
+    badgePosition: { top: spacing[2], left: spacing[2] },
+    wishlistPosition: { top: spacing[2], right: spacing[2] },
+    ratingSize: 'sm' as const,
+  },
+  cart: {
+    imageSize: 80,
+    stepperSize: 'sm' as const,
+    swipeActionWidth: 80,
+  },
+  pricing: {
+    originalPriceOpacity: 0.6,
+    originalPriceDecoration: 'line-through' as const,
+    discountColor: 'destructive' as const,
+  },
+} as const;
+
+// =============================================================================
 // Calendar Component Tokens
 // =============================================================================
 
@@ -1379,6 +1480,10 @@ export const components = {
   stateBlock: stateBlockTokens,
   profileBlock: profileBlockTokens,
   settingsBlock: settingsBlockTokens,
+  cardBlock: cardBlockTokens,
+  socialBlock: socialBlockTokens,
+  productBlock: productBlockTokens,
+  ecommerceBlock: ecommerceBlockTokens,
   calendar: calendarTokens,
   dateTimePicker: dateTimePickerTokens,
   form: formTokens,
