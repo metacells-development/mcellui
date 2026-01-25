@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 8 of 12 (Advanced Components)
-Plans: 08-06 of ? complete
-Status: In progress - Advanced component demos enhanced
-Last activity: 2026-01-25 - Completed 08-06-PLAN.md
+Phase: 9 of 12 (Blocks: Auth & Settings)
+Plans: 09-05 of ? complete
+Status: In progress - Demo enhancement complete
+Last activity: 2026-01-25 - Completed 09-05-PLAN.md (block demos)
 
-Progress: [██████░░░░] 58%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 34
+- Total plans completed: 36
 - Average duration: 3.9 min
-- Total execution time: 2.31 hours
+- Total execution time: 2.45 hours
 
 **By Phase:**
 
@@ -34,12 +34,12 @@ Progress: [██████░░░░] 58%
 | 05-data-display | 5/5 | 10.1 min | 2.0 min |
 | 06-layout-structure | 5/5 | 17.6 min | 3.5 min |
 | 07-navigation-interaction | 5/5 | 10.3 min | 2.1 min |
-| 08-advanced-components | 3/? | 12.1 min | 4.0 min |
-| 09-blocks-auth-settings | 1/? | 3 min | 3.0 min |
+| 08-advanced-components | 4/7 | 15.1 min | 3.8 min |
+| 09-blocks-auth-settings | 5/? | 14.3 min | 2.9 min |
 
 **Recent Trend:**
-- Last 5 plans: 08-06 (6 min), 07-05 (5.3 min), 08-02 (2.5 min), 08-01 (3.6 min), 09-01 (3 min)
-- Trend: Demo enhancement plans 5-6 min, token foundation plans 2-4 min, component migrations 2.5-3.5 min
+- Last 5 plans: 09-05 (5.3 min), 08-07 (3 min), 08-06 (6 min), 07-05 (5.3 min), 08-02 (2.5 min)
+- Trend: Demo enhancement plans 5-6 min, gap closure plans ~3 min, component migrations 2.5-3.5 min
 
 *Updated after each plan completion*
 
@@ -146,6 +146,10 @@ Recent decisions affecting current work:
 - **07-05**: Demo section titles renamed for clarity (Basic Collapsible, Disabled State, Custom Trigger)
 - **07-05**: Carousel ref uses scrollToIndex(n) for programmatic control (not goToNext/goToPrevious)
 - **07-05**: Carousel indicatorStyle prop accepts 'dot' and 'line' values (not indicatorVariant)
+- **09-05**: Block demos use actual registry components (not inline mocks) for accurate behavior
+- **09-05**: Auth blocks demonstrate loading state during form submission with 2-second delays
+- **09-05**: Settings demos show all three item types: switch toggles, navigation chevrons, destructive buttons
+- **09-05**: State blocks show variant comparison: default (full-size) vs compact (reduced spacing/sizing)
 
 ### Pending Todos
 
@@ -158,7 +162,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 08-06-PLAN.md (All 7 advanced component demos enhanced)
+Stopped at: Completed 09-05-PLAN.md (All block demos enhanced with comprehensive state coverage)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -248,10 +252,15 @@ Resume file: None
 |------|------|-------------|--------|
 | 08-01 | 1 | Add centralized tokens for all Phase 08 advanced components | ✅ Complete (3.6 min) |
 | 08-02 | 2 | Migrate Calendar and DateTimePicker to tokens | ✅ Complete (2.5 min) |
-| 08-03 | 2 | Migrate Form components to tokens | ⏳ Pending |
-| 08-04 | 2 | Migrate ImageGallery, Pagination to tokens | ⏳ Pending |
-| 08-05 | 2 | Migrate Stories and SearchInput to tokens | ⏳ Pending |
+| 08-03 | 2 | Migrate Form components to tokens | ✅ Complete |
+| 08-04 | 2 | Migrate ImageGallery, Pagination, Stories to tokens | ✅ Complete |
+| 08-05 | 2 | Migrate SearchInput to tokens | ✅ Complete |
 | 08-06 | 3 | Enhance all 7 advanced component demos | ✅ Complete (6 min) |
+| 08-07 | 1 | Gap closure: Add async loading states to ImageGallery | ✅ Complete (3 min) |
+
+**Verification:** Pending re-verification
+**Gap Closure:** 08-07 added Skeleton loading states to ImageGallery
+**Report:** .planning/phases/08-advanced-components/08-VERIFICATION.md
 
 ## Phase 9 In Progress
 
@@ -261,3 +270,4 @@ Resume file: None
 | 09-02 | 2 | Migrate LoginBlock and SignupBlock to authBlockTokens | ✅ Complete (3.75 min) |
 | 09-03 | 2 | Migrate ProfileBlock and SettingsListBlock to centralized tokens | ✅ Complete |
 | 09-04 | 2 | Migrate EmptyStateBlock and ErrorStateBlock to stateBlockTokens | ✅ Complete (2.3 min) |
+| 09-05 | 3 | Enhance all block demos with comprehensive state coverage | ✅ Complete (5.3 min) |
