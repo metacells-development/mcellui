@@ -28,7 +28,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, authBlockTokens } from '@metacells/mcellui-core';
 
 // Import your components
 import { Button } from '../ui/button';
@@ -124,12 +124,25 @@ export function LoginBlock({
           <Text
             style={[
               styles.title,
-              { color: colors.foreground, marginBottom: spacing[2] },
+              {
+                color: colors.foreground,
+                marginBottom: spacing[2],
+                fontSize: authBlockTokens.header.titleFontSize,
+                fontWeight: authBlockTokens.header.titleFontWeight,
+              },
             ]}
           >
             {title}
           </Text>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.subtitle,
+              {
+                color: colors.foregroundMuted,
+                fontSize: authBlockTokens.header.subtitleFontSize,
+              },
+            ]}
+          >
             {subtitle}
           </Text>
         </View>
@@ -168,7 +181,14 @@ export function LoginBlock({
                   {onForgotPassword && (
                     <Pressable onPress={onForgotPassword}>
                       <Text
-                        style={[styles.forgotLink, { color: colors.primary }]}
+                        style={[
+                          styles.forgotLink,
+                          {
+                            color: colors.primary,
+                            fontSize: authBlockTokens.form.forgotLinkFontSize,
+                            fontWeight: authBlockTokens.form.forgotLinkFontWeight,
+                          },
+                        ]}
                       >
                         Forgot password?
                       </Text>
@@ -213,6 +233,7 @@ export function LoginBlock({
                     color: colors.foregroundMuted,
                     paddingHorizontal: spacing[4],
                     backgroundColor: colors.background,
+                    fontSize: authBlockTokens.divider.fontSize,
                   },
                 ]}
               >
@@ -223,7 +244,7 @@ export function LoginBlock({
               />
             </View>
 
-            <View style={[styles.socialButtons, { gap: spacing[3] }]}>
+            <View style={[styles.socialButtons, { gap: authBlockTokens.social.gap }]}>
               {socialProviders.map((provider) => (
                 <Button
                   key={provider}
@@ -241,11 +262,28 @@ export function LoginBlock({
         {/* Sign Up Link */}
         {onSignUp && (
           <View style={[styles.footer, { marginTop: spacing[8] }]}>
-            <Text style={[styles.footerText, { color: colors.foregroundMuted }]}>
+            <Text
+              style={[
+                styles.footerText,
+                {
+                  color: colors.foregroundMuted,
+                  fontSize: authBlockTokens.footer.textFontSize,
+                },
+              ]}
+            >
               Don't have an account?{' '}
             </Text>
             <Pressable onPress={onSignUp}>
-              <Text style={[styles.footerLink, { color: colors.primary }]}>
+              <Text
+                style={[
+                  styles.footerLink,
+                  {
+                    color: colors.primary,
+                    fontSize: authBlockTokens.footer.linkFontSize,
+                    fontWeight: authBlockTokens.footer.linkFontWeight,
+                  },
+                ]}
+              >
                 Sign up
               </Text>
             </Pressable>
@@ -289,12 +327,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
     textAlign: 'center',
   },
   labelRow: {
@@ -303,8 +338,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   forgotLink: {
-    fontSize: 14,
-    fontWeight: '500',
   },
   divider: {
     flexDirection: 'row',
@@ -315,7 +348,6 @@ const styles = StyleSheet.create({
     height: 1,
   },
   dividerText: {
-    fontSize: 14,
   },
   socialButtons: {
     flexDirection: 'row',
@@ -325,10 +357,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   footerText: {
-    fontSize: 14,
   },
   footerLink: {
-    fontSize: 14,
-    fontWeight: '600',
   },
 });
