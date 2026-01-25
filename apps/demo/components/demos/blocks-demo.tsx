@@ -26,6 +26,11 @@ import { TaskItem } from '@/components/blocks/task-item';
 import { EventCard } from '@/components/blocks/event-card';
 import { ArticleCard } from '@/components/blocks/article-card';
 import { PricingCard } from '@/components/blocks/pricing-card';
+import { LoginBlock } from '@/components/blocks/login-block';
+import { SignupBlock } from '@/components/blocks/signup-block';
+import { SettingsListBlock } from '@/components/blocks/settings-list-block';
+import { EmptyStateBlock } from '@/components/blocks/empty-state-block';
+import { ErrorStateBlock } from '@/components/blocks/error-state-block';
 
 // ============================================================================
 // Demo Component
@@ -1133,108 +1138,37 @@ function FeedPostCardPreview() {
 // ============================================================================
 
 function LoginBlockPreview() {
-  const { colors, spacing, radius } = useTheme();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { colors, spacing } = useTheme();
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (data: any) => {
+    setLoading(true);
+    // Simulate API call
+    await new Promise((r) => setTimeout(r, 2000));
+    setLoading(false);
+    Alert.alert('Login Success', `Email: ${data.email}`);
+  };
 
   return (
-    <Card>
-      <CardContent style={{ paddingTop: spacing[4] }}>
-        <View style={styles.loginContainer}>
-          {/* Header */}
-          <View style={[styles.loginHeader, { marginBottom: spacing[6] }]}>
-            <Text style={[styles.loginTitle, { color: colors.foreground }]}>Welcome back</Text>
-            <Text style={[styles.loginSubtitle, { color: colors.foregroundMuted }]}>
-              Sign in to your account
-            </Text>
-          </View>
-
-          {/* Form */}
-          <View style={{ gap: spacing[4] }}>
-            <View>
-              <Text style={[styles.inputLabel, { color: colors.foreground, marginBottom: spacing[2] }]}>
-                Email
-              </Text>
-              <TextInput
-                style={[
-                  styles.loginInput,
-                  {
-                    backgroundColor: colors.background,
-                    borderColor: colors.border,
-                    borderRadius: radius.md,
-                    color: colors.foreground,
-                    padding: spacing[3],
-                  },
-                ]}
-                placeholder="you@example.com"
-                placeholderTextColor={colors.foregroundMuted}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-            </View>
-            <View>
-              <View style={styles.passwordHeader}>
-                <Text style={[styles.inputLabel, { color: colors.foreground }]}>Password</Text>
-                <Pressable onPress={() => Alert.alert('Forgot Password')}>
-                  <Text style={[styles.forgotPassword, { color: colors.primary }]}>Forgot?</Text>
-                </Pressable>
-              </View>
-              <TextInput
-                style={[
-                  styles.loginInput,
-                  {
-                    backgroundColor: colors.background,
-                    borderColor: colors.border,
-                    borderRadius: radius.md,
-                    color: colors.foreground,
-                    padding: spacing[3],
-                    marginTop: spacing[2],
-                  },
-                ]}
-                placeholder="••••••••"
-                placeholderTextColor={colors.foregroundMuted}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-              />
-            </View>
-          </View>
-
-          {/* Button */}
-          <Button
-            onPress={() => Alert.alert('Login', `Email: ${email}`)}
-            style={{ marginTop: spacing[6] }}
-            fullWidth
-          >
-            Sign In
-          </Button>
-
-          {/* Divider */}
-          <View style={[styles.loginDivider, { marginVertical: spacing[6] }]}>
-            <Separator style={{ flex: 1 }} />
-            <Text style={[styles.dividerText, { color: colors.foregroundMuted, marginHorizontal: spacing[3] }]}>
-              or
-            </Text>
-            <Separator style={{ flex: 1 }} />
-          </View>
-
-          {/* Social Login */}
-          <Button variant="outline" onPress={() => Alert.alert('Continue with Google')} fullWidth>
-            Continue with Google
-          </Button>
-
-          {/* Footer */}
-          <View style={[styles.loginFooter, { marginTop: spacing[6] }]}>
-            <Text style={{ color: colors.foregroundMuted }}>Don't have an account? </Text>
-            <Pressable onPress={() => Alert.alert('Sign Up')}>
-              <Text style={{ color: colors.primary, fontWeight: '600' }}>Sign up</Text>
-            </Pressable>
-          </View>
-        </View>
-      </CardContent>
-    </Card>
+    <View style={{ gap: spacing[4] }}>
+      {/* Loading state demo */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Loading State</CardTitle>
+          <CardDescription>Shows spinner during form submission</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <LoginBlock
+            onSubmit={handleSubmit}
+            loading={loading}
+            onForgotPassword={() => Alert.alert('Forgot Password')}
+            onSignUp={() => Alert.alert('Sign Up')}
+            showSocialLogin={true}
+            socialProviders={['google', 'apple']}
+          />
+        </CardContent>
+      </Card>
+    </View>
   );
 }
 
@@ -1243,142 +1177,30 @@ function LoginBlockPreview() {
 // ============================================================================
 
 function SignupBlockPreview() {
-  const { colors, spacing, radius } = useTheme();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [agreed, setAgreed] = useState(false);
+  const { colors, spacing } = useTheme();
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (data: any) => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 2000));
+    setLoading(false);
+    Alert.alert('Signup Success', `Welcome ${data.name}!`);
+  };
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Signup Form</CardTitle>
+        <CardDescription>Complete registration with validation</CardDescription>
+      </CardHeader>
       <CardContent style={{ paddingTop: spacing[4] }}>
-        <View style={styles.loginContainer}>
-          {/* Header */}
-          <View style={[styles.loginHeader, { marginBottom: spacing[6] }]}>
-            <Text style={[styles.loginTitle, { color: colors.foreground }]}>Create account</Text>
-            <Text style={[styles.loginSubtitle, { color: colors.foregroundMuted }]}>
-              Get started with your free account
-            </Text>
-          </View>
-
-          {/* Form */}
-          <View style={{ gap: spacing[4] }}>
-            <View>
-              <Text style={[styles.inputLabel, { color: colors.foreground, marginBottom: spacing[2] }]}>
-                Full Name
-              </Text>
-              <TextInput
-                style={[
-                  styles.loginInput,
-                  {
-                    backgroundColor: colors.background,
-                    borderColor: colors.border,
-                    borderRadius: radius.md,
-                    color: colors.foreground,
-                    padding: spacing[3],
-                  },
-                ]}
-                placeholder="John Doe"
-                placeholderTextColor={colors.foregroundMuted}
-                value={name}
-                onChangeText={setName}
-              />
-            </View>
-            <View>
-              <Text style={[styles.inputLabel, { color: colors.foreground, marginBottom: spacing[2] }]}>
-                Email
-              </Text>
-              <TextInput
-                style={[
-                  styles.loginInput,
-                  {
-                    backgroundColor: colors.background,
-                    borderColor: colors.border,
-                    borderRadius: radius.md,
-                    color: colors.foreground,
-                    padding: spacing[3],
-                  },
-                ]}
-                placeholder="you@example.com"
-                placeholderTextColor={colors.foregroundMuted}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-            </View>
-            <View>
-              <Text style={[styles.inputLabel, { color: colors.foreground, marginBottom: spacing[2] }]}>
-                Password
-              </Text>
-              <TextInput
-                style={[
-                  styles.loginInput,
-                  {
-                    backgroundColor: colors.background,
-                    borderColor: colors.border,
-                    borderRadius: radius.md,
-                    color: colors.foreground,
-                    padding: spacing[3],
-                  },
-                ]}
-                placeholder="••••••••"
-                placeholderTextColor={colors.foregroundMuted}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-              />
-              <Text style={[styles.passwordHint, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
-                Must be at least 8 characters
-              </Text>
-            </View>
-
-            {/* Terms Checkbox */}
-            <View style={[styles.termsRow, { gap: spacing[2] }]}>
-              <Pressable
-                onPress={() => setAgreed(!agreed)}
-                style={[
-                  styles.checkbox,
-                  {
-                    backgroundColor: agreed ? colors.primary : 'transparent',
-                    borderColor: agreed ? colors.primary : colors.border,
-                    borderRadius: radius.sm,
-                  },
-                ]}
-              >
-                {agreed && (
-                  <Svg width={12} height={12} viewBox="0 0 24 24" fill="none">
-                    <Path d="M20 6L9 17l-5-5" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                  </Svg>
-                )}
-              </Pressable>
-              <Text style={[styles.termsText, { color: colors.foregroundMuted, flex: 1 }]}>
-                I agree to the{' '}
-                <Text style={{ color: colors.primary }}>Terms of Service</Text>
-                {' '}and{' '}
-                <Text style={{ color: colors.primary }}>Privacy Policy</Text>
-              </Text>
-            </View>
-          </View>
-
-          {/* Button */}
-          <Button
-            onPress={() => Alert.alert('Sign Up', `Name: ${name}, Email: ${email}`)}
-            style={{ marginTop: spacing[6] }}
-            disabled={!agreed}
-            fullWidth
-          >
-            Create Account
-          </Button>
-
-          {/* Footer */}
-          <View style={[styles.loginFooter, { marginTop: spacing[6] }]}>
-            <Text style={{ color: colors.foregroundMuted }}>Already have an account? </Text>
-            <Pressable onPress={() => Alert.alert('Sign In')}>
-              <Text style={{ color: colors.primary, fontWeight: '600' }}>Sign in</Text>
-            </Pressable>
-          </View>
-        </View>
+        <SignupBlock
+          onSubmit={handleSubmit}
+          loading={loading}
+          onLogin={() => Alert.alert('Login')}
+          onTermsPress={() => Alert.alert('Terms')}
+          onPrivacyPress={() => Alert.alert('Privacy')}
+        />
       </CardContent>
     </Card>
   );
