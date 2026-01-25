@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Layout & Structure** - Separator, Row, Column, Screen, List, Horizontal List, Section Header
 - [x] **Phase 7: Navigation & Interaction** - Tabs, Accordion, Collapsible, Carousel, Swipeable Row
 - [ ] **Phase 8: Advanced Components** - Calendar, DateTime Picker, Image Gallery, Pagination, Stories, Search Input, Form
-- [ ] **Phase 9: Blocks - Auth & Settings** - Login, Signup, Profile, Settings List, Empty State, Error State
+- [x] **Phase 9: Blocks - Auth & Settings** - Login, Signup, Profile, Settings List, Empty State, Error State
 - [ ] **Phase 10: Blocks - Content & Social** - Product Card, Cart Item, Article Card, Event Card, Feed Post, User List Item, Chat Bubble, Comment Item, Review Card
 - [ ] **Phase 11: Blocks - E-commerce & Info** - Banner, Hero, Pricing Card, Stats Card, Feature Card, Content Card, Social Proof Bar, Media Item, Notification Item, Onboarding Slide, Order Item, Task Item, Search Header
 - [ ] **Phase 12: Screens** - All 19 screen templates (Login, Signup, Profile, Settings, Feed, Cart, Checkout, etc.)
@@ -191,14 +191,15 @@ Plans:
   3. Empty State and Error State blocks support customization props
   4. All blocks support loading states during async operations
   5. Demo shows complete workflows with all states (empty, loading, error, success)
-**Plans**: 5 plans
+**Plans**: 6 plans
 
 Plans:
-- [ ] 09-01-PLAN.md - Add auth, state, profile, settings block tokens to core
-- [ ] 09-02-PLAN.md - Migrate LoginBlock and SignupBlock to authBlockTokens
-- [ ] 09-03-PLAN.md - Migrate ProfileBlock and SettingsListBlock to tokens
-- [ ] 09-04-PLAN.md - Migrate EmptyStateBlock and ErrorStateBlock to stateBlockTokens
-- [ ] 09-05-PLAN.md - Enhance blocks demo with comprehensive state coverage
+- [x] 09-01-PLAN.md - Add auth, state, profile, settings block tokens to core
+- [x] 09-02-PLAN.md - Migrate LoginBlock and SignupBlock to authBlockTokens
+- [x] 09-03-PLAN.md - Migrate ProfileBlock and SettingsListBlock to tokens
+- [x] 09-04-PLAN.md - Migrate EmptyStateBlock and ErrorStateBlock to stateBlockTokens
+- [x] 09-05-PLAN.md - Enhance blocks demo with comprehensive state coverage
+- [x] 09-06-PLAN.md - ProfileBlock demo integration gap closure
 
 ### Phase 10: Blocks - Content & Social
 **Goal**: Content and social blocks have consistent card patterns and interaction states
@@ -225,10 +226,15 @@ Plans:
   3. All blocks support loading states where async data is expected
   4. Onboarding Slide and Feature Card support image loading with skeletons
   5. Demo shows all blocks in realistic layouts
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] TBD
+- [ ] 11-01-PLAN.md - Add ecommerceBlockTokens and infoBlockTokens to core theme
+- [ ] 11-02-PLAN.md - Migrate BannerBlock and HeroBlock to ecommerceBlockTokens
+- [ ] 11-03-PLAN.md - Migrate PricingCard and StatsCard to ecommerceBlockTokens
+- [ ] 11-04-PLAN.md - Migrate FeatureCard, ContentCard, OnboardingSlide, SocialProofBar to infoBlockTokens
+- [ ] 11-05-PLAN.md - Migrate NotificationItem, MediaItem, OrderItem, TaskItem, SearchHeader to infoBlockTokens
+- [ ] 11-06-PLAN.md - Enhance blocks demo with all 13 Phase 11 block demos
 
 ### Phase 12: Screens
 **Goal**: All screen templates are production-ready examples with complete flows
@@ -260,7 +266,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 6. Layout & Structure | 5/5 | ✓ Complete | 2026-01-25 |
 | 7. Navigation & Interaction | 5/5 | ✓ Complete | 2026-01-25 |
 | 8. Advanced Components | 0/6 | Planned | - |
-| 9. Blocks - Auth & Settings | 0/5 | Planned | - |
+| 9. Blocks - Auth & Settings | 6/6 | ✓ Complete | 2026-01-25 |
 | 10. Blocks - Content & Social | 0/TBD | Not started | - |
-| 11. Blocks - E-commerce & Info | 0/TBD | Not started | - |
+| 11. Blocks - E-commerce & Info | 0/6 | Planned | - |
 | 12. Screens | 0/TBD | Not started | - |
