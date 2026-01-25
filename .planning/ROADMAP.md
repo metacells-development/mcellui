@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 7: Navigation & Interaction** - Tabs, Accordion, Collapsible, Carousel, Swipeable Row
 - [ ] **Phase 8: Advanced Components** - Calendar, DateTime Picker, Image Gallery, Pagination, Stories, Search Input, Form
 - [x] **Phase 9: Blocks - Auth & Settings** - Login, Signup, Profile, Settings List, Empty State, Error State
-- [ ] **Phase 10: Blocks - Content & Social** - Product Card, Cart Item, Article Card, Event Card, Feed Post, User List Item, Chat Bubble, Comment Item, Review Card
+- [x] **Phase 10: Blocks - Content & Social** - Product Card, Cart Item, Article Card, Event Card, Feed Post, User List Item, Chat Bubble, Comment Item, Review Card
 - [ ] **Phase 11: Blocks - E-commerce & Info** - Banner, Hero, Pricing Card, Stats Card, Feature Card, Content Card, Social Proof Bar, Media Item, Notification Item, Onboarding Slide, Order Item, Task Item, Search Header
 - [ ] **Phase 12: Screens** - All 19 screen templates (Login, Signup, Profile, Settings, Feed, Cart, Checkout, etc.)
 
@@ -212,10 +212,15 @@ Plans:
   3. All blocks use spacing and radius tokens consistently
   4. User List Item and Cart Item support swipe actions with smooth animations
   5. Demo shows all block variants with interaction examples
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] TBD
+- [x] 10-01-PLAN.md - Add cardBlockTokens, socialBlockTokens, productBlockTokens to core theme
+- [x] 10-02-PLAN.md - Migrate ProductCard, ArticleCard, EventCard, ReviewCard to cardBlockTokens
+- [x] 10-03-PLAN.md - Add loading/disabled states to FeedPostCard, ChatBubble, CommentItem
+- [x] 10-04-PLAN.md - Enhance UserListItem and CartItem with loading states and swipe actions
+- [x] 10-05-PLAN.md - Enhance card block demos with variants and states
+- [x] 10-06-PLAN.md - Enhance social/swipeable block demos with loading indicators
 
 ### Phase 11: Blocks - E-commerce & Info
 **Goal**: E-commerce and informational blocks are visually polished and functionally complete
@@ -273,6 +278,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 7. Navigation & Interaction | 5/5 | ✓ Complete | 2026-01-25 |
 | 8. Advanced Components | 7/7 | ✓ Complete | 2026-01-25 |
 | 9. Blocks - Auth & Settings | 6/6 | ✓ Complete | 2026-01-25 |
-| 10. Blocks - Content & Social | 0/TBD | Not started | - |
+| 10. Blocks - Content & Social | 6/6 | ✓ Complete | 2026-01-25 |
 | 11. Blocks - E-commerce & Info | 0/6 | Planned | - |
 | 12. Screens | 0/6 | Planned | - |
