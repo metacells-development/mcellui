@@ -481,7 +481,7 @@ export function CheckoutScreen({
             Shipping Address
           </Text>
         </View>
-        <Text style={{ color: colors.foregroundMuted, fontSize: 13, lineHeight: 20, marginTop: spacing[2] }}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm, lineHeight: 20, marginTop: spacing[2] }}>
           {address.firstName} {address.lastName}{'\n'}
           {address.address}{'\n'}
           {address.city}, {address.state} {address.zipCode}{'\n'}
@@ -497,7 +497,7 @@ export function CheckoutScreen({
             Payment Method
           </Text>
         </View>
-        <Text style={{ color: colors.foregroundMuted, fontSize: 13, lineHeight: 20, marginTop: spacing[2] }}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm, lineHeight: 20, marginTop: spacing[2] }}>
           {paymentType === 'card' && `Card ending in ${cardNumber.slice(-4)}`}
           {paymentType === 'paypal' && 'PayPal'}
           {paymentType === 'applepay' && 'Apple Pay'}
