@@ -6,14 +6,37 @@ import { Section } from './section';
 import { useTheme } from '@metacells/mcellui-core';
 
 export function SectionHeaderDemo() {
-  const { colors } = useTheme();
+  const { colors, spacing, radius } = useTheme();
 
   const handleSeeAll = (section: string) => {
     Alert.alert('See All', `Navigate to ${section} section`);
   };
 
+  const containerStyle = {
+    gap: spacing[6], // 24px
+  };
+
+  const sizesContainerStyle = {
+    gap: spacing[4], // 16px
+  };
+
+  const contextContainerStyle = {
+    gap: spacing[3], // 12px
+  };
+
+  const cardsRowStyle = {
+    flexDirection: 'row' as const,
+    gap: spacing[3], // 12px
+  };
+
+  const cardPlaceholderStyle = {
+    height: 80, // Semantic dimension
+    backgroundColor: colors.backgroundMuted,
+    borderRadius: radius.md, // 8px
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <Section title="Basic">
         <SectionHeader title="Popular Items" />
       </Section>
@@ -42,7 +65,7 @@ export function SectionHeaderDemo() {
       </Section>
 
       <Section title="Sizes">
-        <View style={styles.sizesContainer}>
+        <View style={sizesContainerStyle}>
           <SectionHeader
             title="Small Header"
             size="sm"
@@ -71,21 +94,16 @@ export function SectionHeaderDemo() {
       </Section>
 
       <Section title="In Context">
-        <View style={styles.contextContainer}>
+        <View style={contextContainerStyle}>
           <SectionHeader
             title="Featured"
             onAction={() => handleSeeAll('Featured')}
           />
-          <View style={styles.cardsRow}>
+          <View style={cardsRowStyle}>
             {[1, 2, 3].map((item) => (
               <Card key={item} style={styles.contextCard}>
                 <CardContent style={styles.cardContent}>
-                  <View
-                    style={[
-                      styles.cardPlaceholder,
-                      { backgroundColor: colors.backgroundMuted },
-                    ]}
-                  />
+                  <View style={cardPlaceholderStyle} />
                 </CardContent>
               </Card>
             ))}
@@ -104,25 +122,10 @@ export function SectionHeaderDemo() {
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 24 },
-  sizesContainer: {
-    gap: 16,
-  },
-  contextContainer: {
-    gap: 12,
-  },
-  cardsRow: {
-    flexDirection: 'row',
-    gap: 12,
-  },
   contextCard: {
     flex: 1,
   },
   cardContent: {
     padding: 0,
-  },
-  cardPlaceholder: {
-    height: 80,
-    borderRadius: 8,
   },
 });

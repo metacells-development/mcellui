@@ -68,15 +68,24 @@ function FireIcon({ color = '#000', width = 24, height = 24 }) {
 }
 
 export function ListDemo() {
-  const { colors } = useTheme();
+  const { colors, spacing } = useTheme();
   const [notifications, setNotifications] = useState(true);
 
   const handlePress = (item: string) => {
     Alert.alert('List Item', `${item} pressed`);
   };
 
+  const containerStyle = {
+    gap: spacing[6], // 24px
+  };
+
+  const standaloneListStyle = {
+    gap: 0,
+    marginHorizontal: -spacing[4], // Counteract screen padding for edge-to-edge
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <Section title="Basic">
         <List>
           <ListItem title="Settings" showChevron onPress={() => handlePress('Settings')} />
@@ -251,7 +260,7 @@ export function ListDemo() {
       </Section>
 
       <Section title="Thumbnail - Without Card">
-        <View style={styles.standaloneList}>
+        <View style={standaloneListStyle}>
           <ListItem
             variant="thumbnail"
             title="Spaghetti Bolognese"
@@ -297,12 +306,15 @@ export function ListDemo() {
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 24 },
-  standaloneList: {
-    gap: 0,
-    marginHorizontal: -16, // Counteract screen padding for edge-to-edge standalone items
-  },
   standaloneDivider: {
     height: StyleSheet.hairlineWidth,
+  },
+  box: {
+    padding: 12,
+    borderRadius: 8,
+  },
+  boxText: {
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
