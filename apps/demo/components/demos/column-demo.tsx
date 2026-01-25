@@ -1,20 +1,54 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Column } from '@/components/ui/column';
 import { useTheme } from '@metacells/mcellui-core';
+import { Section } from './section';
 
 function Box({ children, wide }: { children?: React.ReactNode; wide?: boolean }) {
-  const { colors } = useTheme();
+  const { colors, radius } = useTheme();
   return (
-    <View style={[styles.box, wide && styles.wideBox, { backgroundColor: colors.primary }]}>
+    <View style={[styles.box, wide && styles.wideBox, { backgroundColor: colors.primary, borderRadius: radius.md }]}>
       <Text style={[styles.boxText, { color: colors.primaryForeground }]}>{children}</Text>
     </View>
   );
 }
 
 export function ColumnDemo() {
+  const { colors, spacing, fontSize, radius } = useTheme();
+
+  const containerStyle: ViewStyle = {
+    gap: spacing[6], // 24px
+  };
+
+  const labelStyle: TextStyle = {
+    fontSize: fontSize.xs,
+    color: colors.foregroundMuted,
+    marginTop: 4,
+  };
+
+  const gapGridStyle: ViewStyle = {
+    flexDirection: 'row',
+    gap: spacing[4], // 16px
+  };
+
+  const gapItemStyle: ViewStyle = {
+    gap: spacing[1], // 4px
+  };
+
+  const justifyGridStyle: ViewStyle = {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing[2], // 8px
+  };
+
+  const justifyItemStyle: ViewStyle = {
+    flex: 1,
+    minWidth: 70,
+    gap: spacing[1], // 4px
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <Section title="Basic Column">
         <Column gap="md">
           <Box wide>A</Box>
@@ -24,9 +58,9 @@ export function ColumnDemo() {
       </Section>
 
       <Section title="Gap Variants">
-        <View style={styles.gapGrid}>
-          <View style={styles.gapItem}>
-            <Text style={styles.label}>xs (8px)</Text>
+        <View style={gapGridStyle}>
+          <View style={gapItemStyle}>
+            <Text style={labelStyle}>xs (8px)</Text>
             <DemoContainer style={{ width: 80 }}>
               <Column gap="xs">
                 <Box>1</Box>
@@ -35,8 +69,8 @@ export function ColumnDemo() {
               </Column>
             </DemoContainer>
           </View>
-          <View style={styles.gapItem}>
-            <Text style={styles.label}>md (16px)</Text>
+          <View style={gapItemStyle}>
+            <Text style={labelStyle}>md (16px)</Text>
             <DemoContainer style={{ width: 80 }}>
               <Column gap="md">
                 <Box>1</Box>
@@ -45,8 +79,8 @@ export function ColumnDemo() {
               </Column>
             </DemoContainer>
           </View>
-          <View style={styles.gapItem}>
-            <Text style={styles.label}>xl (32px)</Text>
+          <View style={gapItemStyle}>
+            <Text style={labelStyle}>xl (32px)</Text>
             <DemoContainer style={{ width: 80 }}>
               <Column gap="xl">
                 <Box>1</Box>
@@ -59,28 +93,28 @@ export function ColumnDemo() {
       </Section>
 
       <Section title="Align Items">
-        <Text style={styles.label}>align="start"</Text>
+        <Text style={labelStyle}>align="start"</Text>
         <DemoContainer>
           <Column gap="sm" align="start">
             <Box>Short</Box>
             <Box wide>Wider Box</Box>
           </Column>
         </DemoContainer>
-        <Text style={styles.label}>align="center"</Text>
+        <Text style={labelStyle}>align="center"</Text>
         <DemoContainer>
           <Column gap="sm" align="center">
             <Box>Short</Box>
             <Box wide>Wider Box</Box>
           </Column>
         </DemoContainer>
-        <Text style={styles.label}>align="end"</Text>
+        <Text style={labelStyle}>align="end"</Text>
         <DemoContainer>
           <Column gap="sm" align="end">
             <Box>Short</Box>
             <Box wide>Wider Box</Box>
           </Column>
         </DemoContainer>
-        <Text style={styles.label}>align="stretch"</Text>
+        <Text style={labelStyle}>align="stretch"</Text>
         <DemoContainer>
           <Column gap="sm" align="stretch">
             <Box>Stretched</Box>
@@ -90,9 +124,9 @@ export function ColumnDemo() {
       </Section>
 
       <Section title="Justify Content">
-        <View style={styles.justifyGrid}>
-          <View style={styles.justifyItem}>
-            <Text style={styles.label}>start</Text>
+        <View style={justifyGridStyle}>
+          <View style={justifyItemStyle}>
+            <Text style={labelStyle}>start</Text>
             <DemoContainer style={{ height: 150 }}>
               <Column gap="sm" justify="start" style={{ height: '100%' }}>
                 <Box>A</Box>
@@ -100,8 +134,8 @@ export function ColumnDemo() {
               </Column>
             </DemoContainer>
           </View>
-          <View style={styles.justifyItem}>
-            <Text style={styles.label}>center</Text>
+          <View style={justifyItemStyle}>
+            <Text style={labelStyle}>center</Text>
             <DemoContainer style={{ height: 150 }}>
               <Column gap="sm" justify="center" style={{ height: '100%' }}>
                 <Box>A</Box>
@@ -109,8 +143,8 @@ export function ColumnDemo() {
               </Column>
             </DemoContainer>
           </View>
-          <View style={styles.justifyItem}>
-            <Text style={styles.label}>end</Text>
+          <View style={justifyItemStyle}>
+            <Text style={labelStyle}>end</Text>
             <DemoContainer style={{ height: 150 }}>
               <Column gap="sm" justify="end" style={{ height: '100%' }}>
                 <Box>A</Box>
@@ -118,8 +152,8 @@ export function ColumnDemo() {
               </Column>
             </DemoContainer>
           </View>
-          <View style={styles.justifyItem}>
-            <Text style={styles.label}>between</Text>
+          <View style={justifyItemStyle}>
+            <Text style={labelStyle}>between</Text>
             <DemoContainer style={{ height: 150 }}>
               <Column gap="sm" justify="between" style={{ height: '100%' }}>
                 <Box>A</Box>
@@ -131,14 +165,14 @@ export function ColumnDemo() {
       </Section>
 
       <Section title="Flex">
-        <Text style={styles.label}>Two columns with flex={1}</Text>
+        <Text style={labelStyle}>Two columns with flex={1}</Text>
         <DemoContainer>
-          <View style={{ flexDirection: 'row', gap: 8 }}>
-            <Column flex={1} gap="xs" style={{ backgroundColor: 'rgba(0,0,0,0.05)', borderRadius: 8, padding: 8 }}>
+          <View style={{ flexDirection: 'row', gap: spacing[2] }}>
+            <Column flex={1} gap="xs" style={{ backgroundColor: colors.backgroundMuted, borderRadius: radius.md, padding: spacing[2] }}>
               <Box>1</Box>
               <Box>2</Box>
             </Column>
-            <Column flex={1} gap="xs" style={{ backgroundColor: 'rgba(0,0,0,0.05)', borderRadius: 8, padding: 8 }}>
+            <Column flex={1} gap="xs" style={{ backgroundColor: colors.backgroundMuted, borderRadius: radius.md, padding: spacing[2] }}>
               <Box>A</Box>
               <Box>B</Box>
             </Column>
@@ -147,16 +181,16 @@ export function ColumnDemo() {
       </Section>
 
       <Section title="Padding">
-        <Text style={styles.label}>p="md" (padding all sides)</Text>
+        <Text style={labelStyle}>p="md" (padding all sides)</Text>
         <DemoContainer>
-          <Column gap="sm" p="md" style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}>
+          <Column gap="sm" p="md" style={{ backgroundColor: colors.backgroundMuted }}>
             <Box wide>A</Box>
             <Box wide>B</Box>
           </Column>
         </DemoContainer>
-        <Text style={styles.label}>py="lg" (vertical padding)</Text>
+        <Text style={labelStyle}>py="lg" (vertical padding)</Text>
         <DemoContainer>
-          <Column gap="sm" py="lg" style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}>
+          <Column gap="sm" py="lg" style={{ backgroundColor: colors.backgroundMuted }}>
             <Box wide>A</Box>
             <Box wide>B</Box>
           </Column>
@@ -166,34 +200,28 @@ export function ColumnDemo() {
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      <View style={styles.sectionContent}>{children}</View>
-    </View>
-  );
-}
-
 function DemoContainer({ children, style }: { children: React.ReactNode; style?: any }) {
-  const { colors } = useTheme();
+  const { colors, spacing, radius } = useTheme();
+
+  const demoContainerStyle: ViewStyle = {
+    borderWidth: 1,
+    borderRadius: radius.md,
+    borderStyle: 'dashed',
+    padding: spacing[2],
+    borderColor: colors.border,
+  };
+
   return (
-    <View style={[styles.demoContainer, { borderColor: colors.border }, style]}>
+    <View style={[demoContainerStyle, style]}>
       {children}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 24 },
-  section: { gap: 12 },
-  sectionTitle: { fontSize: 14, fontWeight: '600', color: '#737373', textTransform: 'uppercase', letterSpacing: 0.5 },
-  sectionContent: { gap: 8 },
-  label: { fontSize: 12, color: '#737373', marginTop: 4 },
   box: {
     width: 44,
     height: 44,
-    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -201,30 +229,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   boxText: {
-    fontSize: 16,
     fontWeight: '600',
-  },
-  demoContainer: {
-    borderWidth: 1,
-    borderRadius: 8,
-    borderStyle: 'dashed',
-    padding: 8,
-  },
-  gapGrid: {
-    flexDirection: 'row',
-    gap: 16,
-  },
-  gapItem: {
-    gap: 4,
-  },
-  justifyGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  justifyItem: {
-    flex: 1,
-    minWidth: 70,
-    gap: 4,
   },
 });
