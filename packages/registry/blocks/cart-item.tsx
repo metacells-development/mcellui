@@ -29,9 +29,10 @@ import {
   StyleSheet,
   ViewStyle,
   ImageSourcePropType,
+  ActivityIndicator,
 } from 'react-native';
 import Svg, { Path, Rect, Circle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, cardBlockTokens, productBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -112,6 +113,12 @@ export interface CartItemProps {
   outOfStock?: boolean;
   /** Whether swipe actions are enabled */
   swipeable?: boolean;
+  /** Whether quantity change is in progress */
+  quantityLoading?: boolean;
+  /** Whether remove action is in progress */
+  removeLoading?: boolean;
+  /** Whether item is disabled */
+  disabled?: boolean;
   /** Called when quantity changes */
   onQuantityChange?: (quantity: number) => void;
   /** Called when remove is pressed */
@@ -137,6 +144,9 @@ export function CartItem({
   showSaveForLater = false,
   outOfStock = false,
   swipeable = true,
+  quantityLoading = false,
+  removeLoading = false,
+  disabled = false,
   onQuantityChange,
   onRemove,
   onSaveForLater,
@@ -175,8 +185,8 @@ export function CartItem({
     rightActions.push({
       label: 'Save',
       color: colors.primary,
-      icon: <HeartIcon />,
-      onPress: handleSaveForLater,
+      icon: removeLoading ? <ActivityIndicator color="#fff" size="small" /> : <HeartIcon />,
+      onPress: disabled || removeLoading ? () => {} : handleSaveForLater,
     });
   }
 
@@ -184,29 +194,36 @@ export function CartItem({
     rightActions.push({
       label: 'Remove',
       color: colors.destructive,
-      icon: <TrashIcon />,
-      onPress: handleRemove,
+      icon: removeLoading ? <ActivityIndicator color="#fff" size="small" /> : <TrashIcon />,
+      onPress: disabled || removeLoading ? () => {} : handleRemove,
     });
   }
 
   const content = (
     <Pressable
-      onPress={onPress ? handlePress : undefined}
+      onPress={onPress && !disabled ? handlePress : undefined}
+      disabled={disabled}
       style={({ pressed }) => [
         styles.container,
         {
           padding: spacing[4],
           backgroundColor: pressed && onPress ? colors.secondary : colors.background,
-          opacity: outOfStock ? 0.6 : 1,
+          opacity: outOfStock || disabled ? 0.6 : 1,
         },
         style,
       ]}
+      accessibilityLabel={`${product.name}, quantity ${quantity}, total ${formatPrice(lineTotal)}`}
+      accessibilityRole="button"
     >
       {/* Product Image */}
       <View
         style={[
-          styles.imageContainer,
           {
+            width: productBlockTokens.cart.imageSize,
+            height: productBlockTokens.cart.imageSize,
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
             backgroundColor: colors.secondary,
             borderRadius: radius.md,
           },
@@ -225,6 +242,7 @@ export function CartItem({
         <Text
           style={[styles.name, { color: colors.foreground }]}
           numberOfLines={2}
+          accessibilityRole="text"
         >
           {product.name}
         </Text>
@@ -267,7 +285,8 @@ export function CartItem({
               min={minQuantity}
               max={maxQuantity}
               onValueChange={onQuantityChange}
-              size="sm"
+              size={productBlockTokens.cart.stepperSize}
+              disabled={disabled || quantityLoading}
             />
           )}
 
@@ -283,7 +302,10 @@ export function CartItem({
   // Wrap with SwipeableRow if enabled
   if (swipeable && rightActions.length > 0) {
     return (
-      <SwipeableRow rightActions={rightActions}>
+      <SwipeableRow
+        rightActions={rightActions}
+        actionWidth={productBlockTokens.cart.swipeActionWidth}
+      >
         {content}
       </SwipeableRow>
     );
@@ -300,13 +322,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-  },
-  imageContainer: {
-    width: 80,
-    height: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
   },
   image: {
     width: '100%',
