@@ -25,9 +25,9 @@
  */
 
 import React from 'react';
-import { View, Text, Image, StyleSheet, ViewStyle, ImageSourcePropType } from 'react-native';
+import { View, Text, Image, StyleSheet, ViewStyle, ImageSourcePropType, Pressable } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, socialBlockTokens } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Avatar } from '../ui/avatar';
@@ -116,6 +116,8 @@ export interface ChatBubbleProps {
   image?: ImageSourcePropType;
   /** Called when message is long pressed */
   onLongPress?: () => void;
+  /** Whether message interactions are disabled */
+  disabled?: boolean;
   /** Container style */
   style?: ViewStyle;
 }
@@ -135,6 +137,7 @@ export function ChatBubble({
   isLast = true,
   image,
   onLongPress,
+  disabled = false,
   style,
 }: ChatBubbleProps) {
   const { colors, spacing, radius } = useTheme();
@@ -213,7 +216,7 @@ export function ChatBubble({
         <Avatar
           source={user.avatarUrl ? { uri: user.avatarUrl } : undefined}
           fallback={initials}
-          size="sm"
+          size={socialBlockTokens.avatar.chatSize}
           style={{ marginRight: spacing[2] }}
         />
       )}
@@ -224,17 +227,22 @@ export function ChatBubble({
       )}
 
       {/* Message bubble */}
-      <View
+      <Pressable
+        onLongPress={disabled ? undefined : onLongPress}
+        disabled={disabled}
         style={[
           styles.bubble,
           {
             backgroundColor: bubbleBackground,
-            maxWidth: '75%',
-            paddingHorizontal: spacing[3],
-            paddingVertical: spacing[2],
+            maxWidth: socialBlockTokens.bubble.maxWidth,
+            paddingHorizontal: socialBlockTokens.bubble.paddingHorizontal,
+            paddingVertical: socialBlockTokens.bubble.paddingVertical,
+            opacity: disabled ? 0.5 : 1,
           },
           getBorderRadius(),
         ]}
+        accessibilityRole="text"
+        accessibilityLabel={`Message from ${isOwn ? 'you' : user?.name || 'user'}: ${message}${time ? `, sent ${time}` : ''}`}
       >
         {/* Image attachment */}
         {image && (
@@ -249,20 +257,35 @@ export function ChatBubble({
         )}
 
         {/* Message text */}
-        <Text style={[styles.message, { color: textColor }]}>
+        <Text
+          style={[
+            {
+              fontSize: socialBlockTokens.typography.contentFontSize,
+              lineHeight: 20,
+              color: textColor,
+            },
+          ]}
+        >
           {message}
         </Text>
 
         {/* Time and status */}
         <View style={[styles.meta, { marginTop: spacing[1] }]}>
           {time && (
-            <Text style={[styles.time, { color: timeColor }]}>
+            <Text
+              style={[
+                {
+                  fontSize: socialBlockTokens.typography.timeFontSize,
+                  color: timeColor,
+                },
+              ]}
+            >
               {time}
             </Text>
           )}
           {isOwn && renderStatus()}
         </View>
-      </View>
+      </Pressable>
     </View>
   );
 }
@@ -283,10 +306,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   bubble: {},
-  message: {
-    fontSize: 15,
-    lineHeight: 20,
-  },
   image: {
     width: 200,
     height: 150,
@@ -296,9 +315,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     gap: 4,
-  },
-  time: {
-    fontSize: 11,
   },
   errorDot: {
     width: 8,
