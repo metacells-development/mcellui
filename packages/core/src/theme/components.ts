@@ -1146,6 +1146,86 @@ export const ecommerceBlockTokens = {
 } as const;
 
 // =============================================================================
+// Info Block Tokens (Feature, Content, Onboarding, Media, Notification, etc.)
+// =============================================================================
+
+export const infoBlockTokens = {
+  feature: {
+    titleFontSize: fontSize.md,        // 16
+    titleFontWeight: fontWeight.semibold,
+    descriptionFontSize: fontSize.base, // 14
+    descriptionLineHeight: 20,
+    iconContainerSize: 56,
+    iconContainerSizeHorizontal: 48,
+  },
+  content: {
+    titleFontSize: fontSize.lg,        // 18
+    titleFontWeight: fontWeight.bold,
+    titleLineHeight: 24,
+    subtitleFontSize: fontSize.base,   // 14
+    subtitleLineHeight: 20,
+    defaultAspectRatio: 16 / 9,
+  },
+  onboarding: {
+    titleFontSize: fontSize['2xl'],    // 28
+    titleFontWeight: fontWeight.bold,
+    titleLineHeight: 34,
+    descriptionFontSize: fontSize.md,  // 16
+    descriptionLineHeight: 24,
+    dotSize: 8,
+    dotActiveWidth: 24,
+    paginationMarginTop: 32,
+    illustrationPaddingHorizontal: 40,
+  },
+  socialProof: {
+    textFontSize: fontSize.base,       // 14
+    textLineHeight: 18,
+    avatarOverlapRatio: 0.3,
+  },
+  notification: {
+    textFontSize: 15,                  // 15 (between base and md)
+    textLineHeight: 20,
+    titleFontWeight: fontWeight.semibold,
+    timeFontSize: fontSize.sm,         // 13
+    unreadDotSize: 8,
+    avatarSize: 44,
+  },
+  media: {
+    defaultSize: 100,
+    playButtonSize: 44,
+    playIconSize: 24,
+    checkboxSize: 24,
+    checkIconSize: 14,
+    durationBadgeMargin: spacing[1],
+    checkboxOffset: spacing[2],
+  },
+  order: {
+    orderIdFontSize: 15,
+    orderIdFontWeight: fontWeight.semibold,
+    dateFontSize: fontSize.sm,         // 13
+    itemCountFontSize: fontSize.base,  // 14
+    totalFontSize: fontSize.md,        // 16
+    totalFontWeight: fontWeight.bold,
+    productImageSize: 48,
+    moreTextFontSize: fontSize.base,   // 14
+    moreTextFontWeight: fontWeight.semibold,
+  },
+  task: {
+    titleFontSize: 15,
+    titleFontWeight: fontWeight.medium,
+    titleLineHeight: 20,
+    descriptionFontSize: fontSize.sm,  // 13
+    dueDateFontSize: fontSize.xs,      // 12
+    moreTagsFontSize: fontSize.xs,     // 12
+    flagIconSize: 12,
+    calendarIconSize: 12,
+  },
+  searchHeader: {
+    filterBadgeOffset: -4,
+  },
+} as const;
+
+// =============================================================================
 // Content & Social Block Tokens (Phase 10)
 // =============================================================================
 
