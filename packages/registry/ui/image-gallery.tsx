@@ -62,7 +62,7 @@ import {
   GestureDetector,
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
-import { useTheme, haptic } from '@metacells/mcellui-core';
+import { useTheme, haptic, imageGalleryTokens } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -116,6 +116,7 @@ function FullscreenViewer({
   onClose,
 }: FullscreenViewerProps) {
   const { colors } = useTheme();
+  const tokens = imageGalleryTokens;
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   const opacity = useSharedValue(0);
@@ -234,10 +235,15 @@ function FullscreenViewer({
   return (
     <Modal visible={visible} transparent animationType="none" statusBarTranslucent>
       <GestureHandlerRootView style={styles.fullscreenContainer}>
-        <Animated.View style={[styles.fullscreenBackdrop, backdropStyle]}>
+        <Animated.View style={[styles.fullscreenBackdrop, { backgroundColor: `rgba(0, 0, 0, ${tokens.fullscreen.backdropOpacity})` }, backdropStyle]}>
           {/* Close button */}
           <Pressable
-            style={styles.closeButton}
+            style={[
+              styles.closeButton,
+              {
+                top: Platform.OS === 'ios' ? tokens.fullscreen.closeButtonTop : tokens.fullscreen.closeButtonTopAndroid,
+              },
+            ]}
             onPress={() => {
               haptic('light');
               close();
@@ -245,9 +251,33 @@ function FullscreenViewer({
             accessibilityRole="button"
             accessibilityLabel="Close"
           >
-            <View style={[styles.closeIcon, { backgroundColor: colors.background }]}>
-              <View style={[styles.closeLine, styles.closeLine1, { backgroundColor: colors.foreground }]} />
-              <View style={[styles.closeLine, styles.closeLine2, { backgroundColor: colors.foreground }]} />
+            <View style={[
+              styles.closeIcon,
+              {
+                width: tokens.fullscreen.closeButtonSize,
+                height: tokens.fullscreen.closeButtonSize,
+                borderRadius: tokens.fullscreen.closeButtonSize / 2,
+                backgroundColor: colors.background,
+              },
+            ]}>
+              <View style={[
+                styles.closeLine,
+                styles.closeLine1,
+                {
+                  width: tokens.fullscreen.closeLineWidth,
+                  height: tokens.fullscreen.closeLineHeight,
+                  backgroundColor: colors.foreground,
+                },
+              ]} />
+              <View style={[
+                styles.closeLine,
+                styles.closeLine2,
+                {
+                  width: tokens.fullscreen.closeLineWidth,
+                  height: tokens.fullscreen.closeLineHeight,
+                  backgroundColor: colors.foreground,
+                },
+              ]} />
             </View>
           </Pressable>
 
@@ -270,13 +300,22 @@ function FullscreenViewer({
 
           {/* Page indicator */}
           {images.length > 1 && (
-            <View style={styles.pageIndicator}>
+            <View style={[
+              styles.pageIndicator,
+              {
+                bottom: tokens.fullscreen.pageIndicatorBottom,
+                gap: tokens.fullscreen.dotGap,
+              },
+            ]}>
               {images.map((_, index) => (
                 <View
                   key={index}
                   style={[
                     styles.pageDot,
                     {
+                      width: tokens.fullscreen.dotSize,
+                      height: tokens.fullscreen.dotSize,
+                      borderRadius: tokens.fullscreen.dotSize / 2,
                       backgroundColor:
                         index === currentIndex
                           ? colors.background
@@ -401,7 +440,6 @@ const styles = StyleSheet.create({
   },
   fullscreenBackdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.95)',
   },
   fullscreenImageContainer: {
     width: SCREEN_WIDTH,
@@ -415,21 +453,15 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 50 : 20,
     right: 20,
     zIndex: 100,
   },
   closeIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
   },
   closeLine: {
     position: 'absolute',
-    width: 18,
-    height: 2,
     borderRadius: 1,
   },
   closeLine1: {
@@ -440,16 +472,10 @@ const styles = StyleSheet.create({
   },
   pageIndicator: {
     position: 'absolute',
-    bottom: 50,
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 6,
   },
-  pageDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-  },
+  pageDot: {},
 });
