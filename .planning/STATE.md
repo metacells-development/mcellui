@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 
 ## Current Position
 
-Phase: 10 of 12 (Blocks: Content & Social) - COMPLETE ✓
+Phase: 11 of 12 (Blocks: E-commerce & Info)
 Plans: 6/6 complete
-Status: Phase verified (5/5 must-haves), ready for Phase 11
-Last activity: 2026-01-25 - Phase 10 verified complete
+Status: Awaiting human verification
+Last activity: 2026-01-25 - Completed 11-06-PLAN.md (blocks demo enhancement)
 
-Progress: [█████████░] 83%
+Progress: [██████████] 92%
 
 ## Performance Metrics
 
@@ -37,11 +37,11 @@ Progress: [█████████░] 83%
 | 08-advanced-components | 4/7 | 15.1 min | 3.8 min |
 | 09-blocks-auth-settings | 6/6 | 14.3 min | 2.9 min |
 | 10-blocks-content-social | 6/6 | 40.4 min | 6.7 min |
-| 11-blocks-ecommerce-info | 5/6 | 13.0 min | 2.6 min |
+| 11-blocks-ecommerce-info | 6/6 | 18.5 min | 3.1 min |
 | 12-screens | 4/6 | 28.0 min | 7.0 min |
 
 **Recent Trend:**
-- Last 5 plans: 10-06 (7 min), 11-05 (13 min), 10-05 (5 min), 12-04 (11 min), 12-05 (5.3 min)
+- Last 5 plans: 11-06 (5.5 min), 10-06 (7 min), 11-05 (13 min), 10-05 (5 min), 12-04 (11 min)
 - Trend: Demo enhancements 5-7 min, multi-block migrations 13 min, complex screen migrations 8-11 min
 
 *Updated after each plan completion*
@@ -184,6 +184,9 @@ Recent decisions affecting current work:
 - **12-04**: Checkout step indicator uses fontSize.xs (12px) instead of original 11px for token consistency
 - **12-04**: Product price uses fontSize["2xl"] for strong visual hierarchy and primary CTA emphasis
 - **12-04**: Non-standard font sizes (11px, 13px, 15px, 22px) rounded to nearest available tokens
+- **11-06**: Blocks demo uses actual registry components (not inline mocks) for comprehensive behavior demonstration
+- **11-06**: HeroBlock demo shows multiple mesh presets (purple, sunset, ocean) with text alignment options
+- **11-06**: MediaItemBlock demo shows selectable grid, media types (image/video/file), and custom sizes
 
 ### Pending Todos
 
@@ -196,7 +199,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 12-05-PLAN.md (Content/utility screens typography migration)
+Stopped at: Completed 11-06-PLAN.md (Blocks demo enhancement with Phase 11 registry components)
 Resume file: None
 
 ## Phase 1 Complete ✓
@@ -311,7 +314,7 @@ Resume file: None
 **Gap Closure:** 09-06 replaced manual ProfileBlockPreview with actual ProfileBlock import
 **Report:** .planning/phases/09-blocks-auth-settings/09-VERIFICATION.md
 
-## Phase 10 In Progress
+## Phase 10 Complete ✓
 
 | Plan | Wave | Description | Status |
 |------|------|-------------|--------|
@@ -325,6 +328,21 @@ Resume file: None
 **Goal:** Content and social blocks have consistent card patterns and interaction states
 **Blocks:** ProductCard, CartItem, ArticleCard, EventCard, FeedPostCard, UserListItem, ChatBubble, CommentItem, ReviewCard (9 blocks)
 **Progress:** 6/6 plans complete - All card, social, and swipeable blocks have comprehensive demos with loading states
+
+## Phase 11 Awaiting Verification
+
+| Plan | Wave | Description | Status |
+|------|------|-------------|--------|
+| 11-01 | 1 | Add ecommerceBlockTokens and infoBlockTokens to components.ts | ✅ Complete (2.5 min) |
+| 11-02 | 2 | E-commerce blocks (BannerBlock, HeroBlock, PricingCard, StatsCard) | ✅ Complete (3 min) |
+| 11-03 | 2 | Info blocks part 1 (FeatureCard, ContentCard, OnboardingSlide, SocialProofBar) | ✅ Complete (2.5 min) |
+| 11-04 | 2 | Info blocks part 2 (NotificationItem, MediaItem, OrderItem, TaskItem, SearchHeader) | ✅ Complete (3 min) |
+| 11-05 | 3 | E-commerce and info block demos enhancement | ✅ Complete (2 min) |
+| 11-06 | 3 | Blocks demo with actual registry components | ✅ Complete (5.5 min) |
+
+**Goal:** E-commerce and informational blocks use consistent tokens and have comprehensive demos
+**Blocks:** BannerBlock, HeroBlock, PricingCard, StatsCard, FeatureCard, ContentCard, OnboardingSlide, SocialProofBar, NotificationItem, MediaItem, OrderItem, TaskItem, SearchHeader (13 blocks)
+**Progress:** 6/6 plans complete - Awaiting human verification of all block demos
 
 ## Phase 12 In Progress
 
