@@ -750,6 +750,37 @@ export const circularProgressTokens = {
 } as const;
 
 // =============================================================================
+// List Component Tokens
+// =============================================================================
+
+/**
+ * List component constants for consistent dimensions.
+ * dividerInset = iconSize (24) + leftSlot marginRight (spacing[3] = 12) + container paddingHorizontal (spacing[4] = 16) = 52
+ * Using spacing[14] (56) for standard iOS list inset pattern.
+ */
+export const LIST_CONSTANTS = {
+  /** Standard divider inset (aligns with icon + text layout) */
+  dividerInset: spacing[14], // 56px - matches iOS standard
+  /** Default list item min height */
+  itemMinHeight: componentHeight.lg, // 52px
+  /** Legacy minHeight for backwards compatibility (thumbnail variant fallback) */
+  legacyMinHeight: 56,
+} as const;
+
+export const listTokens = {
+  divider: {
+    inset: LIST_CONSTANTS.dividerInset,
+  },
+  item: {
+    minHeight: LIST_CONSTANTS.itemMinHeight,
+    paddingHorizontal: spacing[4],
+    paddingVertical: spacing[3],
+    iconSize: iconSize.lg,
+    iconMargin: spacing[3],
+  },
+} as const;
+
+// =============================================================================
 // Export all component tokens
 // =============================================================================
 
@@ -780,6 +811,7 @@ export const components = {
   skeleton: skeletonTokens,
   progress: progressTokens,
   circularProgress: circularProgressTokens,
+  list: listTokens,
   height: componentHeight,
   icon: iconSize,
 } as const;
