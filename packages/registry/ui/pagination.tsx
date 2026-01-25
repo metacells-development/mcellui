@@ -46,7 +46,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, paginationTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // ============================================================================
@@ -97,33 +97,6 @@ export interface PaginationProps {
   style?: ViewStyle;
 }
 
-// ============================================================================
-// Size Configs
-// ============================================================================
-
-const SIZE_CONFIG = {
-  sm: {
-    dotSize: 6,
-    dotGap: 6,
-    buttonSize: 28,
-    fontSize: 12,
-    numberSize: 28,
-  },
-  md: {
-    dotSize: 8,
-    dotGap: 8,
-    buttonSize: 36,
-    fontSize: 14,
-    numberSize: 36,
-  },
-  lg: {
-    dotSize: 10,
-    dotGap: 10,
-    buttonSize: 44,
-    fontSize: 16,
-    numberSize: 44,
-  },
-};
 
 // ============================================================================
 // Animated Dot
@@ -184,7 +157,8 @@ export function Pagination({
   style,
 }: PaginationProps) {
   const { colors, radius, spacing } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const tokens = paginationTokens;
+  const config = tokens[size];
 
   if (total <= 0) return null;
 
@@ -401,6 +375,7 @@ export function Pagination({
         style={[
           styles.simpleButton,
           {
+            gap: tokens.simple.gap,
             paddingHorizontal: spacing[3],
             paddingVertical: spacing[2],
             borderRadius: radius.md,
@@ -425,6 +400,7 @@ export function Pagination({
         style={[
           styles.simpleButton,
           {
+            gap: tokens.simple.gap,
             paddingHorizontal: spacing[3],
             paddingVertical: spacing[2],
             borderRadius: radius.md,
@@ -473,7 +449,6 @@ const styles = StyleSheet.create({
   simpleButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
   },
   simpleText: {
     fontWeight: '500',
