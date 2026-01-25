@@ -32,7 +32,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import Svg, { Path, Rect, Circle as SvgCircle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, cardBlockTokens } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -123,7 +123,7 @@ export function ArticleCard({
   onAuthorPress,
   style,
 }: ArticleCardProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, platformShadow } = useTheme();
 
   const handlePress = () => {
     haptic('light');
@@ -161,8 +161,10 @@ export function ArticleCard({
           {
             backgroundColor: pressed && onPress ? colors.secondary : colors.background,
             borderRadius: radius.lg,
-            padding: spacing[3],
+            paddingVertical: cardBlockTokens.content.paddingVertical,
+            paddingHorizontal: cardBlockTokens.content.paddingHorizontal,
           },
+          platformShadow(cardBlockTokens.shadow),
           style,
         ]}
       >
@@ -244,7 +246,10 @@ export function ArticleCard({
         </View>
 
         {/* Content overlay */}
-        <View style={[styles.featuredContent, { padding: spacing[4] }]}>
+        <View style={[styles.featuredContent, {
+          paddingVertical: cardBlockTokens.content.paddingVertical,
+          paddingHorizontal: cardBlockTokens.content.paddingHorizontal,
+        }]}>
           {article.category && (
             <Badge variant="secondary" size="sm" style={{ alignSelf: 'flex-start', marginBottom: spacing[2] }}>
               {article.category}
@@ -292,7 +297,10 @@ export function ArticleCard({
         </View>
       )}
 
-      <View style={{ padding: spacing[4] }}>
+      <View style={{
+        paddingVertical: cardBlockTokens.content.paddingVertical,
+        paddingHorizontal: cardBlockTokens.content.paddingHorizontal,
+      }}>
         {/* Category */}
         {article.category && (
           <Text style={[styles.category, { color: colors.primary, marginBottom: spacing[2] }]}>
@@ -366,18 +374,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   category: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: cardBlockTokens.typography.metaFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: cardBlockTokens.typography.priceFontSize,
+    fontWeight: cardBlockTokens.typography.priceFontWeight,
     lineHeight: 24,
   },
   excerpt: {
-    fontSize: 14,
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
     lineHeight: 20,
   },
   footer: {
@@ -390,15 +398,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   authorName: {
-    fontSize: 13,
-    fontWeight: '500',
+    fontSize: cardBlockTokens.typography.metaFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
   },
   metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   metaText: {
-    fontSize: 12,
+    fontSize: cardBlockTokens.typography.metaFontSize,
   },
   metaDot: {
     marginHorizontal: 4,
@@ -423,8 +431,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   horizontalTitle: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: cardBlockTokens.typography.titleFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
     lineHeight: 20,
   },
   bookmarkButton: {
@@ -459,12 +467,12 @@ const styles = StyleSheet.create({
   },
   featuredTitle: {
     fontSize: 22,
-    fontWeight: '700',
+    fontWeight: cardBlockTokens.typography.priceFontWeight,
     color: '#fff',
     lineHeight: 28,
   },
   featuredExcerpt: {
-    fontSize: 14,
+    fontSize: cardBlockTokens.typography.subtitleFontSize,
     color: 'rgba(255,255,255,0.8)',
     marginTop: 8,
     lineHeight: 20,
@@ -475,13 +483,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   featuredAuthor: {
-    fontSize: 13,
-    fontWeight: '500',
+    fontSize: cardBlockTokens.typography.metaFontSize,
+    fontWeight: cardBlockTokens.typography.titleFontWeight,
     color: '#fff',
     marginLeft: 8,
   },
   featuredMeta: {
-    fontSize: 12,
+    fontSize: cardBlockTokens.typography.metaFontSize,
     color: 'rgba(255,255,255,0.7)',
   },
 });
