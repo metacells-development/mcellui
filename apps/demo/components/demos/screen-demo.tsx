@@ -277,7 +277,7 @@ function PropRow({ name, type, description }: { name: string; type: string; desc
   const propRowStyle: ViewStyle = {
     padding: spacing[2.5],
     borderBottomWidth: 1,
-    gap: 2,
+    gap: spacing[0.5],
     borderColor: colors.border,
   };
 

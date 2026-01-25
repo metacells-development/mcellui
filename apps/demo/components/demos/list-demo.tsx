@@ -309,12 +309,4 @@ const styles = StyleSheet.create({
   standaloneDivider: {
     height: StyleSheet.hairlineWidth,
   },
-  box: {
-    padding: 12,
-    borderRadius: 8,
-  },
-  boxText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
 });
