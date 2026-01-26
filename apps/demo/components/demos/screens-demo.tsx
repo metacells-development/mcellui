@@ -630,11 +630,10 @@ export function ScreensDemo() {
 
       <Modal visible={activeScreen === 'chat'} animationType="slide">
         <ChatScreen
-          recipientName="Alex Rivera"
+          recipient={{ name: 'Alex Rivera', status: 'online' }}
           messages={MOCK_MESSAGES}
           onBack={() => setActiveScreen(null)}
-          onSend={(text) => console.log('Send:', text)}
-          onAttachment={() => console.log('Attachment')}
+          onSendMessage={(text) => console.log('Send:', text)}
         />
       </Modal>
 
