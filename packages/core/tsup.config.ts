@@ -9,6 +9,11 @@ export default defineConfig({
   treeshake: true,
   splitting: false,
   target: 'es2020',
+  outExtension({ format }) {
+    return {
+      js: '.js',
+    };
+  },
   esbuildOptions(options) {
     options.platform = 'neutral';
   },
