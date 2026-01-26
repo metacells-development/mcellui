@@ -36,6 +36,9 @@
     "url": "https://github.com/metacells/mcellui"
   },
   "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build",
     "type-check": "tsc --noEmit",
     "lint": "eslint src/"
   },
@@ -45,6 +48,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.10",
+    "tsup": "^8.0.1",
     "typescript": "^5.4.0"
   }
 }

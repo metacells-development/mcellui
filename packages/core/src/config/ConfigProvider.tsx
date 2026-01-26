@@ -51,7 +51,8 @@ function getAutoConfig(): NativeUIConfig {
       autoConfig = {};
     }
   }
-  return autoConfig;
+  // Type assertion safe because autoConfig is always set to {} if null
+  return autoConfig as NativeUIConfig;
 }
 
 // Config context for accessing raw config values
