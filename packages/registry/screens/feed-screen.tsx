@@ -201,7 +201,7 @@ function EmptyState({
         style={{
           color: colors.foregroundMuted,
           fontSize: fontSize.base,
-          lineHeight: lineHeight.relaxed,
+          lineHeight: fontSize.base * 1.6,
           marginTop: 8,
           textAlign: 'center',
         }}

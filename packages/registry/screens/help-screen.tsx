@@ -349,7 +349,7 @@ export function HelpScreen({
                     </Text>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Text style={[styles.faqAnswer, { color: colors.foregroundMuted, fontSize: fontSize.sm, lineHeight: lineHeight.relaxed }]}>
+                    <Text style={[styles.faqAnswer, { color: colors.foregroundMuted, fontSize: fontSize.sm, lineHeight: fontSize.sm * 1.6 }]}>
                       {faq.answer}
                     </Text>
                   </AccordionContent>

@@ -155,7 +155,7 @@ function OnboardingSlideComponent({
       {/* Content */}
       <View style={[styles.content, { paddingHorizontal: spacing[6] }]}>
         <Text style={[styles.title, { color: colors.foreground, fontSize: fontSize['2xl'], fontWeight: fontWeight.bold }]}>{item.title}</Text>
-        <Text style={[styles.description, { color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.base, lineHeight: lineHeight.relaxed }]}>
+        <Text style={[styles.description, { color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.base, lineHeight: fontSize.base * 1.6 }]}>
           {item.description}
         </Text>
       </View>
