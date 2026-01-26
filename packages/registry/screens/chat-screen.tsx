@@ -171,7 +171,7 @@ function MessageBubble({
           style={{
             color: textColor,
             fontSize: fontSize.base,
-            lineHeight: lineHeight.normal,
+            lineHeight: fontSize.base * 1.5,
           }}
         >
           {message.text}
