@@ -9,9 +9,9 @@ Requirements for audit milestone. Each maps to roadmap phases.
 
 ### Package Fixes (Critical)
 
-- [ ] **PKG-01**: Core package exports compiled .js instead of .ts source
-- [ ] **PKG-02**: All animated components declare peer dependencies (reanimated, gesture-handler)
-- [ ] **PKG-03**: Core package exports ./package.json for tooling compatibility
+- [x] **PKG-01**: Core package exports compiled .js instead of .ts source
+- [x] **PKG-02**: All animated components declare peer dependencies (reanimated, gesture-handler)
+- [x] **PKG-03**: Core package exports ./package.json for tooling compatibility
 
 ### CLI Audit
 
@@ -79,9 +79,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PKG-01 | Phase 14 | Pending |
-| PKG-02 | Phase 14 | Pending |
-| PKG-03 | Phase 14 | Pending |
+| PKG-01 | Phase 14 | Complete |
+| PKG-02 | Phase 14 | Complete |
+| PKG-03 | Phase 14 | Complete |
 | CLI-01 | Phase 15 | Pending |
 | CLI-02 | Phase 15 | Pending |
 | CLI-03 | Phase 15 | Pending |
@@ -114,4 +114,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-26*
-*Last updated: 2026-01-26 after roadmap creation*
+*Last updated: 2026-01-26 after Phase 14 completion*

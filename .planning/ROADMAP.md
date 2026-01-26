@@ -72,7 +72,7 @@ v1.0 shipped 102 components with consistent quality. v1.1 audits all tooling for
 
 **Milestone Goal:** Audit and fix all tooling for production readiness — fix critical package issues, verify CLI/MCP/Registry/Core quality
 
-- [ ] **Phase 14: Critical Package Fixes** - Fix TypeScript compilation, peer dependencies, package exports
+- [x] **Phase 14: Critical Package Fixes** - Fix TypeScript compilation, peer dependencies, package exports
 - [ ] **Phase 15: CLI Error Handling & Consistency** - Audit all CLI commands for error handling and UX consistency
 - [ ] **Phase 16: MCP Server Tool Quality** - Audit all MCP tools for AI agent usability
 - [ ] **Phase 17: Registry Structure & Metadata** - Audit component registry structure and metadata completeness
@@ -174,7 +174,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 11. State Blocks | v1.0 | 1/1 | Complete | 2026-01-26 |
 | 12. Screen Foundation | v1.0 | 1/1 | Complete | 2026-01-26 |
 | 13. Screen Completion | v1.0 | 1/1 | Complete | 2026-01-26 |
-| 14. Critical Fixes | v1.1 | 0/2 | Not started | - |
+| 14. Critical Fixes | v1.1 | 2/2 | Complete | 2026-01-26 |
 | 15. CLI Audit | v1.1 | 0/1 | Not started | - |
 | 16. MCP Audit | v1.1 | 0/1 | Not started | - |
 | 17. Registry Audit | v1.1 | 0/1 | Not started | - |
@@ -182,4 +182,4 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 
 ---
 *Roadmap created: 2026-01-26*
-*Last updated: 2026-01-26 after Phase 14 planning*
+*Last updated: 2026-01-26 after Phase 14 completion*
