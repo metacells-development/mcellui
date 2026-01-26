@@ -145,11 +145,15 @@ function StepIndicator({
   currentStep,
   colors,
   spacing,
+  fontSize,
+  fontWeight,
 }: {
   steps: { key: CheckoutStep; label: string }[];
   currentStep: CheckoutStep;
   colors: any;
   spacing: any;
+  fontSize: any;
+  fontWeight: any;
 }) {
   const currentIndex = steps.findIndex((s) => s.key === currentStep);
 
@@ -538,7 +542,7 @@ export function CheckoutScreen({
       </View>
 
       {/* Step Indicator */}
-      <StepIndicator steps={steps} currentStep={currentStep} colors={colors} spacing={spacing} />
+      <StepIndicator steps={steps} currentStep={currentStep} colors={colors} spacing={spacing} fontSize={fontSize} fontWeight={fontWeight} />
 
       <Separator />
 

@@ -24,6 +24,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10: Blocks - Content & Social** - Product Card, Cart Item, Article Card, Event Card, Feed Post, User List Item, Chat Bubble, Comment Item, Review Card
 - [x] **Phase 11: Blocks - E-commerce & Info** - Banner, Hero, Pricing Card, Stats Card, Feature Card, Content Card, Social Proof Bar, Media Item, Notification Item, Onboarding Slide, Order Item, Task Item, Search Header
 - [x] **Phase 12: Screens** - All 19 screen templates (Login, Signup, Profile, Settings, Feed, Cart, Checkout, etc.)
+- [ ] **Phase 13: Gap Closure** - Fix CheckoutScreen bug, cleanup orphaned exports
 
 ## Phase Details
 
@@ -262,6 +263,18 @@ Plans:
 - [x] 12-05-PLAN.md - Migrate Home, Search, Followers, Onboarding, Help screens to theme tokens
 - [x] 12-06-PLAN.md - Enhance screens demo with actual registry components and state coverage
 
+### Phase 13: Gap Closure
+**Goal**: Fix bugs and cleanup orphaned exports identified in milestone audit
+**Depends on**: Phase 12
+**Requirements**: Integration verification, code cleanup
+**Success Criteria** (what must be TRUE):
+  1. CheckoutScreen StepIndicator function receives fontSize and fontWeight as props
+  2. No undefined variable references in any screen components
+**Plans**: 1 plan
+
+Plans:
+- [ ] 13-01-PLAN.md - Fix CheckoutScreen StepIndicator prop passing bug
+
 ## Progress
 
 **Execution Order:**
@@ -281,3 +294,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 10. Blocks - Content & Social | 6/6 | ✓ Complete | 2026-01-25 |
 | 11. Blocks - E-commerce & Info | 6/6 | ✓ Complete | 2026-01-25 |
 | 12. Screens | 6/6 | ✓ Complete | 2026-01-25 |
+| 13. Gap Closure | 0/1 | In Progress | - |
