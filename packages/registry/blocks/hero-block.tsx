@@ -269,8 +269,9 @@ export function HeroBlock({
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
+    width: '100%',
     justifyContent: 'flex-end',
+    overflow: 'hidden',
   },
   content: {},
   title: {},

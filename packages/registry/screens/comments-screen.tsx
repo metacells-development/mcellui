@@ -193,22 +193,19 @@ export function CommentsScreen({
     return (
       <View style={isReply ? { paddingLeft: spacing[10] } : undefined}>
         <CommentItem
-          author={{
-            id: comment.author.id,
+          user={{
             name: comment.author.name,
-            avatar: comment.author.avatar,
+            avatarUrl: comment.author.avatar?.uri,
             verified: comment.author.verified,
           }}
           content={comment.content}
-          timestamp={comment.timestamp}
+          time={comment.timestamp}
           likes={comment.likes}
-          isLiked={comment.isLiked}
-          showReply={allowReplies && !isReply}
+          liked={comment.isLiked}
           onLike={() => onLikeComment?.(comment.id)}
-          onReply={() => handleReply(comment.id, comment.author.name)}
-          onAuthorPress={() => onAuthorPress?.(comment.author.id)}
-          onDelete={isOwnComment && onDeleteComment ? () => onDeleteComment(comment.id) : undefined}
-          onReport={!isOwnComment && onReportComment ? () => onReportComment(comment.id) : undefined}
+          onReply={allowReplies && !isReply ? () => handleReply(comment.id, comment.author.name) : undefined}
+          onUserPress={() => onAuthorPress?.(comment.author.id)}
+          onMore={isOwnComment && onDeleteComment ? () => onDeleteComment(comment.id) : (!isOwnComment && onReportComment ? () => onReportComment(comment.id) : undefined)}
         />
       </View>
     );
@@ -266,7 +263,7 @@ export function CommentsScreen({
           ListEmptyComponent={renderEmpty}
           contentContainerStyle={[
             flattenedComments.length === 0 && styles.emptyList,
-            { paddingVertical: spacing[2] },
+            { paddingVertical: spacing[2], paddingHorizontal: spacing[4] },
           ]}
         />
       )}

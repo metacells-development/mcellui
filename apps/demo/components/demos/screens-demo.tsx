@@ -10,15 +10,16 @@ import { ProfileScreen } from '@/components/screens/profile-screen';
 import { SettingsScreen } from '@/components/screens/settings-screen';
 import { SearchScreen } from '@/components/screens/search-screen';
 import { ChatScreen } from '@/components/screens/chat-screen';
-import { NotificationsScreen } from '@/components/screens/notifications-screen';
+import { NotificationsScreen, Notification } from '@/components/screens/notifications-screen';
 import { FeedScreen } from '@/components/screens/feed-screen';
 import { OTPVerificationScreen } from '@/components/screens/otp-verification-screen';
 import { ProductDetailScreen } from '@/components/screens/product-detail-screen';
 import { CartScreen } from '@/components/screens/cart-screen';
-import { FollowersScreen } from '@/components/screens/followers-screen';
-import { CommentsScreen } from '@/components/screens/comments-screen';
+import { FollowersScreen, FollowersScreenUser } from '@/components/screens/followers-screen';
+import { CommentsScreen, Comment } from '@/components/screens/comments-screen';
 import { CheckoutScreen } from '@/components/screens/checkout-screen';
 import { OrderHistoryScreen } from '@/components/screens/order-history-screen';
+import { Order } from '@/components/blocks/order-item';
 import { HomeScreen } from '@/components/screens/home-screen';
 import { AccountScreen } from '@/components/screens/account-screen';
 import { HelpScreen } from '@/components/screens/help-screen';
@@ -55,42 +56,13 @@ interface MockFeedPost {
   liked: boolean;
 }
 
-interface MockNotification {
-  id: string;
-  type: 'like' | 'comment' | 'follow' | 'mention';
-  user: {
-    name: string;
-    avatar?: string;
-  };
-  message: string;
-  time: string;
-  read: boolean;
-}
+// MockNotification removed - using Notification interface from NotificationsScreen
 
 // MockMessage removed - using ChatMessage interface from ChatScreen
 
-interface MockUser {
-  id: string;
-  name: string;
-  username?: string;
-  bio?: string;
-  avatar?: string;
-  verified?: boolean;
-  following?: boolean;
-}
+// MockUser removed - using FollowersScreenUser interface from FollowersScreen
 
-interface MockComment {
-  id: string;
-  user: {
-    name: string;
-    avatar?: string;
-  };
-  content: string;
-  time: string;
-  likes: number;
-  liked: boolean;
-  replies?: MockComment[];
-}
+// MockComment removed - using Comment interface from CommentsScreen
 
 interface MockProduct {
   id: string;
@@ -104,14 +76,7 @@ interface MockProduct {
   colors?: string[];
 }
 
-interface MockOrder {
-  id: string;
-  date: string;
-  status: 'delivered' | 'shipped' | 'processing' | 'cancelled';
-  items: number;
-  total: number;
-  trackingNumber?: string;
-}
+// MockOrder removed - using Order interface from order-item
 
 // ============================================================================
 // Mock Data Constants
@@ -198,30 +163,38 @@ const MOCK_FEED_POSTS: MockFeedPost[] = [
   },
 ];
 
-const MOCK_NOTIFICATIONS: MockNotification[] = [
+const MOCK_NOTIFICATIONS: Notification[] = [
   {
     id: '1',
-    type: 'like',
-    user: { name: 'Emma Wilson' },
+    type: 'social',
+    title: 'Emma Wilson',
     message: 'liked your post',
-    time: '5m',
-    read: false,
+    time: '5m ago',
+    unread: true,
   },
   {
     id: '2',
-    type: 'comment',
-    user: { name: 'James Lee' },
+    type: 'social',
+    title: 'James Lee',
     message: 'commented on your photo: "This looks amazing!"',
-    time: '1h',
-    read: false,
+    time: '1h ago',
+    unread: true,
   },
   {
     id: '3',
-    type: 'follow',
-    user: { name: 'Sophia Kim' },
+    type: 'social',
+    title: 'Sophia Kim',
     message: 'started following you',
-    time: '3h',
-    read: true,
+    time: '3h ago',
+    unread: false,
+  },
+  {
+    id: '4',
+    type: 'system',
+    title: 'Order shipped',
+    message: 'Your order #12345 is on its way',
+    time: '1d ago',
+    unread: false,
   },
 ];
 
@@ -232,39 +205,43 @@ const MOCK_MESSAGES = [
   { id: '4', text: 'Pretty well, should be done by Friday', isMe: true, time: '10:35 AM' },
 ];
 
-const MOCK_USERS: MockUser[] = [
-  { id: '1', name: 'Emma Wilson', username: '@emmawilson', verified: true, following: false },
-  { id: '2', name: 'James Lee', username: '@jameslee', following: true },
-  { id: '3', name: 'Sophia Kim', username: '@sophiakim', verified: true, following: false },
-  { id: '4', name: 'Michael Chen', username: '@mchen', following: true },
+const MOCK_FOLLOWERS: FollowersScreenUser[] = [
+  { id: '1', name: 'Emma Wilson', username: '@emmawilson', verified: true, isFollowing: false, followsYou: true },
+  { id: '2', name: 'James Lee', username: '@jameslee', isFollowing: true, followsYou: true },
+  { id: '3', name: 'Sophia Kim', username: '@sophiakim', verified: true, isFollowing: false, followsYou: true },
 ];
 
-const MOCK_COMMENTS: MockComment[] = [
+const MOCK_FOLLOWING: FollowersScreenUser[] = [
+  { id: '2', name: 'James Lee', username: '@jameslee', isFollowing: true },
+  { id: '4', name: 'Michael Chen', username: '@mchen', isFollowing: true },
+];
+
+const MOCK_COMMENTS: Comment[] = [
   {
     id: '1',
-    user: { name: 'Emma Wilson' },
+    author: { id: 'user-1', name: 'Emma Wilson' },
     content: 'This is absolutely amazing! Great work on the design.',
-    time: '2h',
+    timestamp: '2h ago',
     likes: 12,
-    liked: false,
+    isLiked: false,
     replies: [
       {
         id: '1-1',
-        user: { name: 'Original Poster' },
+        author: { id: 'user-2', name: 'Original Poster' },
         content: 'Thank you so much! Glad you liked it.',
-        time: '1h',
+        timestamp: '1h ago',
         likes: 3,
-        liked: false,
+        isLiked: false,
       },
     ],
   },
   {
     id: '2',
-    user: { name: 'James Lee' },
+    author: { id: 'user-3', name: 'James Lee' },
     content: 'Would love to see more details about the implementation!',
-    time: '4h',
+    timestamp: '4h ago',
     likes: 8,
-    liked: true,
+    isLiked: true,
   },
 ];
 
@@ -280,28 +257,39 @@ const MOCK_PRODUCT: MockProduct = {
   colors: ['Black', 'White', 'Blue'],
 };
 
-const MOCK_ORDERS: MockOrder[] = [
+const MOCK_ORDERS: Order[] = [
   {
     id: 'ORD-001',
+    orderNumber: 'ORD-001',
     date: 'Jan 20, 2026',
     status: 'delivered',
-    items: 3,
+    items: [
+      { name: 'Wireless Headphones', quantity: 1 },
+      { name: 'Phone Case', quantity: 2 },
+    ],
     total: 249.99,
     trackingNumber: 'TRK123456789',
   },
   {
     id: 'ORD-002',
+    orderNumber: 'ORD-002',
     date: 'Jan 15, 2026',
     status: 'shipped',
-    items: 1,
+    items: [
+      { name: 'Laptop Stand', quantity: 1 },
+    ],
     total: 89.99,
     trackingNumber: 'TRK987654321',
   },
   {
     id: 'ORD-003',
+    orderNumber: 'ORD-003',
     date: 'Jan 10, 2026',
     status: 'processing',
-    items: 2,
+    items: [
+      { name: 'USB Cable', quantity: 3 },
+      { name: 'Wall Adapter', quantity: 1 },
+    ],
     total: 149.99,
   },
 ];
@@ -636,7 +624,7 @@ export function ScreensDemo() {
         <NotificationsScreen
           notifications={MOCK_NOTIFICATIONS}
           onBack={() => setActiveScreen(null)}
-          onNotificationPress={(id) => console.log('Notification:', id)}
+          onNotificationPress={(notification) => console.log('Notification:', notification.id)}
           onMarkAllRead={() => console.log('Mark all read')}
         />
       </Modal>
@@ -698,7 +686,8 @@ export function ScreensDemo() {
 
       <Modal visible={activeScreen === 'followers'} animationType="slide">
         <FollowersScreen
-          users={MOCK_USERS}
+          followers={MOCK_FOLLOWERS}
+          following={MOCK_FOLLOWING}
           onBack={() => setActiveScreen(null)}
           onUserPress={(userId) => console.log('User:', userId)}
           onFollowToggle={(userId) => console.log('Toggle follow:', userId)}
@@ -709,15 +698,21 @@ export function ScreensDemo() {
         <CommentsScreen
           comments={MOCK_COMMENTS}
           onBack={() => setActiveScreen(null)}
-          onLike={(commentId) => console.log('Like comment:', commentId)}
-          onReply={(commentId) => console.log('Reply to:', commentId)}
-          onSend={(text) => console.log('Send comment:', text)}
+          onLikeComment={(commentId) => console.log('Like comment:', commentId)}
+          onSubmitComment={(text, replyToId) => console.log('Submit comment:', text, replyToId)}
         />
       </Modal>
 
       <Modal visible={activeScreen === 'checkout'} animationType="slide">
         <CheckoutScreen
-          cartTotal={569.96}
+          items={[
+            { id: '1', name: 'Product 1', price: 299.99, quantity: 1 },
+            { id: '2', name: 'Product 2', price: 149.99, quantity: 2 },
+          ]}
+          subtotal={599.97}
+          shipping={9.99}
+          tax={48.00}
+          total={657.96}
           onBack={() => setActiveScreen(null)}
           onPlaceOrder={(data) => {
             console.log('Order placed:', data);
@@ -737,12 +732,31 @@ export function ScreensDemo() {
 
       <Modal visible={activeScreen === 'home'} animationType="slide">
         <HomeScreen
-          userName="Sarah"
-          onMenuPress={() => console.log('Menu')}
-          onNotificationPress={() => setActiveScreen('notifications')}
-          onSearchPress={() => setActiveScreen('search')}
-          onCategoryPress={(category) => console.log('Category:', category)}
-          onProductPress={(productId) => console.log('Product:', productId)}
+          user={{ name: 'Sarah' }}
+          greeting="Welcome back"
+          stats={[
+            { label: 'Orders', value: '12', trend: 5 },
+            { label: 'Points', value: '2,450', trend: 12 },
+            { label: 'Saved', value: '$89', trend: -3 },
+          ]}
+          hero={{
+            title: 'Summer Sale',
+            subtitle: 'Up to 50% off on selected items',
+            actionLabel: 'Shop Now',
+            onAction: () => console.log('Hero action'),
+          }}
+          featuredItems={[
+            { id: '1', title: 'Wireless Headphones', subtitle: '$199.99' },
+            { id: '2', title: 'Smart Watch', subtitle: '$299.99' },
+            { id: '3', title: 'Laptop Stand', subtitle: '$79.99' },
+          ]}
+          showSearch
+          notificationCount={3}
+          onSearch={() => setActiveScreen('search')}
+          onNotifications={() => setActiveScreen('notifications')}
+          onSettings={() => setActiveScreen('settings')}
+          onFeaturedItemPress={(id) => console.log('Featured item:', id)}
+          onSeeAllFeatured={() => console.log('See all featured')}
         />
       </Modal>
 
@@ -752,20 +766,39 @@ export function ScreensDemo() {
             name: 'Sarah Chen',
             email: 'sarah.chen@example.com',
             phone: '+1 (555) 123-4567',
-            joinDate: 'January 2024',
+            memberSince: 'January 2024',
+            isPremium: true,
           }}
+          orderCount={12}
+          wishlistCount={5}
+          addressCount={2}
           onBack={() => setActiveScreen(null)}
           onEditProfile={() => console.log('Edit profile')}
-          onChangePassword={() => console.log('Change password')}
-          onDeleteAccount={() => console.log('Delete account')}
+          onChangeAvatar={() => console.log('Change avatar')}
+          onOrders={() => setActiveScreen('order-history')}
+          onWishlist={() => console.log('Wishlist')}
+          onAddresses={() => console.log('Addresses')}
+          onPaymentMethods={() => console.log('Payment methods')}
+          onNotifications={() => setActiveScreen('notifications')}
+          onSettings={() => setActiveScreen('settings')}
+          onHelp={() => setActiveScreen('help')}
+          onLogout={() => console.log('Logout')}
         />
       </Modal>
 
       <Modal visible={activeScreen === 'help'} animationType="slide">
         <HelpScreen
+          faqs={[
+            { id: '1', question: 'How do I reset my password?', answer: 'Go to Settings > Security > Reset Password and follow the instructions.', category: 'Account' },
+            { id: '2', question: 'How do I contact support?', answer: 'You can reach us via email at support@example.com or use the live chat feature.', category: 'Support' },
+            { id: '3', question: 'What payment methods do you accept?', answer: 'We accept all major credit cards, PayPal, and Apple Pay.', category: 'Payments' },
+            { id: '4', question: 'How do I track my order?', answer: 'Go to Orders in your account and click on the order you want to track.', category: 'Orders' },
+            { id: '5', question: 'What is your return policy?', answer: 'You can return items within 30 days of purchase for a full refund.', category: 'Orders' },
+          ]}
+          supportEmail="support@example.com"
+          supportPhone="+1 (555) 123-4567"
           onBack={() => setActiveScreen(null)}
-          onFAQPress={(faq) => console.log('FAQ:', faq)}
-          onContactPress={(method) => console.log('Contact:', method)}
+          onContactSupport={() => console.log('Contact support')}
         />
       </Modal>
     </View>

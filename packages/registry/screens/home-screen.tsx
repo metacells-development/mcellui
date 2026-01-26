@@ -240,10 +240,13 @@ export function HomeScreen({
             <HeroBlock
               title={hero.title}
               subtitle={hero.subtitle}
-              backgroundImage={hero.image}
-              primaryAction={hero.actionLabel}
-              onPrimaryAction={hero.onAction}
-              variant="gradient"
+              imageUrl={hero.image ? undefined : undefined}
+              background="gradient"
+              meshPreset="ocean"
+              ctaText={hero.actionLabel}
+              onCtaPress={hero.onAction}
+              height={180}
+              style={{ borderRadius: radius.xl, overflow: 'hidden' }}
             />
           </View>
         )}
@@ -251,12 +254,12 @@ export function HomeScreen({
         {/* Stats */}
         {stats && stats.length > 0 && (
           <View style={{ marginTop: spacing[4] }}>
-            <HorizontalList
-              data={stats}
-              renderItem={(stat, index) => (
+            <HorizontalList contentInset={spacing[4]}>
+              {stats.map((stat, index) => (
                 <Pressable
+                  key={index}
                   onPress={onStatPress ? () => onStatPress(index) : undefined}
-                  style={{ width: 150, marginRight: spacing[3] }}
+                  style={{ width: 150 }}
                 >
                   <StatsCard
                     label={stat.label}
@@ -265,9 +268,8 @@ export function HomeScreen({
                     icon={stat.icon}
                   />
                 </Pressable>
-              )}
-              contentContainerStyle={{ paddingHorizontal: spacing[4] }}
-            />
+              ))}
+            </HorizontalList>
           </View>
         )}
 
@@ -318,20 +320,60 @@ export function HomeScreen({
               onAction={onSeeAllFeatured}
               style={{ paddingHorizontal: spacing[4] }}
             />
-            <HorizontalList
-              data={featuredItems}
-              renderItem={(item) => (
-                <View style={{ width: 200, marginRight: spacing[3] }}>
-                  <ContentCard
-                    title={item.title}
-                    subtitle={item.subtitle}
-                    image={item.image}
+            <View style={{ marginTop: spacing[2] }}>
+              <HorizontalList contentInset={spacing[4]}>
+                {featuredItems.map((item) => (
+                  <Pressable
+                    key={item.id}
                     onPress={onFeaturedItemPress ? () => onFeaturedItemPress(item.id) : undefined}
-                  />
-                </View>
-              )}
-              contentContainerStyle={{ paddingHorizontal: spacing[4], marginTop: spacing[2] }}
-            />
+                  >
+                    <View
+                      style={{
+                        width: 140,
+                        backgroundColor: colors.card,
+                        borderRadius: radius.lg,
+                        borderWidth: 1,
+                        borderColor: colors.border,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: '100%',
+                          height: 90,
+                          backgroundColor: colors.secondary,
+                          borderTopLeftRadius: radius.lg,
+                          borderTopRightRadius: radius.lg,
+                        }}
+                      />
+                      <View style={{ padding: spacing[3] }}>
+                        <Text
+                          style={{
+                            color: colors.foreground,
+                            fontSize: fontSize.xs,
+                            fontWeight: fontWeight.semibold,
+                          }}
+                          numberOfLines={1}
+                        >
+                          {item.title}
+                        </Text>
+                        {item.subtitle && (
+                          <Text
+                            style={{
+                              color: colors.foregroundMuted,
+                              fontSize: fontSize['2xs'],
+                              marginTop: 2,
+                            }}
+                            numberOfLines={1}
+                          >
+                            {item.subtitle}
+                          </Text>
+                        )}
+                      </View>
+                    </View>
+                  </Pressable>
+                ))}
+              </HorizontalList>
+            </View>
           </View>
         )}
       </ScrollView>

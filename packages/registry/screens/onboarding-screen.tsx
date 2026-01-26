@@ -35,7 +35,7 @@ import Animated, {
   Extrapolation,
   SharedValue,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, getLineHeight, lineHeight } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Button } from '../ui/button';
@@ -155,7 +155,7 @@ function OnboardingSlideComponent({
       {/* Content */}
       <View style={[styles.content, { paddingHorizontal: spacing[6] }]}>
         <Text style={[styles.title, { color: colors.foreground, fontSize: fontSize['2xl'], fontWeight: fontWeight.bold }]}>{item.title}</Text>
-        <Text style={[styles.description, { color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.base, lineHeight: fontSize.base * 1.6 }]}>
+        <Text style={[styles.description, { color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.base, lineHeight: getLineHeight(fontSize.base, lineHeight.relaxed) }]}>
           {item.description}
         </Text>
       </View>

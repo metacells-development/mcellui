@@ -38,7 +38,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path, Circle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, getLineHeight, lineHeight } from '@metacells/mcellui-core';
 
 // Import UI primitives
 import { Avatar } from '../ui/avatar';
@@ -251,7 +251,7 @@ export function ProfileScreen({
           {user.bio && (
             <Text style={{
               fontSize: fontSize.base,
-              lineHeight: fontSize.base * 1.5,
+              lineHeight: getLineHeight(fontSize.base, lineHeight.normal),
               textAlign: 'center',
               color: colors.foreground,
               marginTop: spacing[3],

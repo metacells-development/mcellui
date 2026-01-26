@@ -30,7 +30,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path, Rect, Circle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, getLineHeight, lineHeight } from '@metacells/mcellui-core';
 
 // Import blocks
 import { FeedPostCard, FeedPostUser } from '../blocks/feed-post-card';
@@ -201,7 +201,7 @@ function EmptyState({
         style={{
           color: colors.foregroundMuted,
           fontSize: fontSize.base,
-          lineHeight: fontSize.base * 1.6,
+          lineHeight: getLineHeight(fontSize.base, lineHeight.relaxed),
           marginTop: 8,
           textAlign: 'center',
         }}

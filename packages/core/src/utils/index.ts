@@ -31,3 +31,8 @@ export {
   setAnimationsDisabled,
   areAnimationsDisabled,
 } from './expoGo';
+export {
+  getLineHeight,
+  computedLineHeight,
+  type ComputedLineHeightKey,
+} from './typography';

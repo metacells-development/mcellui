@@ -25,7 +25,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path, Circle as SvgCircle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, getLineHeight, lineHeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Import UI primitives
@@ -349,7 +349,7 @@ export function HelpScreen({
                     </Text>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Text style={[styles.faqAnswer, { color: colors.foregroundMuted, fontSize: fontSize.sm, lineHeight: fontSize.sm * 1.6 }]}>
+                    <Text style={[styles.faqAnswer, { color: colors.foregroundMuted, fontSize: fontSize.sm, lineHeight: getLineHeight(fontSize.sm, lineHeight.relaxed) }]}>
                       {faq.answer}
                     </Text>
                   </AccordionContent>
