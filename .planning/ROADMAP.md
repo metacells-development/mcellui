@@ -90,10 +90,11 @@ v1.0 shipped 102 components with consistent quality. v1.1 audits all tooling for
   3. All packages export ./package.json for tooling compatibility
   4. Fresh npm install of mcellui components works without TypeScript configuration
   5. Users can require('@metacells/mcellui-core') in Node.js without errors
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 14-01: TBD (will be planned)
+- [ ] 14-01-PLAN.md — Core package compilation (tsup + dist exports)
+- [ ] 14-02-PLAN.md — Package exports and registry peer dependencies
 
 ### Phase 15: CLI Error Handling & Consistency
 **Goal**: All CLI commands follow consistent error handling and output patterns
@@ -173,7 +174,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 11. State Blocks | v1.0 | 1/1 | Complete | 2026-01-26 |
 | 12. Screen Foundation | v1.0 | 1/1 | Complete | 2026-01-26 |
 | 13. Screen Completion | v1.0 | 1/1 | Complete | 2026-01-26 |
-| 14. Critical Fixes | v1.1 | 0/1 | Not started | - |
+| 14. Critical Fixes | v1.1 | 0/2 | Not started | - |
 | 15. CLI Audit | v1.1 | 0/1 | Not started | - |
 | 16. MCP Audit | v1.1 | 0/1 | Not started | - |
 | 17. Registry Audit | v1.1 | 0/1 | Not started | - |
@@ -181,4 +182,4 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 
 ---
 *Roadmap created: 2026-01-26*
-*Last updated: 2026-01-26 after v1.1 milestone planning*
+*Last updated: 2026-01-26 after Phase 14 planning*
