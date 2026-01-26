@@ -8,6 +8,20 @@ A modern, copy-paste UI component library for Expo/React Native — inspired by 
 
 Users own the component code. No npm dependency lock-in, full customization freedom, native-first styling.
 
+## Current Milestone: v1.1 Project Audit
+
+**Goal:** Comprehensive audit of CLI, MCP Server, Core package, and Registry — document all findings, fix broken functionality.
+
+**Target areas:**
+- CLI (npx mcellui) — commands, error handling, output, UX
+- MCP Server — tool definitions, responses, integration quality
+- Core package — theme system, tokens, utilities, exports
+- Registry structure — component organization, dependencies, metadata
+
+**Approach:** Audit → Report → Fix critical (broken functionality only)
+
+---
+
 ## Current State (v1.0)
 
 **Shipped:** 2026-01-26
@@ -53,7 +67,11 @@ All 102 components refined to consistent quality:
 
 <!-- Current scope for next milestone -->
 
-(Define in next milestone)
+- [ ] CLI audit — commands, error handling, output, UX
+- [ ] MCP Server audit — tool definitions, responses, integration
+- [ ] Core package audit — theme system, tokens, utilities, exports
+- [ ] Registry structure audit — component organization, dependencies, metadata
+- [ ] Fix all broken functionality identified in audits
 
 ### Out of Scope
 
@@ -95,4 +113,4 @@ All 102 components refined to consistent quality:
 | Centralized token system | Single source of truth for styling | ✓ Good — 40+ token sets in use |
 
 ---
-*Last updated: 2026-01-26 after v1.0 milestone*
+*Last updated: 2026-01-26 after v1.1 milestone start*
