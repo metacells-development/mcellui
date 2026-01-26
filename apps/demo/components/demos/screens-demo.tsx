@@ -564,14 +564,13 @@ export function ScreensDemo() {
 
       <Modal visible={activeScreen === 'settings'} animationType="slide">
         <SettingsScreen
-          onBack={() => setActiveScreen(null)}
+          onBackPress={() => setActiveScreen(null)}
           onItemPress={(key) => console.log('Settings item:', key)}
         />
       </Modal>
 
       <Modal visible={activeScreen === 'search'} animationType="slide">
         <SearchScreen
-          onBack={() => setActiveScreen(null)}
           onSearch={(query) => console.log('Search:', query)}
           onResultPress={(result) => console.log('Result pressed:', result)}
         />
