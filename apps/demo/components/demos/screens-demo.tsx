@@ -548,18 +548,17 @@ export function ScreensDemo() {
             username: '@sarahchen',
             bio: 'Product Designer • UI/UX Enthusiast • Coffee Lover ☕️',
             verified: true,
-          }}
-          stats={{
-            posts: 234,
-            followers: profileFollowing ? 12501 : 12500,
-            following: 432,
+            stats: {
+              posts: 234,
+              followers: profileFollowing ? 12501 : 12500,
+              following: 432,
+            },
           }}
           isOwnProfile={false}
-          following={profileFollowing}
-          onBack={() => setActiveScreen(null)}
-          onFollow={handleProfileFollow}
-          onMessage={() => console.log('Message')}
-          onPostPress={(postId) => console.log('Post pressed:', postId)}
+          isFollowing={profileFollowing}
+          onBackPress={() => setActiveScreen(null)}
+          onFollowPress={handleProfileFollow}
+          onMessagePress={() => console.log('Message')}
         />
       </Modal>
 
