@@ -4,7 +4,7 @@ import { useTheme } from '@metacells/mcellui-core';
 
 // Import all registry screen components
 import { LoginScreen } from '@/components/screens/login-screen';
-import { SignupScreen } from '@/components/screens/signup-screen';
+import { SignUpScreen } from '@/components/screens/signup-screen';
 import { OnboardingScreen } from '@/components/screens/onboarding-screen';
 import { ProfileScreen } from '@/components/screens/profile-screen';
 import { SettingsScreen } from '@/components/screens/settings-screen';
@@ -500,7 +500,7 @@ export function ScreensDemo() {
       </Modal>
 
       <Modal visible={activeScreen === 'signup'} animationType="slide">
-        <SignupScreen
+        <SignUpScreen
           onSignUp={handleSignup}
           onSocialSignUp={(provider) => console.log('Social signup:', provider)}
           onLogin={() => setActiveScreen('login')}
