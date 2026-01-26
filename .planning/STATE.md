@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-01-26)
 Phase: 14 of 18 (Critical Package Fixes)
 Plan: 1 of 2 in current phase
 Status: In progress
-Last activity: 2026-01-26 — Completed 14-02-PLAN.md (Package exports and peer dependencies)
+Last activity: 2026-01-26 — Completed 14-01-PLAN.md (Core package TypeScript compilation)
 
 Progress: [████░░░░░░░░░░░░░░] 13/18 phases (72% - v1.0 complete)
 
@@ -35,6 +35,8 @@ Recent decisions affecting v1.1:
 - v1.0: Centralized token system (affects CORE-01, CORE-02 audit scope)
 - v1.0: Copy-paste philosophy (affects PKG-02 peer dependency strategy)
 - v1.0: Full state coverage (baseline quality for audits)
+- 14-01: ESM-only output for core package (modern bundlers, no CommonJS)
+- 14-01: Multiple entry points for subpath exports (./tokens, ./utils)
 - 14-02: Optional peer dependencies for animation/form libraries (users install only what they need)
 - 14-02: sideEffects: false in all packages (enables better tree-shaking)
 
@@ -45,9 +47,11 @@ Recent decisions affecting v1.1:
 
 ### Open Blockers
 From research findings for Phase 14:
+- ~~**CRITICAL:** Core package exports raw TypeScript instead of compiled JavaScript~~ - Fixed in 14-01
 - ~~**CRITICAL:** Missing peer dependencies (reanimated, gesture-handler) in registry package~~ - Fixed in 14-02
 - ~~**MEDIUM:** Missing ./package.json exports in all packages~~ - Fixed in 14-02
-- **CRITICAL:** Core package exports raw TypeScript instead of compiled JavaScript (14-01 pending)
+
+Phase 14 blockers resolved. Ready for Phase 15.
 
 ### Technical Debt
 - 3 orphaned token exports in core (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS)
@@ -55,9 +59,9 @@ From research findings for Phase 14:
 
 ## Session Continuity
 
-Last session: 2026-01-26T21:34:12Z
-Stopped at: Completed 14-02-PLAN.md
+Last session: 2026-01-26T22:40:06Z
+Stopped at: Completed 14-01-PLAN.md
 Resume file: None
 
 ---
-*Updated: 2026-01-26 after completing 14-02-PLAN.md*
+*Updated: 2026-01-26 after completing 14-01-PLAN.md*
