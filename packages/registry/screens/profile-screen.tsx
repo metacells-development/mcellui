@@ -251,7 +251,7 @@ export function ProfileScreen({
           {user.bio && (
             <Text style={{
               fontSize: fontSize.base,
-              lineHeight: lineHeight.relaxed,
+              lineHeight: fontSize.base * 1.5,
               textAlign: 'center',
               color: colors.foreground,
               marginTop: spacing[3],
