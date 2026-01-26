@@ -19,10 +19,12 @@ config.resolver.nodeModulesPaths = [
   path.resolve(monorepoRoot, 'node_modules'),
 ];
 
-// Resolve @/components/ui/* to packages/registry/ui/*
+// Resolve @/components/* paths to packages/registry/*
 config.resolver.extraNodeModules = {
   ...config.resolver.extraNodeModules,
   '@/components/ui': path.resolve(registryPath, 'ui'),
+  '@/components/blocks': path.resolve(registryPath, 'blocks'),
+  '@/components/screens': path.resolve(registryPath, 'screens'),
 };
 
 // Wrap with mcellui for auto-config discovery

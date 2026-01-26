@@ -6,6 +6,7 @@
       "@/*": ["./*"],
       "@/components/ui/*": ["../../packages/registry/ui/*"],
       "@/components/blocks/*": ["../../packages/registry/blocks/*"],
+      "@/components/screens/*": ["../../packages/registry/screens/*"],
       "@/components/*": ["./components/*"],
       "@/lib/*": ["./lib/*"]
     }
