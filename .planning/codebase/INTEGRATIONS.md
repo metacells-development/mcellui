@@ -1,174 +1,154 @@
 # External Integrations
 
-**Analysis Date:** 2026-01-24
+**Analysis Date:** 2026-01-26
 
 ## APIs & External Services
 
-**GitHub:**
-- Registry hosting: Components fetched from `https://raw.githubusercontent.com/metacells-development/mcellui/main/packages/registry`
-  - Used by: CLI (`packages/cli/src/commands/add.ts`), MCP server
-  - Env var: `MCELLUI_REGISTRY_URL` or `NATIVEUI_REGISTRY_URL` to override
-  - Fallback: Default GitHub raw content URL
+**MCP Servers (Developer Tools):**
+- shadcn - Stdio connection for shadcn UI component access
+  - Config: `.mcp.json` - MCP configuration
+  - Purpose: IDE integration for component discovery
 
-**Figma Plugin API:**
-- Used in: `packages/figma-plugin/`
-- SDK: `@figma/plugin-typings` ^1.96.0
-- Purpose: Design token sync and component export
-- No external API calls; runs entirely within Figma
+- Expo MCP - HTTP connection to https://mcp.expo.dev/mcp
+  - Purpose: Expo development tools integration
 
-**npm Registry:**
-- Package publishing target: `https://registry.npmjs.org`
-- Authentication: `NPM_TOKEN` secret in GitHub Actions
-- Packages published: `@metacells/mcellui-cli`, `@metacells/mcellui-core`, `@metacells/mcellui-mcp-server`
-- Workflow: `.github/workflows/release.yml` - automated on git tag
+- React Native/Expo MCP - Stdio via @divagnz/mcp-react-native-expo
+  - Purpose: React Native development assistance
+
+- Figma MCP - HTTP connection to https://mcp.figma.com/mcp
+  - Purpose: Design system integration with Figma
+
+- Context7 MCP - Stdio via @upstash/context7-mcp
+  - Purpose: Development context management
+
+**No Third-Party API Clients Detected:**
+- No Stripe, Firebase, Supabase, AWS SDK, or other service SDKs
+- No HTTP client library (axios, fetch, etc.) - components are UI-only
+- No authentication service integrations
 
 ## Data Storage
 
 **Databases:**
-- None - This is a component library, not an app
-- No persistent data storage required
+- None - This is a UI component library, not a backend application
 
 **File Storage:**
 - Local filesystem only
-- Demo app uses Expo's asset bundling
-- No cloud storage dependencies
+- No cloud storage integration (S3, Cloudinary, etc.)
 
 **Caching:**
-- Registry cache: In-memory cache in MCP server (`packages/mcp-server/src/tools/index.ts`)
-- Component code cache: Stored in memory during CLI operations
-- No persistent cache layer
+- React Native platform caching (via Expo)
+- Build caching via Turborepo (local)
+- No external cache service
 
 ## Authentication & Identity
 
 **Auth Provider:**
-- None required for component library itself
-- GitHub: Used implicitly for registry fetching (public repo)
-- npm: Publishing uses `NPM_TOKEN` environment variable (GitHub Actions only)
+- None integrated
+- Components include UI layouts (LoginBlock, SignupBlock in `packages/registry/blocks/`) but no auth logic
+- Users implement their own authentication
 
-**MCP Server Authentication:**
-- Model Context Protocol handles auth via stdio transport
-- Integrates with Claude/Anthropic's auth flow
-- No separate credential management needed
+**Custom Implementation:**
+- Form components use react-hook-form + zod for validation
+- No pre-built auth provider integration
 
 ## Monitoring & Observability
 
 **Error Tracking:**
-- None integrated
-- Console logging in CLI and MCP tools for debugging
-- Demo app logs available via Expo debugging tools
+- None detected
 
 **Logs:**
-- CLI: `chalk` for colored console output with spinners (`ora`)
-- Demo app: React Native console via Expo CLI or device logs
-- MCP server: stderr output (`console.error`)
+- Console logging allowed in demo app and CLI tools (via ESLint rules in `eslint.config.js`)
 - No centralized logging service
 
-**CI/CD & Quality Monitoring:**
-- GitHub Actions: `.github/workflows/ci.yml`, `.github/workflows/release.yml`, `.github/workflows/codeql.yml`
-- CodeQL: Weekly security scanning and PR checks
-- No external monitoring service (pure GitHub Actions)
+**Debugging:**
+- React Native debugging via Expo
+- No Sentry, LogRocket, or similar integrations
 
 ## CI/CD & Deployment
 
 **Hosting:**
-- Demo app: Expo-hosted (can be deployed to Expo/EAS)
-- Documentation site: Next.js 15 (ready for Vercel/Netlify)
-- Component library: npm registry
+- GitHub repository: https://github.com/metacells/mcellui
+- No detected hosting platform (Vercel, Netlify, AWS, etc.)
+- Demo app: Requires local Expo development server
+- Docs site: Could be deployed to any Node.js hosting (uses Next.js)
 
 **CI Pipeline:**
-- GitHub Actions (`.github/workflows/`)
-  - `ci.yml`: Lint, TypeCheck, Build on every PR and push to main
-  - `release.yml`: npm publish on git tags (v*)
-  - `codeql.yml`: Security scanning (weekly + on PRs)
-  - No third-party CI services (uses GitHub Actions exclusively)
+- No CI/CD service detected (no GitHub Actions, GitLab CI, etc. configs)
+- Local development and testing only
 
-**Dependency Management:**
-- Dependabot: `.github/dependabot.yml` configured
-  - Weekly checks for npm and GitHub Actions updates
-  - Grouped minor/patch updates
+**Publishing:**
+- npm packages published to npm registry:
+  - `@metacells/mcellui-core`
+  - `@metacells/mcellui-cli`
+  - `@metacells/mcellui-metro-plugin`
+  - `@metacells/mcellui-mcp-server`
 
 ## Environment Configuration
 
 **Required env vars:**
-- None for component library
-- For CLI/MCP: `MCELLUI_REGISTRY_URL` or `NATIVEUI_REGISTRY_URL` (optional, defaults to GitHub)
-- For npm publishing: `NPM_TOKEN` (GitHub Actions only)
+- None - zero-config philosophy
+- Configuration via `mcellui.config.ts` in user projects
 
 **Secrets location:**
-- GitHub repository settings: `NPM_TOKEN` for automated npm publishing
-- No local `.env` files in monorepo
+- No secrets management detected
+- Not applicable for UI component library
 
-**Configuration Files:**
-- User projects: `mcellui.config.ts` (optional, auto-generated by CLI)
-- Metro bundler: Plugin auto-discovery via `packages/metro-plugin/`
-- Expo: `app.json` in demo app
+**GitHub Integration:**
+- Repository: https://github.com/metacells/mcellui
+- Issue tracking via GitHub Issues
 
 ## Webhooks & Callbacks
 
 **Incoming:**
-- None - This is a component library
+- None detected
 
 **Outgoing:**
-- GitHub Actions: Publishes packages to npm on tag push
-- No other external service callbacks
+- None detected
 
-## Package Management & Distribution
+## Build & Development Tools
 
-**npm Packages Published:**
-- `@metacells/mcellui-cli` - Command-line tool for component installation
-- `@metacells/mcellui-core` - Design tokens and theme system
-- `@metacells/mcellui-mcp-server` - MCP server for AI integration
-
-**Private Monorepo Packages:**
-- `@metacells/mcellui-registry` - Source components (used internally)
-- `@metacells/mcellui-demo` - Demo application
-- `@metacells/mcellui-figma-plugin` - Figma plugin
-- `@metacells/mcellui-metro-plugin` - Metro bundler integration
-- `@mcellui/docs` - Documentation website
-
-## Design & Development Tools
-
-**Figma Integration:**
-- `@figma/plugin-typings` ^1.96.0
-- Plugin runs in Figma iframe (no external API calls)
-- Purpose: Export design tokens and component specs
-- Files: `packages/figma-plugin/`
-
-**Documentation:**
-- Fumadocs 15.0.0 - Open-source MDX documentation
-- Shiki 1.22.2 - Syntax highlighting
-- All markdown stored in repo (no external doc service)
-
-## Registry Architecture
+**Module Resolution:**
+- Babel module-resolver plugin - Maps `@/components/*` paths to registry directories
+- Metro extraNodeModules - Custom path aliasing for monorepo
+- Path aliases configured in `mcellui.config.ts` user config
 
 **Component Registry:**
-- Format: `registry.json` in `packages/registry/`
-- Fetching: CLI and MCP server fetch from GitHub
-- Caching: In-memory cache with no persistence
-- Structure: Lists component metadata (name, type, category, files, dependencies)
-- Used by: `npx mcellui add`, `npx mcellui list`, MCP component tools
+- Local registry system in `packages/registry/`
+- registry.json generated from component metadata
+- No remote registry fetch
 
-**Runtime Registry Access:**
-- `packages/cli/src/utils/registry.ts` - Fetch and parse registry
-- `packages/mcp-server/src/tools/index.ts` - Component metadata and code fetching
-- Fallback URL chain: `MCELLUI_REGISTRY_URL` → `NATIVEUI_REGISTRY_URL` → GitHub default
+## IDE & Editor Integration
 
-## No External Service Dependencies
+**MCP Server (packages/mcp-server):**
+- Exposes component registry to Claude and other AI assistants
+- Location: `packages/mcp-server/`
+- Reads from local `registry.json` and component source
+- Broadcasts component metadata, source code, and examples
 
-**Notably absent:**
-- No database (MongoDB, PostgreSQL, Supabase, Firebase)
-- No backend API server
-- No authentication service (Auth0, Firebase Auth, Cognito)
-- No analytics (Mixpanel, Amplitude, Google Analytics)
-- No error tracking (Sentry, Rollbar)
-- No storage service (AWS S3, Cloudinary)
-- No payment processing (Stripe, PayPal)
-- No email service (SendGrid, Mailgun)
-- No CDN (Cloudflare, Akamai)
-- No monitoring (DataDog, New Relic)
+**Figma Plugin:**
+- Location: `packages/figma-plugin/`
+- Design token sync capability (documented)
+- Component export capability (documented)
+- Runs in Figma desktop app, integrates with `@metacells/mcellui-core`
 
-**Rationale:** mcellui is a copy-paste component library - it provides code that users copy into their own projects. The library itself is stateless with no backend requirements.
+## Third-Party Styling & UI Libraries
+
+**Documentation Site Only (apps/docs):**
+- Radix UI primitives - Headless components for docs
+- class-variance-authority - Component variant management
+- clsx - Conditional className utilities
+- cmdk - Command/search menu
+- lucide-react - Icon library
+- motion - Animation library
+- sonner - Toast notifications
+- tailwind-merge - Merge Tailwind class conflicts
+- shiki - Syntax highlighting
+- rehype-pretty-code - Code block rendering
+
+**No External UI in Main Library:**
+- Core library uses only React Native primitives
+- No dependency on shadcn, Material UI, or other UI libraries
 
 ---
 
-*Integration audit: 2026-01-24*
+*Integration audit: 2026-01-26*

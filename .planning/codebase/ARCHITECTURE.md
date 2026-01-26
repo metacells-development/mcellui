@@ -1,199 +1,194 @@
 # Architecture
 
-**Analysis Date:** 2026-01-24
+**Analysis Date:** 2026-01-26
 
 ## Pattern Overview
 
-**Overall:** Copy-paste component library with monorepo structure (Turborepo). Modular packages approach with copy-first philosophy inspired by shadcn/ui, adapted for Expo/React Native.
+**Overall:** Copy-paste component library with monorepo architecture
 
 **Key Characteristics:**
-- Copy-paste philosophy: Users own the code, not npm-installed dependencies
-- Monorepo with Turborepo for build orchestration across packages
-- Theme-driven design system with StyleSheet + ThemeProvider
-- Registry-based component discovery and distribution
-- CLI-first developer experience for component installation
-- MCP (Model Context Protocol) server for AI-assisted development
+- Monorepo with Turborepo orchestration (packages: CLI, core, registry, plugins)
+- Copy-paste distribution model (users own the code, no npm install)
+- Design token system with ThemeProvider for global styling
+- Component registry with dependency resolution
+- Expo/React Native first, StyleSheet-based (not CSS-in-JS)
+- Form system with react-hook-form + Zod integration
 
 ## Layers
 
-**Core Design System (`packages/core`):**
-- Purpose: Provides theme system, design tokens, and shared utilities
+**CLI Layer:**
+- Purpose: Command-line interface for project initialization, component discovery, and installation
+- Location: `packages/cli/`
+- Contains: Commander-based CLI commands, dependency resolution, registry fetching, file copying
+- Depends on: Node.js fs, glob, diff, prompts; local utils (project, registry, imports)
+- Used by: Developers, via `npx mcellui init` and `npx mcellui add`
+
+**Core Theme Layer:**
+- Purpose: Global design tokens, ThemeProvider context, and utilities shared across all components
 - Location: `packages/core/src/`
-- Contains: Theme provider, color palettes, spacing/radius tokens, typography, animation constants, component tokens, utilities
-- Depends on: React, React Native
-- Used by: All components in registry, demo app, CLI, MCP server
+- Contains: Theme tokens (colors, spacing, typography, radius, shadows, animations), ThemeProvider component, config system
+- Depends on: React, React Native, Reanimated
+- Used by: All UI components, demo app, user applications
 
-**Component Registry (`packages/registry`):**
-- Purpose: Single source of truth for all copy-paste components
+**Component Registry:**
+- Purpose: Single source of truth for all UI components, screens, and blocks
 - Location: `packages/registry/`
-- Contains: UI components (57 files in `ui/`), blocks (30+ screen templates in `blocks/`), screens (21 in `screens/`), hooks, primitives
-- Depends on: `@metacells/mcellui-core`, react-hook-form, Zod, Reanimated, Gesture Handler
-- Used by: Demo app (copies components), CLI (reads registry), MCP server (serves via resources)
+- Contains: 57 UI components, 20 screen templates, 28 reusable blocks; registry.json metadata
+- Depends on: React, React Native, react-hook-form, @hookform/resolvers, Zod, Reanimated, Gesture Handler, SVG
+- Used by: CLI (for distribution), demo app (for showcase)
 
-**CLI Tool (`packages/cli`):**
-- Purpose: `npx mcellui` command for adding components to user projects
-- Location: `packages/cli/src/`
-- Contains: Commands for init, add, list, diff, update, create, pick, doctor
-- Depends on: Commander, Chalk, Zod, fs-extra, glob, prompts
-- Used by: End developers installing components
-
-**MCP Server (`packages/mcp-server`):**
-- Purpose: Integration with Claude Code and AI assistants for development
-- Location: `packages/mcp-server/src/`
-- Contains: MCP resource providers and tools for reading components, registry, documentation
-- Depends on: MCP SDK, registry data
-- Used by: Claude Code, other AI assistants via stdio transport
-
-**Metro Plugin (`packages/metro-plugin`):**
-- Purpose: Metro bundler integration for automatic config discovery
-- Location: `packages/metro-plugin/src/`
-- Contains: Virtual module resolver for `@mcellui/auto-config`, config file finder
-- Depends on: None (pure Metro resolver logic)
-- Used by: Expo projects in their metro.config.js
-
-**Demo App (`apps/demo`):**
-- Purpose: Reference implementation and component showcase
+**Demo Application:**
+- Purpose: Live showcase and testing ground for all components and design system
 - Location: `apps/demo/`
-- Contains: Expo app with component demos, theme playground, blocks examples
-- Depends on: All packages, react-native, expo-router, gesture-handler
-- Used by: Testing, documentation, development reference
+- Contains: Expo app with Expo Router navigation, theme settings UI, component showcase screens
+- Depends on: All core and registry packages, Expo, Expo Router, react-hook-form
+- Used by: Developers for testing, documentation, visual validation
+
+**MCP Server:**
+- Purpose: Model Context Protocol server for Claude Code integration
+- Location: `packages/mcp-server/`
+- Contains: MCP server with tools for registry queries and resource access
+- Depends on: @modelcontextprotocol/sdk
+- Used by: Claude Code for component discovery and assistance
+
+**Metro Plugin:**
+- Purpose: Metro bundler integration for theme customization support in user projects
+- Location: `packages/metro-plugin/`
+- Contains: Bundler plugin, theme resolution logic
+- Used by: Demo app and user Expo projects
+
+**Figma Plugin:**
+- Purpose: Design-to-code bridge for exporting Figma designs as mcellui components
+- Location: `packages/figma-plugin/`
+- Contains: Figma plugin UI and export logic
+- Used by: Designers creating component variants
 
 ## Data Flow
 
-**User Adding a Component:**
+**Component Discovery & Installation Flow:**
 
-1. Developer runs: `npx mcellui add button`
-2. CLI (`packages/cli/src/commands/add.ts`) parses request
-3. CLI reads registry from `packages/registry/registry.json`
-4. CLI locates component files in `packages/registry/[type]/button.tsx`
-5. CLI resolves dependencies (both npm and registry dependencies)
-6. CLI copies component code to user's project (typically `components/ui/button.tsx`)
-7. CLI updates package.json with npm dependencies
-8. Developer imports: `import { Button } from '@/components/ui/button'`
+1. User runs `npx mcellui init` in their Expo/React Native project
+2. CLI detects project type, creates `mcellui.config.ts` with paths (componentsPath, utilsPath, style)
+3. User runs `npx mcellui add button card input`
+4. CLI fetches registry.json from `packages/registry/registry.json` (via npm/URL)
+5. CLI resolves dependencies (component A depends on component B)
+6. CLI transforms component code: replaces @metacells/mcellui-core imports, adjusts relative paths
+7. CLI copies transformed files to user's `components/ui/` directory
+8. User imports components from their local copy, not npm
 
-**Component Initialization in App:**
+**Design Token & Theme Flow:**
 
-1. App wraps with `<ConfigProvider config={mcellui.config}>` from `packages/core`
-2. ConfigProvider reads user's `mcellui.config.ts` via Metro plugin's virtual module resolver
-3. ConfigProvider establishes ThemeProvider context with resolved tokens
-4. Components import from `@metacells/mcellui-core` via `useTheme()` hook
-5. Styling happens with React Native StyleSheet + theme values from context
+1. Demo app wraps root with `<ThemeProvider theme="violet" radius="lg">`
+2. ThemeProvider creates context with full Theme object:
+   - Colors (8 presets: zinc, slate, stone, blue, green, rose, orange, violet)
+   - Spacing scale (0-32)
+   - Typography (fonts, sizes, weights, line heights)
+   - Component tokens (button sizes, input heights, etc.)
+   - Animations (springs, timing, durations)
+3. Component uses `const { colors, spacing, radius, components } = useTheme()`
+4. Component renders with tokens: `backgroundColor: colors.primary`, `padding: spacing[4]`
 
-**AI Assistant Integration (MCP):**
+**State Management:**
 
-1. Claude Code connects to MCP server via stdio
-2. MCP server (`packages/mcp-server/src/index.ts`) responds to:
-   - `ListResources` - lists available components, screens, documentation
-   - `ReadResource` - serves component source code
-   - `ListTools` - exposes helper tools (generate component, suggest patterns, etc.)
-   - `CallTool` - executes tools with arguments
-3. Claude can now read component registry, understand patterns, and guide development
-
-**Theme Customization Flow:**
-
-1. User creates `mcellui.config.ts` with `defineConfig({ theme: 'violet', radius: 'lg' })`
-2. Metro plugin intercepts import of `@mcellui/auto-config` and resolves to this file
-3. ConfigProvider loads config and merges with defaults
-4. Theme tokens are resolved from `packages/core/src/theme/` based on selections
-5. All components access tokens via `useTheme()` hook
-6. Dark mode determined from `colorScheme` setting and device preference
+- Theme state lives in ThemeProvider context (color scheme preference, radius preset, animation preset)
+- Per-component state: Local useState for UI state (input value, checkbox checked, etc.)
+- Form state: react-hook-form with Zod validation (external library, not internal)
+- No Redux, Zustand, or centralized global state
 
 ## Key Abstractions
 
 **Theme System:**
-- Purpose: Single source of design tokens (colors, spacing, typography, animations)
-- Examples: `packages/core/src/theme/colors.ts`, `packages/core/src/theme/spacing.ts`, `packages/core/src/theme/animations.ts`
-- Pattern: Token definition files export constants and presets; ThemeProvider + useTheme hook provide runtime access
+- Purpose: Centralized design token access without prop drilling
+- Examples: `packages/core/src/theme/ThemeProvider.tsx`, `packages/core/src/theme/colors.ts`, `packages/core/src/theme/radius.ts`
+- Pattern: Context-based with useTheme hook; tokens exposed as plain objects (no CSS-in-JS runtime)
 
-**Component Patterns:**
-- Purpose: Consistent component interface across UI library
-- Examples: `packages/registry/ui/button.tsx`, `packages/registry/ui/input.tsx`, `packages/registry/blocks/login-block.tsx`
-- Pattern: Export interface with props, default export as named component, styled with StyleSheet + theme tokens, animations via Reanimated
+**Component Composition:**
+- Purpose: Reusable, copyable building blocks that combine primitives
+- Examples: Button (Pressable + Text + Animated), Form (react-hook-form integration), Input (TextInput + Icons + clear button)
+- Pattern: Functional components with forwardRef, explicit props, StyleSheet for static styles
 
 **Registry Metadata:**
-- Purpose: Map components to files, dependencies, and categories
-- Examples: `packages/registry/registry.json` (main), component entries have name, type, files, dependencies, registryDependencies
-- Pattern: CLI parses registry to understand relationships; MCP server uses registry to expose components; build scripts generate registry from files
+- Purpose: Declarative component manifests for CLI dependency resolution and discovery
+- Examples: `packages/registry/registry.json` entries (name, type, files, dependencies, registryDependencies)
+- Pattern: JSON-based metadata consumed by CLI and MCP server
 
-**Form System:**
-- Purpose: Provide react-hook-form integration with Zod validation
-- Examples: `packages/registry/ui/form.tsx`, `packages/registry/blocks/login-block.tsx`
-- Pattern: Form wrapper component manages react-hook-form Controller; FormField/FormItem/FormLabel/FormMessage composition pattern
+**Screen Templates:**
+- Purpose: Full-page examples combining components + business logic for common patterns
+- Examples: `packages/registry/screens/login-screen.tsx`, `cart-screen.tsx`, `product-detail-screen.tsx`
+- Pattern: Export ready-to-copy React components with callback props for integration
 
-**Blocks (Screen Templates):**
-- Purpose: Copy-paste complete screens, not just components
-- Examples: `packages/registry/blocks/login-block.tsx`, `packages/registry/screens/profile-screen.tsx`
-- Pattern: Larger components with business logic, use base UI components, fully typed, example in comments
+**Block Components:**
+- Purpose: Composite UI sections (smaller than screens, larger than atomic components)
+- Examples: `packages/registry/blocks/login-block.tsx`, `product-card.tsx`, `feed-post-card.tsx`
+- Pattern: Self-contained, theme-aware, use other UI components internally
 
 ## Entry Points
 
-**For End Users:**
-- Location: `npx mcellui init|add|list` - CLI entry point in `packages/cli/src/index.ts`
-- Triggers: Developer runs command in terminal
-- Responsibilities: Parse args, read registry, resolve dependencies, write files
+**CLI Entry:**
+- Location: `packages/cli/src/index.ts`
+- Triggers: `npx mcellui init`, `npx mcellui add`, `npx mcellui list`, etc.
+- Responsibilities: Project detection, config management, component fetching, dependency resolution, file transformation, installation
 
-**For App Developers:**
-- Location: `apps/demo/app/_layout.tsx` (RootLayout with Expo Router)
-- Triggers: App starts
-- Responsibilities: Wrap app with GestureHandlerRootView, ConfigProvider, ThemeProvider, StatusBar
+**Demo App Entry:**
+- Location: `apps/demo/app/_layout.tsx`
+- Triggers: `expo start` / `npm run dev`
+- Responsibilities: Root layout with Expo Router setup, theme provider initialization, navigation structure
 
-**For Component Usage:**
-- Location: Component files in `packages/registry/[type]/[name].tsx`
-- Triggers: Import statement in user code
-- Responsibilities: Export styled component that consumes theme via useTheme()
+**MCP Server Entry:**
+- Location: `packages/mcp-server/src/index.ts`
+- Triggers: Claude Code integration (stdio transport)
+- Responsibilities: Expose registry tools and resources to Claude
 
-**For AI Integration:**
-- Location: `packages/mcp-server/src/index.ts` (MCP server entry)
-- Triggers: Claude Code connects
-- Responsibilities: Handle MCP requests for resources and tools
+**Component Library Entry (for users):**
+- Location: User's generated `components/ui/*.tsx` (copied from registry)
+- Triggers: `import { Button } from '@/components/ui/button'`
+- Responsibilities: Component usage in user application
 
 ## Error Handling
 
-**Strategy:** Graceful degradation with helpful messages. CLI validates before copying. Components have fallbacks for missing assets.
+**Strategy:** Errors propagate with context, CLI provides helpful messaging
 
 **Patterns:**
-- CLI command validation using Zod schemas before execution
-- Graceful file not found handling in registry reads
-- Theme tokens have defaults, components don't break without custom theme
-- Try-catch around async operations in CLI with user-friendly error messages via Chalk
-- Components handle missing props with sensible defaults (e.g., empty state components)
+- CLI: chalk colors for error messages (red for errors, yellow for warnings, dim for context)
+- CLI: ora spinners for long operations with error states
+- Components: Fallback values for missing ThemeProvider (warning logged)
+- Components: ErrorBoundary component in `packages/core/src/components/ErrorBoundary.tsx`
 
 ## Cross-Cutting Concerns
 
 **Logging:**
-- CLI uses `chalk` for colored console output and `ora` for spinners
-- MCP server logs errors to console.error()
-- Demo app has debug logging in development via React Native debugging
-- No centralized logging framework (not required for copy-paste library)
+- CLI: chalk-based console output (structured via ora spinners and chalk colors)
+- Components: console.warn when ThemeProvider missing, console.error in error boundaries
+- Demo: Minimal logging (development only)
 
 **Validation:**
-- CLI uses Zod for config and component selection validation
-- Form components use Zod validators passed via react-hook-form
-- Registry entries validated at build time (implicit, registry.json structure)
+- CLI: File existence checks, package.json validation, config file schema validation via Zod
+- Forms: Zod schema integration via react-hook-form resolver
+- Components: PropTypes equivalent via TypeScript interfaces (no runtime validation)
 
 **Authentication:**
-- Not applicable - library doesn't handle auth
-- Form components provide patterns for login flows (blocks like LoginBlock)
-- Auth handled by consuming application
+- Not built in; screens (LoginScreen, SignupScreen) expose callbacks for integration
+- Pattern: Pass `onLogin`, `onSignUp` props; component calls callbacks with user data
+- Example: `<LoginScreen onLogin={(email, password) => signIn(email, password)} />`
 
 **Accessibility:**
-- Components support VoiceOver (iOS) and TalkBack (Android)
-- Form components use proper labels and semantic structure
-- Button components use Pressable with proper hit targets (minimum 44x44 iOS, 48x48 Android)
-- Not enforced at library level but documented in component guidelines
-
-**Dark Mode:**
-- ThemeProvider determines mode from device preference or explicit setting
-- All components use `useTheme()` to get colors for current mode
-- Colors in `packages/core/src/theme/colors.ts` include both light and dark variants
-- Components conditionally apply styles based on `colors.isDark` or mode-specific color keys
+- Native: Uses React Native built-in a11y props (accessible, accessibilityRole, accessibilityLabel)
+- Components: VoiceOver (iOS) + TalkBack (Android) tested per CLAUDE.md
+- Dark mode: Automatic via ThemeProvider color scheme detection
+- Haptics: Global haptics control via ThemeProvider `haptics` prop; utility in `packages/core/src/utils/haptics.ts`
 
 **Animations:**
-- Reanimated 3 for all animations to ensure smooth 60fps performance
-- Animation tokens in `packages/core/src/theme/animations.ts` define spring/timing configs
-- Components check `areAnimationsDisabled()` from core for accessibility
-- Both "subtle" and "playful" animation presets available
+- Engine: Reanimated 3 for performant animations
+- Control: Global animation preset (subtle vs playful) via ThemeProvider
+- Disable: Support for Expo Go (automatically disabled) and explicit opt-out
+- Utility: `areAnimationsDisabled()` check in components; `getAnimationPreset()` in theme
+
+**Platform Differences:**
+- iOS shadow: React Native shadow props (shadowColor, shadowOffset, shadowOpacity, shadowRadius)
+- Android elevation: elevation property
+- Helper: `platformShadow()` function in `packages/core/src/theme/shadows.ts` returns platform-appropriate shadow
+- Pattern: Components use `platformShadow()` for consistent shadows across platforms
 
 ---
 
-*Architecture analysis: 2026-01-24*
+*Architecture analysis: 2026-01-26*

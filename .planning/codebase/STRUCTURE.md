@@ -1,304 +1,300 @@
 # Codebase Structure
 
-**Analysis Date:** 2026-01-24
+**Analysis Date:** 2026-01-26
 
 ## Directory Layout
 
 ```
-mcellui/
-├── packages/                    # Monorepo packages
-│   ├── core/                    # Design system and theme
-│   │   └── src/
-│   │       ├── theme/          # Theme system (colors, spacing, radius, animation, typography)
-│   │       ├── config/         # Config definition and provider
-│   │       ├── tokens/         # Design tokens (legacy exports)
-│   │       ├── utils/          # Utility functions
-│   │       ├── primitives/     # Low-level React Native wrappers
-│   │       ├── components/     # Error boundaries
-│   │       └── constants.ts    # Magic numbers and constants
-│   ├── registry/                # Component source code (copy-paste)
-│   │   ├── ui/                 # 57 UI components
-│   │   ├── blocks/             # 30+ screen blocks (LoginBlock, ProfileBlock, etc.)
-│   │   ├── screens/            # 21 full-page screen templates
-│   │   ├── hooks/              # Custom hooks (empty/minimal)
-│   │   ├── primitives/         # Low-level building blocks
-│   │   ├── registry.json       # Component metadata (name, type, files, dependencies)
-│   │   ├── scripts/            # Build scripts (build-registry.js)
-│   │   └── package.json        # Private package, no npm publish
-│   ├── cli/                     # Command-line tool
-│   │   ├── src/
-│   │   │   ├── commands/       # init.ts, add.ts, list.ts, diff.ts, update.ts, doctor.ts, create.ts, pick.ts
-│   │   │   ├── utils/          # Command helpers (file operations, registry parsing, validation)
-│   │   │   └── index.ts        # CLI entry point with Commander
-│   │   ├── dist/               # Compiled output
-│   │   └── package.json        # Executable package (bin: mcellui)
-│   ├── mcp-server/              # Model Context Protocol server
-│   │   ├── src/
-│   │   │   ├── resources/      # Resource definitions (components, screens, docs)
-│   │   │   ├── tools/          # Tool definitions for AI assistants
-│   │   │   └── index.ts        # MCP server setup and request handlers
-│   │   ├── registry/           # Copied registry (symlinked during build)
-│   │   └── package.json        # Published package
-│   ├── metro-plugin/            # Expo Metro bundler plugin
-│   │   ├── src/
-│   │   │   ├── index.ts        # withMcellUI() function to wrap metro config
-│   │   │   ├── findConfig.ts   # Locate mcellui.config.ts in project
-│   │   │   └── emptyConfig.ts  # Fallback empty config
-│   │   └── package.json
-│   └── figma-plugin/            # (Secondary) Figma integration
-│       └── src/
-├── apps/                        # Monorepo applications
-│   ├── demo/                    # Expo demo and showcase app
-│   │   ├── app/                # Expo Router navigation
-│   │   │   ├── _layout.tsx     # Root layout with theme selector
-│   │   │   ├── index.tsx       # Home screen listing all components
-│   │   │   ├── playground.tsx  # Theme token playground
-│   │   │   ├── tokens.tsx      # Token reference screen
-│   │   │   └── components/     # Dynamic component screens
-│   │   ├── components/         # Demo-specific components
-│   │   │   ├── ui/            # Copy of registry UI components
-│   │   │   ├── blocks/        # Copy of registry blocks
-│   │   │   ├── screens/       # Copy of registry screens
-│   │   │   └── demos/         # Demo harnesses (ButtonDemo, CardDemo, etc.)
-│   │   ├── context/            # Demo-only context (theme switching)
+mcellui/ (monorepo root)
+├── apps/                       # Runnable applications
+│   ├── demo/                   # Expo demo application
+│   │   ├── app/                # Expo Router pages/screens
+│   │   ├── components/         # Demo-specific UI components
+│   │   ├── context/            # React context (ThemeSettingsContext)
 │   │   ├── lib/                # Demo utilities
-│   │   ├── metro.config.js     # Metro config with mcellui plugin
-│   │   ├── app.json            # Expo config
-│   │   ├── mcellui.config.ts   # Demo's theme config
-│   │   └── package.json
-│   └── docs/                    # Documentation website
-│       ├── app/                # Next.js app router
-│       ├── components/         # Next.js components
-│       ├── content/            # MDX documentation pages
-│       ├── lib/                # Documentation utilities
-│       └── package.json
-├── docs/                        # Project documentation
+│   │   └── mcellui.config.ts   # Demo theme configuration
+│   └── docs/                   # Documentation site (Next.js)
+├── packages/                   # Shared packages & libraries
+│   ├── cli/                    # CLI tool (npx mcellui)
+│   │   ├── src/
+│   │   │   ├── commands/       # Command implementations (init, add, list, etc.)
+│   │   │   └── utils/          # Project detection, registry fetching, imports
+│   │   └── dist/               # Built CLI output
+│   ├── core/                   # Design token system & primitives
+│   │   ├── src/
+│   │   │   ├── theme/          # ThemeProvider, color/spacing/typography tokens
+│   │   │   ├── tokens/         # Legacy design tokens (deprecated)
+│   │   │   ├── primitives/     # Low-level components (Pressable, Slot, Portal)
+│   │   │   ├── components/     # ErrorBoundary
+│   │   │   ├── utils/          # Accessibility, platform, haptics, typography
+│   │   │   ├── config/         # Config system (mcellui.config.ts)
+│   │   │   └── constants.ts    # Magic numbers (button press scale, etc.)
+│   ├── registry/               # Component source code (copy-paste ready)
+│   │   ├── ui/                 # 57 UI components (button, card, input, etc.)
+│   │   ├── blocks/             # 28 composite blocks (login-block, product-card, etc.)
+│   │   ├── screens/            # 20 full-page screen templates
+│   │   ├── hooks/              # Custom hooks (empty, placeholder for future)
+│   │   ├── primitives/         # Layout primitives (empty)
+│   │   ├── registry.json       # Component metadata & manifest
+│   │   └── scripts/            # Registry build scripts
+│   ├── mcp-server/             # Claude Code integration (MCP)
+│   │   ├── src/
+│   │   │   ├── tools/          # MCP tools (registry queries)
+│   │   │   └── resources/      # MCP resources (component definitions)
+│   │   └── registry/           # Runtime registry copy (generated)
+│   ├── metro-plugin/           # Metro bundler plugin
+│   │   └── src/                # Plugin implementation
+│   └── figma-plugin/           # Figma design plugin
+│       └── src/                # Plugin UI & export logic
+├── docs/                       # Project documentation
 │   ├── adr/                    # Architecture Decision Records
 │   ├── features/               # Feature specifications
-│   ├── phases/                 # Development phase documentation
-│   ├── COMPONENT_GUIDELINES.md # How to write components
-│   ├── VISION.md               # Project vision
-│   └── ROADMAP.md              # High-level roadmap
-├── .planning/                   # GSD planning outputs
-│   └── codebase/               # Codebase analysis documents
-├── .github/                     # GitHub config
-│   ├── workflows/              # CI/CD pipelines
-│   └── ISSUE_TEMPLATE/
-├── .mcp.json                    # MCP server configuration
-├── turbo.json                   # Turborepo config
-├── package.json                 # Root monorepo package
+│   └── phases/                 # Phase details & planning
+├── ios/                        # Native iOS project (Expo managed)
+├── node_modules/               # Dependencies
+├── .planning/                  # GSD planning documents
+│   ├── codebase/               # Structure, architecture, conventions docs
+│   └── phases/                 # Phase execution plans
+├── package.json                # Root workspace config (npm workspaces)
+├── turbo.json                  # Turborepo config
 ├── tsconfig.base.json          # Base TypeScript config
-├── tsconfig.json               # Root TypeScript config
-├── tsconfig.react-native.json  # React Native specific config
-├── tsconfig.node.json          # Node.js utilities config
-├── .prettierrc                  # Code formatting
-├── .eslintrc.js                # Code linting
-├── PHASES.md                    # Development phases roadmap
-├── REGISTRY.md                  # Registry documentation
-├── CHANGELOG.md                 # Version history
-└── CLAUDE.md                    # Project instructions for Claude
+├── mcellui.config.ts           # Root demo theme config (example)
+├── PHASES.md                   # Development roadmap (Phase 1-13)
+├── REGISTRY.md                 # Component registry documentation
+└── CLAUDE.md                   # Project instructions for Claude
 ```
 
 ## Directory Purposes
 
-**`packages/core/`:**
-- Purpose: Design system library - shared tokens and theme system
-- Contains: TypeScript only, no React components, pure functions and constants
-- Key files: `src/theme/`, `src/config/`, `src/index.ts`
-- Published to npm as `@metacells/mcellui-core`
-- **Used by:** All other packages, consuming apps
+**apps/demo:**
+- Purpose: Live Expo app showcasing all components, blocks, and screens
+- Contains: Expo Router navigation, theme selector UI, component demos
+- Key files: `app/_layout.tsx` (root layout), `app/index.tsx` (home screen), `app/[name].tsx` (dynamic component demo)
+- Generated: `dist/` build output (not committed)
 
-**`packages/registry/`:**
-- Purpose: Component source code repository
-- Contains: TSX files for every component, block, and screen (not compiled, source only)
-- Key files: `registry.json`, `ui/*.tsx`, `blocks/*.tsx`, `screens/*.tsx`
-- **Not published** (private package)
-- **Used by:** CLI for copying, MCP server for serving, demo app for showing examples
+**apps/docs:**
+- Purpose: Documentation website (currently placeholder Next.js)
+- Contains: Markdown content, component API docs
+- Status: Not fully developed
 
-**`packages/cli/`:**
-- Purpose: `npx mcellui` command-line tool
-- Contains: Commander commands, file system operations, registry parsing
-- Key files: `src/index.ts` (entry), `src/commands/*.ts`
-- Published to npm as `@metacells/mcellui-cli`
-- Executable binary at `dist/index.js`
+**packages/cli:**
+- Purpose: Command-line tool for project initialization and component installation
+- Contains: 8 commands (init, add, list, doctor, diff, update, create, pick)
+- Key dependency resolution: `utils/dependencies.ts` resolves component A → component B chains
+- Key registry fetch: `utils/registry.ts` loads and queries registry.json
 
-**`packages/mcp-server/`:**
-- Purpose: AI assistant integration (Claude Code, etc.)
-- Contains: MCP protocol handlers, resource and tool definitions
-- Key files: `src/index.ts`, `src/resources/index.ts`, `src/tools/index.ts`
-- Published to npm as `@metacells/mcellui-mcp-server`
-- Started as: `node -e "import('@metacells/mcellui-mcp-server').then(m => m.default?.())"`
+**packages/core:**
+- Purpose: Single source of truth for design tokens and theme system
+- Contains: ThemeProvider context, all token definitions, utilities
+- Key exports: `index.ts` exports ~100 token constants and providers
+- Theme presets: `theme/presets.ts` defines 8 color schemes (zinc, slate, stone, blue, green, rose, orange, violet)
 
-**`packages/metro-plugin/`:**
-- Purpose: Expo Metro bundler integration
-- Contains: Virtual module resolver for dynamic config discovery
-- Key files: `src/index.ts` (withMcellUI function), `src/findConfig.ts`
-- Published to npm as `@metacells/mcellui-metro-plugin`
-- Usage: Wrap metro config in `metro.config.js`
+**packages/registry:**
+- Purpose: Repository of all component source code (ready to copy-paste)
+- Contains: 57 components split across `ui/`, `blocks/`, `screens/` subdirectories
+- registry.json: Metadata for each component (name, type, files, dependencies, status)
+- Not published as npm package (private: true)
 
-**`apps/demo/`:**
-- Purpose: Expo reference app and component showcase
-- Contains: Screen demos, theme playground, blocks examples
-- Key files: `app/_layout.tsx`, `app/index.tsx`, `components/demos/`
-- **Not published**
-- **Also serves as:** Testing ground, documentation reference
+**packages/mcp-server:**
+- Purpose: MCP server exposing registry and tools to Claude
+- Contains: Tool handlers for component search, resource handlers for component sources
+- registry/: Copy of registry files (generated for MCP access)
 
-**`docs/`:**
-- Purpose: Architecture records, feature specs, component guidelines
-- Contains: Markdown documentation and ADRs
-- Key files: `COMPONENT_GUIDELINES.md`, `VISION.md`, `adr/`, `features/`
+**packages/metro-plugin:**
+- Purpose: Metro bundler integration for theme customization
+- Contains: Plugin that intercepts module resolution for custom theme handling
+
+**packages/figma-plugin:**
+- Purpose: Figma integration for design-to-code export
+- Contains: Figma plugin UI, export logic, component generation
+
+**docs/adr:**
+- Purpose: Architecture Decision Records explaining major design choices
+- Examples: ADR-001 (Copy-paste model), ADR-002 (ThemeProvider design), etc.
+
+**docs/features:**
+- Purpose: Feature specifications and detailed component requirements
+- Examples: Form system spec, animation system spec
+
+**docs/phases:**
+- Purpose: Development roadmap phases (Phase 1-13) with component lists
+- Examples: Phase 4 (Forms & Blocks) complete, Phase 5 onward planned
+
+**.planning/codebase:**
+- Purpose: GSD-generated analysis documents for code orchestration
+- Contains: ARCHITECTURE.md, STRUCTURE.md, CONVENTIONS.md, TESTING.md, CONCERNS.md
+
+**.planning/phases:**
+- Purpose: GSD-generated implementation plans for each phase
+- One directory per phase with task breakdown and execution steps
 
 ## Key File Locations
 
 **Entry Points:**
 
-| Entry | Location | Purpose |
-|-------|----------|---------|
-| CLI executable | `packages/cli/dist/index.js` | `npx mcellui` command |
-| MCP server | `packages/mcp-server/dist/index.js` | AI integration entry |
-| Demo app root | `apps/demo/app/_layout.tsx` | Expo Router root layout |
-| Component export | `packages/registry/ui/button.tsx` | Each component file |
+- `package.json` - Root workspace configuration (npm workspaces, Turborepo scripts)
+- `apps/demo/app/_layout.tsx` - Demo app root with Expo Router + ThemeProvider
+- `packages/cli/src/index.ts` - CLI main with Commander program setup
+- `packages/core/src/index.ts` - Core exports (~100 tokens and hooks)
+- `packages/registry/registry.json` - Component manifest (metadata source)
 
 **Configuration:**
 
-| File | Location | Purpose |
-|------|----------|---------|
-| Theme system | `packages/core/src/theme/index.ts` | All theme exports |
-| Design tokens | `packages/core/src/tokens/` | Legacy token exports |
-| Component registry | `packages/registry/registry.json` | Metadata for all components |
-| App config | `apps/demo/mcellui.config.ts` | Example theme config |
-| Metro plugin | `packages/metro-plugin/src/index.ts` | Config auto-discovery |
-| TypeScript base | `tsconfig.base.json` | Shared TS configuration |
-| Turborepo | `turbo.json` | Build pipeline config |
+- `tsconfig.base.json` - Base TypeScript config (shared across workspace)
+- `tsconfig.react-native.json` - React Native specific TypeScript config
+- `turbo.json` - Turborepo pipeline (build, dev, lint, type-check tasks)
+- `.eslintrc.js` - ESLint rules (shared)
+- `.prettierrc` - Prettier formatting rules
+- `apps/demo/mcellui.config.ts` - Demo theme configuration (user-facing example)
 
 **Core Logic:**
 
-| Component | Location | Purpose |
-|-----------|----------|---------|
-| Theme Provider | `packages/core/src/theme/provider.tsx` | Context setup and useTheme hook |
-| ThemeProvider | `packages/core/src/theme/ThemeProvider.tsx` | Component wrapper |
-| ConfigProvider | `packages/core/src/config/ConfigProvider.tsx` | Config wrapping |
-| CLI add command | `packages/cli/src/commands/add.ts` | Main install logic |
-| Registry parsing | `packages/cli/src/utils/` | Registry and file utilities |
-| Button component | `packages/registry/ui/button.tsx` | Example UI component |
-| LoginBlock | `packages/registry/blocks/login-block.tsx` | Example screen block |
+- `packages/core/src/theme/ThemeProvider.tsx` - Theme context and hooks (450 lines)
+- `packages/core/src/theme/colors.ts` - Color token definitions with 8 presets
+- `packages/core/src/theme/radius.ts` - Border radius token generation
+- `packages/core/src/theme/typography.ts` - Font size, weight, line height scales
+- `packages/cli/src/commands/add.ts` - Component installation logic with dependency resolution
+- `packages/registry/registry.json` - All 105 components metadata (JSON manifest)
 
-**Testing:**
-- No centralized test directory
-- Tests co-located with source (not implemented in current phase)
-- Command: `npm run type-check` for type safety
+**Component Examples:**
+
+- `packages/registry/ui/button.tsx` - UI component example (Pressable + animations)
+- `packages/registry/ui/form.tsx` - Form system with react-hook-form integration
+- `packages/registry/blocks/login-block.tsx` - Composite block example
+- `packages/registry/screens/login-screen.tsx` - Full screen template example
+
+**Testing & Quality:**
+
+- `.eslintrc.js` - Linting configuration
+- `.prettierrc` - Code formatting rules
+- Workspace scripts in `package.json`: `build`, `lint`, `type-check`, `format`
 
 ## Naming Conventions
 
 **Files:**
-- Components: kebab-case (e.g., `login-block.tsx`, `button.tsx`)
-- Utilities: kebab-case (e.g., `get-theme.ts`)
-- Screens in Expo Router: kebab-case or segment syntax (e.g., `[name].tsx`)
-- Directories: kebab-case except `src`, `dist`, `node_modules`
+
+- Components: `kebab-case.tsx` (e.g., `button.tsx`, `avatar-stack.tsx`, `empty-state-block.tsx`)
+- Config: `camelCase.ts` (e.g., `mcellui.config.ts`, `tsconfig.json`)
+- Index files: `index.ts` or `index.tsx` (barrel exports)
+- Types/interfaces: In same file as implementation, not separate `.types.ts` files
+
+**Directories:**
+
+- Package names: `lowercase-with-hyphens` (e.g., `mcp-server`, `metro-plugin`)
+- UI components: `ui/` (atomic components: button, input, card, etc.)
+- Composite components: `blocks/` (card-like sections: product-card, login-block, etc.)
+- Pages/full screens: `screens/` (complete screens: login-screen, cart-screen, etc.)
+- Utilities: `utils/` with feature suffix (e.g., `utils/project.ts`, `utils/dependencies.ts`)
+- Context: `context/` (e.g., `ThemeSettingsContext.tsx`)
 
 **Exports:**
-- Component names: PascalCase (e.g., `LoginBlock`, `Button`, `Card`)
-- Type names: PascalCase (e.g., `LoginBlockProps`, `ButtonProps`)
-- Hooks: camelCase starting with `use` (e.g., `useTheme`, `useConfig`)
-- Constants: UPPER_SNAKE_CASE (e.g., `BUTTON_CONSTANTS`)
-- Utilities: camelCase (e.g., `getTheme`, `resolveConfig`)
 
-**Theme Tokens:**
-- Color keys: camelCase (e.g., `primary`, `foreground`, `destructive`)
-- Spacing keys: numeric indices (e.g., `spacing[4]`, `spacing[8]`)
-- Radius keys: camelCase (e.g., `radius.lg`, `radius.sm`)
-- Animation keys: camelCase (e.g., `springs.snappy`, `timing.linear`)
+- Named exports for components: `export const Button = ...`
+- Named exports for functions: `export function useTheme() { ... }`
+- Types exported: `export type ButtonProps = { ... }`
+- No default exports (consistency across codebase)
 
 ## Where to Add New Code
 
 **New UI Component:**
-1. Primary code: `packages/registry/ui/[component-name].tsx`
-2. Add entry to `packages/registry/registry.json` with metadata
-3. Copy to demo: `apps/demo/components/ui/[component-name].tsx`
-4. Create demo file: `apps/demo/components/demos/[component-name]-demo.tsx`
-5. Link in demo route: `apps/demo/app/components/[name].tsx`
+- Primary code: `packages/registry/ui/{name}.tsx`
+- Dependencies: List in `packages/registry/registry.json` entry for the component
+- Example: Copy structure from `packages/registry/ui/button.tsx`
+- Export: No barrel file needed; CLI handles imports
+- Style: Use `useTheme()` for colors, spacing, typography; StyleSheet for static styles
 
-**New Screen Block:**
-1. Primary code: `packages/registry/blocks/[block-name].tsx`
-2. Add entry to `packages/registry/registry.json` (type: "block")
-3. Copy to demo: `apps/demo/components/blocks/[block-name].tsx`
-4. Reference in demo: `apps/demo/components/demos/blocks-demo.tsx`
+**New Block Component:**
+- Implementation: `packages/registry/blocks/{name}.tsx`
+- Composition: Import from `packages/registry/ui/` components
+- Example: See `packages/registry/blocks/login-block.tsx`, `product-card.tsx`
+- Registry entry: Add to `packages/registry/registry.json` with type: "block"
 
-**New Full Screen:**
-1. Primary code: `packages/registry/screens/[screen-name].tsx`
-2. Add entry to registry.json (type: "screen")
-3. Demo route: `apps/demo/app/screens/[screen-name].tsx`
+**New Screen Template:**
+- Implementation: `packages/registry/screens/{name}-screen.tsx`
+- Scope: Complete, full-height screen with SafeAreaView, ScrollView, and spacing
+- Callbacks: Export callback props (onLogin, onSignUp, etc.) for integration
+- Example: See `packages/registry/screens/login-screen.tsx`, `cart-screen.tsx`
+- Registry entry: Add to `packages/registry/registry.json` with type: "screen"
 
-**New Theme Token:**
-1. If color: `packages/core/src/theme/colors.ts`
-2. If spacing: `packages/core/src/theme/spacing.ts`
-3. If radius: `packages/core/src/theme/radius.ts`
-4. If animation: `packages/core/src/theme/animations.ts`
-5. Export from: `packages/core/src/theme/index.ts`
+**New Design Token:**
+- Add to: `packages/core/src/theme/{category}.ts` (colors.ts, spacing.ts, typography.ts, etc.)
+- Export from: `packages/core/src/theme/index.ts`
+- Expose via: `packages/core/src/index.ts` (main entry point)
+- Type: Strongly typed interfaces (e.g., `ThemeColors`, `RadiusTokens`)
+- Consumer: Accessed via `const { colors, spacing } = useTheme()`
 
 **New CLI Command:**
-1. Implementation: `packages/cli/src/commands/[command-name].ts`
-2. Export in: `packages/cli/src/index.ts` (add to program)
-3. Utilities: `packages/cli/src/utils/` as needed
+- Implementation: `packages/cli/src/commands/{command-name}.ts`
+- Export: Register in `packages/cli/src/index.ts` with `program.addCommand()`
+- Pattern: Create Command() object with .name(), .description(), .option(), .action()
+- Example: See `packages/cli/src/commands/init.ts`, `add.ts`
 
 **New Utility Function:**
-1. Core utilities: `packages/core/src/utils/[name].ts`
-2. CLI utilities: `packages/cli/src/utils/[name].ts`
-3. Export from: corresponding `index.ts`
+- Shared across components: `packages/core/src/utils/{name}.ts`
+- CLI utilities: `packages/cli/src/utils/{name}.ts`
+- Demo app utilities: `apps/demo/lib/{name}.ts`
+- Export: From module's `index.ts` file (barrel pattern)
+
+**Styling Approach:**
+
+All components use React Native StyleSheet + useTheme():
+
+```tsx
+import { useTheme } from '@metacells/mcellui-core';
+
+function MyComponent() {
+  const { colors, spacing, radius } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      padding: spacing[4],
+      borderRadius: radius.md,
+    }
+  });
+
+  return (
+    <View style={[styles.container, { backgroundColor: colors.primary }]}>
+      {/* content */}
+    </View>
+  );
+}
+```
+
+**No Style Files:**
+- Do NOT create `.css`, `.scss`, `.module.css` files
+- Do NOT use StyleSheet.create() outside of component files
+- Inline static styles in component file via StyleSheet.create()
+- Dynamic styles use `useTheme()` hook
 
 ## Special Directories
 
-**`packages/registry/`:**
-- Purpose: Source of truth for all copyable code
-- Generated: `registry.json` is manually maintained (but could be auto-generated)
-- Committed: Yes, all source files committed
-- Not compiled: TSX files stay as-is, users copy directly
-
-**`apps/demo/components/`:**
-- Purpose: Synced copies of registry for local demo
-- Generated: Manually copied during development (could be scripted)
-- Committed: Yes (for development convenience)
-- Workflow: Edit in registry, copy to demo, test in demo app
-
-**`packages/core/src/theme/`:**
-- Purpose: Design token definitions
-- Generated: No
-- Committed: Yes
-- 10+ files defining colors, spacing, radius, typography, animations, presets
-
-**`apps/demo/app/components/[name].tsx`:**
-- Purpose: Dynamic route for component demo pages
-- Generated: No (Expo Router file)
-- Committed: Yes
-- Pattern: Renders component from `/components/demos/[name]-demo.tsx`
-
-**`.planning/codebase/`:**
-- Purpose: GSD codebase analysis output
-- Generated: Yes (by analysis tools)
-- Committed: Yes (reference for implementation)
-- Contents: ARCHITECTURE.md, STRUCTURE.md, CONVENTIONS.md, TESTING.md, CONCERNS.md, STACK.md, INTEGRATIONS.md
-
-**`node_modules/`:**
+**node_modules:**
 - Purpose: Installed dependencies
-- Generated: Yes (npm install)
-- Committed: No (.gitignored)
+- Generated: Yes (not committed)
+- Committed: No
+- Install: `npm install` at root
 
-**`dist/` and `build/` directories:**
-- Purpose: Compiled output
-- Generated: Yes (npm run build)
-- Committed: No (.gitignored)
-- Packages: `packages/cli/dist/`, `packages/mcp-server/dist/`, `packages/metro-plugin/dist/`
+**ios/ and android/:**
+- Purpose: Native project files (Expo managed)
+- Generated: Yes (managed by Expo)
+- Committed: Yes (required for native builds)
+- Modify: Via Expo CLI or XCode/Android Studio (rarely needed)
 
-## Build Output Locations
+**dist/ and .turbo/:**
+- Purpose: Build outputs and Turborepo cache
+- Generated: Yes (via `npm run build` and Turbo)
+- Committed: No (in .gitignore)
 
-| Package | Input | Output | Type |
-|---------|-------|--------|------|
-| `@metacells/mcellui-core` | `packages/core/src/` | Published as source (no dist) | Source |
-| `@metacells/mcellui-cli` | `packages/cli/src/` | `packages/cli/dist/` | Bundled (tsup) |
-| `@metacells/mcellui-mcp-server` | `packages/mcp-server/src/` | `packages/mcp-server/dist/` | Bundled (tsup) |
-| `@metacells/mcellui-metro-plugin` | `packages/metro-plugin/src/` | `packages/metro-plugin/dist/` | Bundled (tsup) |
-| `@metacells/mcellui-registry` | `packages/registry/` | registry.json in dist | Metadata |
+**.planning/:**
+- Purpose: GSD planning and codebase analysis documents
+- Generated: Yes (by GSD agents)
+- Committed: Yes (reviewed and versioned)
+
+**docs/phases/ (in root):**
+- Purpose: Original phase planning documentation
+- Contains: Phase 1-13 planning files
+- Committed: Yes (reference for development)
 
 ---
 
-*Structure analysis: 2026-01-24*
+*Structure analysis: 2026-01-26*
