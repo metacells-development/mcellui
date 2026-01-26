@@ -554,6 +554,36 @@ export function ScreensDemo() {
               following: 432,
             },
           }}
+          tabs={[
+            {
+              key: 'posts',
+              title: 'Posts',
+              badge: 234,
+              content: (
+                <View style={{ paddingVertical: 32, alignItems: 'center' }}>
+                  <Text style={{ color: '#888' }}>User posts would appear here</Text>
+                </View>
+              ),
+            },
+            {
+              key: 'likes',
+              title: 'Likes',
+              content: (
+                <View style={{ paddingVertical: 32, alignItems: 'center' }}>
+                  <Text style={{ color: '#888' }}>Liked posts would appear here</Text>
+                </View>
+              ),
+            },
+            {
+              key: 'media',
+              title: 'Media',
+              content: (
+                <View style={{ paddingVertical: 32, alignItems: 'center' }}>
+                  <Text style={{ color: '#888' }}>Media gallery would appear here</Text>
+                </View>
+              ),
+            },
+          ]}
           isOwnProfile={false}
           isFollowing={profileFollowing}
           onBackPress={() => setActiveScreen(null)}
