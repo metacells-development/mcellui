@@ -595,7 +595,29 @@ export function ScreensDemo() {
       <Modal visible={activeScreen === 'settings'} animationType="slide">
         <SettingsScreen
           onBackPress={() => setActiveScreen(null)}
-          onItemPress={(key) => console.log('Settings item:', key)}
+          sections={[
+            {
+              title: 'Account',
+              items: [
+                { type: 'navigation', label: 'Profile', value: 'Sarah Chen', onPress: () => console.log('Profile') },
+                { type: 'navigation', label: 'Email', value: 'sarah@example.com', onPress: () => console.log('Email') },
+              ],
+            },
+            {
+              title: 'Preferences',
+              items: [
+                { type: 'toggle', label: 'Dark Mode', value: false, onValueChange: (v) => console.log('Dark mode:', v) },
+                { type: 'toggle', label: 'Notifications', value: true, onValueChange: (v) => console.log('Notifications:', v) },
+              ],
+            },
+            {
+              title: 'About',
+              items: [
+                { type: 'navigation', label: 'Version', value: '1.0.0' },
+                { type: 'button', label: 'Log Out', variant: 'destructive', onPress: () => console.log('Logout') },
+              ],
+            },
+          ]}
         />
       </Modal>
 
