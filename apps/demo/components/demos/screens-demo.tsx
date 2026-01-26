@@ -122,6 +122,24 @@ interface MockOrder {
 // Mock Data Constants
 // ============================================================================
 
+const MOCK_ONBOARDING_SLIDES = [
+  {
+    key: '1',
+    title: 'Welcome to the App',
+    description: 'Discover amazing features that will make your life easier and more productive.',
+  },
+  {
+    key: '2',
+    title: 'Stay Connected',
+    description: 'Keep in touch with friends and family, share moments, and build meaningful connections.',
+  },
+  {
+    key: '3',
+    title: 'Get Started',
+    description: 'Create your account and start exploring all the features we have to offer.',
+  },
+];
+
 const MOCK_CART_ITEMS: MockCartItem[] = [
   {
     id: '1',
@@ -517,6 +535,7 @@ export function ScreensDemo() {
 
       <Modal visible={activeScreen === 'onboarding'} animationType="slide">
         <OnboardingScreen
+          slides={MOCK_ONBOARDING_SLIDES}
           onComplete={() => setActiveScreen(null)}
           onSkip={() => setActiveScreen(null)}
         />
