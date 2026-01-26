@@ -194,7 +194,7 @@ export function Avatar({
 
 const styles = StyleSheet.create({
   wrapper: {
-    alignSelf: 'flex-start',
+    // No alignSelf - let parent control alignment
   },
   container: {
     overflow: 'hidden',
