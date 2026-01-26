@@ -67,12 +67,7 @@ interface MockNotification {
   read: boolean;
 }
 
-interface MockMessage {
-  id: string;
-  text: string;
-  isUser: boolean;
-  time: string;
-}
+// MockMessage removed - using ChatMessage interface from ChatScreen
 
 interface MockUser {
   id: string;
@@ -230,11 +225,11 @@ const MOCK_NOTIFICATIONS: MockNotification[] = [
   },
 ];
 
-const MOCK_MESSAGES: MockMessage[] = [
-  { id: '1', text: 'Hey! How are you?', isUser: false, time: '10:30 AM' },
-  { id: '2', text: 'I\'m good! Just working on the new project', isUser: true, time: '10:32 AM' },
-  { id: '3', text: 'Nice! How\'s it going?', isUser: false, time: '10:33 AM' },
-  { id: '4', text: 'Pretty well, should be done by Friday', isUser: true, time: '10:35 AM' },
+const MOCK_MESSAGES = [
+  { id: '1', text: 'Hey! How are you?', isMe: false, time: '10:30 AM' },
+  { id: '2', text: 'I\'m good! Just working on the new project', isMe: true, time: '10:32 AM' },
+  { id: '3', text: 'Nice! How\'s it going?', isMe: false, time: '10:33 AM' },
+  { id: '4', text: 'Pretty well, should be done by Friday', isMe: true, time: '10:35 AM' },
 ];
 
 const MOCK_USERS: MockUser[] = [
