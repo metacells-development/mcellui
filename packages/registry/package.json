@@ -3,6 +3,10 @@
   "version": "0.0.2",
   "private": true,
   "description": "Component registry for mcellui",
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
   "scripts": {
     "type-check": "tsc --noEmit",
     "lint": "eslint .",
@@ -13,7 +17,26 @@
     "react-native": ">=0.73.0",
     "react-hook-form": ">=7.50.0",
     "@hookform/resolvers": ">=3.3.0",
-    "zod": ">=3.22.0"
+    "zod": ">=3.22.0",
+    "react-native-reanimated": ">=3.0.0",
+    "react-native-gesture-handler": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-hook-form": {
+      "optional": true
+    },
+    "@hookform/resolvers": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    },
+    "react-native-reanimated": {
+      "optional": true
+    },
+    "react-native-gesture-handler": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/react": "~19.1.10",
