@@ -79,32 +79,39 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PKG-01 | — | Pending |
-| PKG-02 | — | Pending |
-| PKG-03 | — | Pending |
-| CLI-01 | — | Pending |
-| CLI-02 | — | Pending |
-| CLI-03 | — | Pending |
-| CLI-04 | — | Pending |
-| CLI-05 | — | Pending |
-| MCP-01 | — | Pending |
-| MCP-02 | — | Pending |
-| MCP-03 | — | Pending |
-| MCP-04 | — | Pending |
-| MCP-05 | — | Pending |
-| REG-01 | — | Pending |
-| REG-02 | — | Pending |
-| REG-03 | — | Pending |
-| REG-04 | — | Pending |
-| CORE-01 | — | Pending |
-| CORE-02 | — | Pending |
-| CORE-03 | — | Pending |
+| PKG-01 | Phase 14 | Pending |
+| PKG-02 | Phase 14 | Pending |
+| PKG-03 | Phase 14 | Pending |
+| CLI-01 | Phase 15 | Pending |
+| CLI-02 | Phase 15 | Pending |
+| CLI-03 | Phase 15 | Pending |
+| CLI-04 | Phase 15 | Pending |
+| CLI-05 | Phase 15 | Pending |
+| MCP-01 | Phase 16 | Pending |
+| MCP-02 | Phase 16 | Pending |
+| MCP-03 | Phase 16 | Pending |
+| MCP-04 | Phase 16 | Pending |
+| MCP-05 | Phase 16 | Pending |
+| REG-01 | Phase 17 | Pending |
+| REG-02 | Phase 17 | Pending |
+| REG-03 | Phase 17 | Pending |
+| REG-04 | Phase 17 | Pending |
+| CORE-01 | Phase 18 | Pending |
+| CORE-02 | Phase 18 | Pending |
+| CORE-03 | Phase 18 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 20 total
-- Mapped to phases: 0
-- Unmapped: 20 (pending roadmap)
+- Mapped to phases: 20
+- Unmapped: 0
+
+**Phase Breakdown:**
+- Phase 14 (Critical Fixes): 3 requirements
+- Phase 15 (CLI Audit): 5 requirements
+- Phase 16 (MCP Audit): 5 requirements
+- Phase 17 (Registry Audit): 4 requirements
+- Phase 18 (Core Audit): 3 requirements
 
 ---
 *Requirements defined: 2026-01-26*
-*Last updated: 2026-01-26 after initial definition*
+*Last updated: 2026-01-26 after roadmap creation*
