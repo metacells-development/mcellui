@@ -209,8 +209,9 @@ export function ProfileScreen({
       </View>
 
       <ScrollView
+        style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: insets.bottom + spacing[4] }}
+        contentContainerStyle={{ paddingBottom: insets.bottom + spacing[4], flexGrow: 1 }}
       >
         {/* Profile Info */}
         <View style={[styles.profileInfo, { paddingHorizontal: spacing[6] }]}>
