@@ -15,11 +15,11 @@ Requirements for audit milestone. Each maps to roadmap phases.
 
 ### CLI Audit
 
-- [ ] **CLI-01**: All CLI errors written to stderr with actionable messages
-- [ ] **CLI-02**: All CLI commands use consistent exit codes (0=success, 1=error)
-- [ ] **CLI-03**: All CLI commands have consistent flag naming patterns
-- [ ] **CLI-04**: CLI help text is complete and accurate for all commands
-- [ ] **CLI-05**: CLI handles edge cases gracefully (no project, missing config, network errors)
+- [x] **CLI-01**: All CLI errors written to stderr with actionable messages
+- [x] **CLI-02**: All CLI commands use consistent exit codes (0=success, 1=error)
+- [x] **CLI-03**: All CLI commands have consistent flag naming patterns
+- [x] **CLI-04**: CLI help text is complete and accurate for all commands
+- [x] **CLI-05**: CLI handles edge cases gracefully (no project, missing config, network errors)
 
 ### MCP Server Audit
 
@@ -82,11 +82,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PKG-01 | Phase 14 | Complete |
 | PKG-02 | Phase 14 | Complete |
 | PKG-03 | Phase 14 | Complete |
-| CLI-01 | Phase 15 | Pending |
-| CLI-02 | Phase 15 | Pending |
-| CLI-03 | Phase 15 | Pending |
-| CLI-04 | Phase 15 | Pending |
-| CLI-05 | Phase 15 | Pending |
+| CLI-01 | Phase 15 | Complete |
+| CLI-02 | Phase 15 | Complete |
+| CLI-03 | Phase 15 | Complete |
+| CLI-04 | Phase 15 | Complete |
+| CLI-05 | Phase 15 | Complete |
 | MCP-01 | Phase 16 | Pending |
 | MCP-02 | Phase 16 | Pending |
 | MCP-03 | Phase 16 | Pending |

@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-26)
 
 **Core value:** Users own the component code — tooling must work reliably
-**Current focus:** Phase 15 - CLI Audit
+**Current focus:** Phase 16 - MCP Server Tool Quality
 
 ## Current Position
 
 Phase: 15 of 18 (CLI Audit) — Complete
-Plan: 3/3 in current phase
-Status: All CLI commands refactored with centralized error handling
-Last activity: 2026-01-27 — Completed 15-03-PLAN.md
+Plan: 4/4 in current phase
+Status: Phase 15 verified, ready for Phase 16
+Last activity: 2026-01-27 — Phase 15 complete
 
-Progress: [█████░░░░░░░░░░░░░] 15/18 phases (83%)
+Progress: [██████░░░░░░░░░░░░] 15/18 phases (83%)
 
 ## Milestones
 
@@ -39,16 +39,13 @@ Recent decisions affecting v1.1:
 - 14-01: Multiple entry points for subpath exports (./tokens, ./utils)
 - 14-02: Optional peer dependencies for animation/form libraries (users install only what they need)
 - 14-02: sideEffects: false in all packages (enables better tree-shaking)
-- 15-01: All CLI errors use stderr, not stdout (enables proper shell scripting)
-- 15-01: Every error includes actionable hint (improves developer experience)
-- 15-01: Error factory pattern for common errors (consistent formatting)
-- 15-02: 30-second timeout prevents indefinite hangs on unresponsive servers
-- 15-02: Maximum 3 retry attempts with exponential backoff for transient errors
-- 15-02: Non-network errors (404, parse errors) fail immediately without retry
-- 15-02: Errors now propagate to callers instead of being silently caught
-- 15-03: User cancellation (Ctrl+C) exits with code 0 (not an error condition)
-- 15-03: Partial failures in multi-component operations exit with code 1
-- 15-03: All 8 CLI commands use centralized error handling (handleError/errors.*)
+- 15-01: All CLI errors use stderr via handleError() (enables proper shell scripting)
+- 15-01: Error factory pattern for 5 common errors (noProject, notInitialized, registryFetch, componentNotFound, configInvalid)
+- 15-02: Network retry with exponential backoff (3 retries, 30s timeout)
+- 15-03: All 8 commands refactored to centralized error handling
+- 15-03: Prompt cancellation exits with code 0, partial failures exit with code 1
+- 15-04: Commander.js parseAsync + configureOutput for stderr separation
+- 15-04: list --json flag for CI/CD usage
 
 ### Resolved Blockers
 - CheckoutScreen StepIndicator scope bug — fixed in Phase 13
@@ -56,23 +53,11 @@ Recent decisions affecting v1.1:
 - ImageGallery missing loading states — fixed in Phase 8
 
 ### Open Blockers
-From research findings for Phase 14:
-- ~~**CRITICAL:** Core package exports raw TypeScript instead of compiled JavaScript~~ - Fixed in 14-01
-- ~~**CRITICAL:** Missing peer dependencies (reanimated, gesture-handler) in registry package~~ - Fixed in 14-02
-- ~~**MEDIUM:** Missing ./package.json exports in all packages~~ - Fixed in 14-02
-
-Phase 14 blockers resolved. Phase 15 in progress.
+None. Phase 15 complete. Ready for Phase 16.
 
 ### Technical Debt
 - 3 orphaned token exports in core (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS)
 - Address in CORE-03 (orphaned/unused exports audit)
-- ~~pick command silent failure bug~~ - Fixed in 15-03 (now properly exits with code 1)
-
-## Session Continuity
-
-Last session: 2026-01-27 17:00 UTC
-Stopped at: Completed 15-03-PLAN.md
-Resume file: None
 
 ---
-*Updated: 2026-01-27 after 15-03 completion*
+*Updated: 2026-01-27 after Phase 15 completion*
