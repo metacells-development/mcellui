@@ -9,6 +9,7 @@ import {
   detectPackageManager,
   ProjectType,
 } from '../utils/project';
+import { handleError, errors } from '../utils/errors';
 
 type CheckStatus = 'pass' | 'warn' | 'fail';
 
@@ -597,9 +598,7 @@ export const doctorCommand = new Command()
       const projectRoot = await getProjectRoot(cwd);
 
       if (!projectRoot) {
-        console.log(chalk.red('Could not find a valid project.'));
-        console.log(chalk.dim('Make sure you run this command in a project directory.'));
-        process.exit(1);
+        errors.noProject();
       }
 
       const projectType = await detectProjectType(projectRoot);
@@ -654,7 +653,9 @@ export const doctorCommand = new Command()
         process.exit(1);
       }
     } catch (error) {
-      console.error(chalk.red('Doctor check failed:'), error);
-      process.exit(1);
+      handleError({
+        message: 'Doctor check failed',
+        hint: error instanceof Error ? error.message : 'Run again with --json for details',
+      });
     }
   });

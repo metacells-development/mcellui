@@ -75,8 +75,10 @@ async function listAvailableComponents(options: { category?: string; json?: bool
     console.log();
   } catch (error) {
     spinner.fail('Failed to fetch components');
-    console.error(error);
-    process.exit(1);
+    handleError({
+      message: 'Failed to fetch components',
+      hint: error instanceof Error ? error.message : 'Check your network connection and try again',
+    });
   }
 }
 
@@ -88,17 +90,13 @@ async function listInstalledComponents(options: { cwd?: string; json?: boolean }
     const projectRoot = await getProjectRoot(cwd);
 
     if (!projectRoot) {
-      console.log(chalk.red('Could not find a valid project.'));
-      console.log(chalk.dim('Run `npx mcellui init` first.'));
-      process.exit(1);
+      errors.noProject();
     }
 
     const config = await getConfig(projectRoot);
 
     if (!config) {
-      console.log(chalk.red('Project not initialized.'));
-      console.log(chalk.dim('Run `npx mcellui init` first.'));
-      process.exit(1);
+      errors.notInitialized();
     }
 
     spinner.start('Scanning installed components...');
@@ -210,7 +208,9 @@ async function listInstalledComponents(options: { cwd?: string; json?: boolean }
     }
   } catch (error) {
     spinner.fail('Failed to list installed components');
-    console.error(error);
-    process.exit(1);
+    handleError({
+      message: 'Failed to list installed components',
+      hint: error instanceof Error ? error.message : 'Check your network connection and try again',
+    });
   }
 }

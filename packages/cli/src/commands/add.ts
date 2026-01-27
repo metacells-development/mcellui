@@ -9,6 +9,7 @@ import { fetchComponent, getRegistry, RegistryItem } from '../utils/registry';
 import { resolveDependencies, formatCircularError } from '../utils/dependencies';
 import { getInstalledFiles, getInstalledNames } from '../utils/installed';
 import { transformToInstalled } from '../utils/imports';
+import { handleError, errors } from '../utils/errors';
 
 export const addCommand = new Command()
   .name('add')
@@ -25,17 +26,13 @@ export const addCommand = new Command()
       const projectRoot = await getProjectRoot(cwd);
 
       if (!projectRoot) {
-        console.log(chalk.red('Could not find a valid project.'));
-        console.log(chalk.dim('Run `npx mcellui init` first.'));
-        process.exit(1);
+        errors.noProject();
       }
 
       const config = await getConfig(projectRoot);
 
       if (!config) {
-        console.log(chalk.red('Project not initialized.'));
-        console.log(chalk.dim('Run `npx mcellui init` first.'));
-        process.exit(1);
+        errors.notInitialized();
       }
 
       // If no components specified, show picker
@@ -43,8 +40,10 @@ export const addCommand = new Command()
         const registry = await getRegistry();
 
         if (!registry.length) {
-          console.log(chalk.red('No components found in registry.'));
-          process.exit(1);
+          handleError({
+            message: 'No components found in registry',
+            hint: 'Check your internet connection or try again later',
+          });
         }
 
         const { selected } = await prompts({
@@ -58,6 +57,11 @@ export const addCommand = new Command()
           })),
           hint: '- Space to select, Enter to confirm',
         });
+
+        // Handle user cancellation (Ctrl+C)
+        if (selected === undefined) {
+          process.exit(0);
+        }
 
         if (!selected?.length) {
           console.log(chalk.dim('No components selected.'));
@@ -122,6 +126,11 @@ export const addCommand = new Command()
           initial: true,
         });
 
+        // Handle user cancellation (Ctrl+C)
+        if (confirm === undefined) {
+          process.exit(0);
+        }
+
         if (!confirm) {
           console.log(chalk.dim('Cancelled.'));
           return;
@@ -130,6 +139,7 @@ export const addCommand = new Command()
 
       const allDependencies: string[] = [];
       const allDevDependencies: string[] = [];
+      let failCount = 0;
 
       for (const componentName of toInstall) {
         spinner.start(`Fetching ${componentName}...`);
@@ -139,6 +149,7 @@ export const addCommand = new Command()
 
           if (!component) {
             spinner.fail(`Component "${componentName}" not found`);
+            failCount++;
             continue;
           }
 
@@ -173,7 +184,13 @@ export const addCommand = new Command()
         } catch (error) {
           spinner.fail(`Failed to add ${componentName}`);
           console.error(chalk.dim(String(error)));
+          failCount++;
         }
+      }
+
+      // Exit with error code if any components failed
+      if (failCount > 0) {
+        process.exit(1);
       }
 
       // Show dependency install commands if needed
@@ -196,8 +213,10 @@ export const addCommand = new Command()
       console.log(chalk.green('Done!'));
     } catch (error) {
       spinner.fail('Failed');
-      console.error(error);
-      process.exit(1);
+      handleError({
+        message: 'Failed to add components',
+        hint: error instanceof Error ? error.message : 'Check your network connection and try again',
+      });
     }
   });
 

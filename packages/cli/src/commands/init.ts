@@ -5,6 +5,7 @@ import prompts from 'prompts';
 import fs from 'fs-extra';
 import path from 'path';
 import { getProjectRoot, detectProjectType } from '../utils/project';
+import { handleError, errors } from '../utils/errors';
 
 export const initCommand = new Command()
   .name('init')
@@ -19,9 +20,7 @@ export const initCommand = new Command()
       const projectRoot = await getProjectRoot(cwd);
 
       if (!projectRoot) {
-        console.log(chalk.red('Could not find a valid Expo/React Native project.'));
-        console.log(chalk.dim('Make sure you run this command in a project with package.json'));
-        process.exit(1);
+        errors.noProject();
       }
 
       console.log();
@@ -80,6 +79,11 @@ export const initCommand = new Command()
             ],
           },
         ]);
+
+        // Handle user cancellation (Ctrl+C)
+        if (response.componentsPath === undefined) {
+          process.exit(0);
+        }
 
         config = { ...config, ...response };
       }
@@ -210,8 +214,10 @@ export function cn(...inputs: StyleInput[]): Style {
       console.log();
     } catch (error) {
       spinner.fail('Failed to initialize');
-      console.error(error);
-      process.exit(1);
+      handleError({
+        message: 'Initialization failed',
+        hint: error instanceof Error ? error.message : 'Check file permissions and try again',
+      });
     }
   });
 
