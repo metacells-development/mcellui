@@ -23,11 +23,11 @@ Requirements for audit milestone. Each maps to roadmap phases.
 
 ### MCP Server Audit
 
-- [ ] **MCP-01**: All MCP tools have accurate descriptions and examples
-- [ ] **MCP-02**: All MCP tools return useful responses for AI consumers
-- [ ] **MCP-03**: All MCP errors include actionable recovery steps
-- [ ] **MCP-04**: MCP tool schemas are flat with clear parameter descriptions
-- [ ] **MCP-05**: MCP resources are discoverable with hierarchical URIs
+- [x] **MCP-01**: All MCP tools have accurate descriptions and examples
+- [x] **MCP-02**: All MCP tools return useful responses for AI consumers
+- [x] **MCP-03**: All MCP errors include actionable recovery steps
+- [x] **MCP-04**: MCP tool schemas are flat with clear parameter descriptions
+- [x] **MCP-05**: MCP resources are discoverable with hierarchical URIs
 
 ### Registry Audit
 
@@ -87,11 +87,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLI-03 | Phase 15 | Complete |
 | CLI-04 | Phase 15 | Complete |
 | CLI-05 | Phase 15 | Complete |
-| MCP-01 | Phase 16 | Pending |
-| MCP-02 | Phase 16 | Pending |
-| MCP-03 | Phase 16 | Pending |
-| MCP-04 | Phase 16 | Pending |
-| MCP-05 | Phase 16 | Pending |
+| MCP-01 | Phase 16 | Complete |
+| MCP-02 | Phase 16 | Complete |
+| MCP-03 | Phase 16 | Complete |
+| MCP-04 | Phase 16 | Complete |
+| MCP-05 | Phase 16 | Complete |
 | REG-01 | Phase 17 | Pending |
 | REG-02 | Phase 17 | Pending |
 | REG-03 | Phase 17 | Pending |
@@ -114,4 +114,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-26*
-*Last updated: 2026-01-26 after Phase 14 completion*
+*Last updated: 2026-01-27 after Phase 16 completion*

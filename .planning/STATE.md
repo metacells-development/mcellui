@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-01-26)
 
 **Core value:** Users own the component code — tooling must work reliably
-**Current focus:** Phase 16 - MCP Server Tool Quality
+**Current focus:** Phase 17 - Registry Structure & Metadata
 
 ## Current Position
 
-Phase: 16 of 18 (MCP Server Tool Quality) — In Progress
-Plan: 3/4 in current phase
-Status: Plan 16-02 complete
-Last activity: 2026-01-27 — Completed 16-02-PLAN.md
+Phase: 16 of 18 (MCP Server Tool Quality) — Complete
+Plan: 3/3 in current phase
+Status: Phase 16 verified, ready for Phase 17
+Last activity: 2026-01-27 — Phase 16 complete
 
 Progress: [██████░░░░░░░░░░░░] 16/18 phases (89%)
 
@@ -50,7 +50,6 @@ Recent decisions affecting v1.1:
 - 16-01: Optional parameters have explicit defaults in schemas (reduces clarifying questions)
 - 16-02: All MCP tool errors include isError: true flag for agent consumption
 - 16-02: Error responses follow "Next step:" pattern for actionable recovery guidance
-- 16-02: Component not found errors list available components and suggest alternate tools
 - 16-03: MCP resources use _meta field for metadata (sizeHint, lastUpdated, topics) per MCP SDK schema
 - 16-03: Error responses include recovery hints for common failures (registry path, tokens directory)
 
@@ -60,13 +59,12 @@ Recent decisions affecting v1.1:
 - ImageGallery missing loading states — fixed in Phase 8
 
 ### Open Blockers
-None. Phase 16 plan 02 complete. Ready for plan 16-04 (Wave 2 final plan).
+None. Phase 16 complete. Ready for Phase 17.
 
 ### Technical Debt
 - 3 orphaned token exports in core (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS)
 - Address in CORE-03 (orphaned/unused exports audit)
 - Pre-existing TypeScript errors in packages/mcp-server/src/tools/index.ts parseComponentDocs function (strict null checks)
-- Address in future type safety cleanup plan
 
 ---
-*Updated: 2026-01-27 after Phase 16 Plan 02 completion*
+*Updated: 2026-01-27 after Phase 16 completion*
