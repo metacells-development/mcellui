@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-26)
 ## Current Position
 
 Phase: 15 of 18 (CLI Audit) — In Progress
-Plan: 1/3 in current phase
-Status: Error handling foundation complete
-Last activity: 2026-01-27 — Completed 15-01-PLAN.md
+Plan: 2/3 in current phase
+Status: Network resilience complete
+Last activity: 2026-01-27 — Completed 15-02-PLAN.md
 
 Progress: [█████░░░░░░░░░░░░░] 15/18 phases (83%)
 
@@ -42,6 +42,10 @@ Recent decisions affecting v1.1:
 - 15-01: All CLI errors use stderr, not stdout (enables proper shell scripting)
 - 15-01: Every error includes actionable hint (improves developer experience)
 - 15-01: Error factory pattern for common errors (consistent formatting)
+- 15-02: 30-second timeout prevents indefinite hangs on unresponsive servers
+- 15-02: Maximum 3 retry attempts with exponential backoff for transient errors
+- 15-02: Non-network errors (404, parse errors) fail immediately without retry
+- 15-02: Errors now propagate to callers instead of being silently caught
 
 ### Resolved Blockers
 - CheckoutScreen StepIndicator scope bug — fixed in Phase 13
@@ -54,7 +58,7 @@ From research findings for Phase 14:
 - ~~**CRITICAL:** Missing peer dependencies (reanimated, gesture-handler) in registry package~~ - Fixed in 14-02
 - ~~**MEDIUM:** Missing ./package.json exports in all packages~~ - Fixed in 14-02
 
-Phase 14 blockers resolved. Ready for Phase 15.
+Phase 14 blockers resolved. Phase 15 in progress.
 
 ### Technical Debt
 - 3 orphaned token exports in core (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS)
@@ -62,9 +66,9 @@ Phase 14 blockers resolved. Ready for Phase 15.
 
 ## Session Continuity
 
-Last session: 2026-01-27 17:52 UTC
-Stopped at: Completed 15-01-PLAN.md
+Last session: 2026-01-27 16:52 UTC
+Stopped at: Completed 15-02-PLAN.md
 Resume file: None
 
 ---
-*Updated: 2026-01-27 after Phase 15 Plan 01 completion*
+*Updated: 2026-01-27 after 15-02 completion*
