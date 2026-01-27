@@ -152,24 +152,26 @@ async function loadComponentCode(item: RegistryItem): Promise<string | null> {
 export const tools: Tool[] = [
   {
     name: 'mcellui_list_components',
-    description: 'List all available mcellui components with filtering options',
+    description: 'List all available mcellui components grouped by category. Use this when you need to browse or discover components. Returns names, descriptions, and status for each component.',
     inputSchema: {
       type: 'object',
       properties: {
         category: {
           type: 'string',
-          description: 'Filter by category: Inputs, Layout, Data Display, Feedback, Navigation, Mobile Patterns',
+          description: 'Filter by category (e.g., "Inputs", "Feedback", "Navigation")',
+          default: undefined,
         },
         type: {
           type: 'string',
-          description: 'Filter by type: ui, block, screen, primitive, hook',
+          description: 'Filter by type (e.g., "ui", "block", "screen")',
+          default: undefined,
         },
       },
     },
   },
   {
     name: 'mcellui_get_component',
-    description: 'Get concise documentation for a component: description, props, examples, and installation. Use this first to understand a component.',
+    description: 'Get concise documentation for a component. Use this when you want to understand a component. Returns description, props table, usage example, and installation command.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -183,7 +185,7 @@ export const tools: Tool[] = [
   },
   {
     name: 'mcellui_get_component_source',
-    description: 'Get the full source code for a component. Only use this when you need to see the complete implementation details.',
+    description: 'Get the full TypeScript source code for a component. Use this when you need to see the complete implementation, modify it, or understand internal logic.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -197,13 +199,13 @@ export const tools: Tool[] = [
   },
   {
     name: 'mcellui_add_component',
-    description: 'Get instructions to add a component to a project',
+    description: 'Get installation instructions for a component: CLI command, peer dependencies, and required components. Use this when you need to add a component to a project.',
     inputSchema: {
       type: 'object',
       properties: {
         name: {
           type: 'string',
-          description: 'Component name to add',
+          description: 'Component name to add (e.g., "button", "dialog", "form")',
         },
       },
       required: ['name'],
@@ -211,7 +213,7 @@ export const tools: Tool[] = [
   },
   {
     name: 'mcellui_suggest_component',
-    description: 'Get intelligent component suggestions based on what you want to build',
+    description: 'Get ranked component suggestions based on a natural language description of what you want to build. Use this when the user describes a UI need but doesn\'t name specific components.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -219,13 +221,20 @@ export const tools: Tool[] = [
           type: 'string',
           description: 'Describe what you want to build (e.g., "a login form with email and password")',
         },
+        maxResults: {
+          type: 'number',
+          description: 'Maximum suggestions to return (default: 5, max: 10)',
+          default: 5,
+          minimum: 1,
+          maximum: 10,
+        },
       },
       required: ['description'],
     },
   },
   {
     name: 'mcellui_create_component',
-    description: 'Get a guide and template for creating a new custom component',
+    description: 'Get a starter template and guide for creating a new custom component. Use this when building a component that doesn\'t exist in the registry.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -237,10 +246,12 @@ export const tools: Tool[] = [
           type: 'string',
           enum: ['basic', 'animated', 'pressable', 'input'],
           description: 'Template type: basic (simple view), animated (with Reanimated), pressable (touchable), input (form field)',
+          default: 'basic',
         },
         withForwardRef: {
           type: 'boolean',
           description: 'Include forwardRef pattern for ref forwarding',
+          default: false,
         },
       },
       required: ['name'],
@@ -248,7 +259,7 @@ export const tools: Tool[] = [
   },
   {
     name: 'mcellui_customize_theme',
-    description: 'Get guidance on customizing the mcellui theme (colors, radius, fonts)',
+    description: 'Get guidance on customizing the mcellui theme: colors, radius, fonts, or all aspects. Use this when the user wants to change the visual style of their app.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -256,17 +267,18 @@ export const tools: Tool[] = [
           type: 'string',
           enum: ['colors', 'radius', 'fonts', 'all'],
           description: 'Which aspect of the theme to customize',
+          default: 'all',
         },
         preset: {
           type: 'string',
-          description: 'Theme preset to use as base: zinc, slate, stone, blue, green, rose, orange, violet',
+          description: 'Theme preset to use as base (e.g., "blue", "violet", "zinc")',
         },
       },
     },
   },
   {
     name: 'mcellui_doctor',
-    description: 'Check mcellui project setup and diagnose common issues',
+    description: 'Diagnose common mcellui project setup issues: missing config, dependencies, babel plugins. Use this when components don\'t render or the project won\'t start.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -279,13 +291,13 @@ export const tools: Tool[] = [
   },
   {
     name: 'mcellui_search',
-    description: 'Search components by name, description, or keywords',
+    description: 'Search components by name, description, or category keyword. Use this when you know a keyword but not the exact component name. For browsing all components, use mcellui_list_components instead.',
     inputSchema: {
       type: 'object',
       properties: {
         query: {
           type: 'string',
-          description: 'Search query',
+          description: 'Search query (e.g., "modal", "form", "loading")',
         },
       },
       required: ['query'],
@@ -551,6 +563,7 @@ npx @metacells/mcellui-cli add ${component.registryDependencies.join(' ')}
 
     case 'mcellui_suggest_component': {
       const description = (args?.description as string).toLowerCase();
+      const maxResults = Math.min(Math.max((args?.maxResults as number) || 5, 1), 10);
       const suggestions: Array<{ component: RegistryItem; score: number; matchedKeywords: string[] }> = [];
 
       for (const component of registry!.components) {
@@ -586,7 +599,7 @@ npx @metacells/mcellui-cli add ${component.registryDependencies.join(' ')}
 
       // Sort by score
       suggestions.sort((a, b) => b.score - a.score);
-      const topSuggestions = suggestions.slice(0, 8);
+      const topSuggestions = suggestions.slice(0, maxResults);
 
       if (topSuggestions.length === 0) {
         return {
