@@ -386,19 +386,21 @@ const componentKeywords: Record<string, string[]> = {
 export async function handleToolCall(
   name: string,
   args: Record<string, unknown> | undefined
-): Promise<{ content: Array<{ type: string; text: string }> }> {
-  const registry = await loadRegistry();
+): Promise<{ content: Array<{ type: string; text: string }>; isError?: boolean }> {
+  try {
+    const registry = await loadRegistry();
 
-  if (!registry && !['mcellui_doctor', 'mcellui_create_component', 'mcellui_customize_theme'].includes(name)) {
-    return {
-      content: [
-        {
-          type: 'text',
-          text: `Error: Could not load component registry. Tried: ${REGISTRY_URL}/registry.json`,
-        },
-      ],
-    };
-  }
+    if (!registry && !['mcellui_doctor', 'mcellui_create_component', 'mcellui_customize_theme'].includes(name)) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `Could not load component registry.\n\nPossible causes:\n- Network connection issue\n- Registry URL unreachable: ${REGISTRY_URL}\n\nNext step: Check internet connection and retry. If running locally, ensure the registry directory exists.`,
+          },
+        ],
+        isError: true,
+      };
+    }
 
   switch (name) {
     case 'mcellui_list_components': {
@@ -446,13 +448,15 @@ export async function handleToolCall(
       const component = registry!.components.find((c) => c.name === componentName);
 
       if (!component) {
+        const names = registry!.components.map((c) => c.name).join(', ');
         return {
           content: [
             {
               type: 'text',
-              text: `Component "${componentName}" not found.\n\nAvailable: ${registry!.components.map((c) => c.name).join(', ')}`,
+              text: `Component "${componentName}" not found.\n\nAvailable: ${names}\n\nNext step: Use mcellui_list_components to browse all components, or mcellui_search to find by keyword.`,
             },
           ],
+          isError: true,
         };
       }
 
@@ -462,9 +466,10 @@ export async function handleToolCall(
           content: [
             {
               type: 'text',
-              text: `Error: Could not load documentation for "${componentName}".`,
+              text: `Could not load documentation for "${componentName}".\n\nNext step: Try mcellui_get_component_source if documentation failed, or vice versa.`,
             },
           ],
+          isError: true,
         };
       }
 
@@ -480,13 +485,15 @@ export async function handleToolCall(
       const component = registry!.components.find((c) => c.name === componentName);
 
       if (!component) {
+        const names = registry!.components.map((c) => c.name).join(', ');
         return {
           content: [
             {
               type: 'text',
-              text: `Component "${componentName}" not found.\n\nAvailable: ${registry!.components.map((c) => c.name).join(', ')}`,
+              text: `Component "${componentName}" not found.\n\nAvailable: ${names}\n\nNext step: Use mcellui_list_components to browse all components, or mcellui_search to find by keyword.`,
             },
           ],
+          isError: true,
         };
       }
 
@@ -496,9 +503,10 @@ export async function handleToolCall(
           content: [
             {
               type: 'text',
-              text: `Error: Could not load source code for "${componentName}".`,
+              text: `Could not load source code for "${componentName}".\n\nNext step: Try mcellui_get_component_source if documentation failed, or vice versa.`,
             },
           ],
+          isError: true,
         };
       }
 
@@ -517,13 +525,15 @@ ${code}
       const component = registry!.components.find((c) => c.name === componentName);
 
       if (!component) {
+        const names = registry!.components.map((c) => c.name).join(', ');
         return {
           content: [
             {
               type: 'text',
-              text: `Component "${componentName}" not found.`,
+              text: `Component "${componentName}" not found.\n\nAvailable: ${names}\n\nNext step: Use mcellui_list_components to browse all components, or mcellui_search to find by keyword.`,
             },
           ],
+          isError: true,
         };
       }
 
@@ -609,6 +619,7 @@ npx @metacells/mcellui-cli add ${component.registryDependencies.join(' ')}
               text: `No specific component suggestions for "${description}".\n\nTry being more specific or use \`mcellui_list_components\` to browse all available components.\n\n**Tip:** Mention specific UI elements like "button", "card", "form", "modal", "list", etc.`,
             },
           ],
+          isError: true,
         };
       }
 
@@ -1001,6 +1012,7 @@ Check \`tsconfig.json\`:
               text: `No components found matching "${query}".\n\nTry a different search term or use \`mcellui_list_components\` to see all.`,
             },
           ],
+          isError: true,
         };
       }
 
@@ -1019,8 +1031,18 @@ Check \`tsconfig.json\`:
 
     default:
       return {
-        content: [{ type: 'text', text: `Unknown tool: ${name}` }],
+        content: [{ type: 'text', text: `Unknown tool: "${name}".\n\nAvailable tools: mcellui_list_components, mcellui_get_component, mcellui_get_component_source, mcellui_add_component, mcellui_suggest_component, mcellui_create_component, mcellui_customize_theme, mcellui_doctor, mcellui_search` }],
+        isError: true,
       };
+  }
+  } catch (error) {
+    return {
+      content: [{
+        type: 'text',
+        text: `Internal error: ${error instanceof Error ? error.message : 'Unknown error'}\n\nNext step: Report this issue or retry the tool call.`,
+      }],
+      isError: true,
+    };
   }
 }
 
