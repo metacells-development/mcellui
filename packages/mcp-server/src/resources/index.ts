@@ -34,44 +34,51 @@ export const resources: Resource[] = [
   {
     uri: 'mcellui://registry',
     name: 'Component Registry',
-    description: 'Full list of all mcellui components with metadata',
+    description: 'Full list of all mcellui components with metadata (27 UI components + 6 blocks). JSON format with name, type, category, status, dependencies, and files for each component.',
     mimeType: 'application/json',
+    _meta: { sizeHint: '15KB', lastUpdated: '2026-01-27', componentCount: 33 },
   },
   {
     uri: 'mcellui://tokens',
     name: 'Design Tokens',
-    description: 'Color, spacing, typography, and other design tokens',
+    description: 'Design tokens for colors, spacing, typography, radius, and shadows. JSON format with token category names pointing to source file references.',
     mimeType: 'application/json',
+    _meta: { sizeHint: '2KB', lastUpdated: '2026-01-27', categories: ['colors', 'spacing', 'typography', 'radius', 'shadows'] },
   },
   {
     uri: 'mcellui://docs/getting-started',
     name: 'Getting Started Guide',
-    description: 'How to set up mcellui in your project',
+    description: 'Quick start guide: initialize project, add components, basic usage. Covers CLI commands and project structure. (5-minute read)',
     mimeType: 'text/markdown',
+    _meta: { sizeHint: '2KB', lastUpdated: '2026-01-27', topics: ['installation', 'configuration', 'first-component', 'cli-commands'] },
   },
   {
     uri: 'mcellui://docs/component-patterns',
     name: 'Component Patterns Guide',
-    description: 'Best practices for building React Native components',
+    description: 'Component architecture patterns: basic structure, forwardRef, pressable, compound components, and input patterns with full code examples.',
     mimeType: 'text/markdown',
+    _meta: { sizeHint: '4KB', lastUpdated: '2026-01-27', topics: ['basic-component', 'forward-ref', 'pressable', 'compound-component', 'input-pattern'] },
   },
   {
     uri: 'mcellui://docs/theme-customization',
     name: 'Theme Customization Guide',
-    description: 'How to customize colors, tokens, and themes',
+    description: 'Theme customization guide: presets, custom colors, spacing scale, radius scale, dark mode, and font configuration with code examples.',
     mimeType: 'text/markdown',
+    _meta: { sizeHint: '5KB', lastUpdated: '2026-01-27', topics: ['presets', 'colors', 'spacing', 'radius', 'dark-mode', 'fonts'] },
   },
   {
     uri: 'mcellui://docs/animation-patterns',
     name: 'Animation Patterns Guide',
-    description: 'Best practices for animations with Reanimated',
+    description: 'Reanimated 3 animation patterns: spring configs, press feedback, enter/exit, layout animations, gesture-driven, and performance tips.',
     mimeType: 'text/markdown',
+    _meta: { sizeHint: '5KB', lastUpdated: '2026-01-27', topics: ['spring-config', 'press-feedback', 'enter-exit', 'layout', 'gesture', 'performance'] },
   },
   {
     uri: 'mcellui://docs/accessibility',
     name: 'Accessibility Guide',
-    description: 'Making components accessible on iOS and Android',
+    description: 'Accessibility guide: VoiceOver/TalkBack patterns for buttons, forms, lists, modals, images, focus management, and testing checklist.',
     mimeType: 'text/markdown',
+    _meta: { sizeHint: '6KB', lastUpdated: '2026-01-27', topics: ['voiceover', 'talkback', 'roles', 'labels', 'focus', 'testing'] },
   },
 ];
 
@@ -90,7 +97,7 @@ export async function handleResourceRead(
         };
       } catch {
         return {
-          contents: [{ uri, text: '{"error": "Could not load registry"}' }],
+          contents: [{ uri, text: '{"error": "Could not load registry", "hint": "Check that the registry directory exists at the expected path or that the remote registry URL is reachable."}' }],
         };
       }
     }
@@ -105,7 +112,7 @@ export async function handleResourceRead(
         };
       } catch {
         return {
-          contents: [{ uri, text: '{"error": "Could not load tokens"}' }],
+          contents: [{ uri, text: '{"error": "Could not load tokens", "hint": "Token files may be missing from the core package. Ensure packages/core/src/tokens/ directory exists."}' }],
         };
       }
     }
@@ -145,10 +152,16 @@ export async function handleResourceRead(
         ],
       };
 
-    default:
+    default: {
+      const availableUris = resources.map(r => r.uri).join(', ');
       return {
-        contents: [{ uri, text: `Resource not found: ${uri}` }],
+        contents: [{
+          uri,
+          text: `Resource not found: ${uri}\n\nAvailable resources: ${availableUris}`,
+          mimeType: 'text/plain',
+        }],
       };
+    }
   }
 }
 
