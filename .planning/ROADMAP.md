@@ -106,10 +106,13 @@ Plans:
   3. All CLI flags follow consistent naming patterns across commands
   4. All CLI help text is accurate and complete for every command
   5. CLI handles edge cases gracefully (no project, missing config, network failures)
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 15-01: TBD (will be planned)
+- [ ] 15-01-PLAN.md — Centralized error handling and output utilities
+- [ ] 15-02-PLAN.md — Network retry logic and timeout for registry fetches
+- [ ] 15-03-PLAN.md — Refactor all 8 commands to use centralized error handling
+- [ ] 15-04-PLAN.md — Commander.js async config, --json for list, help text audit
 
 ### Phase 16: MCP Server Tool Quality
 **Goal**: All MCP tools optimized for AI agent consumption with accurate documentation
@@ -175,7 +178,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 12. Screen Foundation | v1.0 | 1/1 | Complete | 2026-01-26 |
 | 13. Screen Completion | v1.0 | 1/1 | Complete | 2026-01-26 |
 | 14. Critical Fixes | v1.1 | 2/2 | Complete | 2026-01-26 |
-| 15. CLI Audit | v1.1 | 0/1 | Not started | - |
+| 15. CLI Audit | v1.1 | 0/4 | Not started | - |
 | 16. MCP Audit | v1.1 | 0/1 | Not started | - |
 | 17. Registry Audit | v1.1 | 0/1 | Not started | - |
 | 18. Core Audit | v1.1 | 0/1 | Not started | - |
