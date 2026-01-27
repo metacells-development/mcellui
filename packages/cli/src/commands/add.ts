@@ -80,8 +80,11 @@ export const addCommand = new Command()
 
       if (circular) {
         spinner.fail('Circular dependency detected');
-        console.log(chalk.red(`  ${formatCircularError(circular)}`));
-        process.exit(1);
+        handleError({
+          message: `Circular dependency: ${formatCircularError(circular)}`,
+          hint: 'Check component dependencies for cycles',
+          code: 'CIRCULAR_DEPENDENCY',
+        });
       }
 
       spinner.stop();
