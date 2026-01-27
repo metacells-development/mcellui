@@ -5,12 +5,14 @@ import path from 'path';
 import { getRegistry, RegistryItem } from '../utils/registry';
 import { getConfig, getProjectRoot } from '../utils/project';
 import { getInstalledFiles, getInstallStatus, getInstalledNames } from '../utils/installed';
+import { handleError, errors } from '../utils/errors';
 
 export const listCommand = new Command()
   .name('list')
   .description('List available or installed components')
   .option('-c, --category <category>', 'Filter by category')
   .option('-i, --installed', 'Show installed components and their sync status')
+  .option('--json', 'Output as JSON')
   .option('--cwd <path>', 'Working directory', process.cwd())
   .action(async (options) => {
     if (options.installed) {
@@ -20,13 +22,22 @@ export const listCommand = new Command()
     }
   });
 
-async function listAvailableComponents(options: { category?: string }) {
+async function listAvailableComponents(options: { category?: string; json?: boolean }) {
   const spinner = ora('Fetching components...').start();
 
   try {
     const registry = await getRegistry();
 
     spinner.stop();
+
+    // JSON output mode
+    if (options.json) {
+      const items = options.category
+        ? registry.filter(item => (item.category || 'Other').toLowerCase() === options.category.toLowerCase())
+        : registry;
+      console.log(JSON.stringify(items, null, 2));
+      return;
+    }
 
     console.log();
     console.log(chalk.bold('Available Components'));
@@ -69,7 +80,7 @@ async function listAvailableComponents(options: { category?: string }) {
   }
 }
 
-async function listInstalledComponents(options: { cwd?: string }) {
+async function listInstalledComponents(options: { cwd?: string; json?: boolean }) {
   const spinner = ora();
 
   try {
@@ -96,6 +107,11 @@ async function listInstalledComponents(options: { cwd?: string }) {
     const installedFiles = await getInstalledFiles(componentsDir);
 
     if (installedFiles.length === 0) {
+      spinner.stop();
+      if (options.json) {
+        console.log(JSON.stringify([], null, 2));
+        return;
+      }
       spinner.info('No components installed yet.');
       console.log(chalk.dim('\nAdd components with: npx mcellui add <component>'));
       return;
@@ -108,6 +124,12 @@ async function listInstalledComponents(options: { cwd?: string }) {
     const installed = await getInstallStatus(installedFiles, registry, config);
 
     spinner.stop();
+
+    // JSON output mode
+    if (options.json) {
+      console.log(JSON.stringify(installed, null, 2));
+      return;
+    }
 
     // Group by status
     const identical = installed.filter(c => c.status === 'identical');
