@@ -71,6 +71,88 @@ function getLocalRegistryPath(): string {
 // --- Registry Functions ---
 
 /**
+ * Sleep utility for retry delays
+ */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Check if error is a transient network error that should be retried
+ */
+function isNetworkError(error: unknown): boolean {
+  if (!error) return false;
+
+  // Check for DOMException (AbortError from timeout)
+  if (error instanceof DOMException && error.name === 'AbortError') {
+    return true;
+  }
+
+  // For Node.js errors, check error codes and causes
+  const err = error as any;
+  const errorCodes = ['ECONNRESET', 'ENOTFOUND', 'ETIMEDOUT', 'ECONNREFUSED', 'ECONNABORTED'];
+
+  // Check error.code directly
+  if (err.code && errorCodes.includes(err.code)) {
+    return true;
+  }
+
+  // Check error.message for error codes
+  if (err.message && typeof err.message === 'string') {
+    const message = err.message.toLowerCase();
+    if (errorCodes.some((code) => message.includes(code.toLowerCase()))) {
+      return true;
+    }
+  }
+
+  // Check error.cause recursively
+  if (err.cause) {
+    return isNetworkError(err.cause);
+  }
+
+  return false;
+}
+
+/**
+ * Fetch with retry logic and timeout
+ * Retries transient network errors with exponential backoff
+ */
+async function fetchWithRetry(url: string, maxRetries = 3): Promise<Response> {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      // 30-second timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30_000);
+
+      const response = await fetch(url, {
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      lastError = error;
+
+      // Don't retry if it's not a network error or if we're out of attempts
+      if (!isNetworkError(error) || attempt === maxRetries) {
+        throw error;
+      }
+
+      // Exponential backoff: 1s, 2s, 4s (max 5s) + random jitter (0-200ms)
+      const baseDelay = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+      const jitter = Math.random() * 200;
+      const delay = baseDelay + jitter;
+
+      await sleep(delay);
+    }
+  }
+
+  throw lastError;
+}
+
+/**
  * Check if we should use local registry (development mode)
  */
 function isLocalMode(): boolean {
@@ -101,8 +183,10 @@ async function getLocalRegistry(): Promise<RegistryItem[]> {
     const registry: Registry = await fs.readJson(registryPath);
     return registry.components;
   } catch (error) {
-    console.error('Failed to load local registry:', error);
-    return [];
+    throw new Error(
+      'Failed to load local registry: ' +
+        (error instanceof Error ? error.message : String(error))
+    );
   }
 }
 
@@ -111,12 +195,19 @@ async function getLocalRegistry(): Promise<RegistryItem[]> {
  */
 async function getRemoteRegistry(): Promise<RegistryItem[]> {
   try {
-    const response = await fetch(`${REGISTRY_URL}/registry.json`);
+    const response = await fetchWithRetry(`${REGISTRY_URL}/registry.json`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
     const registry = (await response.json()) as Registry;
     return registry.components;
   } catch (error) {
-    console.error('Failed to fetch remote registry:', error);
-    return [];
+    throw new Error(
+      'Failed to fetch registry: ' +
+        (error instanceof Error ? error.message : String(error))
+    );
   }
 }
 
@@ -168,7 +259,14 @@ async function fetchLocalComponent(item: RegistryItem): Promise<ComponentData> {
 async function fetchRemoteComponent(item: RegistryItem): Promise<ComponentData> {
   const files = await Promise.all(
     item.files.map(async (filePath) => {
-      const response = await fetch(`${REGISTRY_URL}/${filePath}`);
+      const response = await fetchWithRetry(`${REGISTRY_URL}/${filePath}`);
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch ${filePath}: HTTP ${response.status} ${response.statusText}`
+        );
+      }
+
       const content = await response.text();
       const name = path.basename(filePath);
 
