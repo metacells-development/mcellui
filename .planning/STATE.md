@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-26)
 
 ## Current Position
 
-Phase: 15 of 18 (CLI Audit) — Complete
-Plan: 4/4 in current phase
-Status: Phase 15 verified, ready for Phase 16
-Last activity: 2026-01-27 — Phase 15 complete
+Phase: 16 of 18 (MCP Server Tool Quality) — In Progress
+Plan: 1/2 in current phase
+Status: Plan 16-01 complete
+Last activity: 2026-01-27 — Completed 16-01-PLAN.md
 
-Progress: [██████░░░░░░░░░░░░] 15/18 phases (83%)
+Progress: [██████░░░░░░░░░░░░] 16/18 phases (89%)
 
 ## Milestones
 
@@ -46,6 +46,8 @@ Recent decisions affecting v1.1:
 - 15-03: Prompt cancellation exits with code 0, partial failures exit with code 1
 - 15-04: Commander.js parseAsync + configureOutput for stderr separation
 - 15-04: list --json flag for CI/CD usage
+- 16-01: MCP tool descriptions follow "{Action} {what}. Use this when {scenario}." pattern (AI agent tool selection)
+- 16-01: Optional parameters have explicit defaults in schemas (reduces clarifying questions)
 
 ### Resolved Blockers
 - CheckoutScreen StepIndicator scope bug — fixed in Phase 13
@@ -53,11 +55,11 @@ Recent decisions affecting v1.1:
 - ImageGallery missing loading states — fixed in Phase 8
 
 ### Open Blockers
-None. Phase 15 complete. Ready for Phase 16.
+None. Phase 16 plan 01 complete. Ready for plan 16-02.
 
 ### Technical Debt
 - 3 orphaned token exports in core (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS)
 - Address in CORE-03 (orphaned/unused exports audit)
 
 ---
-*Updated: 2026-01-27 after Phase 15 completion*
+*Updated: 2026-01-27 after Phase 16 Plan 01 completion*
