@@ -124,10 +124,12 @@ Plans:
   3. All MCP errors include actionable recovery steps for the agent
   4. All MCP tool schemas are flat with clear parameter descriptions
   5. MCP resources are discoverable via hierarchical URIs
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 16-01: TBD (will be planned)
+- [ ] 16-01-PLAN.md — Tool descriptions, schemas, and parameter defaults (MCP-01, MCP-04)
+- [ ] 16-02-PLAN.md — Tool response format and error handling with isError + recovery hints (MCP-02, MCP-03)
+- [ ] 16-03-PLAN.md — Resource metadata (sizeHint, lastUpdated) and error handling (MCP-05)
 
 ### Phase 17: Registry Structure & Metadata
 **Goal**: Component registry has complete metadata and consistent structure
@@ -179,7 +181,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 13. Screen Completion | v1.0 | 1/1 | Complete | 2026-01-26 |
 | 14. Critical Fixes | v1.1 | 2/2 | Complete | 2026-01-26 |
 | 15. CLI Audit | v1.1 | 4/4 | Complete | 2026-01-27 |
-| 16. MCP Audit | v1.1 | 0/1 | Not started | - |
+| 16. MCP Audit | v1.1 | 0/3 | Not started | - |
 | 17. Registry Audit | v1.1 | 0/1 | Not started | - |
 | 18. Core Audit | v1.1 | 0/1 | Not started | - |
 
