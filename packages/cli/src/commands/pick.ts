@@ -7,6 +7,7 @@ import path from 'path';
 import { getConfig, getProjectRoot } from '../utils/project.js';
 import { fetchComponent, getRegistry, type RegistryItem } from '../utils/registry.js';
 import { transformToInstalled } from '../utils/imports.js';
+import { handleError, errors } from '../utils/errors.js';
 
 interface CategoryGroup {
   name: string;
@@ -91,24 +92,24 @@ export const pickCommand = new Command()
     const projectRoot = await getProjectRoot(cwd);
 
     if (!projectRoot) {
-      console.log(chalk.red('Could not find a valid project.'));
-      console.log(chalk.dim('Run `npx mcellui init` first.\n'));
-      return;
+      errors.noProject();
     }
 
     const config = await getConfig(projectRoot);
 
     if (!config) {
-      console.log(chalk.yellow('No mcellui.config.ts found. Run `npx mcellui init` first.\n'));
-      return;
+      errors.notInitialized();
     }
 
     const spinner = ora('Loading component registry...').start();
     const registry = await getRegistry();
 
     if (!registry.length) {
-      spinner.fail('Could not load registry');
-      return;
+      spinner.stop();
+      handleError({
+        message: 'Could not load component registry',
+        hint: 'Check your internet connection and try again',
+      });
     }
 
     spinner.succeed(`Loaded ${registry.length} components`);
@@ -149,6 +150,11 @@ export const pickCommand = new Command()
         choices: categoryChoices,
       });
 
+      // Handle user cancellation (Ctrl+C)
+      if (categoryResponse.category === undefined) {
+        process.exit(0);
+      }
+
       if (!categoryResponse.category) {
         console.log(chalk.yellow('\nCancelled.\n'));
         return;
@@ -184,6 +190,11 @@ export const pickCommand = new Command()
       instructions: false,
     });
 
+    // Handle user cancellation (Ctrl+C)
+    if (componentResponse.components === undefined) {
+      process.exit(0);
+    }
+
     if (!componentResponse.components || componentResponse.components.length === 0) {
       console.log(chalk.yellow('\nNo components selected.\n'));
       return;
@@ -204,6 +215,11 @@ export const pickCommand = new Command()
       initial: true,
     });
 
+    // Handle user cancellation (Ctrl+C)
+    if (confirmResponse.proceed === undefined) {
+      process.exit(0);
+    }
+
     if (!confirmResponse.proceed) {
       console.log(chalk.yellow('\nCancelled.\n'));
       return;
@@ -212,6 +228,7 @@ export const pickCommand = new Command()
     // Install
     console.log('');
     let successCount = 0;
+    let failCount = 0;
     const allDependencies: string[] = [];
     const allDevDependencies: string[] = [];
 
@@ -222,6 +239,7 @@ export const pickCommand = new Command()
         const component = await fetchComponent(name);
         if (!component) {
           installSpinner.fail(`Component "${name}" not found`);
+          failCount++;
           continue;
         }
 
@@ -255,7 +273,13 @@ export const pickCommand = new Command()
         }
       } catch (error) {
         installSpinner.fail(`Failed to install ${name}: ${error}`);
+        failCount++;
       }
+    }
+
+    // Exit with error code if any components failed
+    if (failCount > 0) {
+      process.exit(1);
     }
 
     console.log(

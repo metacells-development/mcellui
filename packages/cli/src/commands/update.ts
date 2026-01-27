@@ -7,6 +7,7 @@ import path from 'path';
 import { getConfig, getProjectRoot, ResolvedNativeUIConfig } from '../utils/project';
 import { fetchComponent, getRegistry, RegistryItem } from '../utils/registry';
 import { transformToInstalled, normalizeForComparison } from '../utils/imports';
+import { handleError, errors } from '../utils/errors';
 
 interface ComponentDiff {
   name: string;
@@ -30,17 +31,13 @@ export const updateCommand = new Command()
       const projectRoot = await getProjectRoot(cwd);
 
       if (!projectRoot) {
-        console.log(chalk.red('Could not find a valid project.'));
-        console.log(chalk.dim('Run `npx mcellui init` first.'));
-        process.exit(1);
+        errors.noProject();
       }
 
       const config = await getConfig(projectRoot);
 
       if (!config) {
-        console.log(chalk.red('Project not initialized.'));
-        console.log(chalk.dim('Run `npx mcellui init` first.'));
-        process.exit(1);
+        errors.notInitialized();
       }
 
       spinner.start('Checking for updates...');
@@ -105,6 +102,11 @@ export const updateCommand = new Command()
           message: `Update ${toUpdate.length} component${toUpdate.length !== 1 ? 's' : ''}?`,
           initial: true,
         });
+
+        // Handle user cancellation (Ctrl+C)
+        if (confirm === undefined) {
+          process.exit(0);
+        }
 
         if (!confirm) {
           console.log(chalk.dim('Cancelled.'));
@@ -182,10 +184,17 @@ export const updateCommand = new Command()
           console.log(chalk.cyan(`  npm install -D ${uniqueDevDeps.join(' ')}`));
         }
       }
+
+      // Exit with error code if any components failed
+      if (failCount > 0) {
+        process.exit(1);
+      }
     } catch (error) {
       spinner.fail('Failed to update');
-      console.error(error);
-      process.exit(1);
+      handleError({
+        message: 'Failed to update components',
+        hint: error instanceof Error ? error.message : 'Check your network connection and try again',
+      });
     }
   });
 

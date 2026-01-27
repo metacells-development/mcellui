@@ -8,6 +8,7 @@ import { getConfig, getProjectRoot } from '../utils/project';
 import { fetchComponent, getRegistry, RegistryItem } from '../utils/registry';
 import { getInstalledFiles } from '../utils/installed';
 import { normalizeForComparison } from '../utils/imports';
+import { handleError, errors } from '../utils/errors';
 
 interface DiffResult {
   name: string;
@@ -33,17 +34,13 @@ export const diffCommand = new Command()
       const projectRoot = await getProjectRoot(cwd);
 
       if (!projectRoot) {
-        console.log(chalk.red('Could not find a valid project.'));
-        console.log(chalk.dim('Run `npx mcellui init` first.'));
-        process.exit(1);
+        errors.noProject();
       }
 
       const config = await getConfig(projectRoot);
 
       if (!config) {
-        console.log(chalk.red('Project not initialized.'));
-        console.log(chalk.dim('Run `npx mcellui init` first.'));
-        process.exit(1);
+        errors.notInitialized();
       }
 
       spinner.start('Scanning installed components...');
@@ -82,8 +79,11 @@ export const diffCommand = new Command()
         });
 
         if (filesToCompare.length === 0) {
-          spinner.fail(`None of the specified components found: ${components.join(', ')}`);
-          process.exit(1);
+          spinner.stop();
+          handleError({
+            message: 'None of the specified components are installed',
+            hint: 'Check component names: npx mcellui list --installed',
+          });
         }
       }
 
@@ -190,9 +190,11 @@ export const diffCommand = new Command()
       const hasChanges = results.some(r => r.status === 'modified');
       process.exit(hasChanges ? 1 : 0);
     } catch (error) {
-      spinner.fail('Failed to diff components');
-      console.error(error);
-      process.exit(1);
+      spinner.stop();
+      handleError({
+        message: 'Failed to diff components',
+        hint: error instanceof Error ? error.message : 'Check your network connection',
+      });
     }
   });
 

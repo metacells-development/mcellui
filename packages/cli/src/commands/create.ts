@@ -5,6 +5,7 @@ import prompts from 'prompts';
 import fs from 'fs-extra';
 import path from 'path';
 import { getConfig, getProjectRoot } from '../utils/project';
+import { handleError, errors } from '../utils/errors';
 
 type ComponentTemplate = 'basic' | 'animated' | 'pressable' | 'input';
 
@@ -31,17 +32,13 @@ export const createCommand = new Command()
       const projectRoot = await getProjectRoot(cwd);
 
       if (!projectRoot) {
-        console.log(chalk.red('Could not find a valid project.'));
-        console.log(chalk.dim('Run `npx mcellui init` first.'));
-        process.exit(1);
+        errors.noProject();
       }
 
       const config = await getConfig(projectRoot);
 
       if (!config) {
-        console.log(chalk.red('Project not initialized.'));
-        console.log(chalk.dim('Run `npx mcellui init` first.'));
-        process.exit(1);
+        errors.notInitialized();
       }
 
       // Normalize component name
@@ -53,9 +50,11 @@ export const createCommand = new Command()
       const targetPath = path.join(targetDir, fileName);
 
       if (await fs.pathExists(targetPath)) {
-        console.log(chalk.red(`Component already exists: ${fileName}`));
-        console.log(chalk.dim(`Path: ${targetPath}`));
-        process.exit(1);
+        handleError({
+          message: `Component already exists: ${fileName}`,
+          hint: 'Choose a different name or delete the existing file',
+          code: 'COMPONENT_EXISTS',
+        });
       }
 
       // Show preview unless --yes
@@ -75,6 +74,11 @@ export const createCommand = new Command()
           message: 'Create this component?',
           initial: true,
         });
+
+        // Handle user cancellation (Ctrl+C)
+        if (confirm === undefined) {
+          process.exit(0);
+        }
 
         if (!confirm) {
           console.log(chalk.dim('Cancelled.'));
@@ -101,8 +105,10 @@ export const createCommand = new Command()
       console.log();
     } catch (error) {
       spinner.fail('Failed to create component');
-      console.error(error);
-      process.exit(1);
+      handleError({
+        message: 'Failed to create component',
+        hint: error instanceof Error ? error.message : 'Check file permissions and try again',
+      });
     }
   });
 
