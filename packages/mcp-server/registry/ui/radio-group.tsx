@@ -33,7 +33,7 @@ import Animated, {
   interpolateColor,
   Extrapolation,
 } from 'react-native-reanimated';
-import { useTheme, ThemeColors, springs as themeSpringPresets } from '@metacells/mcellui-core';
+import { useTheme, ThemeColors, springs as themeSpringPresets, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // Context for sharing state between RadioGroup and RadioGroupItem
@@ -278,9 +278,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   description: {
-    fontWeight: '400',
+    fontWeight: fontWeight.normal,
   },
 });

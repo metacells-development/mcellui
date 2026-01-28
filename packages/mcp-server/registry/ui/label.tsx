@@ -20,7 +20,7 @@ import {
   TextStyle,
   TextProps,
 } from 'react-native';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, fontWeight } from '@metacells/mcellui-core';
 
 export type LabelSize = 'sm' | 'md' | 'lg';
 
@@ -88,6 +88,6 @@ export function Label({
 const styles = StyleSheet.create({
   label: {},
   required: {
-    fontWeight: '400',
+    fontWeight: fontWeight.normal,
   },
 });

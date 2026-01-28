@@ -46,7 +46,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme, paginationTokens } from '@metacells/mcellui-core';
+import { useTheme, paginationTokens, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // ============================================================================
@@ -445,17 +445,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   numberText: {
-    fontWeight: '600',
+    fontWeight: fontWeight.semibold,
   },
   ellipsis: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   simpleButton: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   simpleText: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   pageInfo: {
     minWidth: 60,

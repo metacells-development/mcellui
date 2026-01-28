@@ -43,7 +43,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, fontWeight, fontSize } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // ============================================================================
@@ -264,7 +264,7 @@ function DayCell({
             {
               fontSize: config.fontSize,
               color: getTextColor(),
-              fontWeight: isToday || isSelected ? '600' : '400',
+              fontWeight: isToday || isSelected ? fontWeight.semibold : fontWeight.normal,
             },
           ]}
         >
@@ -523,7 +523,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   headerTitle: {
-    fontWeight: '600',
+    fontWeight: fontWeight.semibold,
   },
   grid: {},
   weekRow: {
@@ -537,14 +537,14 @@ const styles = StyleSheet.create({
   },
   dayText: {},
   weekdayText: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   weekNumber: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   weekNumberText: {
-    fontSize: 10,
+    fontSize: fontSize['2xs'],
   },
   dot: {
     position: 'absolute',
