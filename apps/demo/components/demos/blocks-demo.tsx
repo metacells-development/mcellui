@@ -89,15 +89,15 @@ export function BlocksDemo() {
       </Section>
 
       <Section title="Social Proof Bar">
-        <SocialProofBarBlockPreview />
+        <SocialProofBarPreview />
       </Section>
 
       <Section title="Search Header">
-        <SearchHeaderBlockPreview />
+        <SearchHeaderPreview />
       </Section>
 
       <Section title="Onboarding Slide">
-        <OnboardingSlideBlockPreview />
+        <OnboardingSlidePreview />
       </Section>
 
       <Section title="Media Item">
@@ -105,7 +105,7 @@ export function BlocksDemo() {
       </Section>
 
       <Section title="Feed Post Card">
-        <FeedPostCardBlockPreview />
+        <FeedPostCardPreview />
       </Section>
 
       <Section title="Login Block">
