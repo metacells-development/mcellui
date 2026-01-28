@@ -33,7 +33,7 @@ import {
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, areAnimationsDisabled, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 export type SliderSize = 'sm' | 'md' | 'lg';
@@ -278,10 +278,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   value: {
-    fontWeight: '600',
+    fontWeight: fontWeight.semibold,
   },
   trackContainer: {
     justifyContent: 'center',

@@ -31,7 +31,7 @@ import Animated, {
   interpolateColor,
   Extrapolation,
 } from 'react-native-reanimated';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, areAnimationsDisabled, fontWeight, fontSize } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 export type SwitchSize = 'sm' | 'md' | 'lg';
@@ -232,10 +232,10 @@ const styles = StyleSheet.create({
     // Dynamic gap applied inline via spacing tokens
   },
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   description: {
-    fontSize: 13,
+    fontSize: fontSize.sm,
   },
   track: {
     justifyContent: 'center',

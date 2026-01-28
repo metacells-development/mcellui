@@ -49,7 +49,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, haptic } from '@metacells/mcellui-core';
+import { useTheme, haptic, fontWeight, fontSize } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -632,12 +632,12 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   imageCardTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: fontSize.xl,
+    fontWeight: fontWeight.bold,
   },
   imageCardSubtitle: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: fontSize.base,
+    fontWeight: fontWeight.medium,
   },
 
   // MediaCard
@@ -654,17 +654,17 @@ const styles = StyleSheet.create({
     // Dynamic styles applied inline
   },
   mediaCardCategory: {
-    fontSize: 11,
-    fontWeight: '700',
+    fontSize: fontSize.xs,
+    fontWeight: fontWeight.bold,
     letterSpacing: 0.5,
   },
   mediaCardTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: fontSize.md,
+    fontWeight: fontWeight.semibold,
     lineHeight: 22,
   },
   mediaCardDescription: {
-    fontSize: 14,
+    fontSize: fontSize.base,
     lineHeight: 20,
   },
 });

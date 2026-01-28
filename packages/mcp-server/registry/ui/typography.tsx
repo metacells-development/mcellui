@@ -15,7 +15,7 @@
 
 import React from 'react';
 import { Text, TextProps, TextStyle, StyleSheet } from 'react-native';
-import { useTheme, ThemeColors, TypographyKey } from '@metacells/mcellui-core';
+import { useTheme, ThemeColors, TypographyKey, fontWeight } from '@metacells/mcellui-core';
 
 export type TypographyVariant = TypographyKey | 'subtitle1' | 'subtitle2' | 'body1' | 'body2';
 
@@ -179,7 +179,7 @@ export function Code(props: Omit<TypographyProps, 'variant'>) {
 
 const styles = StyleSheet.create({
   bold: {
-    fontWeight: '700',
+    fontWeight: fontWeight.bold,
   },
   italic: {
     fontStyle: 'italic',
