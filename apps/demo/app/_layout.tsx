@@ -25,7 +25,7 @@ function ThemeSelector({
   currentRadius: RadiusPreset;
   onRadiusChange: (radius: RadiusPreset) => void;
 }) {
-  const { colors } = useTheme();
+  const { colors, fontSize, fontWeight, spacing } = useTheme();
   const themes: ThemePreset[] = ['zinc', 'slate', 'stone', 'blue', 'green', 'rose', 'orange', 'violet'];
   const radiusOptions: RadiusPreset[] = ['none', 'sm', 'md', 'lg', 'full'];
 
@@ -49,16 +49,16 @@ function ThemeSelector({
       onRequestClose={onClose}
     >
       <SafeAreaView style={[selectorStyles.container, { backgroundColor: colors.background }]}>
-        <View style={[selectorStyles.header, { borderBottomColor: colors.border }]}>
-          <Text style={[selectorStyles.title, { color: colors.foreground }]}>Theme Settings</Text>
-          <Pressable onPress={onClose} style={selectorStyles.closeButton}>
-            <Text style={[selectorStyles.closeText, { color: colors.primary }]}>Done</Text>
+        <View style={[selectorStyles.header, { borderBottomColor: colors.border, paddingHorizontal: spacing[4], paddingVertical: spacing[3] }]}>
+          <Text style={[selectorStyles.title, { color: colors.foreground, fontSize: fontSize.lg, fontWeight: fontWeight.semibold }]}>Theme Settings</Text>
+          <Pressable onPress={onClose} style={[selectorStyles.closeButton, { padding: spacing[2] }]}>
+            <Text style={[selectorStyles.closeText, { color: colors.primary, fontSize: fontSize.base, fontWeight: fontWeight.semibold }]}>Done</Text>
           </Pressable>
         </View>
 
-        <ScrollView contentContainerStyle={selectorStyles.content}>
-          <Text style={[selectorStyles.sectionTitle, { color: colors.foregroundMuted }]}>Color Theme</Text>
-          <View style={selectorStyles.grid}>
+        <ScrollView contentContainerStyle={[selectorStyles.content, { padding: spacing[4] }]}>
+          <Text style={[selectorStyles.sectionTitle, { color: colors.foregroundMuted, fontSize: fontSize.sm, fontWeight: fontWeight.semibold, marginBottom: spacing[3] }]}>Color Theme</Text>
+          <View style={[selectorStyles.grid, { gap: spacing[3] }]}>
             {themes.map((theme) => (
               <Pressable
                 key={theme}
@@ -72,12 +72,12 @@ function ThemeSelector({
                 <View
                   style={[
                     selectorStyles.themeColor,
-                    { backgroundColor: themeColors[theme] },
+                    { backgroundColor: themeColors[theme], marginBottom: spacing[2] },
                   ]}
                 />
                 <Text style={[
                   selectorStyles.themeLabel,
-                  { color: colors.foregroundMuted },
+                  { color: colors.foregroundMuted, fontSize: fontSize.xs, fontWeight: fontWeight.medium },
                   currentTheme === theme && { color: colors.primary },
                 ]}>
                   {theme.charAt(0).toUpperCase() + theme.slice(1)}
@@ -86,21 +86,21 @@ function ThemeSelector({
             ))}
           </View>
 
-          <Text style={[selectorStyles.sectionTitle, { marginTop: 24, color: colors.foregroundMuted }]}>Border Radius</Text>
-          <View style={selectorStyles.radiusGrid}>
+          <Text style={[selectorStyles.sectionTitle, { marginTop: spacing[6], color: colors.foregroundMuted, fontSize: fontSize.sm, fontWeight: fontWeight.semibold, marginBottom: spacing[3] }]}>Border Radius</Text>
+          <View style={[selectorStyles.radiusGrid, { gap: spacing[2] }]}>
             {radiusOptions.map((radius) => (
               <Pressable
                 key={radius}
                 style={[
                   selectorStyles.radiusOption,
-                  { backgroundColor: colors.secondary },
+                  { backgroundColor: colors.secondary, paddingVertical: spacing[3] },
                   currentRadius === radius && [selectorStyles.radiusOptionSelected, { borderColor: colors.primary, backgroundColor: colors.primaryMuted }],
                 ]}
                 onPress={() => onRadiusChange(radius)}
               >
                 <Text style={[
                   selectorStyles.radiusLabel,
-                  { color: colors.foregroundMuted },
+                  { color: colors.foregroundMuted, fontSize: fontSize.xs, fontWeight: fontWeight.medium },
                   currentRadius === radius && { color: colors.primary },
                 ]}>
                   {radius.toUpperCase()}
@@ -116,14 +116,14 @@ function ThemeSelector({
 
 // Header with theme toggle button
 function ThemedHeader() {
-  const { colors, isDark, setColorScheme } = useTheme();
+  const { colors, fontSize, spacing, isDark, setColorScheme } = useTheme();
 
   return (
     <Pressable
       onPress={() => setColorScheme(isDark ? 'light' : 'dark')}
-      style={headerStyles.button}
+      style={{ padding: spacing[2] }}
     >
-      <Text style={[headerStyles.icon, { color: colors.foreground }]}>
+      <Text style={{ color: colors.foreground, fontSize: fontSize.xl }}>
         {isDark ? '☀️' : '🌙'}
       </Text>
     </Pressable>
@@ -135,7 +135,7 @@ function RootLayoutContent({
 }: {
   onOpenThemeSelector: () => void;
 }) {
-  const { colors, isDark } = useTheme();
+  const { colors, fontSize, fontWeight, spacing, isDark } = useTheme();
 
   return (
     <>
@@ -147,7 +147,7 @@ function RootLayoutContent({
           },
           headerTintColor: colors.foreground,
           headerTitleStyle: {
-            fontWeight: '600',
+            fontWeight: fontWeight.semibold,
           },
           contentStyle: {
             backgroundColor: colors.backgroundSubtle,
@@ -159,10 +159,10 @@ function RootLayoutContent({
           options={{
             title: 'mcellui',
             headerRight: () => (
-              <View style={headerStyles.headerRight}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[2] }}>
                 <ThemedHeader />
-                <Pressable onPress={onOpenThemeSelector} style={headerStyles.button}>
-                  <Text style={[headerStyles.icon, { color: colors.foreground }]}>🎨</Text>
+                <Pressable onPress={onOpenThemeSelector} style={{ padding: spacing[2] }}>
+                  <Text style={{ color: colors.foreground, fontSize: fontSize.xl }}>🎨</Text>
                 </Pressable>
               </View>
             ),
@@ -211,20 +211,7 @@ export default function RootLayout() {
   );
 }
 
-const headerStyles = StyleSheet.create({
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  button: {
-    padding: 8,
-  },
-  icon: {
-    fontSize: 20,
-  },
-});
-
+// Layout styles - typography, colors, and spacing applied inline via theme tokens
 const selectorStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -233,35 +220,29 @@ const selectorStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
     borderBottomWidth: 1,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '600',
+    // Typography applied inline via theme tokens
   },
   closeButton: {
-    padding: 8,
+    // Spacing applied inline via theme tokens
   },
   closeText: {
-    fontSize: 16,
-    fontWeight: '600',
+    // Typography applied inline via theme tokens
   },
   content: {
-    padding: 16,
+    // Spacing applied inline via theme tokens
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 12,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+    // Typography and spacing applied inline via theme tokens
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    // Gap applied inline via theme tokens
   },
   themeOption: {
     width: '22%',
@@ -279,29 +260,27 @@ const selectorStyles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    marginBottom: 8,
+    // Margin applied inline via theme tokens
   },
   themeLabel: {
-    fontSize: 12,
-    fontWeight: '500',
+    // Typography applied inline via theme tokens
   },
   radiusGrid: {
     flexDirection: 'row',
-    gap: 8,
+    // Gap applied inline via theme tokens
   },
   radiusOption: {
     flex: 1,
-    paddingVertical: 12,
     alignItems: 'center',
     borderRadius: 8,
     borderWidth: 2,
     borderColor: 'transparent',
+    // Spacing applied inline via theme tokens
   },
   radiusOptionSelected: {
     // Colors applied inline via theme tokens
   },
   radiusLabel: {
-    fontSize: 12,
-    fontWeight: '500',
+    // Typography applied inline via theme tokens
   },
 });
