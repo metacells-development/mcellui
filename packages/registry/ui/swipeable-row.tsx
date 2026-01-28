@@ -319,6 +319,7 @@ interface ActionButtonProps {
 }
 
 function ActionButton({ action, width, onPress }: ActionButtonProps) {
+  const { colors } = useTheme();
   return (
     <Pressable
       style={[
@@ -331,7 +332,7 @@ function ActionButton({ action, width, onPress }: ActionButtonProps) {
       <Text
         style={[
           styles.actionLabel,
-          { color: action.textColor ?? '#fff' },
+          { color: action.textColor ?? colors.primaryForeground },
         ]}
         numberOfLines={1}
       >

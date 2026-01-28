@@ -400,12 +400,12 @@ export function ImageCard({
           ]}
         >
           {title && (
-            <Text style={[styles.imageCardTitle, { color: '#ffffff' }]}>
+            <Text style={[styles.imageCardTitle, { color: colors.primaryForeground }]}>
               {title}
             </Text>
           )}
           {subtitle && (
-            <Text style={[styles.imageCardSubtitle, { color: 'rgba(255,255,255,0.8)', marginTop: spacing[1] }]}>
+            <Text style={[styles.imageCardSubtitle, { color: colors.primaryForeground, opacity: 0.8, marginTop: spacing[1] }]}>
               {subtitle}
             </Text>
           )}
