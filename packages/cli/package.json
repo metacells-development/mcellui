@@ -1,6 +1,6 @@
 {
   "name": "@metacells/mcellui-cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "CLI for mcellui - add beautiful, accessible UI components to your Expo/React Native project",
   "author": "metacells",
   "license": "MIT",
