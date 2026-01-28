@@ -52,14 +52,18 @@ All tooling audited and production-ready:
   4. All shadow implementations use `platformShadow()` helper — consistent elevation across platforms
   5. Avatar component uses standard size scale (`sm|md|lg`) — consistent with all other components
   6. Home screen uses existing MediaCard component — no manual card construction
-**Plans:** 5 plans
+**Plans:** 9 plans (5 original + 4 gap closure)
 
 Plans:
-- [ ] 19-01-PLAN.md — Icon color defaults + shadow migrations (UI components)
-- [ ] 19-02-PLAN.md — RGBA overlay + hex color fixes (UI components)
-- [ ] 19-03-PLAN.md — Icon defaults + color fixes (block components)
-- [ ] 19-04-PLAN.md — Icon defaults + color fixes (screen components)
-- [ ] 19-05-PLAN.md — Avatar API standardization + Home screen MediaCard reuse
+- [x] 19-01-PLAN.md — Icon color defaults + shadow migrations (UI components) - applied to wrong directory
+- [x] 19-02-PLAN.md — RGBA overlay + hex color fixes (UI components) - applied to wrong directory
+- [x] 19-03-PLAN.md — Icon defaults + color fixes (block components)
+- [x] 19-04-PLAN.md — Icon defaults + color fixes (screen components)
+- [x] 19-05-PLAN.md — Avatar API standardization + Home screen MediaCard reuse
+- [ ] 19-06-PLAN.md — [GAP CLOSURE] Icon color defaults + tag-input shadow (packages/registry/ui)
+- [ ] 19-07-PLAN.md — [GAP CLOSURE] Overlay colors (packages/registry/ui)
+- [ ] 19-08-PLAN.md — [GAP CLOSURE] Shadow implementations (packages/registry/ui)
+- [ ] 19-09-PLAN.md — [GAP CLOSURE] Hex colors + Avatar xl usages (packages/registry)
 
 #### Phase 20: Spacing, Typography & Naming
 **Goal**: All styling uses theme tokens and naming patterns are consistent — visual hierarchy and developer experience are unified
@@ -98,9 +102,9 @@ Phases execute in numeric order: 19 → 20 → 21
 |-------|-----------|----------------|--------|-----------|
 | 1-13. Quality Refinement | v1.0 | Complete | Complete | 2026-01-26 |
 | 14-18. Project Audit | v1.1 | Complete | Complete | 2026-01-28 |
-| 19. Critical Color & API Fixes | v1.2 | 0/5 | Not started | - |
+| 19. Critical Color & API Fixes | v1.2 | 5/9 | Gap closure needed | - |
 | 20. Spacing, Typography & Naming | v1.2 | 0/TBD | Not started | - |
 | 21. Demo Consistency & Validation | v1.2 | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-01-28 after v1.2 roadmap creation*
+*Last updated: 2026-01-28 after gap closure planning*
