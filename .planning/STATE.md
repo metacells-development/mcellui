@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md (updated 2026-01-28)
 
 **Core value:** Users own the component code — tooling must work reliably
-**Current focus:** v1.2 Consistency Sweep — Phase 21 Demo Consistency Validation in progress
+**Current focus:** v1.2 Consistency Sweep — COMPLETE
 
 ## Current Position
 
-Phase: 21 of 21 (Demo Consistency Validation)
-Plan: 4 of 5 in current phase
-Status: In progress
-Last activity: 2026-01-28 — Completed 21-04-PLAN.md (Remaining Demo File Token Migration)
+Phase: 21 of 21 (Demo Consistency Validation) — COMPLETE
+Plan: 5 of 5 in current phase — ALL COMPLETE
+Status: v1.2 milestone shipped
+Last activity: 2026-01-28 — Completed 21-05-PLAN.md (App Screens + Dark Mode Verification)
 
-Progress: [█████████████████████] 99% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 complete, Phase 21 in progress)
+Progress: [█████████████████████] 100% (v1.0 + v1.1 + v1.2 complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 18 phases (v1.0 + v1.1)
+- Total plans completed: 21 phases
 - Average duration: Not tracked at phase level
 - Total execution time: Not tracked
 
@@ -29,12 +29,12 @@ Progress: [█████████████████████] 99% 
 |-----------|--------|--------|-----------|
 | v1.0 Quality Refinement | 13 | Shipped | 2026-01-26 |
 | v1.1 Project Audit | 5 | Shipped | 2026-01-28 |
-| v1.2 Consistency Sweep | 3 | In progress | - |
+| v1.2 Consistency Sweep | 3 | Shipped | 2026-01-28 |
 
 **Recent Trend:**
 - v1.0 delivered 102 components with consistent quality
 - v1.1 audited all tooling (CLI, MCP, core, registry)
-- v1.2 starting with research-driven consistency fixes
+- v1.2 migrated all hardcoded values to theme tokens, verified dark mode
 
 ## Accumulated Context
 
@@ -89,10 +89,12 @@ Recent decisions affecting v1.2:
 - fontSize 13 rounds up to fontSize.sm — No sub-token values in typography scale (21-03)
 - Showcase element sizes preserved (InfoIcon:12px, emoji:48px) — Design sizes not UI chrome (21-04)
 - Shared Section component preferred over local duplicates — Code deduplication (21-04)
+- SocialProofBar avatarSize matches Avatar sizes (sm|md|lg) — API consistency (21-05)
+- Block imports use registry export names — Metro resolves @/components/blocks to registry (21-05)
 
 ### Pending Todos
 
-None yet.
+None.
 
 ### Open Blockers
 
@@ -105,24 +107,24 @@ From v1.1 audit:
 - Pre-existing TypeScript strict null check errors in CLI (15 errors in pick.ts/update.ts)
 - 4 borderline console.log(chalk.red) instances in CLI (status output, not errors)
 
-**v1.2 Findings (from research):**
-- ~~250+ hardcoded values bypass token system~~ → FIXED in 19-01/02/03/04 (all UI, blocks, screens migrated)
-- ~~50+ icon components use `#000` instead of `colors.foreground`~~ → FIXED in 19-01 (5 UI icons), 19-03 (50+ block icons), 19-04 (63 screen icons), 19-06 (3 registry icons - gap closure)
-- ~~6 shadow objects use hardcoded `#000`~~ → FIXED in 19-01 (migrated to platformShadow), 19-06 (tag-input gap closure), 19-08 (5 UI components - complete gap closure)
-- ~~20+ RGBA overlays need semantic token migration~~ → FIXED in 19-02 (8 UI components), 19-03 (7 blocks), 19-07 (3 UI components - gap closure)
-- ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED in 19-02 (4 UI components), 19-03 (15 blocks), 19-04 (18 screens), 19-09 (3 UI components - gap closure)
-- ~~Task priority colors hardcoded (#10b981, #f59e0b, #ef4444)~~ → FIXED in 19-03 (semantic tokens)
-- ~~Avatar component uses 5-value size scale instead of standard 3-value~~ → FIXED in 19-05 (standardized to sm|md|lg)
-- ~~Avatar size="xl" usages in blocks/screens~~ → FIXED in 19-09 (changed to valid size="lg")
-- ~~Home screen manual card construction~~ → FIXED in 19-05 (uses MediaCard component)
-- ~~9 demo app files missing `-block` suffix~~ → FIXED in 20-05 (renamed to match registry pattern)
-- ~~Demo files using hardcoded fontSize~~ → FIXED in 21-02 (blocks), 21-03 (high-violation), 21-04 (remaining files)
+**v1.2 Findings — ALL RESOLVED:**
+- ~~250+ hardcoded values bypass token system~~ → FIXED in Phases 19-21
+- ~~50+ icon components use `#000` instead of `colors.foreground`~~ → FIXED
+- ~~6 shadow objects use hardcoded `#000`~~ → FIXED
+- ~~20+ RGBA overlays need semantic token migration~~ → FIXED
+- ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED
+- ~~Task priority colors hardcoded~~ → FIXED
+- ~~Avatar component uses 5-value size scale~~ → FIXED
+- ~~Avatar size="xl" usages~~ → FIXED
+- ~~Home screen manual card construction~~ → FIXED
+- ~~9 demo app files missing `-block` suffix~~ → FIXED
+- ~~Demo files using hardcoded fontSize~~ → FIXED
 
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 21-02-PLAN.md (Block Typography Migration)
+Stopped at: v1.2 MILESTONE COMPLETE
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 21-02 completion (Phase 21 - 4 of 5 plans complete)*
+*Updated: 2026-01-28 — v1.2 Consistency Sweep shipped*
