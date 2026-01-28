@@ -85,7 +85,7 @@ export function Slider({
   style,
   labelStyle,
 }: SliderProps) {
-  const { colors, components, spacing } = useTheme();
+  const { colors, components, spacing, platformShadow } = useTheme();
   const tokens = components.slider[size];
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
 
@@ -258,6 +258,7 @@ export function Slider({
                 left: `${percentage}%`,
                 marginLeft: -thumbSize / 2,
               },
+              platformShadow('sm'),
               thumbAnimatedStyle,
             ]}
           />
@@ -296,10 +297,5 @@ const styles = StyleSheet.create({
   },
   thumb: {
     position: 'absolute',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
 });

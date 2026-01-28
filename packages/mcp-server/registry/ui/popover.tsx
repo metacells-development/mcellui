@@ -181,7 +181,7 @@ export function PopoverContent({
   style,
   maxWidth = POPOVER_CONSTANTS.defaultMaxWidth,
 }: PopoverContentProps) {
-  const { colors, radius, spacing } = useTheme();
+  const { colors, radius, spacing, platformShadow } = useTheme();
   const { open, setOpen, triggerLayout } = usePopoverContext();
 
   const opacity = useSharedValue(0);
@@ -296,12 +296,8 @@ export function PopoverContent({
               borderColor: colors.border,
               padding: spacing[3],
               maxWidth,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.15,
-              shadowRadius: 12,
-              elevation: 8,
             },
+            platformShadow('md'),
             getContentPosition(),
             animatedStyle,
             style,

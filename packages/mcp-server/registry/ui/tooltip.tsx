@@ -89,7 +89,7 @@ export function Tooltip({
   disabled = false,
   maxWidth = TOOLTIP_CONSTANTS.defaultMaxWidth,
 }: TooltipProps) {
-  const { colors, radius, fontSize } = useTheme();
+  const { colors, radius, fontSize, platformShadow } = useTheme();
 
   const isControlled = controlledOpen !== undefined;
   const [internalOpen, setInternalOpen] = useState(false);
@@ -291,6 +291,7 @@ export function Tooltip({
                 top,
                 left,
               },
+              platformShadow('md'),
               animatedStyle,
             ]}
             onLayout={handleTooltipLayout}
@@ -339,11 +340,6 @@ const styles = StyleSheet.create({
   },
   tooltip: {
     position: 'absolute',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 8,
   },
   arrow: {
     position: 'absolute',
