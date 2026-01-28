@@ -249,7 +249,7 @@ function FullscreenViewer({
   return (
     <Modal visible={visible} transparent animationType="none" statusBarTranslucent>
       <GestureHandlerRootView style={styles.fullscreenContainer}>
-        <Animated.View style={[styles.fullscreenBackdrop, { backgroundColor: `rgba(0, 0, 0, ${tokens.fullscreen.backdropOpacity})` }, backdropStyle]}>
+        <Animated.View style={[styles.fullscreenBackdrop, { backgroundColor: colors.scrim }, backdropStyle]}>
           {/* Close button */}
           <Pressable
             style={[
