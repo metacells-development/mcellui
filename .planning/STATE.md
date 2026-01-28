@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-26)
 ## Current Position
 
 Phase: 18 of 18 (Core Package Exports)
-Plan: 1/2 in current phase
-Status: In progress — 18-01 complete
-Last activity: 2026-01-28 — Completed 18-01-PLAN.md
+Plan: 2/2 in current phase
+Status: Phase complete — 18-02 complete
+Last activity: 2026-01-28 — Completed 18-02-PLAN.md
 
-Progress: [█████████░░░░░░░░░] 17/18 phases (94%)
+Progress: [█████████████████░] 18/18 phases (100%)
 
 ## Milestones
 
@@ -62,6 +62,9 @@ Recent decisions affecting v1.1:
 - 17-03: Validation script performs 5 checks: schema, duplicates, naming, dependencies, file existence
 - 18-01: Removed 3 orphaned exports (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS) from core package
 - 18-01: Added 6 missing type exports (SpacingValue, RadiusValue, ComponentRadiusKey, ComponentRadiusTokens, LineHeightKey, LetterSpacingKey)
+- 18-02: Added comprehensive JSDoc to all public exports in core package (@param/@returns tags, @example blocks)
+- 18-02: Component token JSDoc pattern (brief one-line descriptions for 82 exports)
+- 18-02: IDE intellisense now shows meaningful descriptions for all core imports
 
 ### Resolved Blockers
 - CheckoutScreen StepIndicator scope bug — fixed in Phase 13
@@ -69,16 +72,16 @@ Recent decisions affecting v1.1:
 - ImageGallery missing loading states — fixed in Phase 8
 
 ### Open Blockers
-None. Phase 18-01 complete. Ready for Phase 18-02.
+None. Phase 18 complete (Core Package Exports).
 
 ### Technical Debt
 - Pre-existing TypeScript errors in packages/mcp-server/src/tools/index.ts parseComponentDocs function (strict null checks)
 
 ## Session Continuity
 
-Last session: 2026-01-28T09:45:24Z
-Stopped at: Completed 18-01-PLAN.md
+Last session: 2026-01-28T10:01:31Z
+Stopped at: Completed 18-02-PLAN.md
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after Phase 18-01 completion*
+*Updated: 2026-01-28 after Phase 18-02 completion*
