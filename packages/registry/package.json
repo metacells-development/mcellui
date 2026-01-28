@@ -10,16 +10,17 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "lint": "eslint .",
-    "build:registry": "node scripts/build-registry.js"
+    "build:registry": "node scripts/build-registry.js",
+    "validate:registry": "node scripts/validate-registry.js"
   },
   "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-native": ">=0.73.0",
-    "react-hook-form": ">=7.50.0",
     "@hookform/resolvers": ">=3.3.0",
-    "zod": ">=3.22.0",
+    "react": ">=18.0.0",
+    "react-hook-form": ">=7.50.0",
+    "react-native": ">=0.73.0",
+    "react-native-gesture-handler": ">=2.0.0",
     "react-native-reanimated": ">=3.0.0",
-    "react-native-gesture-handler": ">=2.0.0"
+    "zod": ">=3.22.0"
   },
   "peerDependenciesMeta": {
     "react-hook-form": {
@@ -40,6 +41,8 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.10",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^3.0.1",
     "typescript": "^5.4.0"
   }
 }
