@@ -43,7 +43,7 @@ import Animated, {
   FadeOut,
   Layout,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, fontSize, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // ============================================================================
@@ -497,14 +497,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   tag: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   tagText: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
     maxWidth: 150,
   },
   input: {
@@ -519,10 +519,10 @@ const styles = StyleSheet.create({
   },
   suggestionItem: {},
   helperText: {
-    fontSize: 12,
+    fontSize: fontSize.xs,
   },
   tagCount: {
-    fontSize: 12,
+    fontSize: fontSize.xs,
     textAlign: 'right',
   },
 });

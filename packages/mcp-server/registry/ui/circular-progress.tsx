@@ -22,7 +22,7 @@
  * ```
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -39,7 +39,7 @@ import Animated, {
   Easing,
   useDerivedValue,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, areAnimationsDisabled, circularProgressTokens, fontWeight } from '@metacells/mcellui-core';
 
 // ============================================================================
 // Types
@@ -77,16 +77,6 @@ export interface CircularProgressProps {
 }
 
 // ============================================================================
-// Size Configs
-// ============================================================================
-
-const SIZE_CONFIG = {
-  sm: { size: 40, strokeWidth: 4, labelSize: 10 },
-  md: { size: 64, strokeWidth: 6, labelSize: 14 },
-  lg: { size: 96, strokeWidth: 8, labelSize: 20 },
-};
-
-// ============================================================================
 // Animated Components
 // ============================================================================
 
@@ -113,11 +103,12 @@ export function CircularProgress({
   style,
 }: CircularProgressProps) {
   const { colors } = useTheme();
+  const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
 
-  // Resolve size config
+  // Resolve size config from tokens
   const config = typeof size === 'number'
     ? { size, strokeWidth: customStrokeWidth ?? Math.max(4, size / 10), labelSize: Math.max(10, size / 5) }
-    : SIZE_CONFIG[size];
+    : circularProgressTokens[size];
 
   const resolvedSize = typeof size === 'number' ? size : config.size;
   const resolvedStrokeWidth = customStrokeWidth ?? config.strokeWidth;
@@ -138,34 +129,44 @@ export function CircularProgress({
   // Update progress animation
   useEffect(() => {
     if (!indeterminate) {
-      progress.value = withSpring(clampedValue / 100, {
-        damping: 20,
-        stiffness: 100,
-      });
+      if (animationsEnabled) {
+        progress.value = withSpring(clampedValue / 100, {
+          damping: circularProgressTokens.animation.springDamping,
+          stiffness: circularProgressTokens.animation.springStiffness,
+        });
+      } else {
+        progress.value = clampedValue / 100;
+      }
     }
-  }, [clampedValue, indeterminate]);
+  }, [clampedValue, indeterminate, animationsEnabled]);
 
   // Indeterminate rotation animation
   useEffect(() => {
-    if (indeterminate) {
+    if (indeterminate && animationsEnabled) {
       rotation.value = withRepeat(
-        withTiming(360, { duration: 1200, easing: Easing.linear }),
+        withTiming(360, { duration: circularProgressTokens.animation.rotationDuration, easing: Easing.linear }),
         -1,
         false
       );
       indeterminateProgress.value = withRepeat(
-        withTiming(0.75, { duration: 1200, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0.75, { duration: circularProgressTokens.animation.rotationDuration, easing: Easing.inOut(Easing.ease) }),
         -1,
         true
       );
-    } else {
-      rotation.value = withTiming(0, { duration: 200 });
+    } else if (!indeterminate) {
+      if (animationsEnabled) {
+        rotation.value = withTiming(0, { duration: 200 });
+      } else {
+        rotation.value = 0;
+      }
     }
-  }, [indeterminate]);
+  }, [indeterminate, animationsEnabled]);
 
   // Animated stroke dashoffset for determinate
   const animatedProps = useAnimatedProps(() => {
-    const progressValue = indeterminate ? indeterminateProgress.value : progress.value;
+    const progressValue = indeterminate
+      ? (animationsEnabled ? indeterminateProgress.value : 0.5)
+      : progress.value;
     const strokeDashoffset = circumference * (1 - progressValue);
     return {
       strokeDashoffset: clockwise ? strokeDashoffset : -strokeDashoffset,
@@ -256,6 +257,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    fontWeight: '600',
+    fontWeight: fontWeight.semibold,
   },
 });

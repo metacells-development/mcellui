@@ -38,7 +38,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, fontSize, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // ============================================================================
@@ -108,21 +108,21 @@ const SIZE_CONFIG = {
     height: 32,
     minWidth: 32,
     paddingHorizontal: 8,
-    fontSize: 12,
+    fontSize: fontSize.xs,
     iconSize: 16,
   },
   md: {
     height: 40,
     minWidth: 40,
     paddingHorizontal: 12,
-    fontSize: 14,
+    fontSize: fontSize.sm,
     iconSize: 18,
   },
   lg: {
     height: 48,
     minWidth: 48,
     paddingHorizontal: 16,
-    fontSize: 16,
+    fontSize: fontSize.base,
     iconSize: 20,
   },
 };
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   group: {
     flexDirection: 'row',

@@ -16,7 +16,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
-import { useTheme, ThemeColors, ALERT_CONSTANTS } from '@metacells/mcellui-core';
+import { useTheme, ThemeColors, ALERT_CONSTANTS, fontWeight } from '@metacells/mcellui-core';
 
 export type AlertVariant = 'default' | 'info' | 'success' | 'warning' | 'destructive';
 export type AlertSize = 'sm' | 'md' | 'lg';
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
     // Dynamic gap applied inline via spacing tokens
   },
   title: {
-    fontWeight: '600',
+    fontWeight: fontWeight.semibold,
   },
   text: {
     lineHeight: 20,

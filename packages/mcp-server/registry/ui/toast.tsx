@@ -49,7 +49,7 @@ import Animated, {
   Layout,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme, TOAST_CONSTANTS, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, TOAST_CONSTANTS, areAnimationsDisabled, fontSize, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -303,15 +303,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: fontSize.sm,
+    fontWeight: fontWeight.semibold,
   },
   description: {
-    fontSize: 13,
+    fontSize: fontSize.sm,
   },
   actionButton: {},
   actionText: {
-    fontSize: 13,
-    fontWeight: '600',
+    fontSize: fontSize.sm,
+    fontWeight: fontWeight.semibold,
   },
 });
