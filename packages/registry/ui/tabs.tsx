@@ -143,7 +143,7 @@ export interface TabsListProps {
 }
 
 export function TabsList({ children, variant = 'pill', style }: TabsListProps) {
-  const { colors, componentRadius } = useTheme();
+  const { colors, componentRadius, platformShadow } = useTheme();
   const { value } = useTabsContext();
   const tabLayouts = useRef(new Map<string, LayoutRectangle>()).current;
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
@@ -217,6 +217,7 @@ export function TabsList({ children, variant = 'pill', style }: TabsListProps) {
               ? {
                   backgroundColor: colors.background,
                   borderRadius: componentRadius.tabsIndicator,
+                  ...platformShadow('sm'),
                 }
               : {
                   backgroundColor: colors.primary,
@@ -339,11 +340,6 @@ const styles = StyleSheet.create({
     top: tabsTokens.indicator.pillTop,
     bottom: tabsTokens.indicator.pillBottom,
     left: 0,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
   },
   indicatorUnderline: {
     position: 'absolute',
