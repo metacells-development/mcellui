@@ -94,7 +94,7 @@ export function LoginBlock({
   showSocialLogin = true,
   socialProviders = ['google', 'apple'],
 }: LoginBlockProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -124,12 +124,22 @@ export function LoginBlock({
           <Text
             style={[
               styles.title,
-              { color: colors.foreground, marginBottom: spacing[2] },
+              {
+                color: colors.foreground,
+                marginBottom: spacing[2],
+                fontSize: fontSize['2xl'],
+                fontWeight: fontWeight.bold,
+              },
             ]}
           >
             {title}
           </Text>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.subtitle,
+              { color: colors.foregroundMuted, fontSize: fontSize.md },
+            ]}
+          >
             {subtitle}
           </Text>
         </View>
@@ -168,7 +178,14 @@ export function LoginBlock({
                   {onForgotPassword && (
                     <Pressable onPress={onForgotPassword}>
                       <Text
-                        style={[styles.forgotLink, { color: colors.primary }]}
+                        style={[
+                          styles.forgotLink,
+                          {
+                            color: colors.primary,
+                            fontSize: fontSize.base,
+                            fontWeight: fontWeight.medium,
+                          },
+                        ]}
                       >
                         Forgot password?
                       </Text>
@@ -213,6 +230,7 @@ export function LoginBlock({
                     color: colors.foregroundMuted,
                     paddingHorizontal: spacing[4],
                     backgroundColor: colors.background,
+                    fontSize: fontSize.base,
                   },
                 ]}
               >
@@ -241,11 +259,25 @@ export function LoginBlock({
         {/* Sign Up Link */}
         {onSignUp && (
           <View style={[styles.footer, { marginTop: spacing[8] }]}>
-            <Text style={[styles.footerText, { color: colors.foregroundMuted }]}>
+            <Text
+              style={[
+                styles.footerText,
+                { color: colors.foregroundMuted, fontSize: fontSize.base },
+              ]}
+            >
               Don't have an account?{' '}
             </Text>
             <Pressable onPress={onSignUp}>
-              <Text style={[styles.footerLink, { color: colors.primary }]}>
+              <Text
+                style={[
+                  styles.footerLink,
+                  {
+                    color: colors.primary,
+                    fontSize: fontSize.base,
+                    fontWeight: fontWeight.semibold,
+                  },
+                ]}
+              >
                 Sign up
               </Text>
             </Pressable>
@@ -289,12 +321,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
     textAlign: 'center',
   },
   labelRow: {
@@ -302,10 +331,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  forgotLink: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
+  forgotLink: {},
   divider: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -314,9 +340,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 1,
   },
-  dividerText: {
-    fontSize: 14,
-  },
+  dividerText: {},
   socialButtons: {
     flexDirection: 'row',
   },
@@ -324,11 +348,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  footerText: {
-    fontSize: 14,
-  },
-  footerLink: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  footerText: {},
+  footerLink: {},
 });

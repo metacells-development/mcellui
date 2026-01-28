@@ -95,7 +95,7 @@ export function SignupBlock({
   title = 'Create account',
   subtitle = 'Sign up to get started',
 }: SignupBlockProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   const form = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
@@ -127,12 +127,22 @@ export function SignupBlock({
           <Text
             style={[
               styles.title,
-              { color: colors.foreground, marginBottom: spacing[2] },
+              {
+                color: colors.foreground,
+                marginBottom: spacing[2],
+                fontSize: fontSize['2xl'],
+                fontWeight: fontWeight.bold,
+              },
             ]}
           >
             {title}
           </Text>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.subtitle,
+              { color: colors.foregroundMuted, fontSize: fontSize.md },
+            ]}
+          >
             {subtitle}
           </Text>
         </View>
@@ -199,7 +209,11 @@ export function SignupBlock({
                 <Text
                   style={[
                     styles.passwordHint,
-                    { color: colors.foregroundMuted, marginTop: spacing[1] },
+                    {
+                      color: colors.foregroundMuted,
+                      marginTop: spacing[1],
+                      fontSize: fontSize.sm,
+                    },
                   ]}
                 >
                   Min 8 characters, 1 uppercase, 1 number
@@ -222,19 +236,29 @@ export function SignupBlock({
                   <Text
                     style={[
                       styles.termsText,
-                      { color: colors.foregroundMuted, marginLeft: spacing[2] },
+                      {
+                        color: colors.foregroundMuted,
+                        marginLeft: spacing[2],
+                        fontSize: fontSize.base,
+                      },
                     ]}
                   >
                     I agree to the{' '}
                     <Text
-                      style={[styles.termsLink, { color: colors.primary }]}
+                      style={[
+                        styles.termsLink,
+                        { color: colors.primary, fontWeight: fontWeight.semibold },
+                      ]}
                       onPress={onTermsPress}
                     >
                       Terms of Service
                     </Text>
                     {' and '}
                     <Text
-                      style={[styles.termsLink, { color: colors.primary }]}
+                      style={[
+                        styles.termsLink,
+                        { color: colors.primary, fontWeight: fontWeight.semibold },
+                      ]}
                       onPress={onPrivacyPress}
                     >
                       Privacy Policy
@@ -245,7 +269,12 @@ export function SignupBlock({
                   <Text
                     style={[
                       styles.errorText,
-                      { color: colors.destructive, marginTop: spacing[1] },
+                      {
+                        color: colors.destructive,
+                        marginTop: spacing[1],
+                        fontSize: fontSize.sm,
+                        fontWeight: fontWeight.medium,
+                      },
                     ]}
                   >
                     {fieldState.error.message}
@@ -263,11 +292,25 @@ export function SignupBlock({
         {/* Login Link */}
         {onLogin && (
           <View style={[styles.footer, { marginTop: spacing[8] }]}>
-            <Text style={[styles.footerText, { color: colors.foregroundMuted }]}>
+            <Text
+              style={[
+                styles.footerText,
+                { color: colors.foregroundMuted, fontSize: fontSize.base },
+              ]}
+            >
               Already have an account?{' '}
             </Text>
             <Pressable onPress={onLogin}>
-              <Text style={[styles.footerLink, { color: colors.primary }]}>
+              <Text
+                style={[
+                  styles.footerLink,
+                  {
+                    color: colors.primary,
+                    fontSize: fontSize.base,
+                    fontWeight: fontWeight.semibold,
+                  },
+                ]}
+              >
                 Sign in
               </Text>
             </Pressable>
@@ -294,42 +337,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
     textAlign: 'center',
   },
-  passwordHint: {
-    fontSize: 12,
-  },
+  passwordHint: {},
   checkboxRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
   termsText: {
-    fontSize: 14,
     flex: 1,
     lineHeight: 20,
   },
-  termsLink: {
-    fontWeight: '600',
-  },
-  errorText: {
-    fontSize: 12,
-    fontWeight: '500',
-  },
+  termsLink: {},
+  errorText: {},
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  footerText: {
-    fontSize: 14,
-  },
-  footerLink: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  footerText: {},
+  footerLink: {},
 });
