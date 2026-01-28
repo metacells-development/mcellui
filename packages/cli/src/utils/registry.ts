@@ -28,6 +28,10 @@ export interface RegistryItem {
   expoGo?: boolean;
   /** Main props for this component (for CLI display) */
   props?: string[];
+  /** Additional exports beyond the main component (e.g., CardHeader, useToast) */
+  exports?: string[];
+  /** Setup instructions for providers/hooks (e.g., "Wrap app in <ToastProvider>") */
+  setup?: string;
 }
 
 export interface Registry {

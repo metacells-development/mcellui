@@ -191,6 +191,15 @@ export const addCommand = new Command()
             const pascalName = toPascalCase(componentName);
             const importPath = config.aliases.components || '@/components';
             console.log(chalk.dim(`  Import: import { ${pascalName} } from '${importPath}/${componentName}';`));
+
+            // Show additional exports
+            if (registryItem?.exports?.length) {
+              console.log(chalk.dim(`  Also exports: ${registryItem.exports.join(', ')}`));
+            }
+            // Show setup instructions for providers/hooks
+            if (registryItem?.setup) {
+              console.log(chalk.cyan(`  Setup: ${registryItem.setup}`));
+            }
           }
 
           // Collect npm dependencies
