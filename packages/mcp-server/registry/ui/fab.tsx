@@ -85,7 +85,7 @@ export function FAB({
   onPress,
   style,
 }: FABProps) {
-  const { colors, components, componentRadius, fontWeight, platformShadow, springs } = useTheme();
+  const { colors, components, componentRadius, fontWeight, platformShadow, springs, spacing } = useTheme();
   const tokens = components.fab[size];
 
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
@@ -176,7 +176,7 @@ export function FAB({
                   fontSize: tokens.fontSize,
                   fontWeight: tokens.fontWeight,
                   color: variantStyles.iconColor,
-                  marginLeft: 8,
+                  marginLeft: spacing[2],
                 },
               ]}
             >

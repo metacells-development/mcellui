@@ -236,6 +236,7 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
                 {
                   fontSize: tokens.helperFontSize,
                   marginTop: spacing[1],
+                  marginLeft: spacing[2],
                   color: textLength >= maxLength ? colors.destructive : colors.foregroundMuted,
                 },
               ]}
@@ -266,7 +267,5 @@ const styles = StyleSheet.create({
   helperText: {
     flex: 1,
   },
-  count: {
-    marginLeft: 8,
-  },
+  count: {},
 });

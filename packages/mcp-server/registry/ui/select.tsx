@@ -208,7 +208,7 @@ export function Select({
         >
           {selectedOption?.label ?? placeholder}
         </Text>
-        <Text style={[styles.chevron, { color: colors.foregroundMuted }]}>
+        <Text style={[styles.chevron, { color: colors.foregroundMuted, marginLeft: spacing[2] }]}>
           ▼
         </Text>
       </AnimatedPressable>
@@ -233,7 +233,7 @@ export function Select({
           <SheetHeader>
             <SheetTitle>{sheetTitle ?? label ?? 'Select'}</SheetTitle>
           </SheetHeader>
-          <ScrollView style={styles.optionsList} showsVerticalScrollIndicator={false}>
+          <ScrollView style={[styles.optionsList, { marginTop: spacing[2] }]} showsVerticalScrollIndicator={false}>
             {options.map((option) => (
               <Pressable
                 key={option.value}
@@ -300,12 +300,10 @@ const styles = StyleSheet.create({
   },
   chevron: {
     fontSize: fontSize.xs,
-    marginLeft: 8,
   },
   helperText: {},
   optionsList: {
     flex: 1,
-    marginTop: 8,
   },
   option: {
     flexDirection: 'row',
