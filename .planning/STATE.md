@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 19 of 21 (Critical Color & API Fixes)
-Plan: 4 of 5 in current phase
-Status: In progress
-Last activity: 2026-01-28 — Completed 19-04-PLAN.md (screen components hardcoded colors)
+Plan: 5 of 5 in current phase
+Status: Phase complete
+Last activity: 2026-01-28 — Completed 19-05-PLAN.md (Avatar API + Home screen refactor)
 
-Progress: [███████████████████░] 90% (v1.0 + v1.1 complete, v1.2 in progress)
+Progress: [████████████████████] 95% (v1.0 + v1.1 complete, Phase 19 complete)
 
 ## Performance Metrics
 
@@ -58,6 +58,8 @@ Recent decisions affecting v1.2:
 - Google logo brand colors preserved in login/signup — Brand compliance requirement (19-04)
 - Profile verified badge uses colors.primary — Theme consistency instead of hardcoded blue (19-04)
 - Badge text on destructive backgrounds uses colors.destructiveForeground — Semantic token for proper contrast (19-04)
+- Avatar uses standard 3-size scale (sm|md|lg) — Consistency with all other components (19-05)
+- Home screen featured items use MediaCard component — Component reuse over manual construction (19-05)
 
 ### Pending Todos
 
@@ -81,14 +83,15 @@ From v1.1 audit:
 - ~~20+ RGBA overlays need semantic token migration~~ → FIXED in 19-02 (8 UI components), 19-03 (7 blocks)
 - ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED in 19-02 (4 UI components), 19-03 (15 blocks), 19-04 (18 screens)
 - ~~Task priority colors hardcoded (#10b981, #f59e0b, #ef4444)~~ → FIXED in 19-03 (semantic tokens)
+- ~~Avatar component uses 5-value size scale instead of standard 3-value~~ → FIXED in 19-05 (standardized to sm|md|lg)
+- ~~Home screen manual card construction~~ → FIXED in 19-05 (uses MediaCard component)
 - 9 demo app files missing `-block` suffix
-- Avatar component uses 5-value size scale instead of standard 3-value
 
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 19-04-PLAN.md (screen components hardcoded colors)
+Stopped at: Completed 19-05-PLAN.md (Avatar API + Home screen refactor) — Phase 19 complete
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after completing 19-04-PLAN.md*
+*Updated: 2026-01-28 after completing 19-05-PLAN.md*
