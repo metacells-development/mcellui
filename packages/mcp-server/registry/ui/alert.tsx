@@ -116,7 +116,7 @@ export function Alert({
   textStyle,
   accessibilityLabel,
 }: AlertProps) {
-  const { colors, radius, platformShadow } = useTheme();
+  const { colors, radius, platformShadow, spacing } = useTheme();
   const tokens = getSizeTokens(size);
   const variantStyles = getVariantStyles(variant, colors);
 
@@ -161,13 +161,13 @@ export function Alert({
     >
       {/* Icon */}
       {!hideIcon && (
-        <View style={styles.iconContainer}>
+        <View style={[styles.iconContainer, { marginTop: spacing[0.5] }]}>
           {renderIcon()}
         </View>
       )}
 
       {/* Content */}
-      <View style={styles.content}>
+      <View style={[styles.content, { gap: spacing[1] }]}>
         {title && (
           <Text
             style={[
@@ -202,12 +202,17 @@ export function Alert({
           onPress={onClose}
           style={({ pressed }) => [
             styles.closeButton,
+            {
+              padding: spacing[1],
+              marginTop: -spacing[1],
+              marginRight: -spacing[1],
+            },
             pressed && styles.closeButtonPressed,
           ]}
           accessibilityRole="button"
           accessibilityLabel="Close alert"
         >
-          <CloseIcon color={variantStyles.iconColor} size={tokens.iconSize - 4} />
+          <CloseIcon color={variantStyles.iconColor} size={tokens.iconSize - spacing[1]} />
         </Pressable>
       )}
     </View>
@@ -282,11 +287,11 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexShrink: 0,
-    marginTop: 2,
+    // Dynamic marginTop applied inline via spacing tokens
   },
   content: {
     flex: 1,
-    gap: 4,
+    // Dynamic gap applied inline via spacing tokens
   },
   title: {
     fontWeight: '600',
@@ -296,9 +301,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     flexShrink: 0,
-    padding: 4,
-    marginTop: -4,
-    marginRight: -4,
+    // Dynamic padding/margin applied inline via spacing tokens
     borderRadius: 4,
   },
   closeButtonPressed: {

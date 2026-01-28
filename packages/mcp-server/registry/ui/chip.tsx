@@ -128,7 +128,7 @@ export function Chip({
   style,
   labelStyle,
 }: ChipProps) {
-  const { colors, fontWeight, components, componentRadius } = useTheme();
+  const { colors, fontWeight, components, componentRadius, spacing } = useTheme();
   const tokens = components.chip[size];
 
   const scale = useSharedValue(1);
@@ -192,7 +192,7 @@ export function Chip({
 
   // Adjust padding when there's a close button
   const rightPadding = onRemove
-    ? tokens.paddingHorizontal - 4 // Less padding since close button has its own
+    ? tokens.paddingHorizontal - spacing[1] // Less padding since close button has its own
     : tokens.paddingHorizontal;
 
   return (
@@ -217,7 +217,7 @@ export function Chip({
       accessibilityState={{ selected, disabled }}
     >
       {icon && (
-        <View style={{ marginRight: 6 }}>
+        <View style={{ marginRight: spacing[1.5] }}>
           {React.isValidElement(icon)
             ? React.cloneElement(icon as React.ReactElement<{ width?: number; height?: number; color?: string }>, {
                 width: tokens.iconSize,
@@ -247,7 +247,8 @@ export function Chip({
           style={({ pressed }) => [
             styles.closeButton,
             {
-              marginLeft: 4,
+              marginLeft: spacing[1],
+              padding: spacing[0.5],
               opacity: pressed ? 0.7 : 1,
             },
           ]}
@@ -257,7 +258,7 @@ export function Chip({
         >
           <CloseIcon
             color={textColor}
-            size={tokens.iconSize - 2}
+            size={tokens.iconSize - spacing[0.5]}
           />
         </Pressable>
       )}
@@ -295,7 +296,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   closeButton: {
-    padding: 2,
+    // Dynamic padding applied inline via spacing tokens
     borderRadius: 4,
   },
   group: {

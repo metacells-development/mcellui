@@ -158,7 +158,7 @@ export function SectionHeader({
       ]}
     >
       {/* Title & Subtitle */}
-      <View style={styles.titleContainer}>
+      <View style={[styles.titleContainer, { marginRight: spacing[4] }]}>
         <Text
           style={[
             styles.title,
@@ -194,7 +194,7 @@ export function SectionHeader({
       {/* Action Button */}
       {onAction && (
         <AnimatedPressable
-          style={[styles.actionButton, actionAnimatedStyle]}
+          style={[styles.actionButton, { gap: spacing[0.5] }, actionAnimatedStyle]}
           onPressIn={handleActionPressIn}
           onPressOut={handleActionPressOut}
           onPress={handleAction}
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    marginRight: 16,
+    // marginRight moved to dynamic style (spacing[4]) for token usage
   },
   title: {
     // Dynamic styles applied inline
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 2,
+    // Dynamic gap applied inline via spacing tokens
   },
   actionText: {
     // Dynamic styles applied inline
