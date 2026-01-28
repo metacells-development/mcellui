@@ -65,7 +65,7 @@ export function Switch({
   size = 'md',
   style,
 }: SwitchProps) {
-  const { colors, components, componentRadius, platformShadow, springs } = useTheme();
+  const { colors, components, componentRadius, platformShadow, springs, spacing } = useTheme();
   const tokens = components.switch[size];
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
   const progress = useSharedValue(checked ? 1 : 0);
@@ -163,7 +163,7 @@ export function Switch({
       }}
     >
       {(label || description) && (
-        <View style={styles.labelContainer}>
+        <View style={[styles.labelContainer, { gap: spacing[0.5] }]}>
           {label && (
             <Text
               style={[
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flex: 1,
-    gap: 2,
+    // Dynamic gap applied inline via spacing tokens
   },
   label: {
     fontWeight: '500',

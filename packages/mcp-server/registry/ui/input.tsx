@@ -213,7 +213,10 @@ export const Input = forwardRef<TextInput, InputProps>(
               styles.iconContainer,
               styles.iconRight,
               styles.iconButton,
-              { marginRight: tokens.paddingHorizontal - 4 },
+              {
+                marginRight: tokens.paddingHorizontal - spacing[1],
+                padding: spacing[1],
+              },
             ]}
             accessibilityRole="button"
             accessibilityLabel={passwordVisible ? 'Hide password' : 'Show password'}
@@ -235,7 +238,10 @@ export const Input = forwardRef<TextInput, InputProps>(
               styles.iconContainer,
               styles.iconRight,
               styles.iconButton,
-              { marginRight: tokens.paddingHorizontal - 4 },
+              {
+                marginRight: tokens.paddingHorizontal - spacing[1],
+                padding: spacing[1],
+              },
             ]}
             accessibilityRole="button"
             accessibilityLabel="Clear input"
@@ -397,7 +403,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   iconButton: {
-    padding: 4,
+    // Dynamic padding applied inline via spacing tokens
     borderRadius: 4,
   },
   bottomRow: {

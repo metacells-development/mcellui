@@ -70,7 +70,7 @@ export function Checkbox({
   size = 'md',
   style,
 }: CheckboxProps) {
-  const { colors, components, componentRadius, platformShadow, springs } = useTheme();
+  const { colors, components, componentRadius, platformShadow, springs, spacing } = useTheme();
   const tokens = components.checkbox[size];
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
   const progress = useSharedValue(checked || indeterminate ? 1 : 0);
@@ -199,7 +199,7 @@ export function Checkbox({
       </Animated.View>
 
       {(label || description) && (
-        <View style={styles.labelContainer}>
+        <View style={[styles.labelContainer, { gap: spacing[0.5] }]}>
           {label && (
             <Text
               style={[
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flex: 1,
-    gap: 2,
+    // Dynamic gap applied inline via spacing tokens
   },
   label: {
     fontWeight: '500',

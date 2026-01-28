@@ -80,14 +80,14 @@ export function RadioGroup({
   children,
   style,
 }: RadioGroupProps) {
-  const { colors, components, springs } = useTheme();
+  const { colors, components, springs, spacing } = useTheme();
 
   return (
     <RadioGroupContext.Provider
       value={{ value, onValueChange, disabled, size, colors, springs, components }}
     >
       <View
-        style={[styles.group, style]}
+        style={[styles.group, { gap: spacing[3] }, style]}
         accessibilityRole="radiogroup"
       >
         {children}
@@ -120,6 +120,7 @@ export function RadioGroupItem({
   style,
 }: RadioGroupItemProps) {
   const context = useRadioGroup();
+  const { spacing } = useTheme();
   const isSelected = context.value === value;
   const disabled = context.disabled || itemDisabled;
   const { colors, springs, components } = context;
@@ -182,6 +183,7 @@ export function RadioGroupItem({
       disabled={disabled}
       style={({ pressed }) => [
         styles.item,
+        { gap: spacing[2.5] },
         pressed && !disabled && styles.pressed,
         style,
       ]}
@@ -201,6 +203,7 @@ export function RadioGroupItem({
             height: tokens.outerSize,
             borderRadius: tokens.outerSize / 2,
             borderWidth: tokens.borderWidth,
+            marginTop: spacing[0.5],
           },
           outerAnimatedStyle,
           disabled && styles.disabled,
@@ -252,12 +255,12 @@ export function RadioGroupItem({
 
 const styles = StyleSheet.create({
   group: {
-    gap: 12,
+    // Dynamic gap applied inline via spacing tokens
   },
   item: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: 10,
+    // Dynamic gap applied inline via spacing tokens
   },
   pressed: {
     opacity: 0.7,
@@ -265,7 +268,7 @@ const styles = StyleSheet.create({
   outer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 2,
+    // Dynamic marginTop applied inline via spacing tokens
   },
   inner: {},
   disabled: {
