@@ -75,14 +75,15 @@ Plans:
   3. All fontSize/fontWeight values use typography tokens — consistent text hierarchy
   4. All 9 demo app block files use `-block` suffix in file names — naming pattern matches registry
   5. All demo app block component names include `Block` suffix — export names are consistent
-**Plans:** 5 plans
+**Plans:** 6 plans (5 original + 1 gap closure)
 
 Plans:
-- [ ] 20-01-PLAN.md — Spacing token migration (form + display components)
-- [ ] 20-02-PLAN.md — Radius token migration (form, alert, calendar components)
-- [ ] 20-03-PLAN.md — Typography token migration batch 1 (form + feedback components)
-- [ ] 20-04-PLAN.md — Typography token migration batch 2 (navigation + display components)
-- [ ] 20-05-PLAN.md — Demo block file renaming (9 files + imports)
+- [x] 20-01-PLAN.md — Spacing token migration (form + display components)
+- [x] 20-02-PLAN.md — Radius token migration (form, alert, calendar components)
+- [x] 20-03-PLAN.md — Typography token migration batch 1 (form + feedback components)
+- [x] 20-04-PLAN.md — Typography token migration batch 2 (navigation + display components)
+- [x] 20-05-PLAN.md — Demo block file renaming (9 files + imports)
+- [ ] 20-06-PLAN.md — [GAP CLOSURE] Remaining spacing values (textarea, select, fab, datetime-picker)
 
 #### Phase 21: Demo Consistency & Validation
 **Goal**: Demo app follows same token and naming standards as library — consistency is complete
@@ -108,7 +109,7 @@ Phases execute in numeric order: 19 → 20 → 21
 | 1-13. Quality Refinement | v1.0 | Complete | Complete | 2026-01-26 |
 | 14-18. Project Audit | v1.1 | Complete | Complete | 2026-01-28 |
 | 19. Critical Color & API Fixes | v1.2 | 9/9 | Complete | 2026-01-28 |
-| 20. Spacing, Typography & Naming | v1.2 | 0/5 | Ready | - |
+| 20. Spacing, Typography & Naming | v1.2 | 5/6 | Gap closure | - |
 | 21. Demo Consistency & Validation | v1.2 | 0/TBD | Not started | - |
 
 ---
