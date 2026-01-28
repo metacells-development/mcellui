@@ -68,29 +68,31 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TOK-01 | Pending | Pending |
-| TOK-02 | Pending | Pending |
-| TOK-03 | Pending | Pending |
-| TOK-04 | Pending | Pending |
-| TOK-05 | Pending | Pending |
-| TOK-06 | Pending | Pending |
-| TOK-07 | Pending | Pending |
-| TOK-08 | Pending | Pending |
-| TOK-09 | Pending | Pending |
-| API-01 | Pending | Pending |
-| REUSE-01 | Pending | Pending |
-| NAME-01 | Pending | Pending |
-| NAME-02 | Pending | Pending |
-| DEMO-01 | Pending | Pending |
+| TOK-01 | Phase 19 | Pending |
+| TOK-02 | Phase 19 | Pending |
+| TOK-03 | Phase 19 | Pending |
+| TOK-04 | Phase 19 | Pending |
+| TOK-05 | Phase 19 | Pending |
+| TOK-06 | Phase 20 | Pending |
+| TOK-07 | Phase 20 | Pending |
+| TOK-08 | Phase 20 | Pending |
+| TOK-09 | Phase 19 | Pending |
+| API-01 | Phase 19 | Pending |
+| REUSE-01 | Phase 19 | Pending |
+| NAME-01 | Phase 20 | Pending |
+| NAME-02 | Phase 20 | Pending |
+| DEMO-01 | Phase 21 | Pending |
 
 **Coverage:**
 - v1.2 requirements: 14 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 14
+- Mapped to phases: 14 (100%)
+- Unmapped: 0
 
 **Phase Breakdown:**
-- Pending roadmap creation
+- Phase 19 (Critical Color & API Fixes): 8 requirements (TOK-01, TOK-02, TOK-03, TOK-04, TOK-05, TOK-09, API-01, REUSE-01)
+- Phase 20 (Spacing, Typography & Naming): 5 requirements (TOK-06, TOK-07, TOK-08, NAME-01, NAME-02)
+- Phase 21 (Demo Consistency & Validation): 1 requirement (DEMO-01)
 
 ---
 *Requirements defined: 2026-01-28*
-*Last updated: 2026-01-28 after initial definition*
+*Last updated: 2026-01-28 after roadmap creation*
