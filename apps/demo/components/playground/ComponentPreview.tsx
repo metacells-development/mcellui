@@ -63,6 +63,8 @@ export function ComponentPreview() {
   );
 }
 
+// Mini preview uses intentionally tiny design sizes (6-8px) for compact display
+// These are not UI chrome and should not use typography tokens
 const styles = StyleSheet.create({
   container: {
     gap: 6,

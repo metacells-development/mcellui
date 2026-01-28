@@ -7,8 +7,21 @@
 
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { ThemePreset, RadiusPreset } from '@metacells/mcellui-core';
+import { ThemePreset, RadiusPreset, useTheme } from '@metacells/mcellui-core';
 import { ThemeCell } from './ThemeCell';
+
+type ThemeResult = ReturnType<typeof useTheme>;
+
+function getDynamicStyles(theme: ThemeResult) {
+  const { fontSize, fontWeight, spacing, colors } = theme;
+  return {
+    content: { padding: spacing[4] },
+    headerRow: { marginBottom: spacing[2] },
+    headerText: { fontSize: fontSize.xs, fontWeight: fontWeight.semibold, color: colors.foregroundSubtle },
+    row: { marginBottom: spacing[2] },
+    rowHeaderText: { fontSize: fontSize.xs, fontWeight: fontWeight.semibold, color: colors.foregroundSubtle },
+  };
+}
 
 const THEMES: ThemePreset[] = ['zinc', 'slate', 'stone', 'blue', 'green', 'rose', 'orange', 'violet'];
 const RADII: RadiusPreset[] = ['none', 'sm', 'md', 'lg', 'full'];
@@ -21,40 +34,43 @@ interface ThemeGridProps {
 }
 
 export function ThemeGrid({ selectedTheme, selectedRadius, onSelect, isDark }: ThemeGridProps) {
+  const theme = useTheme();
+  const dynamicStyles = getDynamicStyles(theme);
+
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[styles.content, dynamicStyles.content]}
       horizontal
       showsHorizontalScrollIndicator={false}
     >
       <View>
         {/* Header row with radius labels */}
-        <View style={styles.headerRow}>
+        <View style={[styles.headerRow, dynamicStyles.headerRow]}>
           <View style={styles.cornerCell} />
           {RADII.map((radius) => (
             <View key={radius} style={styles.headerCell}>
-              <Text style={styles.headerText}>{radius.toUpperCase()}</Text>
+              <Text style={[styles.headerText, dynamicStyles.headerText]}>{radius.toUpperCase()}</Text>
             </View>
           ))}
         </View>
 
         {/* Grid rows */}
-        {THEMES.map((theme) => (
-          <View key={theme} style={styles.row}>
+        {THEMES.map((themePreset) => (
+          <View key={themePreset} style={[styles.row, dynamicStyles.row]}>
             {/* Row header with theme label */}
             <View style={styles.rowHeader}>
-              <Text style={styles.rowHeaderText}>{theme}</Text>
+              <Text style={[styles.rowHeaderText, dynamicStyles.rowHeaderText]}>{themePreset}</Text>
             </View>
 
             {/* Cells */}
             {RADII.map((radius) => (
-              <View key={`${theme}-${radius}`} style={styles.cellWrapper}>
+              <View key={`${themePreset}-${radius}`} style={styles.cellWrapper}>
                 <ThemeCell
-                  theme={theme}
+                  theme={themePreset}
                   radius={radius}
-                  isSelected={selectedTheme === theme && selectedRadius === radius}
-                  onPress={() => onSelect?.(theme, radius)}
+                  isSelected={selectedTheme === themePreset && selectedRadius === radius}
+                  onPress={() => onSelect?.(themePreset, radius)}
                   isDark={isDark}
                 />
               </View>
@@ -70,12 +86,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  content: {
-    padding: 16,
-  },
+  content: {},
   headerRow: {
     flexDirection: 'row',
-    marginBottom: 8,
   },
   cornerCell: {
     width: 60,
@@ -86,14 +99,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   headerText: {
-    fontSize: 10,
-    fontWeight: '600',
-    color: '#71717a',
     letterSpacing: 0.5,
   },
   row: {
     flexDirection: 'row',
-    marginBottom: 8,
   },
   rowHeader: {
     width: 60,
@@ -101,9 +110,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   rowHeaderText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#71717a',
     textTransform: 'capitalize',
     textAlign: 'right',
   },

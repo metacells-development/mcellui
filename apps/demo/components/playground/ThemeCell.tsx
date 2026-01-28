@@ -18,6 +18,12 @@ interface ThemeCellProps {
   isDark?: boolean;
 }
 
+// Selection border uses parent theme context
+function useParentColors() {
+  const { colors } = useTheme();
+  return { selectionBorderColor: colors.primary };
+}
+
 function CellContent({ theme, radius }: { theme: ThemePreset; radius: RadiusPreset }) {
   const { colors } = useTheme();
 
@@ -37,11 +43,13 @@ function CellContent({ theme, radius }: { theme: ThemePreset; radius: RadiusPres
 }
 
 export function ThemeCell({ theme, radius, isSelected, onPress, isDark }: ThemeCellProps) {
+  const { selectionBorderColor } = useParentColors();
+
   return (
     <Pressable
       style={[
         styles.cell,
-        isSelected && styles.cellSelected,
+        isSelected && { borderColor: selectionBorderColor },
       ]}
       onPress={onPress}
     >
@@ -63,9 +71,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'transparent',
   },
-  cellSelected: {
-    borderColor: '#3b82f6',
-  },
   cellContent: {
     padding: 8,
     minWidth: 90,
@@ -76,6 +81,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  // Intentionally tiny font sizes for mini preview labels
   themeLabel: {
     fontSize: 7,
     fontWeight: '600',
