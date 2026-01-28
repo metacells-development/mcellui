@@ -61,7 +61,7 @@ export function ContentCardBlock({
   aspectRatio = 16 / 9,
   style,
 }: ContentCardBlockProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   return (
     <Card onPress={onPress} style={style}>
@@ -74,7 +74,14 @@ export function ContentCardBlock({
       {/* Content */}
       <CardContent style={{ paddingTop: spacing[4] }}>
         <Text
-          style={[styles.title, { color: colors.foreground }]}
+          style={[
+            styles.title,
+            {
+              color: colors.foreground,
+              fontSize: fontSize.lg,
+              fontWeight: fontWeight.bold,
+            },
+          ]}
           numberOfLines={2}
         >
           {title}
@@ -83,7 +90,11 @@ export function ContentCardBlock({
           <Text
             style={[
               styles.subtitle,
-              { color: colors.foregroundMuted, marginTop: spacing[1] },
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[1],
+                fontSize: fontSize.base,
+              },
             ]}
             numberOfLines={2}
           >
@@ -108,12 +119,9 @@ export function ContentCardBlock({
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 18,
-    fontWeight: '700',
     lineHeight: 24,
   },
   subtitle: {
-    fontSize: 14,
     lineHeight: 20,
   },
 });

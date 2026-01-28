@@ -123,7 +123,7 @@ export function HeroBlock({
   textAlign = 'center',
   style,
 }: HeroBlockProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   // Determine background type
   const backgroundType = background || (imageUrl ? 'image' : 'gradient');
@@ -168,6 +168,8 @@ export function HeroBlock({
             color: '#FFFFFF',
             textAlign,
             marginBottom: spacing[2],
+            fontSize: fontSize['3xl'],
+            fontWeight: fontWeight.extrabold,
           },
         ]}
       >
@@ -181,6 +183,7 @@ export function HeroBlock({
               color: 'rgba(255,255,255,0.9)',
               textAlign,
               marginBottom: spacing[6],
+              fontSize: fontSize.md,
             },
           ]}
         >
@@ -268,12 +271,9 @@ const styles = StyleSheet.create({
   },
   content: {},
   title: {
-    fontSize: 32,
-    fontWeight: '800',
     lineHeight: 38,
   },
   subtitle: {
-    fontSize: 16,
     lineHeight: 24,
   },
   buttons: {

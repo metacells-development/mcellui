@@ -68,7 +68,7 @@ export function EmptyStateBlock({
   compact = false,
   style,
 }: EmptyStateBlockProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   return (
     <View
@@ -104,7 +104,8 @@ export function EmptyStateBlock({
           styles.title,
           {
             color: colors.foreground,
-            fontSize: compact ? 18 : 20,
+            fontSize: compact ? fontSize.lg : fontSize.xl,
+            fontWeight: fontWeight.semibold,
             marginBottom: spacing[2],
           },
         ]}
@@ -119,7 +120,7 @@ export function EmptyStateBlock({
             styles.description,
             {
               color: colors.foregroundMuted,
-              fontSize: compact ? 14 : 15,
+              fontSize: compact ? fontSize.base : fontSize.base,
               marginBottom: spacing[6],
               paddingHorizontal: spacing[4],
             },
@@ -161,7 +162,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontWeight: '600',
     textAlign: 'center',
   },
   description: {

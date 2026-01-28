@@ -56,7 +56,7 @@ export function StatsCardBlock({
   onPress,
   style,
 }: StatsCardBlockProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
 
   const isPositive = trend !== undefined && trend >= 0;
   const trendColor = trend !== undefined
@@ -70,7 +70,16 @@ export function StatsCardBlock({
       <CardContent style={{ paddingTop: spacing[4] }}>
         {/* Header with icon */}
         <View style={styles.header}>
-          <Text style={[styles.label, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.label,
+              {
+                color: colors.foregroundMuted,
+                fontSize: fontSize.base,
+                fontWeight: fontWeight.medium,
+              },
+            ]}
+          >
             {label}
           </Text>
           {icon && (
@@ -93,7 +102,12 @@ export function StatsCardBlock({
         <Text
           style={[
             styles.value,
-            { color: colors.foreground, marginTop: spacing[2] },
+            {
+              color: colors.foreground,
+              marginTop: spacing[2],
+              fontSize: fontSize['3xl'],
+              fontWeight: fontWeight.bold,
+            },
           ]}
         >
           {value}
@@ -102,14 +116,27 @@ export function StatsCardBlock({
         {/* Trend */}
         {trend !== undefined && (
           <View style={[styles.trendContainer, { marginTop: spacing[2] }]}>
-            <Text style={[styles.trend, { color: trendColor }]}>
+            <Text
+              style={[
+                styles.trend,
+                {
+                  color: trendColor,
+                  fontSize: fontSize.base,
+                  fontWeight: fontWeight.semibold,
+                },
+              ]}
+            >
               {isPositive ? '+' : ''}{trend.toFixed(1)}%
             </Text>
             {trendLabel && (
               <Text
                 style={[
                   styles.trendLabel,
-                  { color: colors.foregroundMuted, marginLeft: spacing[1] },
+                  {
+                    color: colors.foregroundMuted,
+                    marginLeft: spacing[1],
+                    fontSize: fontSize.sm,
+                  },
                 ]}
               >
                 {trendLabel}
@@ -132,24 +159,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
+  label: {},
   iconContainer: {},
-  value: {
-    fontSize: 32,
-    fontWeight: '700',
-  },
+  value: {},
   trendContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  trend: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  trendLabel: {
-    fontSize: 13,
-  },
+  trend: {},
+  trendLabel: {},
 });

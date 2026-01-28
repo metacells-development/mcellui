@@ -163,7 +163,7 @@ export function FeedPostCardBlock({
   showSeparator = true,
   style,
 }: FeedPostCardBlockProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
 
   // Get initials from name
   const initials = user.avatar || user.name
@@ -184,11 +184,25 @@ export function FeedPostCardBlock({
             size="md"
           />
           <View style={styles.headerText}>
-            <Text style={[styles.userName, { color: colors.foreground }]}>
+            <Text
+              style={[
+                styles.userName,
+                {
+                  color: colors.foreground,
+                  fontWeight: fontWeight.semibold,
+                  fontSize: fontSize.base,
+                },
+              ]}
+            >
               {user.name}
             </Text>
             {time && (
-              <Text style={[styles.time, { color: colors.foregroundMuted }]}>
+              <Text
+                style={[
+                  styles.time,
+                  { color: colors.foregroundMuted, fontSize: fontSize.sm },
+                ]}
+              >
                 {time}
               </Text>
             )}
@@ -199,7 +213,11 @@ export function FeedPostCardBlock({
         <Text
           style={[
             styles.content,
-            { color: colors.foreground, marginTop: spacing[3] },
+            {
+              color: colors.foreground,
+              marginTop: spacing[3],
+              fontSize: fontSize.base,
+            },
           ]}
         >
           {content}
@@ -233,7 +251,12 @@ export function FeedPostCardBlock({
               accessibilityLabel={liked ? 'Unlike post' : 'Like post'}
             />
             {likes > 0 && (
-              <Text style={[styles.actionCount, { color: colors.foregroundMuted }]}>
+              <Text
+                style={[
+                  styles.actionCount,
+                  { color: colors.foregroundMuted, fontSize: fontSize.base },
+                ]}
+              >
                 {likes}
               </Text>
             )}
@@ -249,7 +272,12 @@ export function FeedPostCardBlock({
               accessibilityLabel="Comment on post"
             />
             {comments > 0 && (
-              <Text style={[styles.actionCount, { color: colors.foregroundMuted }]}>
+              <Text
+                style={[
+                  styles.actionCount,
+                  { color: colors.foregroundMuted, fontSize: fontSize.base },
+                ]}
+              >
                 {comments}
               </Text>
             )}
@@ -285,15 +313,9 @@ const styles = StyleSheet.create({
   headerText: {
     flex: 1,
   },
-  userName: {
-    fontWeight: '600',
-    fontSize: 15,
-  },
-  time: {
-    fontSize: 13,
-  },
+  userName: {},
+  time: {},
   content: {
-    fontSize: 15,
     lineHeight: 22,
   },
   imagePlaceholder: {
@@ -309,7 +331,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  actionCount: {
-    fontSize: 14,
-  },
+  actionCount: {},
 });

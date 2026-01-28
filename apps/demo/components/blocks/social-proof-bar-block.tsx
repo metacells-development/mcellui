@@ -56,7 +56,7 @@ export function SocialProofBarBlock({
   onPress,
   style,
 }: SocialProofBarBlockProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize } = useTheme();
 
   const displayAvatars = avatars.slice(0, maxAvatars);
 
@@ -104,7 +104,7 @@ export function SocialProofBarBlock({
 
       {/* Text */}
       <Text
-        style={[styles.text, { color: colors.foregroundMuted }]}
+        style={[styles.text, { color: colors.foregroundMuted, fontSize: fontSize.base }]}
         numberOfLines={2}
       >
         {text}
@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    fontSize: 14,
     lineHeight: 18,
   },
 });

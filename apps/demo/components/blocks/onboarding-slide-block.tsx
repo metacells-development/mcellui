@@ -88,7 +88,7 @@ export function OnboardingSlideBlock({
   hideSecondary = false,
   style,
 }: OnboardingSlideBlockProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const insets = useSafeAreaInsets();
 
   const isLastStep = currentStep === totalSteps - 1;
@@ -127,7 +127,12 @@ export function OnboardingSlideBlock({
         <Text
           style={[
             styles.title,
-            { color: colors.foreground, marginBottom: spacing[3] },
+            {
+              color: colors.foreground,
+              marginBottom: spacing[3],
+              fontSize: fontSize['2xl'],
+              fontWeight: fontWeight.bold,
+            },
           ]}
         >
           {title}
@@ -135,7 +140,7 @@ export function OnboardingSlideBlock({
         <Text
           style={[
             styles.description,
-            { color: colors.foregroundMuted },
+            { color: colors.foregroundMuted, fontSize: fontSize.md },
           ]}
         >
           {description}
@@ -207,13 +212,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
     textAlign: 'center',
     lineHeight: 34,
   },
   description: {
-    fontSize: 16,
     lineHeight: 24,
     textAlign: 'center',
   },

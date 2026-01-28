@@ -53,7 +53,7 @@ export function FeatureCardBlock({
   horizontal = false,
   style,
 }: FeatureCardBlockProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
 
   return (
     <Card onPress={onPress} style={style}>
@@ -86,7 +86,11 @@ export function FeatureCardBlock({
             style={[
               styles.title,
               horizontal && styles.titleHorizontal,
-              { color: colors.foreground },
+              {
+                color: colors.foreground,
+                fontSize: fontSize.md,
+                fontWeight: fontWeight.semibold,
+              },
             ]}
             numberOfLines={horizontal ? 1 : 2}
           >
@@ -97,7 +101,11 @@ export function FeatureCardBlock({
               style={[
                 styles.description,
                 horizontal && styles.descriptionHorizontal,
-                { color: colors.foregroundMuted, marginTop: spacing[1] },
+                {
+                  color: colors.foregroundMuted,
+                  marginTop: spacing[1],
+                  fontSize: fontSize.base,
+                },
               ]}
               numberOfLines={horizontal ? 2 : 3}
             >
@@ -130,15 +138,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 16,
-    fontWeight: '600',
     textAlign: 'center',
   },
   titleHorizontal: {
     textAlign: 'left',
   },
   description: {
-    fontSize: 14,
     lineHeight: 20,
     textAlign: 'center',
   },

@@ -108,7 +108,7 @@ export function ErrorStateBlock({
   compact = false,
   style,
 }: ErrorStateBlockProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   const iconSize = compact ? 40 : 48;
 
@@ -144,7 +144,8 @@ export function ErrorStateBlock({
           styles.title,
           {
             color: colors.foreground,
-            fontSize: compact ? 18 : 20,
+            fontSize: compact ? fontSize.lg : fontSize.xl,
+            fontWeight: fontWeight.semibold,
             marginBottom: spacing[2],
           },
         ]}
@@ -159,7 +160,7 @@ export function ErrorStateBlock({
             styles.description,
             {
               color: colors.foregroundMuted,
-              fontSize: compact ? 14 : 15,
+              fontSize: compact ? fontSize.base : fontSize.base,
               marginBottom: spacing[2],
               paddingHorizontal: spacing[4],
             },
@@ -181,6 +182,7 @@ export function ErrorStateBlock({
               paddingVertical: spacing[1],
               borderRadius: 4,
               marginBottom: spacing[4],
+              fontSize: fontSize.sm,
             },
           ]}
         >
@@ -230,7 +232,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontWeight: '600',
     textAlign: 'center',
   },
   description: {
@@ -238,7 +239,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   errorCode: {
-    fontSize: 12,
     fontFamily: 'monospace',
   },
   actions: {

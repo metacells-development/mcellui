@@ -67,7 +67,7 @@ export function NotificationItemBlock({
   onPress,
   style,
 }: NotificationItemBlockProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
 
   // Get initials from title
   const initials = title
@@ -129,18 +129,26 @@ export function NotificationItemBlock({
       {/* Content */}
       <View style={styles.content}>
         <Text
-          style={[styles.text, { color: colors.foreground }]}
+          style={[styles.text, { color: colors.foreground, fontSize: fontSize.base }]}
           numberOfLines={2}
         >
-          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.title, { fontWeight: fontWeight.semibold }]}>
+            {title}
+          </Text>
           {' '}
-          <Text style={styles.message}>{message}</Text>
+          <Text style={[styles.message, { fontWeight: fontWeight.normal }]}>
+            {message}
+          </Text>
         </Text>
         {time && (
           <Text
             style={[
               styles.time,
-              { color: colors.foregroundMuted, marginTop: spacing[1] },
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[1],
+                fontSize: fontSize.sm,
+              },
             ]}
           >
             {time}
@@ -196,16 +204,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 15,
     lineHeight: 20,
   },
-  title: {
-    fontWeight: '600',
-  },
-  message: {
-    fontWeight: '400',
-  },
-  time: {
-    fontSize: 13,
-  },
+  title: {},
+  message: {},
+  time: {},
 });
