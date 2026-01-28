@@ -38,9 +38,9 @@ Requirements for audit milestone. Each maps to roadmap phases.
 
 ### Core Package Audit
 
-- [ ] **CORE-01**: Theme token exports are complete and documented
-- [ ] **CORE-02**: Utility functions are properly exported and typed
-- [ ] **CORE-03**: No orphaned or unused exports (address technical debt)
+- [x] **CORE-01**: Theme token exports are complete and documented
+- [x] **CORE-02**: Utility functions are properly exported and typed
+- [x] **CORE-03**: No orphaned or unused exports (address technical debt)
 
 ## Future Requirements (v1.2+)
 
@@ -96,9 +96,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REG-02 | Phase 17 | Complete |
 | REG-03 | Phase 17 | Complete |
 | REG-04 | Phase 17 | Complete |
-| CORE-01 | Phase 18 | Pending |
-| CORE-02 | Phase 18 | Pending |
-| CORE-03 | Phase 18 | Pending |
+| CORE-01 | Phase 18 | Complete |
+| CORE-02 | Phase 18 | Complete |
+| CORE-03 | Phase 18 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 20 total
@@ -114,4 +114,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-26*
-*Last updated: 2026-01-28 after Phase 17 completion*
+*Last updated: 2026-01-28 after Phase 18 completion (all v1.1 requirements complete)*

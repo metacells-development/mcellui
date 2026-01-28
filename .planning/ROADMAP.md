@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 MVP** - Phases 1-13 (shipped 2026-01-26)
-- 🚧 **v1.1 Project Audit** - Phases 14-18 (in progress)
+- ✅ **v1.1 Project Audit** - Phases 14-18 (shipped 2026-01-28)
 
 ## Overview
 
@@ -68,7 +68,7 @@ v1.0 shipped 102 components with consistent quality. v1.1 audits all tooling for
 
 </details>
 
-### 🚧 v1.1 Project Audit (In Progress)
+### ✅ v1.1 Project Audit (Complete)
 
 **Milestone Goal:** Audit and fix all tooling for production readiness — fix critical package issues, verify CLI/MCP/Registry/Core quality
 
@@ -76,7 +76,7 @@ v1.0 shipped 102 components with consistent quality. v1.1 audits all tooling for
 - [x] **Phase 15: CLI Error Handling & Consistency** - Audit all CLI commands for error handling and UX consistency
 - [x] **Phase 16: MCP Server Tool Quality** - Audit all MCP tools for AI agent usability
 - [x] **Phase 17: Registry Structure & Metadata** - Audit component registry structure and metadata completeness
-- [ ] **Phase 18: Core Package Exports** - Audit core package theme tokens and utilities
+- [x] **Phase 18: Core Package Exports** - Audit core package theme tokens and utilities
 
 ## Phase Details
 
@@ -186,8 +186,8 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 15. CLI Audit | v1.1 | 4/4 | Complete | 2026-01-27 |
 | 16. MCP Audit | v1.1 | 3/3 | Complete | 2026-01-27 |
 | 17. Registry Audit | v1.1 | 3/3 | Complete | 2026-01-28 |
-| 18. Core Audit | v1.1 | 0/2 | Not started | - |
+| 18. Core Audit | v1.1 | 2/2 | Complete | 2026-01-28 |
 
 ---
 *Roadmap created: 2026-01-26*
-*Last updated: 2026-01-28 after Phase 17 completion*
+*Last updated: 2026-01-28 after Phase 18 completion (v1.1 milestone complete)*
