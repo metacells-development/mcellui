@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-26)
 
 **Core value:** Users own the component code — tooling must work reliably
-**Current focus:** Phase 17 - Registry Structure & Metadata
+**Current focus:** Phase 18 - Core Package Exports
 
 ## Current Position
 
 Phase: 17 of 18 (Registry Structure & Metadata) — Complete
 Plan: 3/3 in current phase
-Status: Phase 17 complete
-Last activity: 2026-01-28 — Completed 17-03-PLAN.md (Registry Validation Schema & Script)
+Status: Phase 17 verified, ready for Phase 18
+Last activity: 2026-01-28 — Phase 17 complete
 
-Progress: [████████░░░░░░░░░░] 18/18 phases (100%)
+Progress: [█████████░░░░░░░░░] 17/18 phases (94%)
 
 ## Milestones
 
@@ -55,6 +55,9 @@ Recent decisions affecting v1.1:
 - 17-01: All current components are Expo Go compatible (expoGo: true for all 101 components)
 - 17-01: displayName derived from kebab-case using title case conversion (e.g., "radio-group" → "Radio Group")
 - 17-01: schemaVersion "1.0" at registry root for future compatibility tracking
+- 17-02: All 28 blocks have -block suffix for consistent naming (REG-03 fulfilled)
+- 17-02: Git mv used for file renames to preserve history
+- 17-02: Screen imports synchronized with renamed block files
 - 17-03: Ajv v8 + JSON Schema for registry validation (enforces quality standards)
 - 17-03: Validation script performs 5 checks: schema, duplicates, naming, dependencies, file existence
 
