@@ -1,12 +1,12 @@
 /**
- * NotificationItem
+ * NotificationItemBlock
  *
  * A notification list item with avatar, message, time, and unread indicator.
  * Perfect for notification lists, activity feeds, and message previews.
  *
  * @example
  * ```tsx
- * <NotificationItem
+ * <NotificationItemBlock
  *   avatarUrl="https://example.com/avatar.jpg"
  *   title="John Doe"
  *   message="liked your post"
@@ -34,7 +34,7 @@ import { Avatar } from '@/components/ui/avatar';
 // Types
 // ============================================================================
 
-export interface NotificationItemProps {
+export interface NotificationItemBlockProps {
   /** Avatar image URL */
   avatarUrl?: string;
   /** Notification title (usually user name) */
@@ -57,7 +57,7 @@ export interface NotificationItemProps {
 // Component
 // ============================================================================
 
-export function NotificationItem({
+export function NotificationItemBlock({
   avatarUrl,
   title,
   message,
@@ -66,7 +66,7 @@ export function NotificationItem({
   icon,
   onPress,
   style,
-}: NotificationItemProps) {
+}: NotificationItemBlockProps) {
   const { colors, spacing, radius } = useTheme();
 
   // Get initials from title

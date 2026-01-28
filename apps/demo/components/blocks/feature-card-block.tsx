@@ -1,12 +1,12 @@
 /**
- * FeatureCard
+ * FeatureCardBlock
  *
  * A card with icon, title, and description for showcasing features.
  * Perfect for feature lists, benefits sections, and onboarding.
  *
  * @example
  * ```tsx
- * <FeatureCard
+ * <FeatureCardBlock
  *   icon={<ShieldIcon />}
  *   title="Secure Payments"
  *   description="Your data is encrypted and protected with bank-level security."
@@ -26,7 +26,7 @@ import { Card, CardContent } from '@/components/ui/card';
 // Types
 // ============================================================================
 
-export interface FeatureCardProps {
+export interface FeatureCardBlockProps {
   /** Icon element to display */
   icon: React.ReactNode;
   /** Feature title */
@@ -45,14 +45,14 @@ export interface FeatureCardProps {
 // Component
 // ============================================================================
 
-export function FeatureCard({
+export function FeatureCardBlock({
   icon,
   title,
   description,
   onPress,
   horizontal = false,
   style,
-}: FeatureCardProps) {
+}: FeatureCardBlockProps) {
   const { colors, spacing, radius } = useTheme();
 
   return (

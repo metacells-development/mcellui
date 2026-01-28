@@ -1,5 +1,5 @@
 /**
- * MediaItem
+ * MediaItemBlock
  *
  * Thumbnail grid item for photos, videos, and files.
  * Perfect for galleries, media pickers, and file browsers.
@@ -7,14 +7,14 @@
  * @example
  * ```tsx
  * // Photo grid
- * <MediaItem
+ * <MediaItemBlock
  *   type="image"
  *   source={{ uri: 'https://example.com/photo.jpg' }}
  *   onPress={() => openViewer(photo)}
  * />
  *
  * // Video with duration
- * <MediaItem
+ * <MediaItemBlock
  *   type="video"
  *   source={{ uri: 'https://example.com/thumb.jpg' }}
  *   duration={125}
@@ -22,7 +22,7 @@
  * />
  *
  * // Selectable media
- * <MediaItem
+ * <MediaItemBlock
  *   type="image"
  *   source={{ uri: photo.uri }}
  *   selectable
@@ -53,7 +53,7 @@ import { Badge } from '@/components/ui/badge';
 
 export type MediaType = 'image' | 'video' | 'file';
 
-export interface MediaItemProps {
+export interface MediaItemBlockProps {
   /** Media type */
   type?: MediaType;
   /** Image/thumbnail source */
@@ -127,7 +127,7 @@ function FileIcon({ size = 32, color = '#666666' }: { size?: number; color?: str
 // Component
 // ============================================================================
 
-export function MediaItem({
+export function MediaItemBlock({
   type = 'image',
   source,
   duration,
@@ -140,7 +140,7 @@ export function MediaItem({
   onSelect,
   onLongPress,
   style,
-}: MediaItemProps) {
+}: MediaItemBlockProps) {
   const { colors, spacing, radius } = useTheme();
 
   const itemRadius = borderRadius ?? radius.md;

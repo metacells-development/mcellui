@@ -1,12 +1,12 @@
 /**
- * FeedPostCard
+ * FeedPostCardBlock
  *
  * A social feed post card with avatar, content, optional image, and action buttons.
  * Perfect for social feeds, timelines, and activity streams.
  *
  * @example
  * ```tsx
- * <FeedPostCard
+ * <FeedPostCardBlock
  *   user={{ name: 'John Doe', avatar: 'J' }}
  *   content="Just finished my morning run!"
  *   time="2h ago"
@@ -114,7 +114,7 @@ export interface FeedPostUser {
   avatarUrl?: string;
 }
 
-export interface FeedPostCardProps {
+export interface FeedPostCardBlockProps {
   /** User who created the post */
   user: FeedPostUser;
   /** Post text content */
@@ -149,7 +149,7 @@ export interface FeedPostCardProps {
 // Component
 // ============================================================================
 
-export function FeedPostCard({
+export function FeedPostCardBlock({
   user,
   content,
   time,
@@ -162,7 +162,7 @@ export function FeedPostCard({
   onShare,
   showSeparator = true,
   style,
-}: FeedPostCardProps) {
+}: FeedPostCardBlockProps) {
   const { colors, spacing, radius } = useTheme();
 
   // Get initials from name

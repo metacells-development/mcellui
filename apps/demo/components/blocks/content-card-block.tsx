@@ -1,12 +1,12 @@
 /**
- * ContentCard
+ * ContentCardBlock
  *
  * A card with large image, title, subtitle, and action button.
  * Perfect for featured content, articles, and product cards.
  *
  * @example
  * ```tsx
- * <ContentCard
+ * <ContentCardBlock
  *   imageUrl="https://example.com/image.jpg"
  *   title="Amazing Places to Visit"
  *   subtitle="Discover the world's hidden gems"
@@ -28,7 +28,7 @@ import { Button } from '@/components/ui/button';
 // Types
 // ============================================================================
 
-export interface ContentCardProps {
+export interface ContentCardBlockProps {
   /** Image URL for the card */
   imageUrl: string;
   /** Card title */
@@ -51,7 +51,7 @@ export interface ContentCardProps {
 // Component
 // ============================================================================
 
-export function ContentCard({
+export function ContentCardBlock({
   imageUrl,
   title,
   subtitle,
@@ -60,7 +60,7 @@ export function ContentCard({
   onPress,
   aspectRatio = 16 / 9,
   style,
-}: ContentCardProps) {
+}: ContentCardBlockProps) {
   const { colors, spacing } = useTheme();
 
   return (
