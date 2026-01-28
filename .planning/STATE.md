@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-28)
 
 **Core value:** Users own the component code — tooling must work reliably
-**Current focus:** v1.2 Consistency Sweep — Phase 19 ready to plan
+**Current focus:** v1.2 Consistency Sweep — Phase 21 Demo Consistency Validation in progress
 
 ## Current Position
 
-Phase: 20 of 21 (Spacing, Typography & Naming)
-Plan: 7 of 7 in current phase
-Status: Phase complete
-Last activity: 2026-01-28 — Completed 20-07-PLAN.md (TOK-06 Final Gap Closure)
+Phase: 21 of 21 (Demo Consistency Validation)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-28 — Completed 21-01-PLAN.md (Layout Theme Migration)
 
-Progress: [█████████████████████] 99% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 complete)
+Progress: [█████████████████████] 99% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 complete, Phase 21 in progress)
 
 ## Performance Metrics
 
@@ -82,6 +82,8 @@ Recent decisions affecting v1.2:
 - All padding/margin values use spacing tokens — TOK-06 requirement complete (20-06)
 - Runtime PADDING_CONFIG pattern for size-variant components — Splits static layout from dynamic spacing (20-07)
 - Static StyleSheet padding moved to inline styles — Enables theme token access at runtime (20-07)
+- Theme preview swatches remain hardcoded — Intentional brand color representation (21-01)
+- Static layout properties stay in StyleSheet, dynamic values move to inline styles (21-01)
 
 ### Pending Todos
 
@@ -113,8 +115,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 20-07-PLAN.md (TOK-06 Final Gap Closure)
+Stopped at: Completed 21-01-PLAN.md (Layout Theme Migration)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 20-07 completion (Phase 20 complete with all 7 plans)*
+*Updated: 2026-01-28 after 21-01 completion (Phase 21 Plan 1 complete)*
