@@ -248,8 +248,8 @@ export function HomeScreen({
               imageUrl={hero.image ? undefined : undefined}
               background="gradient"
               meshPreset="ocean"
-              ctaText={hero.actionLabel}
-              onCtaPress={hero.onAction}
+              actionText={hero.actionLabel}
+              onAction={hero.onAction}
               height={180}
               style={{ borderRadius: radius.xl, overflow: 'hidden' }}
             />

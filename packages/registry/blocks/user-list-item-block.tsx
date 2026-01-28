@@ -14,7 +14,7 @@
  *
  * <UserListItem
  *   user={{ name: 'Jane Smith', subtitle: 'Product Designer' }}
- *   actionLabel="Follow"
+ *   actionText="Follow"
  *   onAction={() => followUser(user.id)}
  * />
  * ```
@@ -54,8 +54,8 @@ export interface UserListItemProps {
   status?: AvatarStatus;
   /** Whether this user is verified */
   verified?: boolean;
-  /** Action button label (e.g., "Follow", "Add") */
-  actionLabel?: string;
+  /** Action button text (e.g., "Follow", "Add") */
+  actionText?: string;
   /** Action button variant */
   actionVariant?: 'default' | 'outline' | 'secondary';
   /** Whether action is in loading state */
@@ -84,7 +84,7 @@ export function UserListItem({
   user,
   status,
   verified,
-  actionLabel,
+  actionText,
   actionVariant = 'outline',
   actionLoading,
   disabled,
@@ -186,16 +186,16 @@ export function UserListItem({
           </Badge>
         )}
 
-        {rightElement || (actionLabel && (
+        {rightElement || (actionText && (
           <Button
             variant={actionVariant}
             size="sm"
             loading={actionLoading}
             disabled={disabled || actionLoading}
             onPress={handleAction}
-            accessibilityLabel={`${actionLabel} ${user.name}`}
+            accessibilityLabel={`${actionText} ${user.name}`}
           >
-            {actionLabel}
+            {actionText}
           </Button>
         ))}
       </View>

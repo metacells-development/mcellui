@@ -158,22 +158,22 @@ export function FollowersScreen({
     const isFollowersTab = activeTab === 'followers';
 
     // Determine action based on tab and relationship
-    let actionLabel: string | undefined;
+    let actionText: string | undefined;
     let actionVariant: 'default' | 'outline' | 'secondary' = 'default';
 
     if (canManage) {
       if (isFollowersTab) {
         // In followers tab, show Follow/Following button
         if (item.isFollowing) {
-          actionLabel = 'Following';
+          actionText = 'Following';
           actionVariant = 'outline';
         } else {
-          actionLabel = 'Follow';
+          actionText = 'Follow';
           actionVariant = 'default';
         }
       } else {
         // In following tab, show Following button
-        actionLabel = 'Following';
+        actionText = 'Following';
         actionVariant = 'outline';
       }
     }
@@ -182,7 +182,7 @@ export function FollowersScreen({
       <UserListItem
         user={item}
         subtitle={item.followsYou && !isFollowersTab ? 'Follows you' : item.subtitle}
-        actionLabel={actionLabel}
+        actionText={actionText}
         actionVariant={actionVariant}
         onPress={() => onUserPress?.(item.id)}
         onActionPress={() => onFollowToggle?.(item.id, item.isFollowing ?? false)}

@@ -15,8 +15,9 @@
  *     { label: 'Followers', value: '1.2K' },
  *     { label: 'Following', value: '456' },
  *   ]}
- *   onEditProfile={() => navigation.navigate('EditProfile')}
- *   onSettings={() => navigation.navigate('Settings')}
+ *   onAction={() => navigation.navigate('EditProfile')}
+ *   secondaryActionText="Settings"
+ *   onSecondaryAction={() => navigation.navigate('Settings')}
  * />
  * ```
  */
@@ -59,17 +60,13 @@ export interface ProfileBlockProps {
   /** Profile stats to display */
   stats?: ProfileStat[];
   /** Primary action button text */
-  primaryButtonText?: string;
-  /** Called when primary button is pressed */
-  onPrimaryAction?: () => void;
+  actionText?: string;
+  /** Called when primary action button is pressed */
+  onAction?: () => void;
   /** Secondary action button text */
-  secondaryButtonText?: string;
-  /** Called when secondary button is pressed */
+  secondaryActionText?: string;
+  /** Called when secondary action button is pressed */
   onSecondaryAction?: () => void;
-  /** Show edit profile button */
-  showEditProfile?: boolean;
-  /** Called when edit profile is pressed */
-  onEditProfile?: () => void;
   /** Container style */
   style?: ViewStyle;
 }
@@ -84,9 +81,9 @@ export function ProfileBlock({
   subtitle,
   bio,
   stats,
-  primaryButtonText = 'Edit Profile',
-  onPrimaryAction,
-  secondaryButtonText,
+  actionText = 'Edit Profile',
+  onAction,
+  secondaryActionText,
   onSecondaryAction,
   style,
 }: ProfileBlockProps) {
@@ -188,21 +185,21 @@ export function ProfileBlock({
 
       {/* Action Buttons */}
       <View style={[styles.actions, { gap: spacing[3] }]}>
-        {onPrimaryAction && (
+        {onAction && (
           <Button
-            onPress={onPrimaryAction}
+            onPress={onAction}
             fullWidth
           >
-            {primaryButtonText}
+            {actionText}
           </Button>
         )}
-        {onSecondaryAction && secondaryButtonText && (
+        {onSecondaryAction && secondaryActionText && (
           <Button
             variant="outline"
             onPress={onSecondaryAction}
             fullWidth
           >
-            {secondaryButtonText}
+            {secondaryActionText}
           </Button>
         )}
       </View>

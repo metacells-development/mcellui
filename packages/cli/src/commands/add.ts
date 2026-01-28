@@ -17,6 +17,7 @@ export const addCommand = new Command()
   .argument('[components...]', 'Components to add')
   .option('-y, --yes', 'Skip confirmation')
   .option('-o, --overwrite', 'Overwrite existing files')
+  .option('--no-barrel', 'Skip index.ts barrel file generation')
   .option('--cwd <path>', 'Working directory', process.cwd())
   .action(async (components: string[], options) => {
     const spinner = ora();
@@ -144,6 +145,9 @@ export const addCommand = new Command()
       const allDevDependencies: string[] = [];
       let failCount = 0;
 
+      // Create registry map for props lookup
+      const registryMap = new Map(registry.map(item => [item.name, item]));
+
       for (const componentName of toInstall) {
         spinner.start(`Fetching ${componentName}...`);
 
@@ -177,6 +181,17 @@ export const addCommand = new Command()
 
           spinner.succeed(`Added ${componentName}`);
 
+          // Show props and import example for requested components (not dependencies)
+          if (requested.has(componentName)) {
+            const registryItem = registryMap.get(componentName);
+            if (registryItem?.props?.length) {
+              console.log(chalk.dim(`  Props: ${registryItem.props.join(', ')}`));
+            }
+            // Show import path
+            const pascalName = toPascalCase(componentName);
+            console.log(chalk.dim(`  Import: import { ${pascalName} } from '${config.alias}/components/${componentName}';`));
+          }
+
           // Collect npm dependencies
           if (component.dependencies?.length) {
             allDependencies.push(...component.dependencies);
@@ -194,6 +209,12 @@ export const addCommand = new Command()
       // Exit with error code if any components failed
       if (failCount > 0) {
         process.exit(1);
+      }
+
+      // Generate barrel file (index.ts) unless --no-barrel
+      if (options.barrel !== false) {
+        const targetDir = path.join(projectRoot, config.componentsPath);
+        await generateBarrelFile(targetDir);
       }
 
       // Show dependency install commands if needed
@@ -223,3 +244,55 @@ export const addCommand = new Command()
     }
   });
 
+// ============================================================================
+// Barrel File Generation
+// ============================================================================
+
+/**
+ * Generate or update index.ts barrel file with exports for all components
+ */
+async function generateBarrelFile(componentsDir: string): Promise<void> {
+  if (!await fs.pathExists(componentsDir)) {
+    return;
+  }
+
+  const files = await fs.readdir(componentsDir);
+  const componentFiles = files
+    .filter(file => (file.endsWith('.tsx') || file.endsWith('.ts')) && file !== 'index.ts' && file !== 'index.tsx')
+    .sort();
+
+  if (componentFiles.length === 0) {
+    return;
+  }
+
+  const exports = componentFiles
+    .map(file => {
+      const name = file.replace(/\.tsx?$/, '');
+      return `export * from './${name}';`;
+    })
+    .join('\n');
+
+  const content = `// Auto-generated barrel file - do not edit manually
+// Re-run \`npx mcellui add\` to regenerate
+
+${exports}
+`;
+
+  const indexPath = path.join(componentsDir, 'index.ts');
+  await fs.writeFile(indexPath, content);
+}
+
+// ============================================================================
+// Helpers
+// ============================================================================
+
+/**
+ * Convert kebab-case to PascalCase
+ * e.g., "button" -> "Button", "action-sheet" -> "ActionSheet"
+ */
+function toPascalCase(str: string): string {
+  return str
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+}

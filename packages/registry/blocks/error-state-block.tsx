@@ -9,7 +9,7 @@
  * <ErrorStateBlock
  *   title="Something went wrong"
  *   description="We couldn't load your data. Please try again."
- *   onRetry={() => refetch()}
+ *   onAction={() => refetch()}
  * />
  *
  * // Custom error
@@ -17,9 +17,9 @@
  *   icon={<WifiOffIcon />}
  *   title="No internet connection"
  *   description="Please check your connection and try again."
- *   retryText="Try again"
- *   onRetry={() => retry()}
- *   onCancel={() => navigation.goBack()}
+ *   actionText="Try again"
+ *   onAction={() => retry()}
+ *   onSecondaryAction={() => navigation.goBack()}
  * />
  * ```
  */
@@ -48,16 +48,16 @@ export interface ErrorStateBlockProps {
   title?: string;
   /** Error description or message */
   description?: string;
-  /** Retry button text */
-  retryText?: string;
-  /** Called when retry button is pressed */
-  onRetry?: () => void;
-  /** Cancel button text */
-  cancelText?: string;
-  /** Called when cancel button is pressed */
-  onCancel?: () => void;
-  /** Show loading state on retry button */
-  retryLoading?: boolean;
+  /** Primary action button text */
+  actionText?: string;
+  /** Called when primary action button is pressed */
+  onAction?: () => void;
+  /** Secondary action button text */
+  secondaryActionText?: string;
+  /** Called when secondary action button is pressed */
+  onSecondaryAction?: () => void;
+  /** Show loading state on action button */
+  actionLoading?: boolean;
   /** Error code or technical details (shown in muted text) */
   errorCode?: string;
   /** Compact variant with less padding */
@@ -99,11 +99,11 @@ export function ErrorStateBlock({
   icon,
   title = 'Something went wrong',
   description = 'An error occurred. Please try again.',
-  retryText = 'Retry',
-  onRetry,
-  cancelText,
-  onCancel,
-  retryLoading = false,
+  actionText = 'Retry',
+  onAction,
+  secondaryActionText,
+  onSecondaryAction,
+  actionLoading = false,
   errorCode,
   compact = false,
   style,
@@ -193,24 +193,24 @@ export function ErrorStateBlock({
       )}
 
       {/* Actions */}
-      {(onRetry || onCancel) && (
+      {(onAction || onSecondaryAction) && (
         <View
           style={[
             styles.actions,
             { gap: spacing[3], marginTop: spacing[4] },
           ]}
         >
-          {onRetry && (
+          {onAction && (
             <Button
-              onPress={onRetry}
-              loading={retryLoading}
+              onPress={onAction}
+              loading={actionLoading}
             >
-              {retryText}
+              {actionText}
             </Button>
           )}
-          {onCancel && cancelText && (
-            <Button variant="ghost" onPress={onCancel}>
-              {cancelText}
+          {onSecondaryAction && secondaryActionText && (
+            <Button variant="ghost" onPress={onSecondaryAction}>
+              {secondaryActionText}
             </Button>
           )}
         </View>

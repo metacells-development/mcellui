@@ -150,7 +150,7 @@ export function CartScreen({
             icon={<ShoppingBagIcon size={64} color={colors.foregroundMuted} />}
             title="Your cart is empty"
             description="Looks like you haven't added anything to your cart yet."
-            actionLabel="Start Shopping"
+            actionText="Start Shopping"
             onAction={onContinueShopping}
           />
         </View>

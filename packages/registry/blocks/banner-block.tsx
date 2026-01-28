@@ -9,7 +9,7 @@
  * <BannerBlock
  *   title="Summer Sale"
  *   subtitle="Up to 50% off on selected items"
- *   actionLabel="Shop Now"
+ *   actionText="Shop Now"
  *   onAction={() => navigateToSale()}
  *   variant="gradient"
  *   gradientColors={['#FF6B6B', '#FF8E53']}
@@ -71,8 +71,8 @@ export interface BannerBlockProps {
   title: string;
   /** Subtitle or description */
   subtitle?: string;
-  /** Action button label */
-  actionLabel?: string;
+  /** Action button text */
+  actionText?: string;
   /** Visual variant */
   variant?: BannerVariant;
   /** Size variant */
@@ -106,7 +106,7 @@ export interface BannerBlockProps {
 export function BannerBlock({
   title,
   subtitle,
-  actionLabel,
+  actionText,
   variant = 'solid',
   size = 'md',
   backgroundColor,
@@ -169,11 +169,11 @@ export function BannerBlock({
   const bgColor = getBgColor();
   const txtColor = getTextColor();
 
-  const Container = onPress && !actionLabel ? Pressable : View;
+  const Container = onPress && !actionText ? Pressable : View;
 
   const content = (
     <Container
-      onPress={onPress && !actionLabel ? handlePress : undefined}
+      onPress={onPress && !actionText ? handlePress : undefined}
       style={({ pressed }: { pressed?: boolean }) => [
         styles.container,
         {
@@ -271,14 +271,14 @@ export function BannerBlock({
         </View>
 
         {/* Action button or chevron */}
-        {actionLabel && onAction ? (
+        {actionText && onAction ? (
           <Button
             variant={variant === 'outline' ? 'default' : 'secondary'}
             size="sm"
             onPress={handleAction}
             style={{ marginLeft: spacing[3] }}
           >
-            {actionLabel}
+            {actionText}
           </Button>
         ) : onPress ? (
           <View style={{ marginLeft: spacing[2] }}>

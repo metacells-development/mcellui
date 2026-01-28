@@ -11,8 +11,8 @@
  *   imageUrl="https://example.com/hero.jpg"
  *   title="Discover Amazing Places"
  *   subtitle="Explore the world's most beautiful destinations"
- *   ctaText="Get Started"
- *   onCtaPress={() => navigation.navigate('Onboarding')}
+ *   actionText="Get Started"
+ *   onAction={() => navigation.navigate('Onboarding')}
  * />
  *
  * // With mesh gradient
@@ -21,8 +21,8 @@
  *   meshPreset="sunset"
  *   title="Welcome Back!"
  *   subtitle="Discover what's new today"
- *   ctaText="Get Started"
- *   onCtaPress={() => {}}
+ *   actionText="Get Started"
+ *   onAction={() => {}}
  * />
  * ```
  */
@@ -85,14 +85,14 @@ export interface HeroBlockProps {
   title: string;
   /** Hero subtitle or description */
   subtitle?: string;
-  /** CTA button text */
-  ctaText?: string;
-  /** Called when CTA button is pressed */
-  onCtaPress?: () => void;
-  /** Secondary button text */
-  secondaryText?: string;
-  /** Called when secondary button is pressed */
-  onSecondaryPress?: () => void;
+  /** Primary action button text */
+  actionText?: string;
+  /** Called when primary action button is pressed */
+  onAction?: () => void;
+  /** Secondary action button text */
+  secondaryActionText?: string;
+  /** Called when secondary action button is pressed */
+  onSecondaryAction?: () => void;
   /** Height of hero section (default: 400) */
   height?: number;
   /** Use gradient overlay for text readability (only for image background) */
@@ -114,10 +114,10 @@ export function HeroBlock({
   meshColors,
   title,
   subtitle,
-  ctaText,
-  onCtaPress,
-  secondaryText,
-  onSecondaryPress,
+  actionText,
+  onAction,
+  secondaryActionText,
+  onSecondaryAction,
   height = 400,
   overlay = 'gradient',
   textAlign = 'center',
@@ -193,7 +193,7 @@ export function HeroBlock({
           {subtitle}
         </Text>
       )}
-      {(ctaText || secondaryText) && (
+      {(actionText || secondaryActionText) && (
         <View
           style={[
             styles.buttons,
@@ -201,12 +201,12 @@ export function HeroBlock({
             { gap: spacing[3] },
           ]}
         >
-          {ctaText && onCtaPress && (
-            <Button onPress={onCtaPress}>{ctaText}</Button>
+          {actionText && onAction && (
+            <Button onPress={onAction}>{actionText}</Button>
           )}
-          {secondaryText && onSecondaryPress && (
-            <Button variant="outline" onPress={onSecondaryPress}>
-              {secondaryText}
+          {secondaryActionText && onSecondaryAction && (
+            <Button variant="outline" onPress={onSecondaryAction}>
+              {secondaryActionText}
             </Button>
           )}
         </View>

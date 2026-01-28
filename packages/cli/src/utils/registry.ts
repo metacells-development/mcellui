@@ -26,6 +26,8 @@ export interface RegistryItem {
   devDependencies?: string[];
   registryDependencies?: string[];
   expoGo?: boolean;
+  /** Main props for this component (for CLI display) */
+  props?: string[];
 }
 
 export interface Registry {
