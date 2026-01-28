@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 19 of 21 (Critical Color & API Fixes)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-01-28 — v1.2 roadmap created
+Plan: 1 of 5 in current phase
+Status: In progress
+Last activity: 2026-01-28 — Completed 19-01-PLAN.md (icon colors & shadows)
 
-Progress: [██████████████████░░] 85% (v1.0 + v1.1 complete, v1.2 starting)
+Progress: [██████████████████░░] 86% (v1.0 + v1.1 complete, v1.2 in progress)
 
 ## Performance Metrics
 
@@ -46,6 +46,8 @@ Recent decisions affecting v1.2:
 - ESM-only core package output — Modern bundlers, no CommonJS needed
 - JSON Schema registry validation — CI enforcement of component quality
 - JSDoc for all core exports — IDE intellisense for developers
+- Icon color defaults use colors.foreground fallback — Dark mode support (19-01)
+- Shadows use platformShadow() helper — Platform and theme adaptation (19-01)
 
 ### Pending Todos
 
@@ -64,7 +66,8 @@ From v1.1 audit:
 
 **v1.2 Findings (from research):**
 - 250+ hardcoded values bypass token system (breaks theming/dark mode)
-- 50+ icon components use `#000` instead of `colors.foreground`
+- ~~50+ icon components use `#000` instead of `colors.foreground`~~ → FIXED in 19-01 (5 icons)
+- ~~6 shadow objects use hardcoded `#000`~~ → FIXED in 19-01 (migrated to platformShadow)
 - 20+ RGBA overlays need semantic token migration
 - 9 demo app files missing `-block` suffix
 - Avatar component uses 5-value size scale instead of standard 3-value
@@ -72,8 +75,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: v1.2 roadmap created, Phase 19 ready to plan
+Stopped at: Completed 19-01-PLAN.md (icon colors & shadows fixed)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after v1.2 roadmap creation*
+*Updated: 2026-01-28 after completing 19-01-PLAN.md*
