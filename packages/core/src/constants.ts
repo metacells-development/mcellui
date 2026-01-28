@@ -266,18 +266,6 @@ export const PROGRESS_CONSTANTS = {
 } as const;
 
 // ============================================
-// Skeleton Constants
-// ============================================
-
-export const SKELETON_CONSTANTS = {
-  /** Default shimmer cycle duration (ms) */
-  shimmerDuration: 1500,
-  /** Opacity range for shimmer effect */
-  opacityMin: 0.3,
-  opacityMax: 0.6,
-} as const;
-
-// ============================================
 // Export Types
 // ============================================
 
@@ -294,4 +282,3 @@ export type AlertConstants = typeof ALERT_CONSTANTS;
 export type PopoverConstants = typeof POPOVER_CONSTANTS;
 export type TooltipConstants = typeof TOOLTIP_CONSTANTS;
 export type ProgressConstants = typeof PROGRESS_CONSTANTS;
-export type SkeletonConstants = typeof SKELETON_CONSTANTS;

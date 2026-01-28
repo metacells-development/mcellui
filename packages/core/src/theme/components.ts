@@ -917,67 +917,6 @@ export const swipeableRowTokens = {
 } as const;
 
 // =============================================================================
-// Screen Component Tokens
-// =============================================================================
-
-export const SCREEN_CONSTANTS = {
-  // Header tokens (iOS: 44px, Android: 56px)
-  header: {
-    heightIOS: 44,
-    heightAndroid: 56,
-    titleFontSize: 18,  // Uses fontSize.lg
-    titleFontWeight: '600',
-  },
-  // Content padding
-  content: {
-    paddingHorizontal: 'spacing[4]',  // 16px standard
-    paddingHorizontalWide: 'spacing[6]',  // 24px for auth screens
-  },
-  // Section spacing
-  section: {
-    marginTop: 'spacing[6]',
-    marginBottom: 'spacing[4]',
-    titleFontSize: 18,  // fontSize.lg
-    titleFontWeight: '600',
-  },
-  // Footer/bottom bar
-  footer: {
-    paddingVertical: 'spacing[3]',
-    paddingHorizontal: 'spacing[4]',
-  },
-} as const;
-
-/**
- * Screen tokens with resolved theme values.
- * Use this function to get computed tokens at runtime.
- */
-export const screenTokens = (
-  spacingTokens: typeof spacing,
-  fontSizeTokens: typeof fontSize
-) => ({
-  header: {
-    heightIOS: 44,
-    heightAndroid: 56,
-    titleFontSize: fontSizeTokens.lg,
-    titleFontWeight: '600' as const,
-  },
-  content: {
-    paddingHorizontal: spacingTokens[4],
-    paddingHorizontalWide: spacingTokens[6],
-  },
-  section: {
-    marginTop: spacingTokens[6],
-    marginBottom: spacingTokens[4],
-    titleFontSize: fontSizeTokens.lg,
-    titleFontWeight: '600' as const,
-  },
-  footer: {
-    paddingVertical: spacingTokens[3],
-    paddingHorizontal: spacingTokens[4],
-  },
-});
-
-// =============================================================================
 // Auth Block Tokens (Login, Signup)
 // =============================================================================
 

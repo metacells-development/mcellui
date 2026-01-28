@@ -101,8 +101,6 @@ export {
   productBlockTokens,
   ecommerceBlockTokens,
   infoBlockTokens,
-  screenTokens,
-  SCREEN_CONSTANTS,
   calendarTokens,
   dateTimePickerTokens,
   formTokens,
