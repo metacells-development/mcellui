@@ -220,7 +220,7 @@ export function Rating({
   const { colors, components } = useTheme();
   const tokens = components.rating[size];
 
-  const starActiveColor = activeColor || '#F59E0B'; // Amber/warning yellow
+  const starActiveColor = activeColor || colors.warning; // Amber/warning yellow
   const starInactiveColor = inactiveColor || colors.border;
 
   const handleStarPress = (index: number) => {

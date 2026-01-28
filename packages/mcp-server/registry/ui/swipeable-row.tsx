@@ -48,12 +48,15 @@ import {
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import {
+  useTheme,
+  areAnimationsDisabled,
+  swipeableRowTokens,
+  SWIPEABLE_ROW_CONSTANTS,
+} from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const ACTION_WIDTH = 80;
-const SPRING_CONFIG = { damping: 20, stiffness: 200 };
 
 export interface SwipeAction {
   /** Action label */
@@ -91,7 +94,7 @@ export function SwipeableRow({
   children,
   rightActions = [],
   leftActions = [],
-  actionWidth = ACTION_WIDTH,
+  actionWidth = SWIPEABLE_ROW_CONSTANTS.actionWidth,
   fullSwipeEnabled = true,
   onSwipeOpen,
   onSwipeClose,
@@ -106,11 +109,11 @@ export function SwipeableRow({
 
   const rightActionsWidth = rightActions.length * actionWidth;
   const leftActionsWidth = leftActions.length * actionWidth;
-  const fullSwipeThreshold = SCREEN_WIDTH * 0.5;
+  const fullSwipeThreshold = SCREEN_WIDTH * SWIPEABLE_ROW_CONSTANTS.fullSwipeRatio;
 
   const close = useCallback(() => {
     if (animationsEnabled) {
-      translateX.value = withSpring(0, SPRING_CONFIG);
+      translateX.value = withSpring(0, SWIPEABLE_ROW_CONSTANTS.spring);
     } else {
       translateX.value = 0;
     }
@@ -122,7 +125,7 @@ export function SwipeableRow({
 
   const openRight = useCallback(() => {
     if (animationsEnabled) {
-      translateX.value = withSpring(-rightActionsWidth, SPRING_CONFIG);
+      translateX.value = withSpring(-rightActionsWidth, SWIPEABLE_ROW_CONSTANTS.spring);
     } else {
       translateX.value = -rightActionsWidth;
     }
@@ -134,7 +137,7 @@ export function SwipeableRow({
 
   const openLeft = useCallback(() => {
     if (animationsEnabled) {
-      translateX.value = withSpring(leftActionsWidth, SPRING_CONFIG);
+      translateX.value = withSpring(leftActionsWidth, SWIPEABLE_ROW_CONSTANTS.spring);
     } else {
       translateX.value = leftActionsWidth;
     }
@@ -183,7 +186,7 @@ export function SwipeableRow({
         if (newX < -rightActionsWidth) {
           // Add resistance past the buttons
           const overshoot = -newX - rightActionsWidth;
-          const resistance = Math.min(overshoot * 0.3, maxSwipeLeft - rightActionsWidth);
+          const resistance = Math.min(overshoot * SWIPEABLE_ROW_CONSTANTS.resistanceFactor, maxSwipeLeft - rightActionsWidth);
           newX = -rightActionsWidth - resistance;
         }
       } else if (newX > 0) {
@@ -191,7 +194,7 @@ export function SwipeableRow({
         if (newX > leftActionsWidth) {
           // Add resistance past the buttons
           const overshoot = newX - leftActionsWidth;
-          const resistance = Math.min(overshoot * 0.3, maxSwipeRight - leftActionsWidth);
+          const resistance = Math.min(overshoot * SWIPEABLE_ROW_CONSTANTS.resistanceFactor, maxSwipeRight - leftActionsWidth);
           newX = leftActionsWidth + resistance;
         }
       }
@@ -216,14 +219,14 @@ export function SwipeableRow({
       }
 
       // Determine final position based on position and velocity
-      if (x < -rightActionsWidth / 2 || velocity < -500) {
+      if (x < -rightActionsWidth / 2 || velocity < -SWIPEABLE_ROW_CONSTANTS.velocityThreshold) {
         if (rightActions.length > 0) {
           runOnJS(openRight)();
           runOnJS(haptic)('selection');
         } else {
           runOnJS(close)();
         }
-      } else if (x > leftActionsWidth / 2 || velocity > 500) {
+      } else if (x > leftActionsWidth / 2 || velocity > SWIPEABLE_ROW_CONSTANTS.velocityThreshold) {
         if (leftActions.length > 0) {
           runOnJS(openLeft)();
           runOnJS(haptic)('selection');
@@ -316,6 +319,7 @@ interface ActionButtonProps {
 }
 
 function ActionButton({ action, width, onPress }: ActionButtonProps) {
+  const { colors } = useTheme();
   return (
     <Pressable
       style={[
@@ -328,7 +332,7 @@ function ActionButton({ action, width, onPress }: ActionButtonProps) {
       <Text
         style={[
           styles.actionLabel,
-          { color: action.textColor ?? '#fff' },
+          { color: action.textColor ?? colors.primaryForeground },
         ]}
         numberOfLines={1}
       >
@@ -363,13 +367,13 @@ const styles = StyleSheet.create({
   actionButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: swipeableRowTokens.action.paddingHorizontal,
   },
   actionIcon: {
-    marginBottom: 4,
+    marginBottom: swipeableRowTokens.action.iconMargin,
   },
   actionLabel: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: swipeableRowTokens.action.labelFontSize,
+    fontWeight: swipeableRowTokens.action.labelFontWeight,
   },
 });

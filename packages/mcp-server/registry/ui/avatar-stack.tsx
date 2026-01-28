@@ -137,6 +137,7 @@ export function AvatarStack({
                 borderRadius: tokens.size / 2,
                 borderWidth: tokens.borderWidth,
                 borderColor: colors.background,
+                backgroundColor: colors.background,
                 marginLeft: index === 0 ? 0 : -overlapOffset,
                 zIndex: visibleAvatars.length - index,
               },
@@ -172,7 +173,7 @@ export function AvatarStack({
                     {
                       fontSize: tokens.fontSize,
                       fontWeight: fontWeight.semibold,
-                      color: '#ffffff',
+                      color: colors.primaryForeground,
                     },
                   ]}
                 >
@@ -232,7 +233,6 @@ const styles = StyleSheet.create({
   avatarWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
   },
   avatarImage: {
     resizeMode: 'cover',
