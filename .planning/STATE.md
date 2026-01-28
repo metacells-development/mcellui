@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 19 of 21 (Critical Color & API Fixes)
-Plan: 7 of 9 in current phase
-Status: Gap closure in progress
-Last activity: 2026-01-28 — Completed 19-07-PLAN.md (Gap closure: overlay/backdrop colors)
+Plan: 8 of 9 in current phase
+Status: In progress
+Last activity: 2026-01-28 — Completed 19-08-PLAN.md (Gap closure: shadow migration)
 
-Progress: [████████████████████] 95% (v1.0 + v1.1 complete, Phase 19 in progress)
+Progress: [████████████████████] 95% (v1.0 + v1.1 complete, Phase 19 complete)
 
 ## Performance Metrics
 
@@ -64,6 +64,9 @@ Recent decisions affecting v1.2:
 - Tag-input suggestions shadow uses platformShadow() — Platform-aware shadow adaptation (19-06)
 - Modal/sheet overlays use colors.overlay semantic token — Theme-aware semi-transparent backdrops (19-07)
 - Fullscreen image viewer uses colors.scrim — Near-opaque dark overlay for photo viewing (19-07)
+- ImageCard text uses colors.primaryForeground — Theme-adaptive text on image overlays (19-09)
+- AvatarStack initials/backgrounds use semantic tokens — Consistent theme support (19-09)
+- All Avatar usages comply with 3-size API (sm|md|lg) — Standardized sizing across blocks/screens (19-09)
 
 ### Pending Todos
 
@@ -85,17 +88,18 @@ From v1.1 audit:
 - ~~50+ icon components use `#000` instead of `colors.foreground`~~ → FIXED in 19-01 (5 UI icons), 19-03 (50+ block icons), 19-04 (63 screen icons), 19-06 (3 registry icons - gap closure)
 - ~~6 shadow objects use hardcoded `#000`~~ → FIXED in 19-01 (migrated to platformShadow), 19-06 (tag-input gap closure)
 - ~~20+ RGBA overlays need semantic token migration~~ → FIXED in 19-02 (8 UI components), 19-03 (7 blocks), 19-07 (3 UI components - gap closure)
-- ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED in 19-02 (4 UI components), 19-03 (15 blocks), 19-04 (18 screens)
+- ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED in 19-02 (4 UI components), 19-03 (15 blocks), 19-04 (18 screens), 19-09 (3 UI components - gap closure)
 - ~~Task priority colors hardcoded (#10b981, #f59e0b, #ef4444)~~ → FIXED in 19-03 (semantic tokens)
 - ~~Avatar component uses 5-value size scale instead of standard 3-value~~ → FIXED in 19-05 (standardized to sm|md|lg)
+- ~~Avatar size="xl" usages in blocks/screens~~ → FIXED in 19-09 (changed to valid size="lg")
 - ~~Home screen manual card construction~~ → FIXED in 19-05 (uses MediaCard component)
 - 9 demo app files missing `-block` suffix
 
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 19-07-PLAN.md (Gap closure: overlay/backdrop colors)
+Stopped at: Completed 19-09-PLAN.md (Gap closure: hex colors + Avatar API fixes) — Phase 19 complete
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after completing 19-07-PLAN.md*
+*Updated: 2026-01-28 after completing 19-09-PLAN.md*
