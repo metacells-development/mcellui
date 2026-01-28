@@ -156,10 +156,11 @@ Plans:
   2. All utility functions are properly exported with TypeScript types
   3. No orphaned or unused exports (technical debt addressed)
   4. Users can import any theme token or utility without manual path configuration
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 18-01: TBD (will be planned)
+- [ ] 18-01-PLAN.md — Orphan removal and export completeness verification
+- [ ] 18-02-PLAN.md — JSDoc documentation for all theme tokens and utilities
 
 ## Progress
 
@@ -185,7 +186,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 15. CLI Audit | v1.1 | 4/4 | Complete | 2026-01-27 |
 | 16. MCP Audit | v1.1 | 3/3 | Complete | 2026-01-27 |
 | 17. Registry Audit | v1.1 | 3/3 | Complete | 2026-01-28 |
-| 18. Core Audit | v1.1 | 0/1 | Not started | - |
+| 18. Core Audit | v1.1 | 0/2 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-26*
