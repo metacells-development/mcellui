@@ -75,7 +75,7 @@ export function SegmentedControl({
   style,
   textStyle,
 }: SegmentedControlProps) {
-  const { colors, components, componentRadius, fontWeight, platformShadow } = useTheme();
+  const { colors, components, componentRadius, fontWeight, platformShadow, spacing } = useTheme();
   const tokens = components.segmentedControl[size];
   const segmentLayouts = useRef(new Map<string, LayoutRectangle>()).current;
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
@@ -172,6 +172,7 @@ export function SegmentedControl({
               styles.segment,
               {
                 height: segmentHeight,
+                paddingHorizontal: spacing[2],
                 opacity: isSegmentDisabled ? 0.5 : 1,
               },
             ]}
@@ -217,7 +218,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1,
-    paddingHorizontal: 8,
   },
   segmentText: {
     textAlign: 'center',

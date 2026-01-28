@@ -189,7 +189,7 @@ export function ActionSheet({
             ]}
           >
             {/* Handle */}
-            <View style={styles.handleContainer}>
+            <View style={[styles.handleContainer, { paddingVertical: spacing[3] }]}>
               <View
                 style={[
                   styles.handle,
@@ -371,7 +371,6 @@ const styles = StyleSheet.create({
   },
   handleContainer: {
     alignItems: 'center',
-    paddingVertical: 12,
   },
   handle: {
     width: 36,
