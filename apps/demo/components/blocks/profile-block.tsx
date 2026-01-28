@@ -90,7 +90,7 @@ export function ProfileBlock({
   onSecondaryAction,
   style,
 }: ProfileBlockProps) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   // Get initials from name
   const initials = name
@@ -105,14 +105,19 @@ export function ProfileBlock({
       {/* Avatar and Name */}
       <View style={[styles.header, { marginBottom: spacing[4] }]}>
         <Avatar
-          size="xl"
+          size="lg"
           source={avatarUrl ? { uri: avatarUrl } : undefined}
           fallback={initials}
         />
         <Text
           style={[
             styles.name,
-            { color: colors.foreground, marginTop: spacing[3] },
+            {
+              color: colors.foreground,
+              marginTop: spacing[3],
+              fontSize: fontSize['2xl'],
+              fontWeight: fontWeight.bold,
+            },
           ]}
         >
           {name}
@@ -121,7 +126,11 @@ export function ProfileBlock({
           <Text
             style={[
               styles.subtitle,
-              { color: colors.foregroundMuted, marginTop: spacing[1] },
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[1],
+                fontSize: fontSize.base,
+              },
             ]}
           >
             {subtitle}
@@ -138,6 +147,7 @@ export function ProfileBlock({
               color: colors.foreground,
               marginBottom: spacing[4],
               paddingHorizontal: spacing[4],
+              fontSize: fontSize.base,
             },
           ]}
         >
@@ -170,13 +180,26 @@ export function ProfileBlock({
                 },
               ]}
             >
-              <Text style={[styles.statValue, { color: colors.foreground }]}>
+              <Text
+                style={[
+                  styles.statValue,
+                  {
+                    color: colors.foreground,
+                    fontSize: fontSize.xl,
+                    fontWeight: fontWeight.bold,
+                  },
+                ]}
+              >
                 {stat.value}
               </Text>
               <Text
                 style={[
                   styles.statLabel,
-                  { color: colors.foregroundMuted, marginTop: spacing[0.5] },
+                  {
+                    color: colors.foregroundMuted,
+                    marginTop: spacing[0.5],
+                    fontSize: fontSize.sm,
+                  },
                 ]}
               >
                 {stat.label}
@@ -222,15 +245,9 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
   },
-  name: {
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  subtitle: {
-    fontSize: 15,
-  },
+  name: {},
+  subtitle: {},
   bio: {
-    fontSize: 15,
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -242,13 +259,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  statValue: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  statLabel: {
-    fontSize: 13,
-  },
+  statValue: {},
+  statLabel: {},
   actions: {
     width: '100%',
   },

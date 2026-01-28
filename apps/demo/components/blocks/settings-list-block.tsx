@@ -106,7 +106,7 @@ export interface SettingsListBlockProps {
 // ============================================================================
 
 export function SettingsListBlock({ groups, style }: SettingsListBlockProps) {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
 
   return (
     <View style={[styles.container, style]}>
@@ -122,7 +122,12 @@ export function SettingsListBlock({ groups, style }: SettingsListBlockProps) {
                 <Text
                   style={[
                     styles.groupTitle,
-                    { color: colors.foregroundMuted, marginBottom: spacing[1] },
+                    {
+                      color: colors.foregroundMuted,
+                      marginBottom: spacing[1],
+                      fontSize: fontSize.sm,
+                      fontWeight: fontWeight.semibold,
+                    },
                   ]}
                 >
                   {group.title.toUpperCase()}
@@ -132,7 +137,7 @@ export function SettingsListBlock({ groups, style }: SettingsListBlockProps) {
                 <Text
                   style={[
                     styles.groupDescription,
-                    { color: colors.foregroundMuted },
+                    { color: colors.foregroundMuted, fontSize: fontSize.sm },
                   ]}
                 >
                   {group.description}
@@ -172,7 +177,7 @@ export function SettingsListBlock({ groups, style }: SettingsListBlockProps) {
 // ============================================================================
 
 function SettingsItemComponent({ item }: { item: SettingsItem }) {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   const isDestructive =
     item.type === 'button' && item.variant === 'destructive';
@@ -194,6 +199,7 @@ function SettingsItemComponent({ item }: { item: SettingsItem }) {
             styles.itemLabel,
             {
               color: isDestructive ? colors.destructive : colors.foreground,
+              fontSize: fontSize.md,
             },
           ]}
         >
@@ -203,7 +209,11 @@ function SettingsItemComponent({ item }: { item: SettingsItem }) {
           <Text
             style={[
               styles.itemDescription,
-              { color: colors.foregroundMuted, marginTop: spacing[0.5] },
+              {
+                color: colors.foregroundMuted,
+                marginTop: spacing[0.5],
+                fontSize: fontSize.sm,
+              },
             ]}
           >
             {item.description}
@@ -226,13 +236,26 @@ function SettingsItemComponent({ item }: { item: SettingsItem }) {
             <Text
               style={[
                 styles.displayValue,
-                { color: colors.foregroundMuted, marginRight: spacing[2] },
+                {
+                  color: colors.foregroundMuted,
+                  marginRight: spacing[2],
+                  fontSize: fontSize.base,
+                },
               ]}
             >
               {item.displayValue}
             </Text>
           )}
-          <Text style={[styles.chevron, { color: colors.foregroundMuted }]}>
+          <Text
+            style={[
+              styles.chevron,
+              {
+                color: colors.foregroundMuted,
+                fontSize: fontSize.md,
+                fontWeight: fontWeight.semibold,
+              },
+            ]}
+          >
             {'>'}
           </Text>
         </View>
@@ -268,13 +291,9 @@ const styles = StyleSheet.create({
   group: {},
   groupHeader: {},
   groupTitle: {
-    fontSize: 12,
-    fontWeight: '600',
     letterSpacing: 0.5,
   },
-  groupDescription: {
-    fontSize: 13,
-  },
+  groupDescription: {},
   groupContent: {
     overflow: 'hidden',
   },
@@ -285,21 +304,12 @@ const styles = StyleSheet.create({
   itemContent: {
     flex: 1,
   },
-  itemLabel: {
-    fontSize: 16,
-  },
-  itemDescription: {
-    fontSize: 13,
-  },
+  itemLabel: {},
+  itemDescription: {},
   navigationRight: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  displayValue: {
-    fontSize: 15,
-  },
-  chevron: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  displayValue: {},
+  chevron: {},
 });
