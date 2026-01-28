@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-26)
 
 ## Current Position
 
-Phase: 16 of 18 (MCP Server Tool Quality) — Complete
-Plan: 3/3 in current phase
-Status: Phase 16 verified, ready for Phase 17
-Last activity: 2026-01-27 — Phase 16 complete
+Phase: 17 of 18 (Registry Structure & Metadata) — In Progress
+Plan: 1/3 in current phase
+Status: Plan 17-01 complete
+Last activity: 2026-01-28 — Completed 17-01-PLAN.md (Registry Metadata)
 
-Progress: [██████░░░░░░░░░░░░] 16/18 phases (89%)
+Progress: [███████░░░░░░░░░░░] 17/18 phases (94%)
 
 ## Milestones
 
@@ -52,6 +52,9 @@ Recent decisions affecting v1.1:
 - 16-02: Error responses follow "Next step:" pattern for actionable recovery guidance
 - 16-03: MCP resources use _meta field for metadata (sizeHint, lastUpdated, topics) per MCP SDK schema
 - 16-03: Error responses include recovery hints for common failures (registry path, tokens directory)
+- 17-01: All current components are Expo Go compatible (expoGo: true for all 101 components)
+- 17-01: displayName derived from kebab-case using title case conversion (e.g., "radio-group" → "Radio Group")
+- 17-01: schemaVersion "1.0" at registry root for future compatibility tracking
 
 ### Resolved Blockers
 - CheckoutScreen StepIndicator scope bug — fixed in Phase 13
@@ -59,12 +62,18 @@ Recent decisions affecting v1.1:
 - ImageGallery missing loading states — fixed in Phase 8
 
 ### Open Blockers
-None. Phase 16 complete. Ready for Phase 17.
+None. Plan 17-01 complete. Ready for Plan 17-02.
 
 ### Technical Debt
 - 3 orphaned token exports in core (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS)
 - Address in CORE-03 (orphaned/unused exports audit)
 - Pre-existing TypeScript errors in packages/mcp-server/src/tools/index.ts parseComponentDocs function (strict null checks)
 
+## Session Continuity
+
+Last session: 2026-01-28T09:06:07Z
+Stopped at: Completed 17-01-PLAN.md
+Resume file: None
+
 ---
-*Updated: 2026-01-27 after Phase 16 completion*
+*Updated: 2026-01-28 after Plan 17-01 completion*
