@@ -243,7 +243,7 @@ export function TagInput({
   validate,
   style,
 }: TagInputProps) {
-  const { colors, spacing, components, componentRadius } = useTheme();
+  const { colors, spacing, components, componentRadius, platformShadow } = useTheme();
   const tokens = components.tagInput[size];
   const inputRef = useRef<TextInput>(null);
 
@@ -435,11 +435,7 @@ export function TagInput({
               borderColor: colors.border,
               borderRadius: componentRadius.tagInput,
               marginTop: spacing[1],
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 4,
-              elevation: 4,
+              ...platformShadow('md'),
             },
           ]}
         >
