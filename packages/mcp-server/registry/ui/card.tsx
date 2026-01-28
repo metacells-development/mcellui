@@ -388,6 +388,7 @@ export function ImageCard({
         style={[
           styles.imageCardGradient,
           textPosition === 'top' ? styles.gradientTop : styles.gradientBottom,
+          textPosition === 'bottom' && { backgroundColor: colors.scrim },
         ]}
       />
       {/* Text content */}
@@ -400,12 +401,12 @@ export function ImageCard({
           ]}
         >
           {title && (
-            <Text style={[styles.imageCardTitle, { color: '#ffffff' }]}>
+            <Text style={[styles.imageCardTitle, { color: colors.primaryForeground }]}>
               {title}
             </Text>
           )}
           {subtitle && (
-            <Text style={[styles.imageCardSubtitle, { color: 'rgba(255,255,255,0.8)', marginTop: spacing[1] }]}>
+            <Text style={[styles.imageCardSubtitle, { color: colors.primaryForeground, marginTop: spacing[1] }]}>
               {subtitle}
             </Text>
           )}
@@ -618,7 +619,6 @@ const styles = StyleSheet.create({
   },
   gradientBottom: {
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.4)',
   },
   imageCardContent: {
     position: 'absolute',
@@ -634,16 +634,10 @@ const styles = StyleSheet.create({
   imageCardTitle: {
     fontSize: 20,
     fontWeight: '700',
-    textShadowColor: 'rgba(0,0,0,0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3,
   },
   imageCardSubtitle: {
     fontSize: 14,
     fontWeight: '500',
-    textShadowColor: 'rgba(0,0,0,0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
 
   // MediaCard

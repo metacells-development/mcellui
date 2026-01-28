@@ -269,7 +269,7 @@ function ToastItem({ data, onDismiss }: ToastItemProps) {
                 marginLeft: spacing[3],
                 paddingHorizontal: spacing[3],
                 paddingVertical: spacing[1.5],
-                backgroundColor: 'rgba(255,255,255,0.2)',
+                backgroundColor: colors.backgroundElevated,
                 borderRadius: radius.md,
               },
             ]}

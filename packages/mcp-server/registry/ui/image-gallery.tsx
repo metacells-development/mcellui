@@ -48,6 +48,7 @@ import {
   ImageSourcePropType,
   StatusBar,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -62,7 +63,8 @@ import {
   GestureDetector,
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
-import { useTheme, haptic } from '@metacells/mcellui-core';
+import { useTheme, haptic, imageGalleryTokens } from '@metacells/mcellui-core';
+import { Skeleton } from './skeleton';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -116,7 +118,9 @@ function FullscreenViewer({
   onClose,
 }: FullscreenViewerProps) {
   const { colors } = useTheme();
+  const tokens = imageGalleryTokens;
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [fullscreenLoaded, setFullscreenLoaded] = useState<Set<number>>(new Set());
 
   const opacity = useSharedValue(0);
   const scale = useSharedValue(1);
@@ -214,19 +218,30 @@ function FullscreenViewer({
   );
 
   const renderImage = useCallback(
-    ({ item }: { item: GalleryImage }) => (
-      <GestureDetector gesture={composedGesture}>
-        <View style={styles.fullscreenImageContainer}>
-          <AnimatedImage
-            source={{ uri: item.uri }}
-            style={[styles.fullscreenImage, imageStyle]}
-            resizeMode="contain"
-            accessibilityLabel={item.alt}
-          />
-        </View>
-      </GestureDetector>
-    ),
-    [composedGesture, imageStyle]
+    ({ item, index }: { item: GalleryImage; index: number }) => {
+      const isLoaded = fullscreenLoaded.has(index);
+      return (
+        <GestureDetector gesture={composedGesture}>
+          <View style={styles.fullscreenImageContainer}>
+            <AnimatedImage
+              source={{ uri: item.uri }}
+              style={[styles.fullscreenImage, imageStyle]}
+              resizeMode="contain"
+              accessibilityLabel={item.alt}
+              onLoadEnd={() => setFullscreenLoaded(prev => new Set([...prev, index]))}
+            />
+            {!isLoaded && (
+              <ActivityIndicator
+                size="large"
+                color={colors.background}
+                style={styles.fullscreenLoader}
+              />
+            )}
+          </View>
+        </GestureDetector>
+      );
+    },
+    [composedGesture, imageStyle, fullscreenLoaded, colors.background]
   );
 
   if (!visible) return null;
@@ -234,10 +249,15 @@ function FullscreenViewer({
   return (
     <Modal visible={visible} transparent animationType="none" statusBarTranslucent>
       <GestureHandlerRootView style={styles.fullscreenContainer}>
-        <Animated.View style={[styles.fullscreenBackdrop, backdropStyle]}>
+        <Animated.View style={[styles.fullscreenBackdrop, { backgroundColor: `rgba(0, 0, 0, ${tokens.fullscreen.backdropOpacity})` }, backdropStyle]}>
           {/* Close button */}
           <Pressable
-            style={styles.closeButton}
+            style={[
+              styles.closeButton,
+              {
+                top: Platform.OS === 'ios' ? tokens.fullscreen.closeButtonTop : tokens.fullscreen.closeButtonTopAndroid,
+              },
+            ]}
             onPress={() => {
               haptic('light');
               close();
@@ -245,9 +265,33 @@ function FullscreenViewer({
             accessibilityRole="button"
             accessibilityLabel="Close"
           >
-            <View style={[styles.closeIcon, { backgroundColor: colors.background }]}>
-              <View style={[styles.closeLine, styles.closeLine1, { backgroundColor: colors.foreground }]} />
-              <View style={[styles.closeLine, styles.closeLine2, { backgroundColor: colors.foreground }]} />
+            <View style={[
+              styles.closeIcon,
+              {
+                width: tokens.fullscreen.closeButtonSize,
+                height: tokens.fullscreen.closeButtonSize,
+                borderRadius: tokens.fullscreen.closeButtonSize / 2,
+                backgroundColor: colors.background,
+              },
+            ]}>
+              <View style={[
+                styles.closeLine,
+                styles.closeLine1,
+                {
+                  width: tokens.fullscreen.closeLineWidth,
+                  height: tokens.fullscreen.closeLineHeight,
+                  backgroundColor: colors.foreground,
+                },
+              ]} />
+              <View style={[
+                styles.closeLine,
+                styles.closeLine2,
+                {
+                  width: tokens.fullscreen.closeLineWidth,
+                  height: tokens.fullscreen.closeLineHeight,
+                  backgroundColor: colors.foreground,
+                },
+              ]} />
             </View>
           </Pressable>
 
@@ -270,17 +314,26 @@ function FullscreenViewer({
 
           {/* Page indicator */}
           {images.length > 1 && (
-            <View style={styles.pageIndicator}>
+            <View style={[
+              styles.pageIndicator,
+              {
+                bottom: tokens.fullscreen.pageIndicatorBottom,
+                gap: tokens.fullscreen.dotGap,
+              },
+            ]}>
               {images.map((_, index) => (
                 <View
                   key={index}
                   style={[
                     styles.pageDot,
                     {
+                      width: tokens.fullscreen.dotSize,
+                      height: tokens.fullscreen.dotSize,
+                      borderRadius: tokens.fullscreen.dotSize / 2,
                       backgroundColor:
                         index === currentIndex
                           ? colors.background
-                          : 'rgba(255,255,255,0.4)',
+                          : colors.backgroundElevated,
                     },
                   ]}
                 />
@@ -309,6 +362,7 @@ export function ImageGallery({
   const { colors, radius } = useTheme();
   const [viewerVisible, setViewerVisible] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
 
   const imageSize = (SCREEN_WIDTH - spacing * (columns + 1)) / columns;
 
@@ -330,33 +384,47 @@ export function ImageGallery({
   }, []);
 
   const renderItem = useCallback(
-    ({ item, index }: { item: GalleryImage; index: number }) => (
-      <Pressable
-        onPress={() => handleImagePress(index)}
-        style={({ pressed }) => [
-          styles.gridItem,
-          {
-            width: imageSize,
-            height: imageSize / aspectRatio,
-            marginLeft: spacing,
-            marginTop: spacing,
-            borderRadius: borderRadius || radius.sm,
-            opacity: pressed ? 0.8 : 1,
-          },
-        ]}
-        accessibilityRole="button"
-        accessibilityLabel={item.alt || `Image ${index + 1}`}
-      >
-        <Image
-          source={{ uri: item.thumbnail || item.uri }}
-          style={[
-            styles.gridImage,
-            { borderRadius: borderRadius || radius.sm },
+    ({ item, index }: { item: GalleryImage; index: number }) => {
+      const isLoaded = loadedImages.has(index);
+      const imageHeight = imageSize / aspectRatio;
+      return (
+        <Pressable
+          onPress={() => handleImagePress(index)}
+          style={({ pressed }) => [
+            styles.gridItem,
+            {
+              width: imageSize,
+              height: imageHeight,
+              marginLeft: spacing,
+              marginTop: spacing,
+              borderRadius: borderRadius || radius.sm,
+              opacity: pressed ? 0.8 : 1,
+            },
           ]}
-        />
-      </Pressable>
-    ),
-    [handleImagePress, imageSize, aspectRatio, spacing, borderRadius, radius.sm]
+          accessibilityRole="button"
+          accessibilityLabel={item.alt || `Image ${index + 1}`}
+        >
+          {!isLoaded && (
+            <Skeleton
+              width={imageSize}
+              height={imageHeight}
+              radius="sm"
+              style={styles.gridSkeleton}
+            />
+          )}
+          <Image
+            source={{ uri: item.thumbnail || item.uri }}
+            style={[
+              styles.gridImage,
+              { borderRadius: borderRadius || radius.sm },
+              !isLoaded && styles.gridImageLoading,
+            ]}
+            onLoadEnd={() => setLoadedImages(prev => new Set([...prev, index]))}
+          />
+        </Pressable>
+      );
+    },
+    [handleImagePress, imageSize, aspectRatio, spacing, borderRadius, radius.sm, loadedImages]
   );
 
   return (
@@ -396,12 +464,19 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
+  gridImageLoading: {
+    opacity: 0,
+  },
+  gridSkeleton: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
   fullscreenContainer: {
     flex: 1,
   },
   fullscreenBackdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.95)',
   },
   fullscreenImageContainer: {
     width: SCREEN_WIDTH,
@@ -413,23 +488,20 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT * 0.8,
   },
+  fullscreenLoader: {
+    position: 'absolute',
+  },
   closeButton: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 50 : 20,
     right: 20,
     zIndex: 100,
   },
   closeIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
   },
   closeLine: {
     position: 'absolute',
-    width: 18,
-    height: 2,
     borderRadius: 1,
   },
   closeLine1: {
@@ -440,16 +512,10 @@ const styles = StyleSheet.create({
   },
   pageIndicator: {
     position: 'absolute',
-    bottom: 50,
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 6,
   },
-  pageDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-  },
+  pageDot: {},
 });

@@ -170,7 +170,7 @@ export function ActionSheet({
     <Modal transparent visible={open} animationType="none" statusBarTranslucent>
       <View style={styles.container}>
         {/* Backdrop */}
-        <Animated.View style={[styles.backdrop, backdropStyle]}>
+        <Animated.View style={[styles.backdrop, { backgroundColor: colors.overlay }, backdropStyle]}>
           <Pressable style={StyleSheet.absoluteFill} onPress={close} />
         </Animated.View>
 
@@ -361,7 +361,6 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   sheet: {
     minHeight: 100,
