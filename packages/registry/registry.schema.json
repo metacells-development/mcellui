@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mcellui.dev/registry.schema.json",
+  "title": "mcellui Registry Schema",
+  "description": "JSON Schema for the mcellui component registry structure",
+  "type": "object",
+  "required": ["$schema", "schemaVersion", "name", "version", "components"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "description": "Registry schema version for compatibility tracking",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Registry name",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "description": "Registry version",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-z0-9]+)?$"
+    },
+    "components": {
+      "type": "array",
+      "description": "Array of all components in the registry",
+      "items": {
+        "$ref": "#/definitions/component"
+      }
+    }
+  },
+  "definitions": {
+    "component": {
+      "type": "object",
+      "required": ["name", "type", "description", "category", "status", "files"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Component name in kebab-case",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Human-readable component name",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "description": "Component type",
+          "enum": ["ui", "primitive", "hook", "block", "screen"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Component description",
+          "minLength": 10
+        },
+        "category": {
+          "type": "string",
+          "description": "Component category for organization",
+          "enum": [
+            "Authentication",
+            "Content",
+            "Dashboard",
+            "Data Display",
+            "E-commerce",
+            "Feedback",
+            "Forms",
+            "Inputs",
+            "Layout",
+            "Marketing",
+            "Media",
+            "Messaging",
+            "Mobile",
+            "Navigation",
+            "Onboarding",
+            "Overlay",
+            "Productivity",
+            "Profile",
+            "Settings",
+            "Social",
+            "Support"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "description": "Component maturity status",
+          "enum": ["stable", "beta", "experimental"]
+        },
+        "files": {
+          "type": "array",
+          "description": "List of files to copy",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "description": "npm dependencies required by the component",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "devDependencies": {
+          "type": "array",
+          "description": "npm dev dependencies required by the component",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "registryDependencies": {
+          "type": "array",
+          "description": "Other registry components this component depends on",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          }
+        },
+        "expoGo": {
+          "type": "boolean",
+          "description": "Whether the component works in Expo Go without custom native code"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "block"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "name": {
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*-block$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "screen"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "name": {
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*-screen$"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
