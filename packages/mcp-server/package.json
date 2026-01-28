@@ -1,6 +1,6 @@
 {
   "name": "@metacells/mcellui-mcp-server",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "MCP server for mcellui - AI assistant integration for React Native development",
   "author": "metacells",
   "license": "MIT",

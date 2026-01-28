@@ -1,6 +1,6 @@
 {
   "name": "@metacells/mcellui-core",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "type": "module",
   "description": "Core theme system and utilities for mcellui - React Native UI components",
   "main": "./dist/index.js",

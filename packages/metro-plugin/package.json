@@ -1,6 +1,6 @@
 {
   "name": "@metacells/mcellui-metro-plugin",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Metro plugin for mcellui auto-config discovery",
   "author": "metacells",
   "license": "MIT",
