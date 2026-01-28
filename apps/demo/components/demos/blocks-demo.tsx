@@ -7,36 +7,36 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Separator } from '@/components/ui/separator';
 import Svg, { Circle, Path } from 'react-native-svg';
 
-// Import blocks from registry
-import { UserListItemBlock as UserListItem } from '@/components/blocks/user-list-item-block';
-import { ChatBubbleBlock as ChatBubble } from '@/components/blocks/chat-bubble-block';
-import { CommentItemBlock as CommentItem } from '@/components/blocks/comment-item-block';
-import { ProductCardBlock as ProductCard } from '@/components/blocks/product-card-block';
-import { CartItemBlock as CartItem } from '@/components/blocks/cart-item-block';
+// Import blocks from registry (registry exports without Block suffix for most)
+import { UserListItem } from '@/components/blocks/user-list-item-block';
+import { ChatBubble } from '@/components/blocks/chat-bubble-block';
+import { CommentItem } from '@/components/blocks/comment-item-block';
+import { ProductCard } from '@/components/blocks/product-card-block';
+import { CartItem } from '@/components/blocks/cart-item-block';
 import { BannerBlock } from '@/components/blocks/banner-block';
-import { OrderItemBlock as OrderItem } from '@/components/blocks/order-item-block';
-import { ReviewCardBlock as ReviewCard } from '@/components/blocks/review-card-block';
-import { TaskItemBlock as TaskItem } from '@/components/blocks/task-item-block';
-import { EventCardBlock as EventCard } from '@/components/blocks/event-card-block';
-import { ArticleCardBlock as ArticleCard } from '@/components/blocks/article-card-block';
-import { PricingCardBlock as PricingCard } from '@/components/blocks/pricing-card-block';
+import { OrderItem } from '@/components/blocks/order-item-block';
+import { ReviewCard } from '@/components/blocks/review-card-block';
+import { TaskItem } from '@/components/blocks/task-item-block';
+import { EventCard } from '@/components/blocks/event-card-block';
+import { ArticleCard } from '@/components/blocks/article-card-block';
+import { PricingCard } from '@/components/blocks/pricing-card-block';
 import { LoginBlock } from '@/components/blocks/login-block';
 import { SignupBlock } from '@/components/blocks/signup-block';
 import { SettingsListBlock } from '@/components/blocks/settings-list-block';
 import { EmptyStateBlock } from '@/components/blocks/empty-state-block';
 import { ErrorStateBlock } from '@/components/blocks/error-state-block';
 import { ProfileBlock } from '@/components/blocks/profile-block';
-import { FeedPostCardBlock } from '@/components/blocks/feed-post-card-block';
+import { FeedPostCard } from '@/components/blocks/feed-post-card-block';
 // Phase 11 e-commerce and info blocks
 import { HeroBlock } from '@/components/blocks/hero-block';
-import { StatsCardBlock } from '@/components/blocks/stats-card-block';
-import { FeatureCardBlock } from '@/components/blocks/feature-card-block';
-import { ContentCardBlock } from '@/components/blocks/content-card-block';
-import { OnboardingSlideBlock } from '@/components/blocks/onboarding-slide-block';
-import { SocialProofBarBlock } from '@/components/blocks/social-proof-bar-block';
-import { NotificationItemBlock } from '@/components/blocks/notification-item-block';
-import { MediaItemBlock } from '@/components/blocks/media-item-block';
-import { SearchHeaderBlock } from '@/components/blocks/search-header-block';
+import { StatsCard } from '@/components/blocks/stats-card-block';
+import { FeatureCard } from '@/components/blocks/feature-card-block';
+import { ContentCard } from '@/components/blocks/content-card-block';
+import { OnboardingSlide } from '@/components/blocks/onboarding-slide-block';
+import { SocialProofBar } from '@/components/blocks/social-proof-bar-block';
+import { NotificationItem } from '@/components/blocks/notification-item-block';
+import { MediaItem } from '@/components/blocks/media-item-block';
+import { SearchHeader } from '@/components/blocks/search-header-block';
 
 // ============================================================================
 // Demo Component
@@ -387,7 +387,7 @@ function NotificationItemPreview() {
       </CardHeader>
       <View>
         {/* Unread with avatar */}
-        <NotificationItemBlock
+        <NotificationItem
           avatarUrl="https://i.pravatar.cc/100?img=1"
           title="Sarah Miller"
           message="liked your post"
@@ -398,7 +398,7 @@ function NotificationItemPreview() {
         <Separator style={{ marginLeft: 72 }} />
 
         {/* Unread with avatar - different action */}
-        <NotificationItemBlock
+        <NotificationItem
           avatarUrl="https://i.pravatar.cc/100?img=2"
           title="Mike Johnson"
           message="started following you"
@@ -409,7 +409,7 @@ function NotificationItemPreview() {
         <Separator style={{ marginLeft: 72 }} />
 
         {/* Read state */}
-        <NotificationItemBlock
+        <NotificationItem
           avatarUrl="https://i.pravatar.cc/100?img=3"
           title="Emma Wilson"
           message="commented on your post"
@@ -420,7 +420,7 @@ function NotificationItemPreview() {
         <Separator style={{ marginLeft: 72 }} />
 
         {/* System notification without avatar - uses icon fallback */}
-        <NotificationItemBlock
+        <NotificationItem
           title="System"
           message="Your order has been shipped!"
           time="5h ago"
@@ -447,7 +447,7 @@ function ContentCardPreview() {
   return (
     <View style={{ gap: spacing[4] }}>
       {/* Default with action button */}
-      <ContentCardBlock
+      <ContentCard
         imageUrl="https://picsum.photos/400/225?random=1"
         title="Discover Amazing Places"
         subtitle="Explore the world's most beautiful destinations with our curated travel guides."
@@ -456,7 +456,7 @@ function ContentCardPreview() {
       />
 
       {/* Tappable card without action button */}
-      <ContentCardBlock
+      <ContentCard
         imageUrl="https://picsum.photos/400/300?random=2"
         title="Quick Article"
         subtitle="A brief overview of the latest trends in mobile app development."
@@ -465,7 +465,7 @@ function ContentCardPreview() {
       />
 
       {/* Wide aspect ratio */}
-      <ContentCardBlock
+      <ContentCard
         imageUrl="https://picsum.photos/400/180?random=3"
         title="Panoramic View"
         subtitle="Showcasing the beautiful landscape."
@@ -515,7 +515,7 @@ function FeatureCardPreview() {
         </CardHeader>
         <CardContent>
           <View style={{ gap: spacing[3] }}>
-            <FeatureCardBlock
+            <FeatureCard
               icon={<ShieldIcon />}
               title="Secure Payments"
               description="Your data is encrypted with bank-level security."
@@ -533,14 +533,14 @@ function FeatureCardPreview() {
         </CardHeader>
         <CardContent>
           <View style={{ gap: spacing[3] }}>
-            <FeatureCardBlock
+            <FeatureCard
               icon={<ZapIcon />}
               title="Lightning Fast"
               description="Optimized for speed and performance."
               horizontal
               onPress={() => Alert.alert('Feature', 'Lightning Fast')}
             />
-            <FeatureCardBlock
+            <FeatureCard
               icon={<PaletteIcon />}
               title="Beautiful Design"
               description="Stunning UI that users love."
@@ -585,7 +585,7 @@ function StatsCardPreview() {
         <CardContent>
           <View style={{ flexDirection: 'row', gap: spacing[3] }}>
             <View style={{ flex: 1 }}>
-              <StatsCardBlock
+              <StatsCard
                 value="$12,450"
                 label="Revenue"
                 trend={12.5}
@@ -594,7 +594,7 @@ function StatsCardPreview() {
               />
             </View>
             <View style={{ flex: 1 }}>
-              <StatsCardBlock
+              <StatsCard
                 value="1,234"
                 label="Users"
                 trend={-3.2}
@@ -607,7 +607,7 @@ function StatsCardPreview() {
       </Card>
 
       {/* Single full-width card with interaction */}
-      <StatsCardBlock
+      <StatsCard
         value="89%"
         label="Satisfaction Rate"
         trend={5.0}
@@ -616,7 +616,7 @@ function StatsCardPreview() {
       />
 
       {/* No trend (static stat) */}
-      <StatsCardBlock
+      <StatsCard
         value="24/7"
         label="Support Available"
         onPress={() => Alert.alert('Stats', 'Contact support')}
@@ -699,7 +699,7 @@ function SocialProofBarPreview() {
           <CardDescription>Small avatars with engagement text</CardDescription>
         </CardHeader>
         <CardContent>
-          <SocialProofBarBlock
+          <SocialProofBar
             avatars={[
               'https://i.pravatar.cc/100?img=10',
               'https://i.pravatar.cc/100?img=11',
@@ -718,7 +718,7 @@ function SocialProofBarPreview() {
           <CardDescription>Larger avatar stack for prominent display</CardDescription>
         </CardHeader>
         <CardContent>
-          <SocialProofBarBlock
+          <SocialProofBar
             avatars={[
               'https://i.pravatar.cc/100?img=4',
               'https://i.pravatar.cc/100?img=5',
@@ -740,7 +740,7 @@ function SocialProofBarPreview() {
           <CardDescription>Smaller avatars for tight spaces</CardDescription>
         </CardHeader>
         <CardContent>
-          <SocialProofBarBlock
+          <SocialProofBar
             avatars={[
               'https://i.pravatar.cc/100?img=15',
               'https://i.pravatar.cc/100?img=16',
@@ -783,7 +783,7 @@ function SearchHeaderPreview() {
           <CardDescription>Search input, filter button with badge, avatar</CardDescription>
         </CardHeader>
         <CardContent>
-          <SearchHeaderBlock
+          <SearchHeader
             placeholder="Search products..."
             value={searchValue}
             onSearch={handleSearch}
@@ -804,7 +804,7 @@ function SearchHeaderPreview() {
           <CardDescription>Just search and filter</CardDescription>
         </CardHeader>
         <CardContent>
-          <SearchHeaderBlock
+          <SearchHeader
             placeholder="Search articles..."
             onSearch={(q) => console.log('Search:', q)}
             onSubmit={(q) => Alert.alert('Search', q)}
@@ -821,7 +821,7 @@ function SearchHeaderPreview() {
           <CardDescription>Minimal variant without filter and avatar</CardDescription>
         </CardHeader>
         <CardContent>
-          <SearchHeaderBlock
+          <SearchHeader
             placeholder="Search..."
             onSearch={(q) => console.log('Search:', q)}
             onSubmit={(q) => Alert.alert('Search', q)}
@@ -888,7 +888,7 @@ function OnboardingSlidePreview() {
       <CardContent>
         {/* Constrained height preview of the actual OnboardingSlide */}
         <View style={{ height: 480, marginHorizontal: -16, marginBottom: -16 }}>
-          <OnboardingSlideBlock
+          <OnboardingSlide
             illustration={<CustomIllustration />}
             title={current.title}
             description={current.description}
@@ -937,21 +937,21 @@ function MediaItemPreview() {
         </CardHeader>
         <CardContent>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing[2] }}>
-            <MediaItemBlock
+            <MediaItem
               type="image"
               source={{ uri: 'https://picsum.photos/200/200?random=1' }}
               selectable
               selected={selectedIds.includes(0)}
               onSelect={() => toggleSelect(0)}
             />
-            <MediaItemBlock
+            <MediaItem
               type="image"
               source={{ uri: 'https://picsum.photos/200/200?random=2' }}
               selectable
               selected={selectedIds.includes(1)}
               onSelect={() => toggleSelect(1)}
             />
-            <MediaItemBlock
+            <MediaItem
               type="video"
               source={{ uri: 'https://picsum.photos/200/200?random=3' }}
               duration={45}
@@ -959,7 +959,7 @@ function MediaItemPreview() {
               selected={selectedIds.includes(2)}
               onSelect={() => toggleSelect(2)}
             />
-            <MediaItemBlock
+            <MediaItem
               type="image"
               source={{ uri: 'https://picsum.photos/200/200?random=4' }}
               selectable
@@ -979,14 +979,14 @@ function MediaItemPreview() {
         <CardContent>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing[2] }}>
             {/* Image - tap to view */}
-            <MediaItemBlock
+            <MediaItem
               type="image"
               source={{ uri: 'https://picsum.photos/200/200?random=10' }}
               onPress={() => Alert.alert('Image', 'Open image viewer')}
             />
 
             {/* Video with duration badge and play icon */}
-            <MediaItemBlock
+            <MediaItem
               type="video"
               source={{ uri: 'https://picsum.photos/200/200?random=11' }}
               duration={125}
@@ -994,7 +994,7 @@ function MediaItemPreview() {
             />
 
             {/* File with type badge */}
-            <MediaItemBlock
+            <MediaItem
               type="file"
               source={{ uri: '' }}
               fileType="pdf"
@@ -1002,7 +1002,7 @@ function MediaItemPreview() {
             />
 
             {/* Another file type */}
-            <MediaItemBlock
+            <MediaItem
               type="file"
               source={{ uri: '' }}
               fileType="doc"
@@ -1020,25 +1020,25 @@ function MediaItemPreview() {
         </CardHeader>
         <CardContent>
           <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: spacing[2] }}>
-            <MediaItemBlock
+            <MediaItem
               type="image"
               source={{ uri: 'https://picsum.photos/80/80?random=20' }}
               size={60}
               onPress={() => Alert.alert('Small', '60px')}
             />
-            <MediaItemBlock
+            <MediaItem
               type="image"
               source={{ uri: 'https://picsum.photos/100/100?random=21' }}
               size={80}
               onPress={() => Alert.alert('Medium', '80px')}
             />
-            <MediaItemBlock
+            <MediaItem
               type="image"
               source={{ uri: 'https://picsum.photos/120/120?random=22' }}
               size={100}
               onPress={() => Alert.alert('Default', '100px')}
             />
-            <MediaItemBlock
+            <MediaItem
               type="video"
               source={{ uri: 'https://picsum.photos/150/150?random=23' }}
               size={120}
@@ -1085,7 +1085,7 @@ function FeedPostCardPreview() {
         <CardDescription>Try interacting to see loading indicators</CardDescription>
       </CardHeader>
       <CardContent>
-        <FeedPostCardBlock
+        <FeedPostCard
           user={{
             name: 'John Doe',
             avatarUrl: 'https://i.pravatar.cc/100?img=12',
