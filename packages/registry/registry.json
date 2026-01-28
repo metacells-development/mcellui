@@ -808,14 +808,14 @@
       "expoGo": true
     },
     {
-      "name": "notification-item",
-      "displayName": "Notification Item",
+      "name": "notification-item-block",
+      "displayName": "Notification Item Block",
       "type": "block",
       "description": "Notification list item with avatar, message, time, and unread indicator",
       "category": "Social",
       "status": "beta",
       "files": [
-        "blocks/notification-item.tsx"
+        "blocks/notification-item-block.tsx"
       ],
       "dependencies": [
         "react-native-reanimated"
@@ -826,14 +826,14 @@
       "expoGo": true
     },
     {
-      "name": "content-card",
-      "displayName": "Content Card",
+      "name": "content-card-block",
+      "displayName": "Content Card Block",
       "type": "block",
       "description": "Large content card with image, title, subtitle, and action button",
       "category": "Content",
       "status": "beta",
       "files": [
-        "blocks/content-card.tsx"
+        "blocks/content-card-block.tsx"
       ],
       "dependencies": [
         "react-native-reanimated"
@@ -844,14 +844,14 @@
       "expoGo": true
     },
     {
-      "name": "feature-card",
-      "displayName": "Feature Card",
+      "name": "feature-card-block",
+      "displayName": "Feature Card Block",
       "type": "block",
       "description": "Feature highlight card with icon, title, and description",
       "category": "Marketing",
       "status": "beta",
       "files": [
-        "blocks/feature-card.tsx"
+        "blocks/feature-card-block.tsx"
       ],
       "dependencies": [
         "react-native-reanimated"
@@ -860,14 +860,14 @@
       "expoGo": true
     },
     {
-      "name": "stats-card",
-      "displayName": "Stats Card",
+      "name": "stats-card-block",
+      "displayName": "Stats Card Block",
       "type": "block",
       "description": "Metric display card with value, label, and trend indicator",
       "category": "Dashboard",
       "status": "beta",
       "files": [
-        "blocks/stats-card.tsx"
+        "blocks/stats-card-block.tsx"
       ],
       "dependencies": [],
       "registryDependencies": [],
@@ -892,28 +892,28 @@
       "expoGo": true
     },
     {
-      "name": "social-proof-bar",
-      "displayName": "Social Proof Bar",
+      "name": "social-proof-bar-block",
+      "displayName": "Social Proof Bar Block",
       "type": "block",
       "description": "Avatar stack with engagement text for social proof",
       "category": "Social",
       "status": "beta",
       "files": [
-        "blocks/social-proof-bar.tsx"
+        "blocks/social-proof-bar-block.tsx"
       ],
       "dependencies": [],
       "registryDependencies": [],
       "expoGo": true
     },
     {
-      "name": "search-header",
-      "displayName": "Search Header",
+      "name": "search-header-block",
+      "displayName": "Search Header Block",
       "type": "block",
       "description": "Header with search input, filter button, and user avatar",
       "category": "Navigation",
       "status": "beta",
       "files": [
-        "blocks/search-header.tsx"
+        "blocks/search-header-block.tsx"
       ],
       "dependencies": [
         "react-native-reanimated",
@@ -923,14 +923,14 @@
       "expoGo": true
     },
     {
-      "name": "onboarding-slide",
-      "displayName": "Onboarding Slide",
+      "name": "onboarding-slide-block",
+      "displayName": "Onboarding Slide Block",
       "type": "block",
       "description": "Full-screen onboarding slide with illustration, title, and pagination",
       "category": "Onboarding",
       "status": "beta",
       "files": [
-        "blocks/onboarding-slide.tsx"
+        "blocks/onboarding-slide-block.tsx"
       ],
       "dependencies": [
         "react-native-safe-area-context"
@@ -941,14 +941,14 @@
       "expoGo": true
     },
     {
-      "name": "media-item",
-      "displayName": "Media Item",
+      "name": "media-item-block",
+      "displayName": "Media Item Block",
       "type": "block",
       "description": "Thumbnail grid item for photos, videos, and files with selection support",
       "category": "Media",
       "status": "beta",
       "files": [
-        "blocks/media-item.tsx"
+        "blocks/media-item-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -959,14 +959,14 @@
       "expoGo": true
     },
     {
-      "name": "feed-post-card",
-      "displayName": "Feed Post Card",
+      "name": "feed-post-card-block",
+      "displayName": "Feed Post Card Block",
       "type": "block",
       "description": "Social feed post card with avatar, content, image, and action buttons",
       "category": "Social",
       "status": "beta",
       "files": [
-        "blocks/feed-post-card.tsx"
+        "blocks/feed-post-card-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -979,14 +979,14 @@
       "expoGo": true
     },
     {
-      "name": "user-list-item",
-      "displayName": "User List Item",
+      "name": "user-list-item-block",
+      "displayName": "User List Item Block",
       "type": "block",
       "description": "User row for follower lists, search results, and user selection",
       "category": "Social",
       "status": "beta",
       "files": [
-        "blocks/user-list-item.tsx"
+        "blocks/user-list-item-block.tsx"
       ],
       "dependencies": [],
       "registryDependencies": [
@@ -997,14 +997,14 @@
       "expoGo": true
     },
     {
-      "name": "chat-bubble",
-      "displayName": "Chat Bubble",
+      "name": "chat-bubble-block",
+      "displayName": "Chat Bubble Block",
       "type": "block",
       "description": "Chat message bubble with status indicators for messaging interfaces",
       "category": "Messaging",
       "status": "beta",
       "files": [
-        "blocks/chat-bubble.tsx"
+        "blocks/chat-bubble-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -1015,14 +1015,14 @@
       "expoGo": true
     },
     {
-      "name": "comment-item",
-      "displayName": "Comment Item",
+      "name": "comment-item-block",
+      "displayName": "Comment Item Block",
       "type": "block",
       "description": "Comment display for posts, products, or discussions",
       "category": "Social",
       "status": "beta",
       "files": [
-        "blocks/comment-item.tsx"
+        "blocks/comment-item-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -1033,14 +1033,14 @@
       "expoGo": true
     },
     {
-      "name": "product-card",
-      "displayName": "Product Card",
+      "name": "product-card-block",
+      "displayName": "Product Card Block",
       "type": "block",
       "description": "E-commerce product display card with image, price, rating, and actions",
       "category": "E-commerce",
       "status": "beta",
       "files": [
-        "blocks/product-card.tsx"
+        "blocks/product-card-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -1053,14 +1053,14 @@
       "expoGo": true
     },
     {
-      "name": "cart-item",
-      "displayName": "Cart Item",
+      "name": "cart-item-block",
+      "displayName": "Cart Item Block",
       "type": "block",
       "description": "Shopping cart line item with quantity controls and swipe actions",
       "category": "E-commerce",
       "status": "beta",
       "files": [
-        "blocks/cart-item.tsx"
+        "blocks/cart-item-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -1255,7 +1255,7 @@
       "registryDependencies": [
         "separator",
         "swipeable-row",
-        "notification-item"
+        "notification-item-block"
       ],
       "expoGo": true
     },
@@ -1274,7 +1274,7 @@
         "react-native-svg"
       ],
       "registryDependencies": [
-        "feed-post-card"
+        "feed-post-card-block"
       ],
       "expoGo": true
     },
@@ -1413,7 +1413,7 @@
         "button",
         "icon-button",
         "separator",
-        "cart-item",
+        "cart-item-block",
         "empty-state-block"
       ],
       "expoGo": true
@@ -1437,7 +1437,7 @@
         "search-input",
         "tabs",
         "spinner",
-        "user-list-item",
+        "user-list-item-block",
         "empty-state-block"
       ],
       "expoGo": true
@@ -1460,7 +1460,7 @@
         "icon-button",
         "avatar",
         "spinner",
-        "comment-item",
+        "comment-item-block",
         "empty-state-block"
       ],
       "expoGo": true
@@ -1566,14 +1566,14 @@
       "expoGo": true
     },
     {
-      "name": "order-item",
-      "displayName": "Order Item",
+      "name": "order-item-block",
+      "displayName": "Order Item Block",
       "type": "block",
       "description": "Order history line item with status, products, and actions",
       "category": "E-commerce",
       "status": "beta",
       "files": [
-        "blocks/order-item.tsx"
+        "blocks/order-item-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -1585,14 +1585,14 @@
       "expoGo": true
     },
     {
-      "name": "review-card",
-      "displayName": "Review Card",
+      "name": "review-card-block",
+      "displayName": "Review Card Block",
       "type": "block",
       "description": "User review display with rating, images, and helpful votes",
       "category": "E-commerce",
       "status": "beta",
       "files": [
-        "blocks/review-card.tsx"
+        "blocks/review-card-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -1605,14 +1605,14 @@
       "expoGo": true
     },
     {
-      "name": "task-item",
-      "displayName": "Task Item",
+      "name": "task-item-block",
+      "displayName": "Task Item Block",
       "type": "block",
       "description": "Todo/task item with checkbox, priority, and due date",
       "category": "Productivity",
       "status": "beta",
       "files": [
-        "blocks/task-item.tsx"
+        "blocks/task-item-block.tsx"
       ],
       "dependencies": [
         "react-native-reanimated",
@@ -1626,14 +1626,14 @@
       "expoGo": true
     },
     {
-      "name": "event-card",
-      "displayName": "Event Card",
+      "name": "event-card-block",
+      "displayName": "Event Card Block",
       "type": "block",
       "description": "Calendar event display with date, time, location, and attendees",
       "category": "Productivity",
       "status": "beta",
       "files": [
-        "blocks/event-card.tsx"
+        "blocks/event-card-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -1647,14 +1647,14 @@
       "expoGo": true
     },
     {
-      "name": "article-card",
-      "displayName": "Article Card",
+      "name": "article-card-block",
+      "displayName": "Article Card Block",
       "type": "block",
       "description": "Blog/news article preview with image, author, and metadata",
       "category": "Content",
       "status": "beta",
       "files": [
-        "blocks/article-card.tsx"
+        "blocks/article-card-block.tsx"
       ],
       "dependencies": [
         "react-native-svg"
@@ -1667,14 +1667,14 @@
       "expoGo": true
     },
     {
-      "name": "pricing-card",
-      "displayName": "Pricing Card",
+      "name": "pricing-card-block",
+      "displayName": "Pricing Card Block",
       "type": "block",
       "description": "Subscription plan display with features, price, and CTA",
       "category": "Marketing",
       "status": "beta",
       "files": [
-        "blocks/pricing-card.tsx"
+        "blocks/pricing-card-block.tsx"
       ],
       "dependencies": [
         "react-native-reanimated",
@@ -1728,7 +1728,7 @@
         "icon-button",
         "tabs",
         "spinner",
-        "order-item",
+        "order-item-block",
         "empty-state-block"
       ],
       "expoGo": true
@@ -1753,9 +1753,9 @@
         "search-input",
         "horizontal-list",
         "section-header",
-        "stats-card",
+        "stats-card-block",
         "hero-block",
-        "content-card"
+        "content-card-block"
       ],
       "expoGo": true
     },
