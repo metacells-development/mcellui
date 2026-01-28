@@ -144,8 +144,18 @@ const neutral = {
 // Theme Preset Types
 // =============================================================================
 
+/**
+ * Available theme color presets.
+ *
+ * Each preset defines a complete color scheme for light and dark modes.
+ */
 export type ThemePreset = 'zinc' | 'slate' | 'stone' | 'blue' | 'green' | 'rose' | 'orange' | 'violet';
 
+/**
+ * Theme preset color structure.
+ *
+ * Contains complete color schemes for both light and dark modes.
+ */
 export interface PresetColors {
   light: ThemeColors;
   dark: ThemeColors;
@@ -302,6 +312,15 @@ function createPresetColors(
 
 /**
  * All available theme presets.
+ *
+ * Pre-designed color schemes for instant brand alignment.
+ *
+ * @example
+ * ```tsx
+ * <ThemeProvider theme="violet">
+ *   <App />
+ * </ThemeProvider>
+ * ```
  */
 export const themePresets: Record<ThemePreset, PresetColors> = {
   // Neutral presets (use their own palette as neutral base)
@@ -319,11 +338,16 @@ export const themePresets: Record<ThemePreset, PresetColors> = {
 
 /**
  * Default theme preset.
+ *
+ * Used when no `theme` is specified on ThemeProvider.
  */
 export const defaultThemePreset: ThemePreset = 'zinc';
 
 /**
  * Gets colors for a theme preset.
+ *
+ * @param preset - Theme preset name
+ * @returns Complete color scheme (light and dark)
  */
 export function getPresetColors(preset: ThemePreset): PresetColors {
   return themePresets[preset];
@@ -331,6 +355,10 @@ export function getPresetColors(preset: ThemePreset): PresetColors {
 
 /**
  * Gets light or dark colors for a theme preset.
+ *
+ * @param preset - Theme preset name
+ * @param isDark - Whether dark mode is active
+ * @returns Semantic color palette for the specified mode
  */
 export function getPresetColorsForMode(
   preset: ThemePreset,

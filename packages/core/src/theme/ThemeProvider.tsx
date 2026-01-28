@@ -67,7 +67,10 @@ import {
   type ThemePreset,
 } from './presets';
 
+/** Resolved color scheme (either 'light' or 'dark') */
 export type ColorScheme = 'light' | 'dark';
+
+/** User's color scheme preference (can be 'system' for auto-detection) */
 export type ColorSchemePreference = 'light' | 'dark' | 'system';
 
 export interface Theme {
@@ -490,7 +493,17 @@ export function useTheme(): Theme {
 }
 
 /**
- * Hook to get current color scheme
+ * Hook to get current color scheme.
+ *
+ * Returns the resolved color scheme ('light' or 'dark'), even when preference is 'system'.
+ *
+ * @returns Current color scheme
+ *
+ * @example
+ * ```tsx
+ * const colorScheme = useColorSchemeValue();
+ * // colorScheme is 'light' or 'dark' (never 'system')
+ * ```
  */
 export function useColorSchemeValue(): ColorScheme {
   const theme = useTheme();
@@ -498,7 +511,17 @@ export function useColorSchemeValue(): ColorScheme {
 }
 
 /**
- * Hook to check if dark mode is active
+ * Hook to check if dark mode is active.
+ *
+ * Convenience hook equivalent to `useTheme().isDark`.
+ *
+ * @returns True if dark mode is active, false otherwise
+ *
+ * @example
+ * ```tsx
+ * const isDark = useIsDark();
+ * <View style={{ backgroundColor: isDark ? '#000' : '#fff' }} />
+ * ```
  */
 export function useIsDark(): boolean {
   const theme = useTheme();

@@ -6,6 +6,17 @@
  *
  * Each component has sm/md/lg size variants with consistent
  * heights, padding, and typography.
+ *
+ * @example
+ * ```tsx
+ * const { components } = useTheme();
+ *
+ * // Use component tokens for consistent sizing
+ * <View style={{
+ *   height: components.button.md.height,
+ *   paddingHorizontal: components.button.md.paddingHorizontal,
+ * }} />
+ * ```
  */
 
 import { spacing } from './spacing';
@@ -17,6 +28,7 @@ import { fontSize, fontWeight } from './typography';
 
 /**
  * Standard heights for interactive components.
+ *
  * Based on touch target guidelines (minimum 44px).
  */
 export const componentHeight = {
@@ -32,6 +44,9 @@ export const componentHeight = {
 // Icon Sizes
 // =============================================================================
 
+/**
+ * Standard icon sizes for components.
+ */
 export const iconSize = {
   /** Extra small: 12px */
   xs: 12,
@@ -49,6 +64,11 @@ export const iconSize = {
 // Button Component Tokens
 // =============================================================================
 
+/**
+ * Button component size tokens.
+ *
+ * Defines heights, padding, font sizes, and icon sizes for all button variants.
+ */
 export const buttonTokens = {
   sm: {
     height: componentHeight.sm,
@@ -83,6 +103,7 @@ export const buttonTokens = {
 // IconButton Component Tokens
 // =============================================================================
 
+/** IconButton component size tokens */
 export const iconButtonTokens = {
   sm: {
     size: 32,
@@ -106,6 +127,7 @@ export const iconButtonTokens = {
 // FAB Component Tokens
 // =============================================================================
 
+/** Floating Action Button component size tokens */
 export const fabTokens = {
   sm: {
     size: 40,
@@ -134,6 +156,7 @@ export const fabTokens = {
 // SegmentedControl Component Tokens
 // =============================================================================
 
+/** SegmentedControl component size tokens */
 export const segmentedControlTokens = {
   sm: {
     height: componentHeight.sm,
@@ -162,6 +185,7 @@ export const segmentedControlTokens = {
 // ActionSheet Component Tokens
 // =============================================================================
 
+/** ActionSheet component size tokens */
 export const actionSheetTokens = {
   item: {
     height: componentHeight.lg,
@@ -188,6 +212,7 @@ export const actionSheetTokens = {
 // Input Component Tokens
 // =============================================================================
 
+/** Input component size tokens */
 export const inputTokens = {
   sm: {
     height: componentHeight.sm,
@@ -225,6 +250,7 @@ export const inputTokens = {
 // Checkbox Component Tokens
 // =============================================================================
 
+/** Checkbox component size tokens */
 export const checkboxTokens = {
   sm: {
     size: 18,
@@ -253,6 +279,7 @@ export const checkboxTokens = {
 // Switch Component Tokens
 // =============================================================================
 
+/** Switch component size tokens */
 export const switchTokens = {
   sm: {
     trackWidth: 40,
@@ -284,6 +311,7 @@ export const switchTokens = {
 // Badge Component Tokens
 // =============================================================================
 
+/** Badge component size tokens */
 export const badgeTokens = {
   sm: {
     paddingHorizontal: spacing[1.5],
@@ -309,6 +337,7 @@ export const badgeTokens = {
 // Avatar Component Tokens
 // =============================================================================
 
+/** Avatar component size tokens */
 export const avatarTokens = {
   xs: {
     size: 24,
@@ -341,6 +370,7 @@ export const avatarTokens = {
 // Textarea Component Tokens
 // =============================================================================
 
+/** Textarea component size tokens */
 export const textareaTokens = {
   sm: {
     minHeight: componentHeight.sm * 3,
@@ -378,6 +408,7 @@ export const textareaTokens = {
 // Select Component Tokens
 // =============================================================================
 
+/** Select component size tokens */
 export const selectTokens = {
   sm: {
     height: componentHeight.sm,
@@ -412,6 +443,7 @@ export const selectTokens = {
 // Slider Component Tokens
 // =============================================================================
 
+/** Slider component size tokens */
 export const sliderTokens = {
   sm: {
     trackHeight: 4,
@@ -437,6 +469,7 @@ export const sliderTokens = {
 // Stepper Component Tokens
 // =============================================================================
 
+/** Stepper component size tokens */
 export const stepperTokens = {
   sm: {
     height: componentHeight.sm,
@@ -468,6 +501,7 @@ export const stepperTokens = {
 // Radio Component Tokens
 // =============================================================================
 
+/** Radio component size tokens */
 export const radioTokens = {
   sm: {
     outerSize: 16,
@@ -499,6 +533,7 @@ export const radioTokens = {
 // TagInput Component Tokens
 // =============================================================================
 
+/** TagInput component size tokens */
 export const tagInputTokens = {
   sm: {
     minHeight: componentHeight.sm,
@@ -536,6 +571,7 @@ export const tagInputTokens = {
 // Chip Component Tokens
 // =============================================================================
 
+/** Chip component size tokens */
 export const chipTokens = {
   sm: {
     paddingHorizontal: spacing[2.5],
@@ -561,6 +597,7 @@ export const chipTokens = {
 // Label Component Tokens
 // =============================================================================
 
+/** Label component size tokens */
 export const labelTokens = {
   sm: {
     fontSize: fontSize.sm,
@@ -583,6 +620,7 @@ export const labelTokens = {
 // Rating Component Tokens
 // =============================================================================
 
+/** Rating component size tokens */
 export const ratingTokens = {
   sm: {
     starSize: 18,
@@ -602,6 +640,7 @@ export const ratingTokens = {
 // AvatarStack Component Tokens
 // =============================================================================
 
+/** AvatarStack component size tokens */
 export const avatarStackTokens = {
   sm: {
     size: 28,
@@ -629,6 +668,7 @@ export const avatarStackTokens = {
 // Card Component Tokens
 // =============================================================================
 
+/** Card component tokens */
 export const cardTokens = {
   borderWidth: 1,
   padding: spacing[4],
@@ -645,6 +685,7 @@ export const cardTokens = {
 // Overlay Typography Tokens (Dialog, AlertDialog, Sheet)
 // =============================================================================
 
+/** Overlay typography tokens (Dialog, AlertDialog, Sheet) */
 export const overlayTypography = {
   title: {
     fontSize: fontSize.lg,     // 18
@@ -662,6 +703,7 @@ export const overlayTypography = {
 // Spinner Component Tokens
 // =============================================================================
 
+/** Spinner component size tokens */
 export const spinnerTokens = {
   sm: {
     containerSize: 16,
@@ -681,6 +723,7 @@ export const spinnerTokens = {
 // Skeleton Component Tokens
 // =============================================================================
 
+/** Skeleton component tokens */
 export const skeletonTokens = {
   radius: {
     none: 0,
@@ -706,6 +749,7 @@ export const skeletonTokens = {
 // Progress Component Tokens
 // =============================================================================
 
+/** Progress component size tokens */
 export const progressTokens = {
   sm: {
     height: 4,
@@ -726,6 +770,7 @@ export const progressTokens = {
 // CircularProgress Component Tokens
 // =============================================================================
 
+/** CircularProgress component size tokens */
 export const circularProgressTokens = {
   sm: {
     size: 40,
@@ -767,6 +812,7 @@ export const LIST_CONSTANTS = {
   legacyMinHeight: 56,
 } as const;
 
+/** List component tokens */
 export const listTokens = {
   divider: {
     inset: LIST_CONSTANTS.dividerInset,
@@ -793,6 +839,7 @@ export const TABS_CONSTANTS = {
   pillPadding: 4,
 } as const;
 
+/** Tabs component tokens */
 export const tabsTokens = {
   trigger: {
     fontSize: fontSize.base,
@@ -826,6 +873,7 @@ export const ACCORDION_CONSTANTS = {
   chevronSize: 16,
 } as const;
 
+/** Accordion component tokens */
 export const accordionTokens = {
   trigger: {
     fontSize: fontSize.md,
@@ -854,6 +902,7 @@ export const COLLAPSIBLE_CONSTANTS = {
   chevronSize: 16,
 } as const;
 
+/** Collapsible component tokens */
 export const collapsibleTokens = {
   trigger: {
     paddingVertical: spacing[3],
@@ -873,6 +922,7 @@ export const CAROUSEL_CONSTANTS = {
   scrollEventThrottle: 16,
 } as const;
 
+/** Carousel component tokens */
 export const carouselTokens = {
   indicator: {
     dotSize: 8,
@@ -906,6 +956,7 @@ export const SWIPEABLE_ROW_CONSTANTS = {
   resistanceFactor: 0.3,
 } as const;
 
+/** SwipeableRow component tokens */
 export const swipeableRowTokens = {
   action: {
     width: SWIPEABLE_ROW_CONSTANTS.actionWidth,
@@ -920,6 +971,7 @@ export const swipeableRowTokens = {
 // Auth Block Tokens (Login, Signup)
 // =============================================================================
 
+/** Auth block tokens (Login, Signup) */
 export const authBlockTokens = {
   header: {
     titleFontSize: fontSize['2xl'],    // 28 - matches existing
@@ -948,6 +1000,7 @@ export const authBlockTokens = {
 // State Block Tokens (Empty State, Error State)
 // =============================================================================
 
+/** State block tokens (Empty State, Error State) */
 export const stateBlockTokens = {
   default: {
     titleFontSize: fontSize.xl,        // 20
@@ -977,6 +1030,7 @@ export const stateBlockTokens = {
 // Profile Block Tokens
 // =============================================================================
 
+/** Profile block tokens */
 export const profileBlockTokens = {
   name: {
     fontSize: fontSize['2xl'] - 4,     // 24 (2xl is 28, so 24)
@@ -1000,6 +1054,7 @@ export const profileBlockTokens = {
 // Settings Block Tokens
 // =============================================================================
 
+/** Settings block tokens */
 export const settingsBlockTokens = {
   group: {
     titleFontSize: fontSize.xs,        // 12
@@ -1022,6 +1077,7 @@ export const settingsBlockTokens = {
 // E-commerce Block Tokens (Banner, Hero, Pricing, Stats)
 // =============================================================================
 
+/** E-commerce block tokens (Banner, Hero, Pricing, Stats) */
 export const ecommerceBlockTokens = {
   banner: {
     sm: {
@@ -1088,6 +1144,7 @@ export const ecommerceBlockTokens = {
 // Info Block Tokens (Feature, Content, Onboarding, Media, Notification, etc.)
 // =============================================================================
 
+/** Info block tokens (Feature, Content, Onboarding, Media, Notification) */
 export const infoBlockTokens = {
   feature: {
     titleFontSize: fontSize.md,        // 16
@@ -1172,6 +1229,7 @@ export const infoBlockTokens = {
  * Shared card block visual tokens
  * Used by: ProductCard, ArticleCard, EventCard, ReviewCard
  */
+/** Card block tokens (Product, Article, Event, Review cards) */
 export const cardBlockTokens = {
   shadow: 'sm' as const,
   borderWidth: 1,
@@ -1210,6 +1268,7 @@ export const cardBlockTokens = {
  * Social interaction block tokens
  * Used by: FeedPostCard, ChatBubble, CommentItem, UserListItem
  */
+/** Social block tokens (Feed, Chat, Comments, User lists) */
 export const socialBlockTokens = {
   action: {
     iconSize: iconSize.md,
@@ -1247,6 +1306,7 @@ export const socialBlockTokens = {
  * Product block tokens (Phase 10 - Product cards and cart items)
  * Used by: ProductCard, CartItem
  */
+/** Product block tokens (Product cards, Cart items) */
 export const productBlockTokens = {
   product: {
     badgePosition: { top: spacing[2], left: spacing[2] },
@@ -1269,6 +1329,7 @@ export const productBlockTokens = {
 // Calendar Component Tokens
 // =============================================================================
 
+/** Calendar component size tokens */
 export const calendarTokens = {
   sm: {
     daySize: 32,
@@ -1294,6 +1355,7 @@ export const calendarTokens = {
 // DateTimePicker Component Tokens
 // =============================================================================
 
+/** DateTimePicker component tokens */
 export const dateTimePickerTokens = {
   input: {
     height: componentHeight.md,
@@ -1331,6 +1393,7 @@ export const dateTimePickerTokens = {
 // Form Component Tokens
 // =============================================================================
 
+/** Form component tokens */
 export const formTokens = {
   item: {
     marginBottom: spacing[4],
@@ -1355,6 +1418,7 @@ export const formTokens = {
 // ImageGallery Component Tokens
 // =============================================================================
 
+/** ImageGallery component tokens */
 export const imageGalleryTokens = {
   grid: {
     defaultColumns: 3,
@@ -1378,6 +1442,7 @@ export const imageGalleryTokens = {
 // Pagination Component Tokens
 // =============================================================================
 
+/** Pagination component size tokens */
 export const paginationTokens = {
   sm: {
     dotSize: 6,
@@ -1409,6 +1474,7 @@ export const paginationTokens = {
 // Stories Component Tokens
 // =============================================================================
 
+/** Stories component size tokens */
 export const storiesTokens = {
   sm: {
     outer: 56,
@@ -1447,6 +1513,7 @@ export const storiesTokens = {
 // SearchInput Component Tokens
 // =============================================================================
 
+/** SearchInput component tokens */
 export const searchInputTokens = {
   height: componentHeight.md,  // was hardcoded 44
   paddingHorizontal: spacing[3],
@@ -1462,6 +1529,11 @@ export const searchInputTokens = {
 // Export all component tokens
 // =============================================================================
 
+/**
+ * Complete component token collection.
+ *
+ * Access all component size and style tokens via `useTheme().components`.
+ */
 export const components = {
   button: buttonTokens,
   iconButton: iconButtonTokens,
@@ -1515,4 +1587,5 @@ export const components = {
   icon: iconSize,
 } as const;
 
+/** Standard component size variants */
 export type ComponentSize = 'sm' | 'md' | 'lg';

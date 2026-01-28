@@ -40,7 +40,19 @@ export interface TimingConfig {
 }
 
 /**
- * Spring configurations for different animation contexts
+ * Spring configurations for different animation contexts.
+ *
+ * Reanimated-compatible spring physics presets for natural motion.
+ * Use with `withSpring()` from react-native-reanimated.
+ *
+ * @example
+ * ```tsx
+ * import { withSpring } from 'react-native-reanimated';
+ * const { springs } = useTheme();
+ *
+ * // Animate with spring physics
+ * animatedValue.value = withSpring(targetValue, springs.snappy);
+ * ```
  */
 export const springs: SpringTokens = {
   /** Quick, snappy response - for buttons, toggles */
@@ -88,7 +100,19 @@ export const springs: SpringTokens = {
 
 /**
  * Timing configurations for animations.
+ *
  * Duration-only configs - use Reanimated's Easing module for custom easing.
+ *
+ * @example
+ * ```tsx
+ * import { withTiming, Easing } from 'react-native-reanimated';
+ * const { timing } = useTheme();
+ *
+ * animatedValue.value = withTiming(targetValue, {
+ *   duration: timing.default.duration,
+ *   easing: Easing.out(Easing.quad),
+ * });
+ * ```
  */
 export const timing: TimingTokens = {
   /** Fast transition - 150ms */
@@ -108,7 +132,19 @@ export const timing: TimingTokens = {
 };
 
 /**
- * Scale values for press animations
+ * Scale values for press animations.
+ *
+ * Use with animated press gestures to provide tactile feedback.
+ *
+ * @example
+ * ```tsx
+ * const { pressScale } = useTheme();
+ * const scale = useSharedValue(1);
+ *
+ * const gesture = Gesture.Tap()
+ *   .onBegin(() => { scale.value = withSpring(pressScale.default); })
+ *   .onFinalize(() => { scale.value = withSpring(1); });
+ * ```
  */
 export const pressScale: PressScaleTokens = {
   /** Subtle press - for text buttons */
@@ -129,7 +165,15 @@ export interface PressScaleTokens {
 }
 
 /**
- * Common animation durations in ms
+ * Common animation durations in milliseconds.
+ *
+ * Standard duration values for consistent animation timing across the app.
+ *
+ * @example
+ * ```tsx
+ * const { durations } = useTheme();
+ * setTimeout(() => { ... }, durations.fast);
+ * ```
  */
 export const durations: DurationTokens = {
   instant: 0,
@@ -173,8 +217,13 @@ export interface TimingTokens {
   exit: TimingConfig;
 }
 
+/** Available spring animation presets */
 export type SpringPreset = keyof SpringTokens;
+
+/** Available timing animation presets */
 export type TimingPreset = keyof TimingTokens;
+
+/** Available press scale presets */
 export type PressScalePreset = keyof PressScaleTokens;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -202,8 +251,16 @@ export interface AnimationTokens {
 
 /**
  * Subtle animation preset.
+ *
  * Professional, smooth animations suited for business/productivity apps.
  * Higher damping = less bounce, faster settling.
+ *
+ * @example
+ * ```tsx
+ * <ThemeProvider animationPreset="subtle">
+ *   <App />
+ * </ThemeProvider>
+ * ```
  */
 export const subtleAnimations: AnimationTokens = {
   springs: {
@@ -261,8 +318,16 @@ export const subtleAnimations: AnimationTokens = {
 
 /**
  * Playful animation preset.
+ *
  * Bouncy, energetic animations suited for consumer/social apps.
  * Lower damping = more bounce, more overshoot.
+ *
+ * @example
+ * ```tsx
+ * <ThemeProvider animationPreset="playful">
+ *   <App />
+ * </ThemeProvider>
+ * ```
  */
 export const playfulAnimations: AnimationTokens = {
   springs: {
@@ -320,6 +385,15 @@ export const playfulAnimations: AnimationTokens = {
 
 /**
  * Get animation tokens for a specific preset.
+ *
+ * @param preset - Animation preset ('subtle' | 'playful')
+ * @returns Complete animation token set for the preset
+ *
+ * @example
+ * ```tsx
+ * const tokens = getAnimationPreset('playful');
+ * // tokens contains springs, timing, pressScale, durations
+ * ```
  */
 export function getAnimationPreset(preset: AnimationPreset): AnimationTokens {
   switch (preset) {
@@ -340,5 +414,7 @@ export function getAnimationPreset(preset: AnimationPreset): AnimationTokens {
 
 /**
  * Default animation preset.
+ *
+ * Used when no `animationPreset` is specified on ThemeProvider.
  */
 export const defaultAnimationPreset: AnimationPreset = 'subtle';

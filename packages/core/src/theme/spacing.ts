@@ -37,5 +37,8 @@ export const spacing = {
   32: 128,
 } as const;
 
+/** Available spacing scale keys (0, 0.5, 1, 1.5, 2, ..., 32) */
 export type SpacingKey = keyof typeof spacing;
+
+/** Spacing value in logical pixels */
 export type SpacingValue = (typeof spacing)[SpacingKey];

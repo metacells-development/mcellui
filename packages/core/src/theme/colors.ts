@@ -5,7 +5,22 @@
  * Inspired by iOS 17+ Dynamic Colors, Arc Browser, and Linear App.
  */
 
-// Base color palette (raw values)
+/**
+ * Base color palette (raw values).
+ *
+ * Raw color values for all theme presets. Use semantic colors from `lightColors` or
+ * `darkColors` in components rather than palette directly.
+ *
+ * @example
+ * ```tsx
+ * const { colors } = useTheme();
+ * // Use semantic colors (auto-adapts to light/dark)
+ * <View style={{ backgroundColor: colors.primary }} />
+ *
+ * // Not recommended: using palette directly (no dark mode support)
+ * <View style={{ backgroundColor: palette.primary[500] }} />
+ * ```
+ */
 export const palette = {
   // Neutral scale
   neutral: {
@@ -80,7 +95,19 @@ export const palette = {
   },
 } as const;
 
-// Semantic colors for light mode
+/**
+ * Semantic colors for light mode.
+ *
+ * Complete semantic color palette for light color scheme. Access via `useTheme().colors`
+ * for automatic light/dark mode adaptation.
+ *
+ * @example
+ * ```tsx
+ * const { colors, isDark } = useTheme();
+ * // colors automatically matches light or dark mode
+ * <View style={{ backgroundColor: colors.background, color: colors.foreground }} />
+ * ```
+ */
 export const lightColors = {
   // Backgrounds
   background: palette.neutral[0],
@@ -140,7 +167,19 @@ export const lightColors = {
   scrim: 'rgba(0, 0, 0, 0.3)',
 } as const;
 
-// Semantic colors for dark mode
+/**
+ * Semantic colors for dark mode.
+ *
+ * Complete semantic color palette for dark color scheme. Access via `useTheme().colors`
+ * for automatic light/dark mode adaptation.
+ *
+ * @example
+ * ```tsx
+ * const { colors } = useTheme();
+ * // colors automatically matches light or dark mode
+ * <Text style={{ color: colors.foreground }}>Content</Text>
+ * ```
+ */
 export const darkColors = {
   // Backgrounds
   background: palette.neutral[950],
@@ -263,4 +302,5 @@ export interface ThemeColors {
   scrim: string;
 }
 
+/** Available semantic color keys */
 export type ColorKey = keyof ThemeColors;

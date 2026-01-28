@@ -125,10 +125,24 @@ const darkShadows = {
   },
 } as const;
 
+/** Available shadow size presets */
 export type ShadowSize = keyof typeof lightShadows;
 
 /**
- * Get shadow styles for a given size and color scheme
+ * Get shadow styles for a given size and color scheme.
+ *
+ * Returns platform-specific shadow properties (iOS: shadow*, Android: elevation).
+ * Prefer `platformShadow()` or `theme.platformShadow()` for cleaner API.
+ *
+ * @param size - Shadow size preset ('sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none')
+ * @param isDark - Whether dark mode is active (defaults to false)
+ * @returns Complete shadow style object with all platform properties
+ *
+ * @example
+ * ```tsx
+ * const shadow = getShadow('md', isDark);
+ * <View style={shadow} />
+ * ```
  */
 export function getShadow(size: ShadowSize, isDark: boolean = false): ShadowStyle {
   const shadows = isDark ? darkShadows : lightShadows;
@@ -136,8 +150,22 @@ export function getShadow(size: ShadowSize, isDark: boolean = false): ShadowStyl
 }
 
 /**
- * Get platform-optimized shadow style
- * Returns only the relevant properties for the current platform
+ * Get platform-optimized shadow style.
+ *
+ * Returns only the relevant properties for the current platform:
+ * - iOS: shadowColor, shadowOffset, shadowOpacity, shadowRadius
+ * - Android: elevation
+ * - Web: complete shadow object
+ *
+ * @param size - Shadow size preset ('sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none')
+ * @param isDark - Whether dark mode is active (defaults to false)
+ * @returns Platform-specific shadow style object
+ *
+ * @example
+ * ```tsx
+ * const { platformShadow } = useTheme();
+ * <View style={platformShadow('md')} />
+ * ```
  */
 export function getPlatformShadow(size: ShadowSize, isDark: boolean = false): ViewStyle {
   const shadow = getShadow(size, isDark);
@@ -160,6 +188,11 @@ export function getPlatformShadow(size: ShadowSize, isDark: boolean = false): Vi
   return shadow;
 }
 
+/**
+ * Complete shadow preset collections for light and dark modes.
+ *
+ * Prefer using `getShadow()` or `platformShadow()` instead of accessing directly.
+ */
 export const shadows = {
   light: lightShadows,
   dark: darkShadows,
