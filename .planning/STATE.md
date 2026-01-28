@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 21 of 21 (Demo Consistency Validation)
-Plan: 1 of 3 in current phase
+Plan: 3 of 3 in current phase
 Status: In progress
-Last activity: 2026-01-28 — Completed 21-01-PLAN.md (Layout Theme Migration)
+Last activity: 2026-01-28 — Completed 21-03-PLAN.md (High-Violation Demo Migration)
 
 Progress: [█████████████████████] 99% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 complete, Phase 21 in progress)
 
@@ -84,6 +84,9 @@ Recent decisions affecting v1.2:
 - Static StyleSheet padding moved to inline styles — Enables theme token access at runtime (20-07)
 - Theme preview swatches remain hardcoded — Intentional brand color representation (21-01)
 - Static layout properties stay in StyleSheet, dynamic values move to inline styles (21-01)
+- Demo icon color defaults removed — Callers pass colors.foreground from theme (21-03)
+- Showcase colors preserved in demos — Intentional examples of component capabilities (21-03)
+- fontSize 13 rounds up to fontSize.sm — No sub-token values in typography scale (21-03)
 
 ### Pending Todos
 
@@ -115,8 +118,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 21-01-PLAN.md (Layout Theme Migration)
+Stopped at: Completed 21-03-PLAN.md (High-Violation Demo Migration)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 21-01 completion (Phase 21 Plan 1 complete)*
+*Updated: 2026-01-28 after 21-03 completion (Phase 21 Plan 3 complete)*
