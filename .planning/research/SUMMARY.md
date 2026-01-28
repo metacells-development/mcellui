@@ -1,469 +1,346 @@
-# Research Summary: v1.1 Audit
+# v1.2 Consistency Sweep Research Summary
 
-**Project:** mcellui
-**Domain:** React Native/Expo Component Library + Developer Tooling (CLI + MCP Server)
-**Researched:** 2026-01-26
+**Project:** mcellui v1.2 Consistency Sweep
+**Milestone:** Milestone 18
+**Domain:** UI Component Library Maintenance
+**Researched:** 2026-01-28
 **Confidence:** HIGH
 
 ## Executive Summary
 
-The mcellui project is a well-architected copy-paste component library with excellent CLI tooling and innovative MCP server integration. The codebase demonstrates strong CLI UX patterns (interactive prompts, semantic error messages, diff command) and follows modern React Native best practices. However, the audit reveals **two critical issues** that would break production usage: (1) the core package exports raw TypeScript source files instead of compiled JavaScript, preventing use in non-TypeScript or production environments, and (2) missing peer dependency declarations in the registry package for animation/gesture libraries that components actually use.
-
-The CLI package is production-ready with excellent error handling, config validation, and user experience patterns. The MCP server demonstrates innovative workflow-first tool design optimized for AI agent consumption. The component library itself (27 UI components + 6 blocks + form system) is complete and follows solid architectural patterns, but the packaging and dependency management need fixes before any npm publication.
-
-**Primary recommendation:** Fix the critical packaging issues (compile TypeScript, declare all peer deps) before any distribution. The architecture and patterns are sound—the problems are configuration, not design.
-
-## What's Working Well
-
-### CLI Package Excellence
-mcellui's CLI already implements industry best practices:
-- **Error Handling:** Actionable error messages with next-step guidance (not just "Error: failed")
-- **Interactive Mode:** Multi-select component picker with `--yes` flag for CI/scripting
-- **Visual Feedback:** Consistent spinner usage (ora), semantic colors (chalk), status icons (✓ ✗ ⚠)
-- **Advanced Commands:** `diff` shows changes with colored output, `doctor` runs diagnostics, `list --installed` shows sync status
-- **User Respect:** Detects user code style (detect-indent), preserves formatting
-- **Config Validation:** Uses Zod for type-safe configuration with helpful validation errors
-- **Distribution:** npx-first approach (no global install pollution)
-
-These patterns match or exceed industry standards from shadcn/ui, Vite CLI, and Heroku CLI.
-
-### MCP Server Innovation
-The MCP server demonstrates thoughtful design for AI agent consumption:
-- **Workflow-First Tools:** Separate `mcellui_get_component` (concise docs) from `mcellui_get_component_source` (full code) based on user intent, not API structure
-- **Token Efficiency:** Markdown responses instead of verbose JSON, separate overview from detail operations
-- **AI-Optimized Naming:** Tool names act as prompts to the LLM (`mcellui_suggest_component` clearly indicates AI-powered discovery)
-- **Flat Schemas:** Simple parameter structures reduce token overhead and improve LLM comprehension
-- **Contextual Guidance:** Responses include next-step suggestions and related tool references
-- **Keyword-Based Suggestions:** Natural language queries like "form with email and password" → suggests relevant components
-
-### Component Architecture
-- **27 UI Components:** Complete set covering inputs, layout, feedback, navigation, and native patterns
-- **6 Screen Blocks:** Reusable templates (Login, Signup, Settings, Profile, Empty/Error states)
-- **Form System:** Clean integration with react-hook-form, Zod, and @hookform/resolvers
-- **Theme System:** Token-based design with 8 presets, dark mode support, no hardcoded colors
-- **Copy-Paste Philosophy:** Users own the code, can customize freely
-
-### Monorepo Structure
-- **Clear Separation:** apps/ vs packages/ organization
-- **Workspace Protocol:** Proper internal dependency management
-- **Build Orchestration:** Turborepo handles dependency order
-
-## Critical Issues (Must Fix)
-
-### Issue 1: TypeScript Source Exports in Core Package
-
-**Problem:** `@metacells/mcellui-core` exports raw TypeScript source files (`.ts`) instead of compiled JavaScript.
-
-**Impact:** BLOCKING for any production use
-- npm install succeeds but runtime fails with "Cannot find module" errors
-- Breaks for JavaScript-only projects
-- Breaks in production builds (Node.js, Next.js, React Native Metro, Vite)
-- Users must configure TypeScript paths manually
-- Only works in monorepo development, fails for external consumers
-
-**Current State:**
-```json
-{
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
-    }
-  }
-}
-```
-
-**Required Fix:**
-```json
-{
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "npm run build"
-  },
-  "files": ["dist"]
-}
-```
-
-**Detection:** Search for `"./src/` in package.json exports field
-
-**Priority:** CRITICAL — breaks all external usage
-
-**Source:** [TypeScript in 2025 with ESM and CJS npm publishing](https://lirantal.com/blog/typescript-in-2025-with-esm-and-cjs-npm-publishing)
-
-### Issue 2: Missing Peer Dependencies in Registry Package
-
-**Problem:** Components use `react-native-reanimated` and `react-native-gesture-handler` but don't declare them in peerDependencies.
-
-**Impact:** HIGH — runtime failures
-- "Cannot find module 'react-native-reanimated'" when using Sheet, Dialog, Toast
-- Swipeable and PullToRefresh fail without gesture-handler
-- No npm warnings during install (silent failure at runtime)
-- Users encounter cryptic errors: "useNativeDriver is not available"
+The mcellui codebase demonstrates exceptional architectural discipline with 99%+ component reuse compliance and well-established naming patterns. However, a comprehensive audit across four dimensions reveals significant inconsistencies that undermine the library's core value propositions: theming, dark mode support, and developer experience.
 
-**Affected Components:**
-- **Reanimated users:** Sheet, Dialog, Alert Dialog, Toast, Tabs, Accordion (animated transitions)
-- **Gesture Handler users:** Swipeable Row, Pull to Refresh, Sheet (gestures)
+**Overall Consistency Score: 72/100**
+- Component Reuse: 99/100 (exemplary)
+- Naming Patterns: 91/100 (excellent registry, inconsistent demo app)
+- Token Usage: 45/100 (critical issues - 250+ hardcoded values)
+- API Patterns: 97/100 (one size scale deviation)
 
-**Required Fix:**
-```json
-{
-  "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-native": ">=0.73.0",
-    "react-native-reanimated": ">=3.0.0",
-    "react-native-gesture-handler": ">=2.0.0",
-    "react-hook-form": ">=7.50.0",
-    "@hookform/resolvers": ">=3.3.0",
-    "zod": ">=3.22.0"
-  },
-  "peerDependenciesMeta": {
-    "react-hook-form": { "optional": true },
-    "@hookform/resolvers": { "optional": true },
-    "zod": { "optional": true }
-  }
-}
-```
+The most critical finding is token usage: over 250 instances of hardcoded colors, spacing, and typography bypass the well-designed token system. This breaks theming, dark mode adaptation, and visual consistency. The v1.2 Consistency Sweep must prioritize token migration (especially colors) to deliver on the library's promise of full customization.
 
-**Detection:**
-```bash
-grep -r "from 'react-native-reanimated'" packages/registry/ui/
-grep -r "from 'react-native-gesture-handler'" packages/registry/ui/
-```
+Secondary findings include 9 demo app files with incorrect naming (missing `-block` suffix) and one API inconsistency in Avatar's size scale. These are lower priority but should be addressed for complete consistency.
 
-**Priority:** HIGH — breaks component functionality
+**Recommended Approach:** Prioritized remediation with automated codemods for repetitive patterns (icon color defaults, spacing values) and manual migration for complex cases (overlays, gradients). Estimated effort: Medium-Large (100+ files, but patterns are automatable).
 
-**Source:** [React Native Dependency Management](https://microsoft.github.io/rnx-kit/docs/architecture/dependency-management)
+## Key Findings
 
-### Issue 3: Missing `./package.json` Export
+### Component Reuse (EXCELLENT)
 
-**Problem:** Package exports don't include `./package.json`, blocking tooling access.
+**Source:** COMPONENT-REUSE.md
 
-**Impact:** MEDIUM — tooling failures
-- Build tools can't read package metadata
-- Version detection fails
-- Import analysis tools break
+The mcellui codebase demonstrates exemplary component reuse practices, with 99%+ of blocks and screens properly composing from existing UI components rather than reimplementing functionality.
 
-**Required Fix:** Add to all packages' exports:
-```json
-{
-  "exports": {
-    "./package.json": "./package.json"
-  }
-}
-```
+**Findings:**
+- Total files audited: 47 blocks, 19 screens, demo files
+- Issues found: 1 MEDIUM severity (home-screen.tsx featured cards)
+- Compliance rate: 99%+
 
-**Priority:** MEDIUM — breaks developer tooling
+**Single Issue:**
+- `home-screen.tsx` lines 323-378: Manual card construction instead of using MediaCard or Card component
+- Impact: Missing theme updates, press animations, accessibility patterns
+- Fix: Replace with `<MediaCard>` component
 
-**Source:** [Node.js Package Exports Specification](https://nodejs.org/api/packages.html)
+**Why This Matters:** This excellent reuse pattern means theme updates propagate consistently, accessibility patterns are unified, and the codebase remains maintainable. The single home-screen.tsx issue is minor and easily fixed.
 
-## Improvement Opportunities (Later)
+### Naming Patterns (EXCELLENT REGISTRY, INCONSISTENT DEMO)
 
-### Enhancement 1: Tree-Shaking Optimization
+**Source:** NAMING-PATTERNS.md
 
-**Current State:** No `sideEffects` field declared
+The registry (UI components, blocks, screens) demonstrates 100% naming consistency. The demo app has 9 files with incorrect naming.
 
-**Benefit:** Enable aggressive tree-shaking in consumer bundles
+**Registry Patterns (100% consistent):**
+- UI Components: kebab-case without suffix (`button.tsx`, `alert-dialog.tsx`)
+- Blocks: kebab-case with `-block` suffix (`login-block.tsx`, `settings-list-block.tsx`)
+- Screens: kebab-case with `-screen` suffix (`login-screen.tsx`, `profile-screen.tsx`)
+- Props: `{ComponentName}Props` pattern (`ButtonProps`, `LoginBlockProps`)
+- Exports: Named exports only (no default exports)
 
-**Recommendation:**
-```json
-{
-  "sideEffects": false
-}
-```
+**Demo App Issues (MEDIUM severity):**
+- 9 files missing `-block` suffix:
+  - `content-card.tsx` → should be `content-card-block.tsx`
+  - `feature-card.tsx` → should be `feature-card-block.tsx`
+  - `feed-post-card.tsx` → should be `feed-post-card-block.tsx`
+  - `media-item.tsx` → should be `media-item-block.tsx`
+  - `notification-item.tsx` → should be `notification-item-block.tsx`
+  - `onboarding-slide.tsx` → should be `onboarding-slide-block.tsx`
+  - `search-header.tsx` → should be `search-header-block.tsx`
+  - `social-proof-bar.tsx` → should be `social-proof-bar-block.tsx`
+  - `stats-card.tsx` → should be `stats-card-block.tsx`
 
-Add to all packages except those with global side effects.
+**Impact:** Medium - Creates confusion about component purpose, breaks pattern consistency with registry.
 
-**Priority:** LOW — optimization, not blocking
+### Token Usage (CRITICAL ISSUES)
 
-### Enhancement 2: CLI Command Suggestions
+**Source:** TOKEN-USAGE.md
 
-**Current State:** Typos produce generic "Unknown command" error
+This is the most critical finding. Despite a comprehensive, well-designed token system, 250+ instances bypass it with hardcoded values, undermining theming and dark mode support.
 
-**Enhancement:** Add "Did you mean?" suggestions
-```bash
-$ mcellui ad button
-Unknown command: ad
-Did you mean: add?
-```
+**Severity Distribution:**
+- HIGH (colors - breaks theming/dark mode): ~100 findings
+- MEDIUM (spacing/typography - inconsistent UX): ~130 findings
+- LOW (radius/shadows - edge cases): ~20 findings
 
-**Implementation:** Use Levenshtein distance on command names
+**Color Issues (HIGH severity - 100+ instances):**
+- Hex colors: `#ffffff`, `#000`, `#3B82F6` appear in 50+ files
+- RGBA colors: `rgba(0,0,0,0.5)` overlays in 20+ files
+- Icon defaults: 50+ icon components default to `#000` instead of `colors.foreground`
+- Hardcoded gradients: hero-block.tsx has 15+ hardcoded gradient colors
+- Priority colors: task-item-block.tsx uses `#10b981`, `#f59e0b`, `#ef4444` instead of semantic colors
 
-**Priority:** LOW — nice-to-have UX polish
+**Spacing Issues (MEDIUM severity - 50+ instances):**
+- Hardcoded padding: `padding: 16` instead of `spacing[4]`
+- Hardcoded margins: `marginLeft: 8` instead of `spacing[2]`
+- Component-local size configs: toggle.tsx has hardcoded size values
 
-**Source:** [CLI Best Practices - clig.dev](https://clig.dev/)
+**Typography Issues (MEDIUM severity - 80+ instances):**
+- Hardcoded fontSize: `14`, `16` instead of `fontSize.base`, `fontSize.md`
+- Hardcoded fontWeight: `'600'` instead of `fontWeight.semibold`
+- Hardcoded lineHeight: `20`, `22` instead of calculated from fontSize
 
-### Enhancement 3: Progress Bars for Multi-Component Installation
+**Shadow Issues (MEDIUM severity - 6 instances):**
+- Custom shadow objects with `shadowColor: '#000'` instead of `platformShadow('sm')`
+- Don't adapt to dark mode or use platform optimizations
 
-**Current State:** Spinner shows "Adding components..."
+**Worst Offender Files:**
+| File | Colors | Spacing | Typography | Radius | Total |
+|------|--------|---------|------------|--------|-------|
+| `ui/card.tsx` | 8 | 4 | 10 | 1 | 23 |
+| `blocks/hero-block.tsx` | 15+ | 2 | 2 | 0 | 19+ |
+| `blocks/task-item-block.tsx` | 7 | 3 | 4 | 0 | 14 |
+| All screen icons | 50+ | 5 | 10 | 0 | 65+ |
 
-**Enhancement:** Show progress for multi-component adds
-```bash
-Installing components (2/5)
-✓ react-native-reanimated
-✓ react-native-gesture-handler
-⏳ react-native-safe-area-context
-  @react-native-community/blur
-  expo-haptics
-```
-
-**Priority:** LOW — UX improvement for batch operations
-
-**Source:** [Evil Martians CLI UX Patterns](https://evilmartians.com/chronicles/cli-ux-best-practices-3-patterns-for-improving-progress-displays)
-
-### Enhancement 4: MCP Server JSON Output for List Tools
-
-**Current State:** `mcellui_list_components` returns only Markdown
-
-**Enhancement:** Support structured JSON for agent consumption
-- Better programmatic access
-- Enables filtering/sorting in agent code
-- Follows MCP best practice of dual output modes
-
-**Priority:** LOW — MCP already works well
-
-### Enhancement 5: Expo SDK Compatibility Matrix
-
-**Current State:** Tested on Expo SDK 54 only
-
-**Enhancement:** Document and test compatibility across SDK versions
-- Test SDK 52 (RN 0.77), SDK 53 (RN 0.78), SDK 54 (RN 0.81)
-- Test with New Architecture enabled
-- Document minimum supported versions
-
-**Priority:** MEDIUM — important for ecosystem compatibility but not blocking
-
-**Source:** [Expo SDK Changelog](https://expo.dev/changelog/)
-
-### Enhancement 6: Component Version Tracking
-
-**Current State:** Copy-pasted components have no version metadata
-
-**Enhancement:** Add version comments to copied files
-```typescript
-// @mcellui/button v0.1.5
-// Last updated: 2026-01-26
-```
-
-Enables better `diff` command experience and update tracking.
-
-**Priority:** LOW — helpful for maintenance but not critical
-
-### Enhancement 7: Automated Peer Dependency Installation
-
-**Current State:** CLI warns about missing peer deps
-
-**Enhancement:** Offer to auto-install peer deps when adding components
-```bash
-$ mcellui add sheet
-Component 'sheet' requires peer dependencies:
-  - react-native-reanimated (>=3.0.0)
-  - react-native-gesture-handler (>=2.0.0)
-
-Install these dependencies? (Y/n)
-```
-
-**Priority:** LOW — UX improvement
-
-## Prioritized Audit Checklist
-
-### Phase 1: Critical Fixes (MUST FIX BEFORE NPM PUBLISH)
-
-- [ ] **Core Package Build System**
-  - [ ] Add TypeScript build script to `@metacells/mcellui-core`
-  - [ ] Change exports to point to `./dist/*.js` and `./dist/*.d.ts`
-  - [ ] Add `prepublishOnly` hook to prevent publishing unbuild code
-  - [ ] Test: `npm pack && npm install ./package.tgz` in vanilla JS project
-  - [ ] Verify: Import in Node.js, Next.js, and Expo project
-
-- [ ] **Registry Peer Dependencies**
-  - [ ] Audit all imports in registry components
-  - [ ] Add missing peer deps: reanimated, gesture-handler
-  - [ ] Mark form deps as optional with peerDependenciesMeta
-  - [ ] Test: Fresh Expo project, install components, verify no missing modules
-  - [ ] Document: Which components require which peer deps
-
-- [ ] **Package.json Exports**
-  - [ ] Add `"./package.json": "./package.json"` to all packages
-  - [ ] Add `"sideEffects": false` where appropriate
-  - [ ] Verify: Tooling can access package metadata
-
-### Phase 2: High-Priority Improvements
-
-- [ ] **Expo SDK Compatibility**
-  - [ ] Test demo app on SDK 52, 53, 54
-  - [ ] Test with New Architecture enabled
-  - [ ] Document supported SDK versions in README
-  - [ ] Check React Native Directory for library compatibility
-
-- [ ] **Platform Testing**
-  - [ ] Test all components on iOS simulator
-  - [ ] Test all components on Android emulator
-  - [ ] Verify animations smooth on both platforms
-  - [ ] Check SafeArea handling (iOS notch)
-  - [ ] Check BackHandler (Android back button in modals)
-
-- [ ] **CLI Error Handling Audit**
-  - [ ] Verify all errors go to stderr
-  - [ ] Verify non-zero exit codes on failure
-  - [ ] Check error messages have actionable guidance
-  - [ ] Test invalid config values trigger helpful errors
-
-### Phase 3: Polish & Optimization
-
-- [ ] **CLI Enhancements**
-  - [ ] Add command suggestions for typos
-  - [ ] Add progress bars for multi-component operations
-  - [ ] Add `--json` flag to `list` command
-  - [ ] Add `DEBUG=mcellui` verbose logging
-
-- [ ] **Documentation**
-  - [ ] Document peer dependencies per component
-  - [ ] Add migration guide template
-  - [ ] Document Expo Go compatibility
-  - [ ] Add troubleshooting section for common errors
-
-- [ ] **MCP Server**
-  - [ ] Verify bundled registry.json is up to date
-  - [ ] Test error handling for missing files
-  - [ ] Consider JSON output mode for list tools
-
-### Phase 4: Quality Assurance
-
-- [ ] **TypeScript Strictness**
-  - [ ] Verify `strict: true` in all tsconfig.json
-  - [ ] Search for `any` types in public APIs
-  - [ ] Ensure all exported types have JSDoc comments
-
-- [ ] **Accessibility**
-  - [ ] Test with VoiceOver on iOS
-  - [ ] Test with TalkBack on Android
-  - [ ] Verify accessibilityLabel on all interactive elements
-
-- [ ] **Performance**
-  - [ ] Verify animations use `useNativeDriver: true`
-  - [ ] Test on mid-range Android device
-  - [ ] Check bundle size with react-native-bundle-visualizer
-
-## Validation Commands
-
-```bash
-# Critical Issue 1: TypeScript source exports
-grep -r '"./src/' packages/*/package.json
-# Should return nothing after fix
-
-# Critical Issue 2: Missing peer dependencies
-grep -r "from 'react-native-reanimated'" packages/registry/ui/
-grep -r "from 'react-native-gesture-handler'" packages/registry/ui/
-# Compare against peerDependencies in registry/package.json
-
-# Test compiled package
-cd packages/core && npm pack
-mkdir /tmp/test-mcellui && cd /tmp/test-mcellui
-npm init -y
-npm install /path/to/metacells-mcellui-core-*.tgz
-node -e "const mcellui = require('@metacells/mcellui-core'); console.log(mcellui);"
-# Should work without TypeScript
-
-# Check exit codes
-npx mcellui invalid-command; echo "Exit code: $?"
-# Should be non-zero
-
-# Verify package.json exports
-cat packages/core/package.json | grep './package.json'
-# Should exist
-
-# Test in fresh Expo project
-npx create-expo-app test-app
-cd test-app
-npx mcellui init
-npx mcellui add button
-npm run ios
-# Should work without errors
-```
+**Impact:** Critical - These prevent proper dark mode adaptation, break theming, and make customization difficult. This undermines the library's core value proposition.
+
+### API Patterns (ONE CRITICAL DEVIATION)
+
+**Source:** API-PATTERNS.md
+
+Overall API consistency is excellent, with one critical deviation in Avatar's size scale.
+
+**Consistent Patterns (✅):**
+- Variant prop: 28/28 components use `variant` (not `type`, `kind`)
+- Event handlers: 100% use React Native conventions (`onPress`, `onValueChange`, `onCheckedChange`)
+- Style props: 100% use `style` prop (no `className`)
+- Disabled prop: 100% of interactive components support `disabled`
+- Export pattern: 100% use named exports
+
+**Critical Deviation (🔴):**
+- **Avatar size scale:** Uses `xs | sm | md | lg | xl` instead of standard `sm | md | lg`
+- Impact: HIGH - Developers must remember different size scales for different components
+- Affects: 1 component (Avatar)
+
+**Event Handler Naming (semantic, intentional):**
+- `onCheckedChange` - Boolean toggle controls (Checkbox, Switch)
+- `onValueChange` - Value selection controls (Select, Slider, Radio)
+- `onChangeText` - Text inputs (matches React Native)
+- `onOpenChange` - Overlay visibility (Dialog, Sheet, AlertDialog)
+- Verdict: ACCEPT - Semantic differences improve clarity
+
+**Web Anti-Patterns:** None found. No `className`, no `onClick` handlers.
+
+## Total Findings by Severity
+
+| Severity | Count | Primary Issues |
+|----------|-------|----------------|
+| HIGH | 101 | 100 color violations + 1 Avatar size scale |
+| MEDIUM | 140 | 50 spacing + 80 typography + 10 demo naming |
+| LOW | 20 | 15 radius + 5 shadow issues |
+| **TOTAL** | 261 | Issues across 100+ files |
+
+## Worst Offender Files
+
+Files requiring the most remediation work:
+
+1. **All screens with icons (65+ violations)** - Icon components default to `#000` instead of theme color
+2. **ui/card.tsx (23 violations)** - Hardcoded colors, typography, spacing throughout
+3. **blocks/hero-block.tsx (19+ violations)** - Gradient presets with hardcoded colors
+4. **blocks/task-item-block.tsx (14 violations)** - Priority colors, icon defaults, typography
+5. **blocks/article-card-block.tsx (13 violations)** - Overlay colors, typography
+6. **ui/toggle.tsx (12 violations)** - Local size config instead of component tokens
+7. **Demo app blocks (10 files)** - Naming inconsistencies
+
+## Prioritized Issue List
+
+Based on impact and effort, fix in this order:
+
+### Priority 1: HIGH IMPACT, MEDIUM EFFORT
+1. **Icon color defaults (50+ files)** - Replace `color = '#000'` with `colors.foreground`
+   - Impact: Fixes dark mode for all icons
+   - Effort: Medium (automatable with codemod)
+   - Files: All screens, 20+ blocks, 10+ UI components
+
+2. **RGBA overlays (20+ instances)** - Replace with `colors.overlay` or `colors.scrim`
+   - Impact: Fixes dark mode for card overlays, image backgrounds
+   - Effort: Medium (requires manual verification)
+   - Files: card.tsx, hero-block.tsx, article-card-block.tsx, media-item-block.tsx
+
+3. **Avatar size scale (1 component)** - Change from 5-value to 3-value scale
+   - Impact: HIGH (API consistency)
+   - Effort: Low (breaking change, but only 1 component)
+   - Files: ui/avatar.tsx + update usages
+
+### Priority 2: MEDIUM IMPACT, LOW EFFORT
+4. **Demo app naming (9 files)** - Add `-block` suffix
+   - Impact: Pattern consistency
+   - Effort: Low (file renames + import updates)
+   - Files: apps/demo/components/blocks/
+
+5. **Shadow migrations (6 components)** - Replace custom shadows with `platformShadow()`
+   - Impact: Dark mode adaptation, platform optimization
+   - Effort: Low (straightforward replacement)
+   - Files: tag-input, tooltip, segmented-control, popover, tabs, slider
+
+6. **home-screen.tsx card (1 instance)** - Replace manual card with MediaCard
+   - Impact: Component reuse consistency
+   - Effort: Low (simple component replacement)
+   - Files: packages/registry/screens/home-screen.tsx
+
+### Priority 3: MEDIUM IMPACT, MEDIUM EFFORT
+7. **Spacing values (50+ instances)** - Replace with `spacing[n]`
+   - Impact: Visual consistency, responsive adjustments
+   - Effort: Medium (mostly automatable)
+   - Files: 30+ components across UI/blocks/screens
+
+8. **Typography values (80+ instances)** - Replace with font tokens
+   - Impact: Visual hierarchy, font family changes
+   - Effort: Medium (fontSize automatable, lineHeight needs calculation)
+   - Files: 40+ components across all categories
+
+### Priority 4: LOW IMPACT, LOW EFFORT
+9. **Radius values (15 instances)** - Replace with `radius.*` tokens
+   - Impact: User-configurable radius preset support
+   - Effort: Low (straightforward replacement)
+   - Files: 10+ components
+
+10. **Component token migration (2 files)** - Move size configs to components.ts
+    - Impact: Consistency with token system
+    - Effort: Low (add tokens, update usage)
+    - Files: toggle.tsx, custom blocks
+
+## Implications for Roadmap
+
+Based on research synthesis, the v1.2 Consistency Sweep should be structured in 3 phases over 2-3 weeks.
+
+### Phase 1: Critical Token Fixes (Week 1)
+**Rationale:** Fixes break theming and dark mode - highest impact on user experience
+**Delivers:** Fully functional dark mode and theme switching
+**Addresses:** 100+ color violations, 6 shadow issues, 1 API deviation
+**Avoids:** Shipping components that break in dark mode or custom themes
+
+**Requirements:**
+1. Migrate all icon color defaults from `#000` to `colors.foreground`
+2. Replace RGBA overlays with semantic color tokens (`colors.overlay`, `colors.scrim`)
+3. Migrate custom shadow objects to `platformShadow()` helper
+4. Fix Avatar size scale to standard `sm | md | lg`
+
+**Research Flag:** No additional research needed - patterns are clear from audit
+
+### Phase 2: Consistency Improvements (Week 2)
+**Rationale:** Addresses UX consistency and developer experience issues
+**Delivers:** Consistent spacing, typography, and naming patterns
+**Addresses:** 130+ spacing/typography violations, 10 naming issues, 1 component reuse issue
+**Uses:** Token system from STACK, component patterns from ARCHITECTURE
+
+**Requirements:**
+1. Rename 9 demo app files to include `-block` suffix
+2. Replace manual card in home-screen.tsx with MediaCard component
+3. Migrate spacing values to `spacing[n]` tokens
+4. Migrate typography values to font tokens
+5. Move component size configs to components.ts
+
+**Research Flag:** No additional research needed - straightforward token replacements
+
+### Phase 3: Polish & Documentation (Week 3)
+**Rationale:** Completes consistency sweep with edge cases and documentation
+**Delivers:** 100% token compliance, pattern documentation
+**Addresses:** Remaining radius violations, component token system gaps
+**Implements:** Documentation patterns to prevent future inconsistencies
+
+**Requirements:**
+1. Migrate remaining radius values to radius tokens
+2. Add component token definitions for components with local configs
+3. Document event handler naming conventions
+4. Document style prop hierarchy patterns
+5. Create pre-release consistency checklist
+
+**Research Flag:** No additional research needed - consolidating existing patterns
+
+### Phase Ordering Rationale
+
+- **Phase 1 first** because color violations break dark mode completely - a core feature
+- **Phase 2 after colors** because spacing/typography issues are visible but not breaking
+- **Phase 3 last** because radius and documentation are polish that don't block usage
+- **No research-phase needed** because all patterns are documented in research files
+
+### Research Flags
+
+All phases use standard token migration patterns - no deep research needed:
+- **Phase 1:** Token system is well-documented, color mappings are clear
+- **Phase 2:** Spacing/typography tokens follow established patterns
+- **Phase 3:** Radius tokens and documentation are straightforward
 
 ## Confidence Assessment
 
-| Area | Confidence | Source Quality |
-|------|------------|----------------|
-| CLI Best Practices | HIGH | Official guides (clig.dev, Heroku), verified against mcellui implementation |
-| MCP Server Design | HIGH | Official MCP spec, Block's playbook, verified patterns |
-| Package Structure | HIGH | Official Node.js/Metro/TypeScript docs, current 2025-2026 standards |
-| Critical Issues | HIGH | Verified with official sources, tested patterns |
-| React Native Pitfalls | HIGH | Microsoft RN Kit, Expo docs, community 2025-2026 data |
+| Area | Confidence | Notes |
+|------|------------|-------|
+| Component Reuse | HIGH | Direct inspection of all 66 files (blocks + screens) |
+| Naming Patterns | HIGH | Direct inspection of all registry + demo files |
+| Token Usage | HIGH | Direct grep + file inspection of 102 files |
+| API Patterns | HIGH | Direct code audit of 55 UI components |
 
-**Overall Confidence:** HIGH
+**Overall confidence:** HIGH
 
-### Gaps to Address During Implementation
+All findings are based on direct codebase inspection, not assumptions or external documentation. The research methodology included:
+- Reading all 102 component files (UI + blocks + screens)
+- Grep pattern searches for hardcoded values
+- Cross-referencing with token system definitions
+- Manual verification of findings
 
-1. **Exact peer dependency versions:** Need to audit actual usage to determine minimum versions
-2. **Expo SDK test matrix:** Need systematic testing across SDK 52-54 with New Architecture
-3. **Bundle size impact:** Need measurements before/after tree-shaking optimizations
-4. **Migration path:** Need testing of update workflow for copy-pasted components
+### Gaps to Address
 
-## Key Takeaways for Roadmap
+**No significant gaps identified.** Research was comprehensive and high-confidence.
 
-### mcellui's Core Strengths
-1. **Excellent CLI UX** — matches industry best practices, ready for production
-2. **Innovative MCP Integration** — well-designed for AI agent consumption
-3. **Complete Component Library** — 33 components/blocks cover full use cases
-4. **Sound Architecture** — copy-paste philosophy, theme system, form integration all correct
+**Minor validation needed:**
+- Verify which hardcoded colors are intentional (e.g., brand logos)
+- Confirm semantic color mappings during migration (e.g., is `#fff` always `primaryForeground`?)
+- Test dark mode after color migrations to ensure correct appearance
 
-### Critical Path
-1. Fix TypeScript compilation in core package (BLOCKING)
-2. Declare all peer dependencies (BLOCKING)
-3. Test across Expo SDK versions (HIGH PRIORITY)
-4. Platform testing iOS + Android (HIGH PRIORITY)
-
-### Not Broken, Don't Fix
-- CLI command structure and UX patterns
-- MCP server tool design and naming
-- Component architecture and theme system
-- Monorepo organization
-- Copy-paste distribution model
+**Recommended during implementation:**
+- Create automated codemods for repetitive patterns (icon defaults, spacing values)
+- Manual code review for complex cases (overlays, gradients)
+- Visual regression testing after token migrations
 
 ## Sources
 
-### CLI Best Practices (HIGH confidence)
-- [Command Line Interface Guidelines (clig.dev)](https://clig.dev/)
-- [Heroku CLI Style Guide](https://devcenter.heroku.com/articles/cli-style-guide)
-- [shadcn/ui CLI Documentation](https://ui.shadcn.com/docs/cli)
-- [Better CLI - Colors and Formatting](https://bettercli.org/design/using-colors-in-cli/)
+### Primary (HIGH confidence)
 
-### MCP Server Best Practices (HIGH confidence)
-- [MCP Specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25)
-- [Block's Playbook for Designing MCP Servers](https://engineering.block.xyz/blog/blocks-playbook-for-designing-mcp-servers)
-- [MCP Best Practices Guide](https://modelcontextprotocol.info/docs/best-practices/)
+**Direct Codebase Inspection:**
+- packages/registry/ui/ (55 UI components)
+- packages/registry/blocks/ (28 block components)
+- packages/registry/screens/ (19 screen templates)
+- apps/demo/components/ (demo app files)
+- packages/core/theme/ (token system definitions)
 
-### Package Structure (HIGH confidence)
-- [Node.js Packages Documentation](https://nodejs.org/api/packages.html)
-- [Metro Package Exports Support](https://metrobundler.dev/docs/package-exports/)
-- [TypeScript Library Structures](https://www.typescriptlang.org/docs/handbook/declaration-files/library-structures.html)
-- [Turborepo Creating Internal Packages](https://turborepo.dev/docs/crafting-your-repository/creating-an-internal-package)
+**Research Documents:**
+- .planning/research/COMPONENT-REUSE.md (comprehensive block/screen audit)
+- .planning/research/NAMING-PATTERNS.md (naming convention audit)
+- .planning/research/TOKEN-USAGE.md (token usage audit)
+- .planning/research/API-PATTERNS.md (API consistency audit)
 
-### React Native Ecosystem (HIGH confidence)
-- [React Native Dependency Management - Microsoft](https://microsoft.github.io/rnx-kit/docs/architecture/dependency-management)
-- [Expo SDK Changelog](https://expo.dev/changelog/)
-- [React Native Version Mismatch - Expo Docs](https://docs.expo.dev/troubleshooting/react-native-version-mismatch/)
+### Secondary (MEDIUM confidence)
 
-### Developer Tooling Pitfalls (HIGH confidence)
-- [TypeScript in 2025 with ESM and CJS npm publishing](https://lirantal.com/blog/typescript-in-2025-with-esm-and-cjs-npm-publishing)
-- [What's in a Good Error Message](https://www.morling.dev/blog/whats-in-a-good-error-message/)
-- [Error Message Guidelines - Nielsen Norman Group](https://www.nngroup.com/articles/error-message-guidelines/)
+**Project Documentation:**
+- CLAUDE.md (project philosophy, quality standards)
+- PHASES.md (development roadmap, completed phases)
+- packages/core/README.md (token system documentation)
+
+### Confidence Notes
+
+All findings are based on direct source code inspection during the audit period (2026-01-28). No external sources or assumptions were used. The high consistency score for component reuse (99%) and API patterns (97%) validates the team's strong architectural discipline. The low token usage score (45%) represents the primary opportunity for improvement in v1.2.
 
 ---
 
-*Research completed: 2026-01-26*
-*Ready for roadmap: Yes*
-*Critical issues identified: 2 (TypeScript exports, peer dependencies)*
-*Recommendation: Fix critical issues before any npm publication*
+**Research completed:** 2026-01-28
+**Ready for requirements:** Yes
+**Recommended milestone duration:** 2-3 weeks
+**Estimated effort:** Medium-Large (11-15 days of focused work)
