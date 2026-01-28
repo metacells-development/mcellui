@@ -38,7 +38,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, fontSize, fontWeight } from '@metacells/mcellui-core';
+import { useTheme, fontSize, fontWeight, spacing } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 // ============================================================================
@@ -107,24 +107,27 @@ const SIZE_CONFIG = {
   sm: {
     height: 32,
     minWidth: 32,
-    paddingHorizontal: 8,
     fontSize: fontSize.xs,
     iconSize: 16,
   },
   md: {
     height: 40,
     minWidth: 40,
-    paddingHorizontal: 12,
     fontSize: fontSize.sm,
     iconSize: 18,
   },
   lg: {
     height: 48,
     minWidth: 48,
-    paddingHorizontal: 16,
     fontSize: fontSize.base,
     iconSize: 20,
   },
+};
+
+const PADDING_CONFIG: Record<ToggleSize, keyof typeof spacing> = {
+  sm: 2,    // spacing[2] = 8
+  md: 3,    // spacing[3] = 12
+  lg: 4,    // spacing[4] = 16
 };
 
 // ============================================================================
@@ -158,7 +161,7 @@ export function Toggle({
   children,
   style,
 }: ToggleProps) {
-  const { colors, radius } = useTheme();
+  const { colors, radius, spacing } = useTheme();
   const config = SIZE_CONFIG[size];
 
   // Handle controlled/uncontrolled state
@@ -224,7 +227,7 @@ export function Toggle({
         {
           height: config.height,
           minWidth: config.minWidth,
-          paddingHorizontal: config.paddingHorizontal,
+          paddingHorizontal: spacing[PADDING_CONFIG[size]],
           backgroundColor: getBackgroundColor(),
           borderColor: getBorderColor(),
           borderWidth: variant === 'outline' ? 1 : 0,
