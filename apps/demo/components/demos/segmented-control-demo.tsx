@@ -5,7 +5,7 @@ import { SegmentedControl } from '@/components/ui/segmented-control';
 import { Card } from '@/components/ui/card';
 
 export function SegmentedControlDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [period, setPeriod] = useState('daily');
   const [view, setView] = useState('list');
   const [size, setSize] = useState('md');
@@ -14,7 +14,7 @@ export function SegmentedControlDemo() {
     <View style={styles.container}>
       {/* Basic */}
       <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+        <Text style={{ color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
           Basic
         </Text>
         <SegmentedControl
@@ -26,14 +26,14 @@ export function SegmentedControlDemo() {
             { label: 'Monthly', value: 'monthly' },
           ]}
         />
-        <Text style={[styles.selectedText, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+        <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.sm }}>
           Selected: {period}
         </Text>
       </View>
 
       {/* Two Segments */}
       <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+        <Text style={{ color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
           Two Segments
         </Text>
         <SegmentedControl
@@ -45,7 +45,7 @@ export function SegmentedControlDemo() {
           ]}
         />
         <Card style={{ marginTop: spacing[4] }}>
-          <Text style={[styles.contentText, { color: colors.foregroundMuted }]}>
+          <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>
             Showing content as: {view}
           </Text>
         </Card>
@@ -53,11 +53,11 @@ export function SegmentedControlDemo() {
 
       {/* Sizes */}
       <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+        <Text style={{ color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
           Sizes
         </Text>
 
-        <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
+        <Text style={{ color: colors.foregroundMuted, marginBottom: spacing[2], fontSize: fontSize.sm }}>
           Small
         </Text>
         <SegmentedControl
@@ -71,7 +71,7 @@ export function SegmentedControlDemo() {
           ]}
         />
 
-        <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[4], marginBottom: spacing[2] }]}>
+        <Text style={{ color: colors.foregroundMuted, marginTop: spacing[4], marginBottom: spacing[2], fontSize: fontSize.sm }}>
           Medium (Default)
         </Text>
         <SegmentedControl
@@ -85,7 +85,7 @@ export function SegmentedControlDemo() {
           ]}
         />
 
-        <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[4], marginBottom: spacing[2] }]}>
+        <Text style={{ color: colors.foregroundMuted, marginTop: spacing[4], marginBottom: spacing[2], fontSize: fontSize.sm }}>
           Large
         </Text>
         <SegmentedControl
@@ -102,7 +102,7 @@ export function SegmentedControlDemo() {
 
       {/* With Disabled Segment */}
       <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+        <Text style={{ color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
           With Disabled Segment
         </Text>
         <SegmentedControl
@@ -114,14 +114,14 @@ export function SegmentedControlDemo() {
             { label: 'Enterprise', value: 'enterprise', disabled: true },
           ]}
         />
-        <Text style={[styles.helperText, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+        <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs }}>
           Pro and Enterprise require a subscription
         </Text>
       </View>
 
       {/* Disabled Control */}
       <View style={[styles.section, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+        <Text style={{ color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
           Disabled Control
         </Text>
         <SegmentedControl
@@ -138,7 +138,7 @@ export function SegmentedControlDemo() {
 
       {/* Filter Example */}
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: spacing[3] }]}>
+        <Text style={{ color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
           Filter Example
         </Text>
         <FilterExample />
@@ -148,7 +148,7 @@ export function SegmentedControlDemo() {
 }
 
 function FilterExample() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [status, setStatus] = useState('all');
 
   const items = [
@@ -188,16 +188,15 @@ function FilterExample() {
               },
             ]}
           >
-            <Text style={[styles.listItemText, { color: colors.foreground }]}>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
               {item.name}
             </Text>
             <Text
-              style={[
-                styles.listItemStatus,
-                {
-                  color: item.status === 'completed' ? colors.primary : colors.foregroundMuted,
-                },
-              ]}
+              style={{
+                color: item.status === 'completed' ? colors.primary : colors.foregroundMuted,
+                fontSize: fontSize.xs,
+                textTransform: 'capitalize',
+              }}
             >
               {item.status}
             </Text>
@@ -213,33 +212,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section: {},
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  selectedText: {
-    fontSize: 14,
-  },
-  sizeLabel: {
-    fontSize: 13,
-  },
-  contentText: {
-    fontSize: 14,
-  },
-  helperText: {
-    fontSize: 12,
-  },
   listItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  listItemText: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  listItemStatus: {
-    fontSize: 12,
-    textTransform: 'capitalize',
   },
 });

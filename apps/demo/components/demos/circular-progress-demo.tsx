@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Section } from '@/components/demos/section';
 
 export function CircularProgressDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [progress, setProgress] = useState(65);
   const [animated, setAnimated] = useState(0);
 
@@ -21,7 +21,7 @@ export function CircularProgressDemo() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { gap: spacing[6] }]}>
       <Section title="Basic">
         <Card>
           <CardContent style={{ paddingTop: spacing[4] }}>
@@ -41,17 +41,17 @@ export function CircularProgressDemo() {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
               <CircularProgress value={progress} showLabel />
               <CircularProgress value={60} showLabel label={
-                <Text style={{ color: colors.foreground, fontSize: 12, fontWeight: '600' }}>
+                <Text style={{ color: colors.foreground, fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
                   60/100
                 </Text>
               } />
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress value={60} label={
-                  <Text style={{ color: colors.foreground, fontSize: 12, fontWeight: '600' }}>
+                  <Text style={{ color: colors.foreground, fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
                     3/5
                   </Text>
                 } />
-                <Text style={[styles.caption, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs }}>
                   Custom
                 </Text>
               </View>
@@ -66,19 +66,19 @@ export function CircularProgressDemo() {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-end' }}>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress value={60} size="sm" showLabel />
-                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs, fontWeight: fontWeight.medium }}>
                   Small
                 </Text>
               </View>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress value={60} size="md" showLabel />
-                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs, fontWeight: fontWeight.medium }}>
                   Medium
                 </Text>
               </View>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress value={60} size="lg" showLabel />
-                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs, fontWeight: fontWeight.medium }}>
                   Large
                 </Text>
               </View>
@@ -106,19 +106,19 @@ export function CircularProgressDemo() {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress value={65} strokeWidth={4} />
-                <Text style={[styles.caption, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs }}>
                   Thin
                 </Text>
               </View>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress value={65} strokeWidth={8} />
-                <Text style={[styles.caption, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs }}>
                   Default
                 </Text>
               </View>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress value={65} strokeWidth={12} />
-                <Text style={[styles.caption, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs }}>
                   Thick
                 </Text>
               </View>
@@ -132,7 +132,7 @@ export function CircularProgressDemo() {
           <CardContent style={{ paddingTop: spacing[4] }}>
             <View style={{ alignItems: 'center' }}>
               <CircularProgress value={animated} size="lg" showLabel />
-              <Text style={[styles.hint, { color: colors.foregroundMuted, marginTop: spacing[3] }]}>
+              <Text style={{ color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.sm }}>
                 Animates on value change
               </Text>
             </View>
@@ -146,19 +146,19 @@ export function CircularProgressDemo() {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress indeterminate size="sm" />
-                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs, fontWeight: fontWeight.medium }}>
                   Small
                 </Text>
               </View>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress indeterminate size="md" />
-                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs, fontWeight: fontWeight.medium }}>
                   Medium
                 </Text>
               </View>
               <View style={{ alignItems: 'center' }}>
                 <CircularProgress indeterminate size="lg" />
-                <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                <Text style={{ color: colors.foregroundMuted, marginTop: spacing[2], fontSize: fontSize.xs, fontWeight: fontWeight.medium }}>
                   Large
                 </Text>
               </View>
@@ -201,8 +201,8 @@ export function CircularProgressDemo() {
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
                 <CircularProgress value={78} size="sm" showLabel color={colors.primary} />
                 <View style={{ flex: 1 }}>
-                  <Text style={{ color: colors.foreground, fontWeight: '500' }}>Downloading...</Text>
-                  <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>78 MB of 100 MB</Text>
+                  <Text style={{ color: colors.foreground, fontWeight: fontWeight.medium }}>Downloading...</Text>
+                  <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>78 MB of 100 MB</Text>
                 </View>
               </View>
 
@@ -210,8 +210,8 @@ export function CircularProgressDemo() {
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
                 <CircularProgress value={85} size="sm" showLabel color={colors.warning} />
                 <View style={{ flex: 1 }}>
-                  <Text style={{ color: colors.foreground, fontWeight: '500' }}>Storage</Text>
-                  <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>85 GB used of 100 GB</Text>
+                  <Text style={{ color: colors.foreground, fontWeight: fontWeight.medium }}>Storage</Text>
+                  <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>85 GB used of 100 GB</Text>
                 </View>
               </View>
 
@@ -219,8 +219,8 @@ export function CircularProgressDemo() {
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing[4] }}>
                 <CircularProgress value={45} size="sm" showLabel color={colors.success} />
                 <View style={{ flex: 1 }}>
-                  <Text style={{ color: colors.foreground, fontWeight: '500' }}>Daily Goal</Text>
-                  <Text style={{ color: colors.foregroundMuted, fontSize: 13 }}>4,500 of 10,000 steps</Text>
+                  <Text style={{ color: colors.foreground, fontWeight: fontWeight.medium }}>Daily Goal</Text>
+                  <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>4,500 of 10,000 steps</Text>
                 </View>
               </View>
             </View>
@@ -232,17 +232,5 @@ export function CircularProgressDemo() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 24,
-  },
-  caption: {
-    fontSize: 12,
-  },
-  sizeLabel: {
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  hint: {
-    fontSize: 13,
-  },
+  container: {}, // gap applied inline
 });

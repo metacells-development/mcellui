@@ -11,7 +11,7 @@ function TagIcon({ color, width = 16, height = 16 }: { color?: string; width?: n
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path
         d="M12 2l-1 1H3a1 1 0 0 0-1 1v8l1 1 9 9a1 1 0 0 0 1.4 0l8-8a1 1 0 0 0 0-1.4L12 2zM7.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-        stroke={color || '#000'}
+        stroke={color}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -26,7 +26,7 @@ function StarIcon({ color, width = 16, height = 16 }: { color?: string; width?: 
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path
         d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-        stroke={color || '#000'}
+        stroke={color}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -36,7 +36,7 @@ function StarIcon({ color, width = 16, height = 16 }: { color?: string; width?: 
 }
 
 export function ChipDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize } = useTheme();
   const [selected1, setSelected1] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['electronics']);
   const [tags, setTags] = useState(['React Native', 'TypeScript', 'Expo']);
@@ -73,12 +73,12 @@ export function ChipDemo() {
       {/* Variants Section */}
       <Section title="Variants">
         <View style={{ gap: spacing[3] }}>
-          <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>Outline</Text>
+          <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs }}>Outline</Text>
           <ChipGroup>
             <Chip variant="outline" selected>Selected</Chip>
             <Chip variant="outline">Unselected</Chip>
           </ChipGroup>
-          <Text style={{ color: colors.foregroundMuted, fontSize: 12, marginTop: spacing[2] }}>Filled</Text>
+          <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: spacing[2] }}>Filled</Text>
           <ChipGroup>
             <Chip variant="filled" selected>Selected</Chip>
             <Chip variant="filled">Unselected</Chip>
@@ -122,7 +122,7 @@ export function ChipDemo() {
             ))}
           </ChipGroup>
           {tags.length === 0 && (
-            <Text style={{ color: colors.foregroundMuted, fontSize: 14 }}>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>
               All tags removed. Refresh to reset.
             </Text>
           )}
@@ -142,7 +142,7 @@ export function ChipDemo() {
             </Chip>
           ))}
         </ChipGroup>
-        <Text style={{ color: colors.foregroundMuted, fontSize: 12, marginTop: spacing[2] }}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: spacing[2] }}>
           Selected: {selectedCategories.length > 0 ? selectedCategories.join(', ') : 'None'}
         </Text>
       </Section>
@@ -151,21 +151,21 @@ export function ChipDemo() {
       <Section title="Size x Variant Matrix">
         <View style={{ gap: spacing[4] }}>
           <View style={{ gap: spacing[1] }}>
-            <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>Small</Text>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs }}>Small</Text>
             <ChipGroup>
               <Chip size="sm" variant="outline" selected>Outline</Chip>
               <Chip size="sm" variant="filled" selected>Filled</Chip>
             </ChipGroup>
           </View>
           <View style={{ gap: spacing[1] }}>
-            <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>Medium</Text>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs }}>Medium</Text>
             <ChipGroup>
               <Chip size="md" variant="outline" selected>Outline</Chip>
               <Chip size="md" variant="filled" selected>Filled</Chip>
             </ChipGroup>
           </View>
           <View style={{ gap: spacing[1] }}>
-            <Text style={{ color: colors.foregroundMuted, fontSize: 12 }}>Large</Text>
+            <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs }}>Large</Text>
             <ChipGroup>
               <Chip size="lg" variant="outline" selected>Outline</Chip>
               <Chip size="lg" variant="filled" selected>Filled</Chip>
