@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 20 of 21 (Spacing, Typography & Naming)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-01-28 — Completed Phase 19 (Critical Color & API Fixes)
+Plan: 1 of TBD in current phase
+Status: In progress
+Last activity: 2026-01-28 — Completed 20-01-PLAN.md (Spacing Token Migration)
 
-Progress: [████████████████████] 96% (v1.0 + v1.1 complete, Phase 19 complete)
+Progress: [████████████████████] 96% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 in progress)
 
 ## Performance Metrics
 
@@ -69,6 +69,9 @@ Recent decisions affecting v1.2:
 - ImageCard text uses colors.primaryForeground — Theme-adaptive text on image overlays (19-09)
 - AvatarStack initials/backgrounds use semantic tokens — Consistent theme support (19-09)
 - All Avatar usages comply with 3-size API (sm|md|lg) — Standardized sizing across blocks/screens (19-09)
+- Dynamic spacing applied via inline styles — Theme-responsive spacing system (20-01)
+- Explicit 0 values preserved for intentional resets — Not all zeros should use tokens (20-01)
+- Negative margins use spacing tokens — Consistency in token application (20-01)
 
 ### Pending Todos
 
@@ -100,8 +103,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Phase 19 complete, ready to plan Phase 20
+Stopped at: Completed 20-01-PLAN.md (Spacing Token Migration)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after Phase 19 completion*
+*Updated: 2026-01-28 after 20-01 completion*
