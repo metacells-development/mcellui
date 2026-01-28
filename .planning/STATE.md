@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-01-28)
 
 **Core value:** Users own the component code — tooling must work reliably
-**Current focus:** Between milestones — v1.1 shipped, next milestone not started
+**Current focus:** v1.2 Consistency Sweep — defining requirements
 
 ## Current Position
 
-Phase: None — between milestones
-Plan: N/A
-Status: v1.1 shipped, awaiting next milestone definition
-Last activity: 2026-01-28 — v1.1 milestone archived
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-01-28 — Milestone v1.2 started
 
 ## Milestones
 
@@ -20,6 +20,7 @@ Last activity: 2026-01-28 — v1.1 milestone archived
 |---------|------|--------|---------|
 | v1.0 | Quality Refinement | Shipped | 2026-01-26 |
 | v1.1 | Project Audit | Shipped | 2026-01-28 |
+| v1.2 | Consistency Sweep | In Progress | — |
 
 See `.planning/MILESTONES.md` for full history.
 See `.planning/milestones/` for archived phase details.
@@ -45,8 +46,8 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: v1.1 milestone archived
+Stopped at: v1.2 milestone started, research pending
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after v1.1 milestone completion*
+*Updated: 2026-01-28 after v1.2 milestone start*

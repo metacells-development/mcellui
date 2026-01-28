@@ -8,6 +8,19 @@ A modern, copy-paste UI component library for Expo/React Native — inspired by 
 
 Users own the component code. No npm dependency lock-in, full customization freedom, native-first styling.
 
+## Current Milestone: v1.2 Consistency Sweep
+
+**Goal:** Find and fix all inconsistencies across components, blocks, screens, and demos — component reuse, naming patterns, token usage, and API patterns.
+
+**Target areas:**
+- Component reuse: blocks/screens not using existing UI components
+- Naming patterns: inconsistent prop names, file names, export names
+- Token usage: hardcoded values instead of theme tokens
+- API patterns: inconsistent prop APIs (variant/type, size scales)
+- Demo app: demos should follow the same consistency standards
+
+**Approach:** Research codebase patterns → Define requirements → Audit → Fix everything found
+
 ## Current State (v1.1)
 
 **Shipped:** 2026-01-28
@@ -69,9 +82,13 @@ All 102 components refined to consistent quality:
 
 ### Active
 
-<!-- Current scope for next milestone — to be defined by /gsd:new-milestone -->
+<!-- Current scope for v1.2 Consistency Sweep -->
 
-_(No active milestone. Run `/gsd:new-milestone` to define next scope.)_
+- [ ] All blocks/screens reuse existing UI components instead of reimplementing
+- [ ] Naming patterns consistent across all components, blocks, screens
+- [ ] All styling uses theme tokens (no hardcoded colors, spacing, radius, typography)
+- [ ] API patterns consistent (prop names, size scales, variant naming)
+- [ ] Demo app follows same consistency standards
 
 ### Out of Scope
 
@@ -119,4 +136,4 @@ _(No active milestone. Run `/gsd:new-milestone` to define next scope.)_
 | JSDoc for all core exports | IDE intellisense for developers | ✓ Good — 144 doc blocks, full coverage |
 
 ---
-*Last updated: 2026-01-28 after v1.1 milestone completion*
+*Last updated: 2026-01-28 after v1.2 milestone start*
