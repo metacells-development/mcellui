@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 20 of 21 (Spacing, Typography & Naming)
-Plan: 4 of 5 in current phase
+Plan: 3 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-28 — Completed 20-04-PLAN.md (Typography Token Migration Batch 2)
+Last activity: 2026-01-28 — Completed 20-03-PLAN.md (Typography Token Migration Batch 1)
 
 Progress: [████████████████████] 97% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 in progress)
 
@@ -74,8 +74,8 @@ Recent decisions affecting v1.2:
 - Negative margins use spacing tokens — Consistency in token application (20-01)
 - BorderRadius >= 2 uses radius tokens (xs|sm) — Global radius preset support (20-02)
 - Sub-token borderRadius (1, 1.5) preserved as intentional design details — Not all small values need tokens (20-02)
-- Typography token mapping: fontSize (10→'2xs', 11→xs, 13→sm, 14→base, 16→md, 20→xl) and fontWeight ('400'→normal, '500'→medium, '600'→semibold, '700'→bold) — Standardized typography across all registry UI components (20-03, 20-04)
-- Card component text hierarchy uses semantic typography tokens — Visual hierarchy maintained through token-based typography (20-04)
+- fontSize 10 and 13 round up to nearest token (xs=12, sm=14) — No sub-xs tokens in scale (20-03)
+- All fontSize and fontWeight values use typography tokens — Eliminates hardcoded numeric font values (20-03)
 
 ### Pending Todos
 
@@ -107,8 +107,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 20-04-PLAN.md (Typography Token Migration Batch 2)
+Stopped at: Completed 20-03-PLAN.md (Typography Token Migration Batch 1)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 20-04 completion*
+*Updated: 2026-01-28 after 20-03 completion*
