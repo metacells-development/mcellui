@@ -73,15 +73,15 @@ export function BlocksDemo() {
       </Section>
 
       <Section title="Content Card">
-        <ContentCardBlockPreview />
+        <ContentCardPreview />
       </Section>
 
       <Section title="Feature Card">
-        <FeatureCardBlockPreview />
+        <FeatureCardPreview />
       </Section>
 
       <Section title="Stats Card">
-        <StatsCardBlockPreview />
+        <StatsCardPreview />
       </Section>
 
       <Section title="Hero Block">
