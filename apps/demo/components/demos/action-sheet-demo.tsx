@@ -55,7 +55,7 @@ function EditIcon({ width = 22, height = 22, color = '#000' }) {
 }
 
 export function ActionSheetDemo() {
-  const { colors } = useTheme();
+  const { colors, fontSize } = useTheme();
   const [photoSheet, setPhotoSheet] = useState(false);
   const [shareSheet, setShareSheet] = useState(false);
   const [menuSheet, setMenuSheet] = useState(false);
@@ -175,7 +175,7 @@ export function ActionSheetDemo() {
         </ActionSheet>
       </Section>
 
-      <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
+      <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, textAlign: 'center', marginTop: 8 }}>
         Swipe down or tap outside to dismiss
       </Text>
     </View>
@@ -184,5 +184,4 @@ export function ActionSheetDemo() {
 
 const styles = StyleSheet.create({
   container: { gap: 32 },
-  hint: { fontSize: 12, textAlign: 'center', marginTop: 8 },
 });

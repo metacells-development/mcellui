@@ -141,7 +141,7 @@ export function SwipeableRowDemo() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { gap: spacing[6] }]}>
       <Section title="Email List Example">
         <Text style={labelStyle}>Swipe left or right on items</Text>
         <Text style={hintStyle}>Full swipe triggers first action</Text>
@@ -344,7 +344,5 @@ export function SwipeableRowDemo() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 24, // spacing[6]
-  },
+  container: {},
 });
