@@ -318,7 +318,7 @@ export function DateTimePicker({
       {/* Bottom Sheet Modal */}
       <Modal visible={isOpen} transparent animationType="none" statusBarTranslucent>
         <View style={styles.modalContainer}>
-          <Animated.View style={[styles.backdrop, backdropStyle]}>
+          <Animated.View style={[styles.backdrop, { backgroundColor: colors.overlay }, backdropStyle]}>
             <Pressable style={StyleSheet.absoluteFill} onPress={handleCancel} />
           </Animated.View>
 
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    // backgroundColor moved to inline style for theme support
   },
   sheet: {},
   handleContainer: {
