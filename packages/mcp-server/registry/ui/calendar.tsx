@@ -50,17 +50,21 @@ import { haptic } from '@metacells/mcellui-core';
 // Icons
 // ============================================================================
 
-function ChevronLeftIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function ChevronLeftIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ChevronRightIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function ChevronRightIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
@@ -121,21 +125,6 @@ const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
-
-const SIZE_CONFIG = {
-  sm: {
-    daySize: 32,
-    fontSize: 12,
-    headerFontSize: 14,
-    gap: 2,
-  },
-  md: {
-    daySize: 40,
-    fontSize: 14,
-    headerFontSize: 16,
-    gap: 4,
-  },
-};
 
 // ============================================================================
 // Helpers
@@ -201,8 +190,8 @@ function DayCell({
   size: CalendarSize;
   onPress: (date: Date) => void;
 }) {
-  const { colors, radius } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, radius, components } = useTheme();
+  const config = components.calendar[size];
 
   const scale = useSharedValue(1);
 
@@ -312,8 +301,8 @@ export function Calendar({
   showWeekNumbers = false,
   style,
 }: CalendarProps) {
-  const { colors, spacing, radius } = useTheme();
-  const config = SIZE_CONFIG[size];
+  const { colors, spacing, radius, components } = useTheme();
+  const config = components.calendar[size];
 
   const today = new Date();
   const [viewDate, setViewDate] = useState(() => {
@@ -452,10 +441,10 @@ export function Calendar({
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }, style]}>
+    <View style={[styles.container, { backgroundColor: colors.background, padding: config.containerPadding }, style]}>
       {/* Header */}
       <View style={[styles.header, { marginBottom: spacing[3] }]}>
-        <Pressable onPress={handlePrevMonth} style={styles.navButton}>
+        <Pressable onPress={handlePrevMonth} style={{ padding: config.navButtonPadding }}>
           <ChevronLeftIcon size={20} color={colors.foreground} />
         </Pressable>
 
@@ -463,14 +452,14 @@ export function Calendar({
           {MONTHS[month]} {year}
         </Text>
 
-        <Pressable onPress={handleNextMonth} style={styles.navButton}>
+        <Pressable onPress={handleNextMonth} style={{ padding: config.navButtonPadding }}>
           <ChevronRightIcon size={20} color={colors.foreground} />
         </Pressable>
       </View>
 
       {/* Weekday headers */}
       <View style={[styles.weekRow, { gap: config.gap }]}>
-        {showWeekNumbers && <View style={{ width: 24 }} />}
+        {showWeekNumbers && <View style={{ width: config.weekNumberWidth }} />}
         {weekdays.map((day) => (
           <View key={day} style={[styles.dayCell, { width: config.daySize, height: 24 }]}>
             <Text style={[styles.weekdayText, { fontSize: config.fontSize - 2, color: colors.foregroundMuted }]}>
@@ -485,7 +474,7 @@ export function Calendar({
         {weeks.map((week, weekIndex) => (
           <View key={weekIndex} style={[styles.weekRow, { gap: config.gap }]}>
             {showWeekNumbers && (
-              <View style={[styles.weekNumber, { width: 24 }]}>
+              <View style={[styles.weekNumber, { width: config.weekNumberWidth }]}>
                 <Text style={[styles.weekNumberText, { color: colors.foregroundMuted }]}>
                   {getWeekNumber(week[0])}
                 </Text>
@@ -524,9 +513,7 @@ export function Calendar({
 // ============================================================================
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 8,
-  },
+  container: {},
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -534,9 +521,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontWeight: '600',
-  },
-  navButton: {
-    padding: 8,
   },
   grid: {},
   weekRow: {
