@@ -62,7 +62,7 @@ function ShareIcon({ color = '#000', width = 24, height = 24 }) {
 }
 
 export function IconButtonDemo() {
-  const { colors } = useTheme();
+  const { colors, fontSize } = useTheme();
 
   const handlePress = () => {
     Alert.alert('Icon Button', 'Button pressed!');
@@ -187,7 +187,7 @@ export function IconButtonDemo() {
       </Section>
 
       <Section title="All Sizes × Variants">
-        <Text style={[styles.sectionSubtitle, { color: colors.foregroundMuted }]}>Default variant:</Text>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 8 }}>Default variant:</Text>
         <View style={styles.row}>
           {(['sm', 'md', 'lg', 'xl'] as const).map(size => (
             <IconButton
@@ -199,7 +199,7 @@ export function IconButtonDemo() {
             />
           ))}
         </View>
-        <Text style={[styles.sectionSubtitle, { color: colors.foregroundMuted }]}>Secondary variant:</Text>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 8 }}>Secondary variant:</Text>
         <View style={styles.row}>
           {(['sm', 'md', 'lg', 'xl'] as const).map(size => (
             <IconButton
@@ -212,7 +212,7 @@ export function IconButtonDemo() {
             />
           ))}
         </View>
-        <Text style={[styles.sectionSubtitle, { color: colors.foregroundMuted }]}>Outline variant:</Text>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 8 }}>Outline variant:</Text>
         <View style={styles.row}>
           {(['sm', 'md', 'lg', 'xl'] as const).map(size => (
             <IconButton
@@ -233,5 +233,4 @@ export function IconButtonDemo() {
 const styles = StyleSheet.create({
   container: { gap: 24 },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, alignItems: 'center' },
-  sectionSubtitle: { fontSize: 12, marginTop: 8 },
 });

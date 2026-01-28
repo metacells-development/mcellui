@@ -324,7 +324,7 @@ const MOCK_FAQ_ITEMS = [
 // ============================================================================
 
 export function ScreensDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [activeScreen, setActiveScreen] = useState<string | null>(null);
 
   // Demo state for interactive screens
@@ -446,7 +446,7 @@ export function ScreensDemo() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Text style={{ color: colors.foregroundMuted, marginBottom: spacing[6], fontSize: 14, lineHeight: 20 }}>
+      <Text style={{ color: colors.foregroundMuted, marginBottom: spacing[6], fontSize: fontSize.sm, lineHeight: 20 }}>
         Full-page screen templates ready to customize. Tap a screen to preview it.
       </Text>
 
@@ -466,10 +466,10 @@ export function ScreensDemo() {
               },
             ]}
           >
-            <Text style={{ color: colors.foreground, fontSize: 16, fontWeight: '600' }}>
+            <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
               {screen.title}
             </Text>
-            <Text style={{ color: colors.foregroundMuted, marginTop: spacing[1], fontSize: 14 }}>
+            <Text style={{ color: colors.foregroundMuted, marginTop: spacing[1], fontSize: fontSize.sm }}>
               {screen.description}
             </Text>
           </Pressable>
@@ -496,7 +496,7 @@ export function ScreensDemo() {
           }}
           style={{ position: 'absolute', top: 50, right: 20, zIndex: 10 }}
         >
-          <Text style={{ color: colors.primary, fontSize: 16, fontWeight: '600' }}>Close</Text>
+          <Text style={{ color: colors.primary, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>Close</Text>
         </Pressable>
       </Modal>
 
@@ -512,7 +512,7 @@ export function ScreensDemo() {
           onPress={() => setActiveScreen(null)}
           style={{ position: 'absolute', top: 50, right: 20, zIndex: 10 }}
         >
-          <Text style={{ color: colors.primary, fontSize: 16, fontWeight: '600' }}>Close</Text>
+          <Text style={{ color: colors.primary, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>Close</Text>
         </Pressable>
       </Modal>
 

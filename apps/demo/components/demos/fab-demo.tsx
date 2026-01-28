@@ -32,7 +32,7 @@ function ShareIcon({ width = 24, height = 24, color = '#fff' }) {
 }
 
 export function FABDemo() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize } = useTheme();
   const [loading, setLoading] = useState(false);
 
   const handlePress = () => {
@@ -76,7 +76,7 @@ export function FABDemo() {
           <FAB icon={<PlusIcon />} disabled onPress={handlePress} />
           <FAB icon={<PlusIcon />} loading={loading} onPress={handleLoadingPress} />
         </View>
-        <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 8 }}>
           Normal • Disabled • Tap for Loading
         </Text>
       </Section>
@@ -88,7 +88,7 @@ export function FABDemo() {
             { backgroundColor: colors.backgroundMuted, borderRadius: radius.lg },
           ]}
         >
-          <Text style={[styles.mockText, { color: colors.foregroundMuted }]}>
+          <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.sm }}>
             Content Area
           </Text>
           <FAB
@@ -106,12 +106,10 @@ const styles = StyleSheet.create({
   container: { gap: 32 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 16 },
   column: { gap: 12 },
-  hint: { fontSize: 12, marginTop: 8 },
   mockScreen: {
     height: 200,
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  mockText: { fontSize: 14 },
 });

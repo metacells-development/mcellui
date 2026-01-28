@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Avatar } from '@/components/ui/avatar';
+import { Section } from './section';
+import { useTheme } from '@metacells/mcellui-core';
 
 export function AvatarDemo() {
+  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+
   return (
     <View style={styles.container}>
       <Section title="Sizes">
@@ -10,7 +14,6 @@ export function AvatarDemo() {
           <Avatar size="sm" fallback="SM" />
           <Avatar size="md" fallback="MD" />
           <Avatar size="lg" fallback="LG" />
-          <Avatar size="xl" fallback="XL" />
         </View>
       </Section>
 
@@ -41,11 +44,11 @@ export function AvatarDemo() {
       </Section>
 
       <Section title="In Context">
-        <View style={styles.userRow}>
+        <View style={[styles.userRow, { backgroundColor: colors.card, borderRadius: radius.lg, padding: spacing[3] }]}>
           <Avatar fallback="JD" />
           <View style={styles.userInfo}>
-            <Text style={styles.userName}>John Doe</Text>
-            <Text style={styles.userEmail}>john@example.com</Text>
+            <Text style={{ fontSize: fontSize.md, fontWeight: fontWeight.semibold, color: colors.foreground }}>John Doe</Text>
+            <Text style={{ fontSize: fontSize.sm, color: colors.foregroundMuted }}>john@example.com</Text>
           </View>
         </View>
       </Section>
@@ -53,22 +56,9 @@ export function AvatarDemo() {
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      {children}
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: { gap: 24 },
-  section: { gap: 12 },
-  sectionTitle: { fontSize: 14, fontWeight: '600', color: '#737373', textTransform: 'uppercase' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  userRow: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, backgroundColor: '#fff', borderRadius: 12 },
+  userRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   userInfo: { flex: 1 },
-  userName: { fontSize: 16, fontWeight: '600', color: '#171717' },
-  userEmail: { fontSize: 14, color: '#737373' },
 });
