@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 20 of 21 (Spacing, Typography & Naming)
-Plan: 3 of 5 in current phase
+Plan: 5 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-28 — Completed 20-03-PLAN.md (Typography Token Migration Batch 1)
+Last activity: 2026-01-28 — Completed 20-05-PLAN.md (Demo Block Naming Consistency)
 
-Progress: [████████████████████] 97% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 in progress)
+Progress: [████████████████████] 98% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 nearly complete)
 
 ## Performance Metrics
 
@@ -76,6 +76,7 @@ Recent decisions affecting v1.2:
 - Sub-token borderRadius (1, 1.5) preserved as intentional design details — Not all small values need tokens (20-02)
 - fontSize 10 and 13 round up to nearest token (xs=12, sm=14) — No sub-xs tokens in scale (20-03)
 - All fontSize and fontWeight values use typography tokens — Eliminates hardcoded numeric font values (20-03)
+- Demo app blocks use -block suffix in filename and exports — Matches registry naming pattern (20-05)
 
 ### Pending Todos
 
@@ -102,13 +103,13 @@ From v1.1 audit:
 - ~~Avatar component uses 5-value size scale instead of standard 3-value~~ → FIXED in 19-05 (standardized to sm|md|lg)
 - ~~Avatar size="xl" usages in blocks/screens~~ → FIXED in 19-09 (changed to valid size="lg")
 - ~~Home screen manual card construction~~ → FIXED in 19-05 (uses MediaCard component)
-- 9 demo app files missing `-block` suffix
+- ~~9 demo app files missing `-block` suffix~~ → FIXED in 20-05 (renamed to match registry pattern)
 
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 20-03-PLAN.md (Typography Token Migration Batch 1)
+Stopped at: Completed 20-05-PLAN.md (Demo Block Naming Consistency)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 20-03 completion*
+*Updated: 2026-01-28 after 20-05 completion*
