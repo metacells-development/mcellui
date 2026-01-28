@@ -33,7 +33,7 @@ import Svg, { Path, Rect, Circle } from 'react-native-svg';
 import { useTheme, getLineHeight, lineHeight } from '@metacells/mcellui-core';
 
 // Import blocks
-import { FeedPostCard, FeedPostUser } from '../blocks/feed-post-card';
+import { FeedPostCard, FeedPostUser } from '../blocks/feed-post-card-block';
 
 // ============================================================================
 // Types

@@ -32,7 +32,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/tabs';
 import { Spinner } from '../ui/spinner';
 
 // Import blocks
-import { OrderItem, Order, OrderStatus } from '../blocks/order-item';
+import { OrderItem, Order, OrderStatus } from '../blocks/order-item-block';
 import { EmptyStateBlock } from '../blocks/empty-state-block';
 
 // ============================================================================

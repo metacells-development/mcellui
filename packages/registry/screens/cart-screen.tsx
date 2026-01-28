@@ -33,7 +33,7 @@ import { IconButton } from '../ui/icon-button';
 import { Separator } from '../ui/separator';
 
 // Import blocks
-import { CartItem, CartProduct } from '../blocks/cart-item';
+import { CartItem, CartProduct } from '../blocks/cart-item-block';
 import { EmptyStateBlock } from '../blocks/empty-state-block';
 
 // ============================================================================

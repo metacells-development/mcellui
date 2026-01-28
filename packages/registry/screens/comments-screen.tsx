@@ -39,7 +39,7 @@ import { Avatar } from '../ui/avatar';
 import { Spinner } from '../ui/spinner';
 
 // Import blocks
-import { CommentItem, CommentItemProps } from '../blocks/comment-item';
+import { CommentItem, CommentItemProps } from '../blocks/comment-item-block';
 import { EmptyStateBlock } from '../blocks/empty-state-block';
 
 // ============================================================================

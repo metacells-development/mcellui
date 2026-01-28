@@ -34,7 +34,7 @@ import { Separator } from '../ui/separator';
 import { SwipeableRow } from '../ui/swipeable-row';
 
 // Import blocks
-import { NotificationItem } from '../blocks/notification-item';
+import { NotificationItem } from '../blocks/notification-item-block';
 
 // ============================================================================
 // Types

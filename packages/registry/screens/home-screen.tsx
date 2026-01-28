@@ -37,9 +37,9 @@ import { HorizontalList } from '../ui/horizontal-list';
 import { SectionHeader } from '../ui/section-header';
 
 // Import blocks
-import { StatsCard } from '../blocks/stats-card';
+import { StatsCard } from '../blocks/stats-card-block';
 import { HeroBlock } from '../blocks/hero-block';
-import { ContentCard } from '../blocks/content-card';
+import { ContentCard } from '../blocks/content-card-block';
 
 // ============================================================================
 // Icons

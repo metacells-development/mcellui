@@ -35,7 +35,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/tabs';
 import { Spinner } from '../ui/spinner';
 
 // Import blocks
-import { UserListItem, UserListItemUser } from '../blocks/user-list-item';
+import { UserListItem, UserListItemUser } from '../blocks/user-list-item-block';
 import { EmptyStateBlock } from '../blocks/empty-state-block';
 
 // ============================================================================
