@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 19 of 21 (Critical Color & API Fixes)
-Plan: 1 of 5 in current phase
+Plan: 2 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-28 — Completed 19-01-PLAN.md (icon colors & shadows)
+Last activity: 2026-01-28 — Completed 19-02-PLAN.md (RGBA overlays & hex colors)
 
-Progress: [██████████████████░░] 86% (v1.0 + v1.1 complete, v1.2 in progress)
+Progress: [███████████████████░] 87% (v1.0 + v1.1 complete, v1.2 in progress)
 
 ## Performance Metrics
 
@@ -48,6 +48,9 @@ Recent decisions affecting v1.2:
 - JSDoc for all core exports — IDE intellisense for developers
 - Icon color defaults use colors.foreground fallback — Dark mode support (19-01)
 - Shadows use platformShadow() helper — Platform and theme adaptation (19-01)
+- RGBA overlays use semantic tokens (overlay, scrim, backgroundElevated) — Full dark mode support (19-02)
+- Text-on-image no longer uses text shadows — Gradient overlay provides contrast (19-02)
+- Rating stars use colors.warning token — Theme-adaptive amber color (19-02)
 
 ### Pending Todos
 
@@ -68,15 +71,16 @@ From v1.1 audit:
 - 250+ hardcoded values bypass token system (breaks theming/dark mode)
 - ~~50+ icon components use `#000` instead of `colors.foreground`~~ → FIXED in 19-01 (5 icons)
 - ~~6 shadow objects use hardcoded `#000`~~ → FIXED in 19-01 (migrated to platformShadow)
-- 20+ RGBA overlays need semantic token migration
+- ~~20+ RGBA overlays need semantic token migration~~ → FIXED in 19-02 (8 components)
+- ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED in 19-02 (4 components)
 - 9 demo app files missing `-block` suffix
 - Avatar component uses 5-value size scale instead of standard 3-value
 
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 19-01-PLAN.md (icon colors & shadows fixed)
+Stopped at: Completed 19-02-PLAN.md (RGBA overlays & hex colors)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after completing 19-01-PLAN.md*
+*Updated: 2026-01-28 after completing 19-02-PLAN.md*
