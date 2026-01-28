@@ -746,7 +746,7 @@ function SocialProofBarPreview() {
               'https://i.pravatar.cc/100?img=16',
             ]}
             text="Alex and Emma are using this"
-            avatarSize="xs"
+            avatarSize="sm"
           />
         </CardContent>
       </Card>

@@ -37,7 +37,7 @@ export interface SocialProofBarBlockProps {
   /** Maximum avatars to show (default: 3) */
   maxAvatars?: number;
   /** Avatar size (default: 'sm') */
-  avatarSize?: 'xs' | 'sm' | 'md';
+  avatarSize?: 'sm' | 'md' | 'lg';
   /** Called when bar is pressed */
   onPress?: () => void;
   /** Container style */
@@ -60,8 +60,8 @@ export function SocialProofBarBlock({
 
   const displayAvatars = avatars.slice(0, maxAvatars);
 
-  // Get pixel size for overlap calculation
-  const sizeMap = { xs: 24, sm: 32, md: 40 };
+  // Get pixel size for overlap calculation (matches Avatar component sizes)
+  const sizeMap = { sm: 32, md: 40, lg: 56 };
   const pixelSize = sizeMap[avatarSize];
   const overlap = pixelSize * 0.3;
 
