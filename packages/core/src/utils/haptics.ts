@@ -10,6 +10,7 @@
  * - Respect user's haptic preferences
  */
 
+/** Available haptic feedback styles */
 export type HapticStyle = 'light' | 'medium' | 'heavy' | 'success' | 'warning' | 'error' | 'selection';
 
 /**
@@ -47,7 +48,10 @@ let hapticsEnabled = true;
 
 /**
  * Enable or disable haptic feedback globally.
+ *
  * Use this to respect user preferences or accessibility settings.
+ *
+ * @param enabled - Whether to enable haptic feedback
  *
  * @example
  * ```tsx
@@ -63,19 +67,23 @@ export function setHapticsEnabled(enabled: boolean): void {
 }
 
 /**
- * Check if haptics are currently enabled
+ * Check if haptics are currently enabled.
+ *
+ * @returns True if haptics are enabled and expo-haptics is available
  */
 export function isHapticsEnabled(): boolean {
   return hapticsEnabled && Haptics !== null;
 }
 
 /**
- * Trigger haptic feedback
+ * Trigger haptic feedback.
  *
  * Respects the global haptics enabled state. Disabled via:
  * - `setHapticsEnabled(false)`
  * - `<ThemeProvider haptics={false}>`
- * - `mcellui.config.ts` with `haptics: false`
+ *
+ * @param style - Haptic feedback style (defaults to 'light')
+ * @returns Promise that resolves when haptic completes
  *
  * @example
  * ```tsx
@@ -118,7 +126,9 @@ export async function haptic(style: HapticStyle = 'light'): Promise<void> {
 }
 
 /**
- * Check if haptics are available
+ * Check if haptics are available.
+ *
+ * @returns True if expo-haptics is installed and can be used
  */
 export function hapticsAvailable(): boolean {
   return Haptics !== null;

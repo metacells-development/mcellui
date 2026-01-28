@@ -34,7 +34,10 @@ try {
 
 /**
  * Check if the app is running in Expo Go client.
+ *
  * Returns false in development builds, production builds, or non-Expo environments.
+ *
+ * @returns True if running in Expo Go client
  */
 export function isExpoGo(): boolean {
   return executionEnvironment === 'storeClient';
@@ -45,10 +48,11 @@ let animationsDisabledOverride: boolean | null = null;
 
 /**
  * Manually override the animation disabled state.
+ *
  * Set to `true` to force disable animations, `false` to force enable,
  * or `null` to use automatic detection (Expo Go = disabled).
  *
- * @param disabled - Override value or null for automatic
+ * @param disabled - Override value (true/false) or null for automatic detection
  */
 export function setAnimationsDisabled(disabled: boolean | null): void {
   animationsDisabledOverride = disabled;
@@ -56,6 +60,7 @@ export function setAnimationsDisabled(disabled: boolean | null): void {
 
 /**
  * Check if animations should be disabled.
+ *
  * Returns true if:
  * - Manually overridden to true via setAnimationsDisabled(true)
  * - Running in Expo Go (automatic detection)
@@ -63,6 +68,8 @@ export function setAnimationsDisabled(disabled: boolean | null): void {
  * Returns false if:
  * - Manually overridden to false via setAnimationsDisabled(false)
  * - Running in development/production build
+ *
+ * @returns True if animations should be disabled
  */
 export function areAnimationsDisabled(): boolean {
   if (animationsDisabledOverride !== null) {

@@ -12,7 +12,12 @@ type StyleInput = Style | Style[] | null | undefined | false;
 
 /**
  * Merges multiple style objects into a single flattened style.
- * Handles undefined, null, false, and nested arrays.
+ *
+ * Handles undefined, null, false, and nested arrays. React Native equivalent
+ * of clsx/cn for web.
+ *
+ * @param inputs - Style objects or falsy values to merge
+ * @returns Merged and flattened style object
  *
  * @example
  * ```tsx
@@ -42,7 +47,11 @@ export function cn(...inputs: StyleInput[]): Style {
 
 /**
  * Creates a style object from conditional styles.
+ *
  * More explicit alternative to cn() for complex conditions.
+ *
+ * @param styles - Object mapping condition names to style values
+ * @returns Merged and flattened style object
  *
  * @example
  * ```tsx
