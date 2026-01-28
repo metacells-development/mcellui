@@ -84,25 +84,31 @@ export interface ChatScreenProps {
 // Icons
 // ============================================================================
 
-function BackIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function BackIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function SendIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function SendIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function MoreIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function MoreIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={finalColor}>
       <Circle cx="12" cy="12" r="1.5" />
       <Circle cx="19" cy="12" r="1.5" />
       <Circle cx="5" cy="12" r="1.5" />

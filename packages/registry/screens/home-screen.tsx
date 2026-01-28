@@ -45,17 +45,21 @@ import { ContentCard } from '../blocks/content-card-block';
 // Icons
 // ============================================================================
 
-function BellIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function BellIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function SettingsIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function SettingsIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <SvgCircle cx="12" cy="12" r="3" />
       <Path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
@@ -204,7 +208,7 @@ export function HomeScreen({
                       { backgroundColor: colors.destructive },
                     ]}
                   >
-                    <Text style={[styles.notificationCount, { fontSize: fontSize.xs, fontWeight: fontWeight.bold }]}>
+                    <Text style={[styles.notificationCount, { color: colors.destructiveForeground, fontSize: fontSize.xs, fontWeight: fontWeight.bold }]}>
                       {notificationCount > 9 ? '9+' : notificationCount}
                     </Text>
                   </View>
@@ -415,9 +419,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 4,
   },
-  notificationCount: {
-    color: '#fff',
-  },
+  notificationCount: {},
   quickActionsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',

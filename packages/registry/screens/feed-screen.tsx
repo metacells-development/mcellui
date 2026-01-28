@@ -95,25 +95,31 @@ export interface FeedScreenProps {
 // Icons
 // ============================================================================
 
-function BackIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function BackIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function PlusIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function PlusIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M12 5v14M5 12h14" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function FeedEmptyIcon({ size = 64, color = '#000' }: { size?: number; color?: string }) {
+function FeedEmptyIcon({ size = 64, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Rect x="3" y="3" width="18" height="18" rx="2" />
       <Path d="M3 9h18M9 21V9" />
     </Svg>
