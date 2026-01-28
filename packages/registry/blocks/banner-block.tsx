@@ -39,17 +39,21 @@ import { IconButton } from '../ui/icon-button';
 // Icons
 // ============================================================================
 
-function CloseIcon({ size = 20, color = '#fff' }: { size?: number; color?: string }) {
+function CloseIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ChevronRightIcon({ size = 20, color = '#fff' }: { size?: number; color?: string }) {
+function ChevronRightIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
@@ -158,7 +162,7 @@ export function BannerBlock({
       case 'outline':
         return colors.foreground;
       default:
-        return '#ffffff';
+        return colors.primaryForeground;
     }
   };
 
@@ -198,8 +202,7 @@ export function BannerBlock({
         <View
           style={[
             StyleSheet.absoluteFillObject,
-            styles.imageOverlay,
-            { borderRadius: radius.lg },
+            { backgroundColor: colors.scrim, borderRadius: radius.lg },
           ]}
         />
       )}
@@ -313,9 +316,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     overflow: 'hidden',
     justifyContent: 'center',
-  },
-  imageOverlay: {
-    backgroundColor: 'rgba(0,0,0,0.4)',
   },
   contentRow: {
     flexDirection: 'row',

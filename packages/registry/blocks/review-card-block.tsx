@@ -45,25 +45,31 @@ import { Badge } from '../ui/badge';
 // Icons
 // ============================================================================
 
-function ThumbsUpIcon({ size = 16, color = '#000', filled = false }: { size?: number; color?: string; filled?: boolean }) {
+function ThumbsUpIcon({ size = 16, color, filled = false }: { size?: number; color?: string; filled?: boolean }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? color : 'none'} stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? finalColor : 'none'} stroke={finalColor} strokeWidth={2}>
       <Path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function CheckIcon({ size = 14, color = '#000' }: { size?: number; color?: string }) {
+function CheckIcon({ size = 14, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function MoreHorizontalIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function MoreHorizontalIcon({ size = 16, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M12 12h.01M19 12h.01M5 12h.01" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
@@ -190,7 +196,7 @@ export function ReviewCard({
               </Text>
               {author.verified && (
                 <View style={[styles.verifiedBadge, { backgroundColor: colors.success, marginLeft: spacing[1] }]}>
-                  <CheckIcon size={10} color="#fff" />
+                  <CheckIcon size={10} color={colors.primaryForeground} />
                 </View>
               )}
             </View>
@@ -258,8 +264,8 @@ export function ReviewCard({
             >
               <Image source={image} style={styles.image} resizeMode="cover" />
               {index === 3 && images.length > 4 && (
-                <View style={[styles.moreImages, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
-                  <Text style={styles.moreImagesText}>+{images.length - 4}</Text>
+                <View style={[styles.moreImages, { backgroundColor: colors.overlay }]}>
+                  <Text style={[styles.moreImagesText, { color: colors.primaryForeground }]}>+{images.length - 4}</Text>
                 </View>
               )}
             </Pressable>
@@ -377,7 +383,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   moreImagesText: {
-    color: '#fff',
     fontSize: cardBlockTokens.typography.titleFontSize,
     fontWeight: cardBlockTokens.typography.titleFontWeight,
   },

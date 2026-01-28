@@ -43,14 +43,16 @@ import { Rating } from '../ui/rating';
 // Icons
 // ============================================================================
 
-function HeartIcon({ size = 20, color = '#000', filled = false }: { size?: number; color?: string; filled?: boolean }) {
+function HeartIcon({ size = 20, color, filled = false }: { size?: number; color?: string; filled?: boolean }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
     <Svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill={filled ? color : 'none'}
-      stroke={color}
+      fill={filled ? finalColor : 'none'}
+      stroke={finalColor}
       strokeWidth={2}
     >
       <Path
@@ -62,9 +64,11 @@ function HeartIcon({ size = 20, color = '#000', filled = false }: { size?: numbe
   );
 }
 
-function CartIcon({ size = 20, color = '#fff' }: { size?: number; color?: string }) {
+function CartIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path
         d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2zM1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"
         strokeLinecap="round"
@@ -74,9 +78,11 @@ function CartIcon({ size = 20, color = '#fff' }: { size?: number; color?: string
   );
 }
 
-function ImagePlaceholderIcon({ size = 48, color = '#000' }: { size?: number; color?: string }) {
+function ImagePlaceholderIcon({ size = 48, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
       <Circle cx="8.5" cy="8.5" r="1.5" />
       <Path d="M21 15l-5-5L5 21" />
@@ -323,8 +329,8 @@ export function ProductCard({
 
         {/* Out of stock overlay */}
         {outOfStock && (
-          <View style={styles.outOfStockOverlay}>
-            <Text style={styles.outOfStockText}>Out of Stock</Text>
+          <View style={[styles.outOfStockOverlay, { backgroundColor: colors.overlay }]}>
+            <Text style={[styles.outOfStockText, { color: colors.primaryForeground }]}>Out of Stock</Text>
           </View>
         )}
       </View>
@@ -426,12 +432,10 @@ const styles = StyleSheet.create({
   },
   outOfStockOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   outOfStockText: {
-    color: '#fff',
     fontWeight: cardBlockTokens.typography.titleFontWeight,
     fontSize: cardBlockTokens.typography.subtitleFontSize,
   },

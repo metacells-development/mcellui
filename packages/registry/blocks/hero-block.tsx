@@ -133,7 +133,7 @@ export function HeroBlock({
     if (overlay === 'gradient') {
       return (
         <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.7)']}
+          colors={['transparent', colors.scrim]}
           style={StyleSheet.absoluteFill}
         />
       );
@@ -143,7 +143,7 @@ export function HeroBlock({
         <View
           style={[
             StyleSheet.absoluteFill,
-            { backgroundColor: 'rgba(0,0,0,0.5)' },
+            { backgroundColor: colors.overlay },
           ]}
         />
       );
@@ -169,7 +169,7 @@ export function HeroBlock({
             fontSize: heroTokens.titleFontSize,
             fontWeight: String(heroTokens.titleFontWeight) as any,
             lineHeight: heroTokens.titleLineHeight,
-            color: '#FFFFFF',
+            color: colors.primaryForeground,
             textAlign,
             marginBottom: spacing[2],
           },
@@ -184,7 +184,7 @@ export function HeroBlock({
             {
               fontSize: heroTokens.subtitleFontSize,
               lineHeight: heroTokens.subtitleLineHeight,
-              color: 'rgba(255,255,255,0.9)',
+              color: colors.primaryForeground,
               textAlign,
               marginBottom: spacing[6],
             },

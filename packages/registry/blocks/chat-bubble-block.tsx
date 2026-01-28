@@ -36,12 +36,14 @@ import { Avatar } from '../ui/avatar';
 // Icons
 // ============================================================================
 
-function CheckIcon({ size = 16, color = '#fff' }: { size?: number; color?: string }) {
+function CheckIcon({ size = 16, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M20 6L9 17l-5-5"
-        stroke={color}
+        stroke={finalColor}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -50,19 +52,21 @@ function CheckIcon({ size = 16, color = '#fff' }: { size?: number; color?: strin
   );
 }
 
-function DoubleCheckIcon({ size = 16, color = '#fff' }: { size?: number; color?: string }) {
+function DoubleCheckIcon({ size = 16, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M18 6L7 17l-5-5"
-        stroke={color}
+        stroke={finalColor}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <Path
         d="M22 10l-9 9-1-1"
-        stroke={color}
+        stroke={finalColor}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -71,11 +75,13 @@ function DoubleCheckIcon({ size = 16, color = '#fff' }: { size?: number; color?:
   );
 }
 
-function ClockIcon({ size = 14, color = '#fff' }: { size?: number; color?: string }) {
+function ClockIcon({ size = 14, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <Circle cx={12} cy={12} r={10} stroke={color} strokeWidth={2} />
-      <Path d="M12 6v6l4 2" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+      <Circle cx={12} cy={12} r={10} stroke={finalColor} strokeWidth={2} />
+      <Path d="M12 6v6l4 2" stroke={finalColor} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
@@ -154,16 +160,16 @@ export function ChatBubble({
   const renderStatus = () => {
     if (!isOwn || !status) return null;
 
-    const statusColor = status === 'read' ? colors.primary : 'rgba(255,255,255,0.7)';
+    const statusColor = status === 'read' ? colors.primary : colors.primaryForeground;
     const iconSize = 14;
 
     switch (status) {
       case 'sending':
-        return <ClockIcon size={iconSize} color="rgba(255,255,255,0.7)" />;
+        return <ClockIcon size={iconSize} color={colors.primaryForeground} />;
       case 'sent':
-        return <CheckIcon size={iconSize} color="rgba(255,255,255,0.7)" />;
+        return <CheckIcon size={iconSize} color={colors.primaryForeground} />;
       case 'delivered':
-        return <DoubleCheckIcon size={iconSize} color="rgba(255,255,255,0.7)" />;
+        return <DoubleCheckIcon size={iconSize} color={colors.primaryForeground} />;
       case 'read':
         return <DoubleCheckIcon size={iconSize} color={statusColor} />;
       case 'error':
@@ -178,7 +184,7 @@ export function ChatBubble({
   // Bubble colors
   const bubbleBackground = isOwn ? colors.primary : colors.secondary;
   const textColor = isOwn ? colors.primaryForeground : colors.foreground;
-  const timeColor = isOwn ? 'rgba(255,255,255,0.7)' : colors.foregroundMuted;
+  const timeColor = isOwn ? colors.primaryForeground : colors.foregroundMuted;
 
   // Border radius based on position in group
   const getBorderRadius = () => {

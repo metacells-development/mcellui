@@ -94,25 +94,31 @@ function formatDuration(seconds: number): string {
 // Icons
 // ============================================================================
 
-function PlayIcon({ size = 24, color = '#FFFFFF' }: { size?: number; color?: string }) {
+function PlayIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={finalColor}>
       <Path d="M8 5v14l11-7z" />
     </Svg>
   );
 }
 
-function CheckIcon({ size = 16, color = '#FFFFFF' }: { size?: number; color?: string }) {
+function CheckIcon({ size = 16, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={3}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={3}>
       <Path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function FileIcon({ size = 32, color = '#666666' }: { size?: number; color?: string }) {
+function FileIcon({ size = 32, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Path
         d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
         strokeLinecap="round"
@@ -197,7 +203,7 @@ export function MediaItem({
             style={[
               styles.playButtonBg,
               {
-                backgroundColor: 'rgba(0,0,0,0.5)',
+                backgroundColor: colors.overlay,
                 width: tokens.playButtonSize,
                 height: tokens.playButtonSize,
                 borderRadius: tokens.playButtonSize / 2,
@@ -224,7 +230,7 @@ export function MediaItem({
             <View
               style={[
                 styles.selectedOverlay,
-                { borderRadius: itemRadius, borderColor: colors.primary, borderWidth: 3 },
+                { backgroundColor: colors.scrim, borderRadius: itemRadius, borderColor: colors.primary, borderWidth: 3 },
               ]}
             />
           )}
@@ -235,7 +241,7 @@ export function MediaItem({
               style={[
                 styles.checkboxInner,
                 {
-                  backgroundColor: selected ? colors.primary : 'rgba(255,255,255,0.8)',
+                  backgroundColor: selected ? colors.primary : colors.background,
                   borderColor: selected ? colors.primary : colors.border,
                   borderRadius: radius.full,
                   width: tokens.checkboxSize,
@@ -285,7 +291,6 @@ const styles = StyleSheet.create({
   },
   selectedOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.2)',
   },
   checkbox: {
     position: 'absolute',

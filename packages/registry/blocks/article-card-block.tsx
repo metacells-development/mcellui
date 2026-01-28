@@ -44,26 +44,32 @@ import { Card } from '../ui/card';
 // Icons
 // ============================================================================
 
-function ClockIcon({ size = 12, color = '#000' }: { size?: number; color?: string }) {
+function ClockIcon({ size = 12, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <SvgCircle cx="12" cy="12" r="10" />
       <Path d="M12 6v6l4 2" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function BookmarkIcon({ size = 20, color = '#000', filled = false }: { size?: number; color?: string; filled?: boolean }) {
+function BookmarkIcon({ size = 20, color, filled = false }: { size?: number; color?: string; filled?: boolean }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? color : 'none'} stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? finalColor : 'none'} stroke={finalColor} strokeWidth={2}>
       <Path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ImagePlaceholderIcon({ size = 32, color = '#000' }: { size?: number; color?: string }) {
+function ImagePlaceholderIcon({ size = 32, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
       <SvgCircle cx="8.5" cy="8.5" r="1.5" />
       <Path d="M21 15l-5-5L5 21" />
@@ -242,7 +248,7 @@ export function ArticleCard({
               <ImagePlaceholderIcon size={48} color={colors.foregroundMuted} />
             </View>
           )}
-          <View style={styles.featuredOverlay} />
+          <View style={[styles.featuredOverlay, { backgroundColor: colors.overlay }]} />
         </View>
 
         {/* Content overlay */}
@@ -255,11 +261,11 @@ export function ArticleCard({
               {article.category}
             </Badge>
           )}
-          <Text style={styles.featuredTitle} numberOfLines={3}>
+          <Text style={[styles.featuredTitle, { color: colors.primaryForeground }]} numberOfLines={3}>
             {article.title}
           </Text>
           {article.excerpt && (
-            <Text style={styles.featuredExcerpt} numberOfLines={2}>
+            <Text style={[styles.featuredExcerpt, { color: colors.primaryForeground }]} numberOfLines={2}>
               {article.excerpt}
             </Text>
           )}
@@ -269,10 +275,10 @@ export function ArticleCard({
             {article.author && (
               <View style={styles.authorRow}>
                 <Avatar source={article.author.avatar} fallback={article.author.name.charAt(0)} size="xs" />
-                <Text style={styles.featuredAuthor}>{article.author.name}</Text>
+                <Text style={[styles.featuredAuthor, { color: colors.primaryForeground }]}>{article.author.name}</Text>
               </View>
             )}
-            <Text style={styles.featuredMeta}>
+            <Text style={[styles.featuredMeta, { color: colors.primaryForeground }]}>
               {formatDate(article.publishedAt)}
               {article.readTime && ` · ${article.readTime} min read`}
             </Text>
@@ -459,7 +465,6 @@ const styles = StyleSheet.create({
   },
   featuredOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   featuredContent: {
     flex: 1,
@@ -468,12 +473,10 @@ const styles = StyleSheet.create({
   featuredTitle: {
     fontSize: 22,
     fontWeight: cardBlockTokens.typography.priceFontWeight,
-    color: '#fff',
     lineHeight: 28,
   },
   featuredExcerpt: {
     fontSize: cardBlockTokens.typography.subtitleFontSize,
-    color: 'rgba(255,255,255,0.8)',
     marginTop: 8,
     lineHeight: 20,
   },
@@ -485,11 +488,9 @@ const styles = StyleSheet.create({
   featuredAuthor: {
     fontSize: cardBlockTokens.typography.metaFontSize,
     fontWeight: cardBlockTokens.typography.titleFontWeight,
-    color: '#fff',
     marginLeft: 8,
   },
   featuredMeta: {
     fontSize: cardBlockTokens.typography.metaFontSize,
-    color: 'rgba(255,255,255,0.7)',
   },
 });
