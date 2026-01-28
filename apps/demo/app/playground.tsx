@@ -16,19 +16,39 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Input } from '@/components/ui/input';
 
+type ThemeResult = ReturnType<typeof useTheme>;
+
+function getDynamicStyles(theme: ThemeResult) {
+  const { fontSize, fontWeight, spacing } = theme;
+  return {
+    header: { paddingHorizontal: spacing[4], paddingVertical: spacing[3] },
+    title: { fontSize: fontSize.lg, fontWeight: fontWeight.bold },
+    subtitle: { fontSize: fontSize.sm, marginTop: spacing[0.5] },
+    previewHeader: { paddingHorizontal: spacing[4], paddingVertical: spacing[2.5] },
+    previewTitle: { fontSize: fontSize.sm, fontWeight: fontWeight.semibold },
+    previewContent: { padding: spacing[4], gap: spacing[6] },
+    section: { gap: spacing[3] },
+    sectionTitle: { fontSize: fontSize.sm, fontWeight: fontWeight.semibold },
+    buttonRow: { gap: spacing[2] },
+    badgeRow: { gap: spacing[2] },
+  };
+}
+
 function FullPreview() {
-  const { colors, radius, spacing } = useTheme();
+  const theme = useTheme();
+  const { colors } = theme;
+  const dynamicStyles = getDynamicStyles(theme);
 
   return (
     <ScrollView
       style={[styles.previewScroll, { backgroundColor: colors.backgroundSubtle }]}
-      contentContainerStyle={styles.previewContent}
+      contentContainerStyle={[styles.previewContent, dynamicStyles.previewContent]}
       showsVerticalScrollIndicator={false}
     >
       {/* Buttons */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Buttons</Text>
-        <View style={styles.buttonRow}>
+      <View style={[styles.section, dynamicStyles.section]}>
+        <Text style={[styles.sectionTitle, { color: colors.foreground }, dynamicStyles.sectionTitle]}>Buttons</Text>
+        <View style={[styles.buttonRow, dynamicStyles.buttonRow]}>
           <Button variant="default" size="sm">Primary</Button>
           <Button variant="secondary" size="sm">Secondary</Button>
           <Button variant="outline" size="sm">Outline</Button>
@@ -37,8 +57,8 @@ function FullPreview() {
       </View>
 
       {/* Card */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Card</Text>
+      <View style={[styles.section, dynamicStyles.section]}>
+        <Text style={[styles.sectionTitle, { color: colors.foreground }, dynamicStyles.sectionTitle]}>Card</Text>
         <Card>
           <CardHeader>
             <CardTitle>Card Title</CardTitle>
@@ -53,15 +73,15 @@ function FullPreview() {
       </View>
 
       {/* Input */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Input</Text>
+      <View style={[styles.section, dynamicStyles.section]}>
+        <Text style={[styles.sectionTitle, { color: colors.foreground }, dynamicStyles.sectionTitle]}>Input</Text>
         <Input placeholder="Enter something..." />
       </View>
 
       {/* Badges */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Badges</Text>
-        <View style={styles.badgeRow}>
+      <View style={[styles.section, dynamicStyles.section]}>
+        <Text style={[styles.sectionTitle, { color: colors.foreground }, dynamicStyles.sectionTitle]}>Badges</Text>
+        <View style={[styles.badgeRow, dynamicStyles.badgeRow]}>
           <Badge>Default</Badge>
           <Badge variant="secondary">Secondary</Badge>
           <Badge variant="outline">Outline</Badge>
@@ -70,8 +90,8 @@ function FullPreview() {
       </View>
 
       {/* Switch */}
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Switch</Text>
+      <View style={[styles.section, dynamicStyles.section]}>
+        <Text style={[styles.sectionTitle, { color: colors.foreground }, dynamicStyles.sectionTitle]}>Switch</Text>
         <Switch checked={true} label="Enabled setting" />
       </View>
     </ScrollView>
@@ -82,7 +102,9 @@ export default function PlaygroundScreen() {
   const [selectedTheme, setSelectedTheme] = useState<ThemePreset>('blue');
   const [selectedRadius, setSelectedRadius] = useState<RadiusPreset>('md');
   const [isDark, setIsDark] = useState(false);
-  const { colors } = useTheme();
+  const theme = useTheme();
+  const { colors } = theme;
+  const dynamicStyles = getDynamicStyles(theme);
   const router = useRouter();
 
   const handleSelect = (theme: ThemePreset, radius: RadiusPreset) => {
@@ -93,10 +115,10 @@ export default function PlaygroundScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
-      <View style={[styles.header, { borderBottomColor: colors.border }]}>
+      <View style={[styles.header, { borderBottomColor: colors.border }, dynamicStyles.header]}>
         <View>
-          <Text style={[styles.title, { color: colors.foreground }]}>Theme Playground</Text>
-          <Text style={[styles.subtitle, { color: colors.foregroundMuted }]}>
+          <Text style={[styles.title, { color: colors.foreground }, dynamicStyles.title]}>Theme Playground</Text>
+          <Text style={[styles.subtitle, { color: colors.foregroundMuted }, dynamicStyles.subtitle]}>
             Explore all 40 theme combinations
           </Text>
         </View>
@@ -122,8 +144,8 @@ export default function PlaygroundScreen() {
 
       {/* Selected Preview */}
       <View style={[styles.previewContainer, { borderTopColor: colors.border }]}>
-        <View style={[styles.previewHeader, { backgroundColor: colors.background }]}>
-          <Text style={[styles.previewTitle, { color: colors.foreground }]}>
+        <View style={[styles.previewHeader, { backgroundColor: colors.background }, dynamicStyles.previewHeader]}>
+          <Text style={[styles.previewTitle, { color: colors.foreground }, dynamicStyles.previewTitle]}>
             Preview: {selectedTheme} / {selectedRadius}
           </Text>
         </View>
@@ -147,18 +169,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
     borderBottomWidth: 1,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  subtitle: {
-    fontSize: 13,
-    marginTop: 2,
-  },
+  title: {},
+  subtitle: {},
   darkToggle: {
     width: 36,
     height: 36,
@@ -173,38 +187,23 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopWidth: 1,
   },
-  previewHeader: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  previewTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  previewHeader: {},
+  previewTitle: {},
   previewScroll: {
     flex: 1,
   },
-  previewContent: {
-    padding: 16,
-    gap: 24,
-  },
-  section: {
-    gap: 12,
-  },
+  previewContent: {},
+  section: {},
   sectionTitle: {
-    fontSize: 13,
-    fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   buttonRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
   },
   badgeRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
   },
 });

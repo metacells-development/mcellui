@@ -2,6 +2,16 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { useTheme } from '@metacells/mcellui-core';
 
+type ThemeResult = ReturnType<typeof useTheme>;
+
+function getDynamicStyles(theme: ThemeResult) {
+  const { fontSize, spacing } = theme;
+  return {
+    notFound: { padding: spacing[8] },
+    notFoundText: { fontSize: fontSize.base },
+  };
+}
+
 // Component demos
 import { ButtonDemo } from '@/components/demos/button-demo';
 import { CardDemo } from '@/components/demos/card-demo';
@@ -204,7 +214,9 @@ const titles: Record<string, string> = {
 
 export default function ComponentPage() {
   const { name } = useLocalSearchParams<{ name: string }>();
-  const { colors, spacing } = useTheme();
+  const theme = useTheme();
+  const { colors, spacing } = theme;
+  const dynamicStyles = getDynamicStyles(theme);
   const DemoComponent = demos[name ?? ''];
   const title = titles[name ?? ''] ?? 'Component';
 
@@ -218,8 +230,8 @@ export default function ComponentPage() {
         {DemoComponent ? (
           <DemoComponent />
         ) : (
-          <View style={styles.notFound}>
-            <Text style={[styles.notFoundText, { color: colors.foregroundMuted }]}>
+          <View style={[styles.notFound, dynamicStyles.notFound]}>
+            <Text style={[styles.notFoundText, { color: colors.foregroundMuted }, dynamicStyles.notFoundText]}>
               Component "{name}" not found
             </Text>
           </View>
@@ -238,9 +250,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 32,
   },
-  notFoundText: {
-    fontSize: 16,
-  },
+  notFoundText: {},
 });

@@ -2,6 +2,23 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
 import { useTheme } from '@metacells/mcellui-core';
 
+type ThemeResult = ReturnType<typeof useTheme>;
+
+function getStyles(theme: ThemeResult) {
+  const { fontSize, fontWeight, spacing } = theme;
+  return {
+    title: { fontSize: fontSize['2xl'], fontWeight: fontWeight.bold },
+    subtitle: { fontSize: fontSize.base },
+    cardTitle: { fontSize: fontSize.lg, fontWeight: fontWeight.semibold },
+    cardDescription: { fontSize: fontSize.sm },
+    playgroundTitle: { fontSize: fontSize.lg, fontWeight: fontWeight.bold },
+    playgroundDescription: { fontSize: fontSize.sm, marginTop: spacing[0.5] },
+    playgroundIcon: { fontSize: fontSize.xl, fontWeight: fontWeight.semibold },
+    footerText: { fontSize: fontSize.sm, fontWeight: fontWeight.medium },
+    footerHint: { fontSize: fontSize.xs },
+  };
+}
+
 const components = [
   { name: 'button', title: 'Button', description: 'Pressable button with variants and sizes' },
   { name: 'card', title: 'Card', description: 'Container with shadow, ImageCard, MediaCard variants' },
@@ -51,7 +68,9 @@ const components = [
 ];
 
 export default function Home() {
-  const { colors, spacing, radius, platformShadow } = useTheme();
+  const theme = useTheme();
+  const { colors, spacing, radius, platformShadow } = theme;
+  const dynamicStyles = getStyles(theme);
 
   return (
     <ScrollView
@@ -59,8 +78,8 @@ export default function Home() {
       contentContainerStyle={[styles.content, { padding: spacing[4] }]}
     >
       <View style={[styles.header, { marginBottom: spacing[6] }]}>
-        <Text style={[styles.title, { color: colors.foreground }]}>Components</Text>
-        <Text style={[styles.subtitle, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
+        <Text style={[styles.title, { color: colors.foreground }, dynamicStyles.title]}>Components</Text>
+        <Text style={[styles.subtitle, { color: colors.foregroundMuted, marginTop: spacing[1] }, dynamicStyles.subtitle]}>
           Tap a component to see examples and variants
         </Text>
       </View>
@@ -81,14 +100,14 @@ export default function Home() {
         >
           <View style={styles.playgroundContent}>
             <View>
-              <Text style={[styles.playgroundTitle, { color: colors.primaryForeground }]}>
+              <Text style={[styles.playgroundTitle, { color: colors.primaryForeground }, dynamicStyles.playgroundTitle]}>
                 Theme Playground
               </Text>
-              <Text style={[styles.playgroundDescription, { color: colors.primaryForeground, opacity: 0.8 }]}>
+              <Text style={[styles.playgroundDescription, { color: colors.primaryForeground, opacity: 0.8 }, dynamicStyles.playgroundDescription]}>
                 Explore all 40 theme/radius combinations
               </Text>
             </View>
-            <Text style={[styles.playgroundIcon, { color: colors.primaryForeground }]}>
+            <Text style={[styles.playgroundIcon, { color: colors.primaryForeground }, dynamicStyles.playgroundIcon]}>
               →
             </Text>
           </View>
@@ -116,10 +135,10 @@ export default function Home() {
                 platformShadow('sm'),
               ]}
             >
-              <Text style={[styles.cardTitle, { color: colors.foreground }]}>
+              <Text style={[styles.cardTitle, { color: colors.foreground }, dynamicStyles.cardTitle]}>
                 {component.title}
               </Text>
-              <Text style={[styles.cardDescription, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
+              <Text style={[styles.cardDescription, { color: colors.foregroundMuted, marginTop: spacing[1] }, dynamicStyles.cardDescription]}>
                 {component.description}
               </Text>
             </Pressable>
@@ -128,10 +147,10 @@ export default function Home() {
       </View>
 
       <View style={[styles.footer, { marginTop: spacing[8], paddingVertical: spacing[4] }]}>
-        <Text style={[styles.footerText, { color: colors.foregroundMuted }]}>
+        <Text style={[styles.footerText, { color: colors.foregroundMuted }, dynamicStyles.footerText]}>
           Built with @metacells/mcellui-core
         </Text>
-        <Text style={[styles.footerHint, { color: colors.foregroundSubtle, marginTop: spacing[1] }]}>
+        <Text style={[styles.footerHint, { color: colors.foregroundSubtle, marginTop: spacing[1] }, dynamicStyles.footerHint]}>
           Tap 🎨 to change theme • 🌙 to toggle dark mode
         </Text>
       </View>
@@ -145,48 +164,24 @@ const styles = StyleSheet.create({
   },
   content: {},
   header: {},
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-  },
-  subtitle: {
-    fontSize: 16,
-  },
+  title: {},
+  subtitle: {},
   grid: {},
   card: {},
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  cardDescription: {
-    fontSize: 14,
-  },
+  cardTitle: {},
+  cardDescription: {},
   playgroundCard: {},
   playgroundContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  playgroundTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  playgroundDescription: {
-    fontSize: 14,
-    marginTop: 2,
-  },
-  playgroundIcon: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
+  playgroundTitle: {},
+  playgroundDescription: {},
+  playgroundIcon: {},
   footer: {
     alignItems: 'center',
   },
-  footerText: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  footerHint: {
-    fontSize: 12,
-  },
+  footerText: {},
+  footerHint: {},
 });
