@@ -16,7 +16,8 @@ const __dirname = path.dirname(__filename);
 
 export interface RegistryItem {
   name: string;
-  type: 'ui' | 'primitive' | 'hook' | 'block';
+  displayName?: string;
+  type: 'ui' | 'primitive' | 'hook' | 'block' | 'screen';
   description: string;
   category: string;
   status: 'stable' | 'beta' | 'experimental';
@@ -24,10 +25,12 @@ export interface RegistryItem {
   dependencies?: string[];
   devDependencies?: string[];
   registryDependencies?: string[];
+  expoGo?: boolean;
 }
 
 export interface Registry {
   $schema?: string;
+  schemaVersion?: string;
   name: string;
   version: string;
   components: RegistryItem[];
