@@ -96,9 +96,14 @@ Plans:
   3. Demo app components use typography tokens — text follows theme hierarchy
   4. Demo app block naming matches registry patterns — all files have correct suffixes
   5. Visual regression testing confirms no dark mode breaks — all demos render correctly
-**Plans**: TBD
+**Plans:** 5 plans
 
-Plans: TBD
+Plans:
+- [ ] 21-01-PLAN.md — Theme selector modal token migration (_layout.tsx)
+- [ ] 21-02-PLAN.md — Block file typography migration (16 files)
+- [ ] 21-03-PLAN.md — Demo file batch 1 token migration (8 high-violation demos)
+- [ ] 21-04-PLAN.md — Demo file batch 2 token migration (remaining demos)
+- [ ] 21-05-PLAN.md — App screens migration + dark mode verification checkpoint
 
 ## Progress
 
@@ -111,7 +116,7 @@ Phases execute in numeric order: 19 → 20 → 21
 | 14-18. Project Audit | v1.1 | Complete | Complete | 2026-01-28 |
 | 19. Critical Color & API Fixes | v1.2 | 9/9 | Complete | 2026-01-28 |
 | 20. Spacing, Typography & Naming | v1.2 | 7/7 | Complete | 2026-01-28 |
-| 21. Demo Consistency & Validation | v1.2 | 0/TBD | Not started | - |
+| 21. Demo Consistency & Validation | v1.2 | 0/5 | Not started | - |
 
 ---
-*Last updated: 2026-01-28 after Phase 20 complete*
+*Last updated: 2026-01-28 after Phase 21 planning*
