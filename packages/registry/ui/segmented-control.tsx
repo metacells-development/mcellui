@@ -75,7 +75,7 @@ export function SegmentedControl({
   style,
   textStyle,
 }: SegmentedControlProps) {
-  const { colors, components, componentRadius, fontWeight } = useTheme();
+  const { colors, components, componentRadius, fontWeight, platformShadow } = useTheme();
   const tokens = components.segmentedControl[size];
   const segmentLayouts = useRef(new Map<string, LayoutRectangle>()).current;
   const animationsEnabled = useMemo(() => !areAnimationsDisabled(), []);
@@ -154,6 +154,7 @@ export function SegmentedControl({
             height: segmentHeight,
             backgroundColor: colors.background,
             borderRadius: componentRadius.segmentedControlIndicator,
+            ...platformShadow('sm'),
           },
           indicatorStyle,
         ]}
@@ -210,11 +211,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 4,
     left: 0,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 2,
-    elevation: 2,
   },
   segment: {
     flex: 1,
