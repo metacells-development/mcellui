@@ -9,11 +9,11 @@ Requirements for consistency sweep milestone. Each maps to roadmap phases.
 
 ### Token Usage — Colors (Critical)
 
-- [ ] **TOK-01**: All UI components use semantic color tokens (no hardcoded hex/rgb/rgba)
-- [ ] **TOK-02**: All block templates use semantic color tokens
-- [ ] **TOK-03**: All screen templates use semantic color tokens
-- [ ] **TOK-04**: All icon defaults use theme `colors.foreground` instead of hardcoded `#000`
-- [ ] **TOK-05**: All overlay/scrim colors use semantic tokens (not hardcoded rgba)
+- [x] **TOK-01**: All UI components use semantic color tokens (no hardcoded hex/rgb/rgba)
+- [x] **TOK-02**: All block templates use semantic color tokens
+- [x] **TOK-03**: All screen templates use semantic color tokens
+- [x] **TOK-04**: All icon defaults use theme `colors.foreground` instead of hardcoded `#000`
+- [x] **TOK-05**: All overlay/scrim colors use semantic tokens (not hardcoded rgba)
 
 ### Token Usage — Spacing & Layout
 
@@ -26,15 +26,15 @@ Requirements for consistency sweep milestone. Each maps to roadmap phases.
 
 ### Token Usage — Shadows
 
-- [ ] **TOK-09**: All components use `platformShadow()` helper for shadows (no custom shadow objects)
+- [x] **TOK-09**: All components use `platformShadow()` helper for shadows (no custom shadow objects)
 
 ### API Patterns
 
-- [ ] **API-01**: Avatar component uses standard size scale (`sm|md|lg`) matching all other components
+- [x] **API-01**: Avatar component uses standard size scale (`sm|md|lg`) matching all other components
 
 ### Component Reuse
 
-- [ ] **REUSE-01**: Home screen uses existing MediaCard/Card component instead of manual card construction
+- [x] **REUSE-01**: Home screen uses existing MediaCard/Card component instead of manual card construction
 
 ### Naming Patterns
 
@@ -68,17 +68,17 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TOK-01 | Phase 19 | Pending |
-| TOK-02 | Phase 19 | Pending |
-| TOK-03 | Phase 19 | Pending |
-| TOK-04 | Phase 19 | Pending |
-| TOK-05 | Phase 19 | Pending |
+| TOK-01 | Phase 19 | Complete |
+| TOK-02 | Phase 19 | Complete |
+| TOK-03 | Phase 19 | Complete |
+| TOK-04 | Phase 19 | Complete |
+| TOK-05 | Phase 19 | Complete |
 | TOK-06 | Phase 20 | Pending |
 | TOK-07 | Phase 20 | Pending |
 | TOK-08 | Phase 20 | Pending |
-| TOK-09 | Phase 19 | Pending |
-| API-01 | Phase 19 | Pending |
-| REUSE-01 | Phase 19 | Pending |
+| TOK-09 | Phase 19 | Complete |
+| API-01 | Phase 19 | Complete |
+| REUSE-01 | Phase 19 | Complete |
 | NAME-01 | Phase 20 | Pending |
 | NAME-02 | Phase 20 | Pending |
 | DEMO-01 | Phase 21 | Pending |
@@ -95,4 +95,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-28*
-*Last updated: 2026-01-28 after roadmap creation*
+*Last updated: 2026-01-28 after Phase 19 completion*
