@@ -17,12 +17,12 @@ Requirements for consistency sweep milestone. Each maps to roadmap phases.
 
 ### Token Usage — Spacing & Layout
 
-- [ ] **TOK-06**: All components use `spacing[n]` tokens for padding/margin (no raw numbers)
-- [ ] **TOK-07**: All components use `radius.*` tokens for borderRadius (no hardcoded values)
+- [x] **TOK-06**: All components use `spacing[n]` tokens for padding/margin (no raw numbers)
+- [x] **TOK-07**: All components use `radius.*` tokens for borderRadius (no hardcoded values)
 
 ### Token Usage — Typography
 
-- [ ] **TOK-08**: All components use typography tokens for fontSize/fontWeight (no hardcoded values)
+- [x] **TOK-08**: All components use typography tokens for fontSize/fontWeight (no hardcoded values)
 
 ### Token Usage — Shadows
 
@@ -38,12 +38,12 @@ Requirements for consistency sweep milestone. Each maps to roadmap phases.
 
 ### Naming Patterns
 
-- [ ] **NAME-01**: All demo app block files use `-block` suffix in file names (9 files)
-- [ ] **NAME-02**: All demo app block component names include `Block` suffix
+- [x] **NAME-01**: All demo app block files use `-block` suffix in file names (16 files)
+- [x] **NAME-02**: All demo app block component names include `Block` suffix
 
 ### Demo Consistency
 
-- [ ] **DEMO-01**: Demo app follows same token and naming standards as library components
+- [x] **DEMO-01**: Demo app follows same token and naming standards as library components
 
 ## Future Requirements (v1.3+)
 
@@ -73,15 +73,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TOK-03 | Phase 19 | Complete |
 | TOK-04 | Phase 19 | Complete |
 | TOK-05 | Phase 19 | Complete |
-| TOK-06 | Phase 20 | Pending |
-| TOK-07 | Phase 20 | Pending |
-| TOK-08 | Phase 20 | Pending |
+| TOK-06 | Phase 20 | Complete |
+| TOK-07 | Phase 20 | Complete |
+| TOK-08 | Phase 20 | Complete |
 | TOK-09 | Phase 19 | Complete |
 | API-01 | Phase 19 | Complete |
 | REUSE-01 | Phase 19 | Complete |
-| NAME-01 | Phase 20 | Pending |
-| NAME-02 | Phase 20 | Pending |
-| DEMO-01 | Phase 21 | Pending |
+| NAME-01 | Phase 20 | Complete |
+| NAME-02 | Phase 20 | Complete |
+| DEMO-01 | Phase 21 | Complete |
 
 **Coverage:**
 - v1.2 requirements: 14 total
@@ -95,4 +95,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-28*
-*Last updated: 2026-01-28 after Phase 19 completion*
+*Last updated: 2026-01-28 — All v1.2 requirements complete*
