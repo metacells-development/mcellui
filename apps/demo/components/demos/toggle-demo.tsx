@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Section } from '@/components/demos/section';
 
 // Icons
-function BoldIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function BoldIcon({ size = 16, color }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2.5}>
       <Path d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6zM6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z" />
@@ -16,7 +16,7 @@ function BoldIcon({ size = 16, color = '#000' }: { size?: number; color?: string
   );
 }
 
-function ItalicIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function ItalicIcon({ size = 16, color }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
       <Path d="M19 4h-9M14 20H5M15 4L9 20" strokeLinecap="round" strokeLinejoin="round" />
@@ -24,7 +24,7 @@ function ItalicIcon({ size = 16, color = '#000' }: { size?: number; color?: stri
   );
 }
 
-function UnderlineIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function UnderlineIcon({ size = 16, color }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
       <Path d="M6 3v7a6 6 0 006 6 6 6 0 006-6V3M4 21h16" strokeLinecap="round" strokeLinejoin="round" />
@@ -32,7 +32,7 @@ function UnderlineIcon({ size = 16, color = '#000' }: { size?: number; color?: s
   );
 }
 
-function AlignLeftIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function AlignLeftIcon({ size = 16, color }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
       <Path d="M17 10H3M21 6H3M21 14H3M17 18H3" strokeLinecap="round" />
@@ -40,7 +40,7 @@ function AlignLeftIcon({ size = 16, color = '#000' }: { size?: number; color?: s
   );
 }
 
-function AlignCenterIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function AlignCenterIcon({ size = 16, color }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
       <Path d="M18 10H6M21 6H3M21 14H3M18 18H6" strokeLinecap="round" />
@@ -48,7 +48,7 @@ function AlignCenterIcon({ size = 16, color = '#000' }: { size?: number; color?:
   );
 }
 
-function AlignRightIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function AlignRightIcon({ size = 16, color }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
       <Path d="M21 10H7M21 6H3M21 14H3M21 18H7" strokeLinecap="round" />
@@ -56,7 +56,7 @@ function AlignRightIcon({ size = 16, color = '#000' }: { size?: number; color?: 
   );
 }
 
-function GridIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function GridIcon({ size = 16, color }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
       <Rect x="3" y="3" width="7" height="7" />
@@ -67,7 +67,7 @@ function GridIcon({ size = 16, color = '#000' }: { size?: number; color?: string
   );
 }
 
-function ListIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function ListIcon({ size = 16, color }: { size?: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
       <Path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" strokeLinecap="round" />
@@ -76,7 +76,7 @@ function ListIcon({ size = 16, color = '#000' }: { size?: number; color?: string
 }
 
 export function ToggleDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [boldPressed, setBoldPressed] = useState(false);
   const [italicPressed, setItalicPressed] = useState(false);
   const [underlinePressed, setUnderlinePressed] = useState(false);
@@ -85,7 +85,7 @@ export function ToggleDemo() {
   const [formats, setFormats] = useState<string[]>(['bold']);
 
   return (
-    <View style={styles.container}>
+    <View style={{ gap: spacing[6] }}>
       <Section title="Single Toggle">
         <Card>
           <CardContent style={{ paddingTop: spacing[4] }}>
@@ -111,7 +111,7 @@ export function ToggleDemo() {
                 <UnderlineIcon color={colors.foreground} />
               </Toggle>
             </View>
-            <Text style={[styles.stateText, { color: colors.foregroundMuted, marginTop: spacing[3] }]}>
+            <Text style={{ color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.sm }}>
               Bold: {boldPressed ? 'On' : 'Off'} • Italic: {italicPressed ? 'On' : 'Off'}
             </Text>
           </CardContent>
@@ -121,7 +121,7 @@ export function ToggleDemo() {
       <Section title="Toggle Group (Single)">
         <Card>
           <CardContent style={{ paddingTop: spacing[4] }}>
-            <Text style={[styles.label, { color: colors.foreground, marginBottom: spacing[3] }]}>
+            <Text style={{ color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
               Text Alignment
             </Text>
             <ToggleGroup
@@ -139,7 +139,7 @@ export function ToggleDemo() {
                 <AlignRightIcon color={colors.foreground} />
               </ToggleGroupItem>
             </ToggleGroup>
-            <Text style={[styles.stateText, { color: colors.foregroundMuted, marginTop: spacing[3] }]}>
+            <Text style={{ color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.sm }}>
               Selected: {alignment}
             </Text>
           </CardContent>
@@ -149,7 +149,7 @@ export function ToggleDemo() {
       <Section title="Toggle Group (Multiple)">
         <Card>
           <CardContent style={{ paddingTop: spacing[4] }}>
-            <Text style={[styles.label, { color: colors.foreground, marginBottom: spacing[3] }]}>
+            <Text style={{ color: colors.foreground, marginBottom: spacing[3], fontSize: fontSize.sm, fontWeight: fontWeight.medium }}>
               Text Formatting
             </Text>
             <ToggleGroup
@@ -167,7 +167,7 @@ export function ToggleDemo() {
                 <UnderlineIcon color={colors.foreground} />
               </ToggleGroupItem>
             </ToggleGroup>
-            <Text style={[styles.stateText, { color: colors.foregroundMuted, marginTop: spacing[3] }]}>
+            <Text style={{ color: colors.foregroundMuted, marginTop: spacing[3], fontSize: fontSize.sm }}>
               Active: {formats.length > 0 ? formats.join(', ') : 'none'}
             </Text>
           </CardContent>
@@ -185,11 +185,11 @@ export function ToggleDemo() {
             >
               <ToggleGroupItem value="grid">
                 <GridIcon color={colors.foreground} />
-                <Text style={{ color: colors.foreground, marginLeft: spacing[2], fontSize: 14 }}>Grid</Text>
+                <Text style={{ color: colors.foreground, marginLeft: spacing[2], fontSize: fontSize.sm }}>Grid</Text>
               </ToggleGroupItem>
               <ToggleGroupItem value="list">
                 <ListIcon color={colors.foreground} />
-                <Text style={{ color: colors.foreground, marginLeft: spacing[2], fontSize: 14 }}>List</Text>
+                <Text style={{ color: colors.foreground, marginLeft: spacing[2], fontSize: fontSize.sm }}>List</Text>
               </ToggleGroupItem>
             </ToggleGroup>
           </CardContent>
@@ -218,14 +218,5 @@ export function ToggleDemo() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 24,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  stateText: {
-    fontSize: 13,
-  },
+  // Empty - styles moved inline for theme token access
 });

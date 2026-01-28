@@ -43,8 +43,8 @@ export function CarouselDemo() {
   };
 
   const bannerTitleStyle: TextStyle = {
-    color: '#fff',
-    fontSize: 24,
+    color: '#fff', // Intentional contrast on colored backgrounds
+    fontSize: fontSize['2xl'], // 24px
     fontWeight: fontWeight.bold,
     marginBottom: spacing[1], // 4px
   };
@@ -87,13 +87,13 @@ export function CarouselDemo() {
   };
 
   const productPriceStyle: TextStyle = {
-    fontSize: 18,
+    fontSize: fontSize.lg, // 18px
     fontWeight: fontWeight.bold,
     color: colors.primary,
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { gap: spacing[8] }]}>
       <Section title="Basic Carousel">
         <View style={{ marginHorizontal: -spacing[4] }}>
           <Carousel height={160} onSlideChange={setActiveSlide}>
@@ -311,5 +311,5 @@ export function CarouselDemo() {
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 32 }, // spacing[8]
+  container: {}, // gap applied inline with spacing token
 });
