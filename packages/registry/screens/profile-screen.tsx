@@ -115,26 +115,32 @@ export interface ProfileScreenProps {
 // Icons
 // ============================================================================
 
-function SettingsIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function SettingsIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Circle cx="12" cy="12" r="3" />
       <Path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
     </Svg>
   );
 }
 
-function VerifiedIcon({ size = 18, color = '#3B82F6' }: { size?: number; color?: string }) {
+function VerifiedIcon({ size = 18, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.primary;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={finalColor}>
       <Path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
     </Svg>
   );
 }
 
-function BackIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function BackIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );

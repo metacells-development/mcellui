@@ -69,12 +69,14 @@ export interface OTPVerificationScreenProps {
 // Icons
 // ============================================================================
 
-function ArrowLeftIcon({ color = '#000', size = 24 }: { color?: string; size?: number }) {
+function ArrowLeftIcon({ color, size = 24 }: { color?: string; size?: number }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M19 12H5M12 19l-7-7 7-7"
-        stroke={color}
+        stroke={finalColor}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -40,17 +40,21 @@ import { EmptyStateBlock } from '../blocks/empty-state-block';
 // Icons
 // ============================================================================
 
-function ChevronLeftIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function ChevronLeftIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ShoppingBagIcon({ size = 48, color = '#000' }: { size?: number; color?: string }) {
+function ShoppingBagIcon({ size = 48, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );

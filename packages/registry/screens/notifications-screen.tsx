@@ -86,33 +86,41 @@ export interface NotificationsScreenProps {
 // Icons
 // ============================================================================
 
-function BackIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function BackIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function BellIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function BellIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function TrashIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function TrashIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ShippingIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function ShippingIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z" strokeLinecap="round" strokeLinejoin="round" />
       <Circle cx="5.5" cy="18.5" r="2.5" />
       <Circle cx="18.5" cy="18.5" r="2.5" />
@@ -120,17 +128,21 @@ function ShippingIcon({ size = 24, color = '#000' }: { size?: number; color?: st
   );
 }
 
-function ChartIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function ChartIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M18 20V10M12 20V4M6 20v-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function BellOffIcon({ size = 64, color = '#000' }: { size?: number; color?: string }) {
+function BellOffIcon({ size = 64, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Path d="M13.73 21a2 2 0 01-3.46 0M18.63 13A17.89 17.89 0 0118 8M6.26 6.26A5.86 5.86 0 006 8c0 7-3 9-3 9h14M18 8a6 6 0 00-9.33-5M1 1l22 22" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
@@ -371,7 +383,7 @@ export function NotificationsScreen({
                       {
                         label: 'Delete',
                         color: colors.destructive,
-                        icon: <TrashIcon size={20} color="#fff" />,
+                        icon: <TrashIcon size={20} color={colors.destructiveForeground} />,
                         onPress: () => onDelete(notification.id),
                       },
                     ]

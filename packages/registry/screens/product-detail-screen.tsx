@@ -56,41 +56,51 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/tabs';
 // Icons
 // ============================================================================
 
-function HeartIcon({ size = 24, color = '#000', filled = false }: { size?: number; color?: string; filled?: boolean }) {
+function HeartIcon({ size = 24, color, filled = false }: { size?: number; color?: string; filled?: boolean }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? color : 'none'} stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? finalColor : 'none'} stroke={finalColor} strokeWidth={2}>
       <Path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ShareIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function ShareIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ChevronLeftIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function ChevronLeftIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function CartIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function CartIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2zM1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ImagePlaceholderIcon({ size = 48, color = '#000' }: { size?: number; color?: string }) {
+function ImagePlaceholderIcon({ size = 48, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
       <Circle cx="8.5" cy="8.5" r="1.5" />
       <Path d="M21 15l-5-5L5 21" />
@@ -218,7 +228,7 @@ export function ProductDetailScreen({
                 <IconButton icon={<CartIcon />} variant="ghost" onPress={onCartPress} />
                 {cartCount !== undefined && cartCount > 0 && (
                   <View style={[styles.cartBadge, { backgroundColor: colors.destructive }]}>
-                    <Text style={{ color: '#fff', fontSize: fontSize.xs - 2, fontWeight: fontWeight.bold }}>{cartCount > 9 ? '9+' : cartCount}</Text>
+                    <Text style={{ color: colors.destructiveForeground, fontSize: fontSize.xs - 2, fontWeight: fontWeight.bold }}>{cartCount > 9 ? '9+' : cartCount}</Text>
                   </View>
                 )}
               </View>

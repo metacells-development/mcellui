@@ -42,41 +42,51 @@ import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 // Icons
 // ============================================================================
 
-function ChevronLeftIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function ChevronLeftIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function CheckIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function CheckIcon({ size = 16, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={3}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={3}>
       <Path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function CreditCardIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function CreditCardIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M21 4H3a2 2 0 00-2 2v12a2 2 0 002 2h18a2 2 0 002-2V6a2 2 0 00-2-2zM1 10h22" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function TruckIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function TruckIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8zM5.5 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM18.5 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function LockIcon({ size = 14, color = '#000' }: { size?: number; color?: string }) {
+function LockIcon({ size = 14, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M19 11H5a2 2 0 00-2 2v7a2 2 0 002 2h14a2 2 0 002-2v-7a2 2 0 00-2-2zM7 11V7a5 5 0 0110 0v4" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );

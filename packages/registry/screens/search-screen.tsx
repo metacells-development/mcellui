@@ -113,44 +113,54 @@ export interface SearchScreenProps {
 // Icons
 // ============================================================================
 
-function SearchIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function SearchIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Circle cx="11" cy="11" r="8" />
       <Path d="M21 21l-4.35-4.35" strokeLinecap="round" />
     </Svg>
   );
 }
 
-function ClockIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function ClockIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Circle cx="12" cy="12" r="10" />
       <Path d="M12 6v6l4 2" strokeLinecap="round" />
     </Svg>
   );
 }
 
-function TrendingIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function TrendingIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M23 6l-9.5 9.5-5-5L1 18" strokeLinecap="round" strokeLinejoin="round" />
       <Path d="M17 6h6v6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function CloseIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function CloseIcon({ size = 16, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
     </Svg>
   );
 }
 
-function ImageIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function ImageIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
       <Circle cx="8.5" cy="8.5" r="1.5" />
       <Path d="M21 15l-5-5L5 21" />
@@ -158,27 +168,33 @@ function ImageIcon({ size = 20, color = '#000' }: { size?: number; color?: strin
   );
 }
 
-function VideoIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function VideoIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Rect x="2" y="4" width="20" height="16" rx="2" />
-      <Path d="M10 9l5 3-5 3V9z" fill={color} stroke="none" />
+      <Path d="M10 9l5 3-5 3V9z" fill={finalColor} stroke="none" />
     </Svg>
   );
 }
 
-function UserIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function UserIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
       <Circle cx="12" cy="7" r="4" />
     </Svg>
   );
 }
 
-function MapPinIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function MapPinIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
       <Circle cx="12" cy="10" r="3" />
     </Svg>
