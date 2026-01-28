@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 19 of 21 (Critical Color & API Fixes)
-Plan: 3 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-28 — Completed 19-03-PLAN.md (block components hardcoded colors)
+Last activity: 2026-01-28 — Completed 19-04-PLAN.md (screen components hardcoded colors)
 
-Progress: [███████████████████░] 88% (v1.0 + v1.1 complete, v1.2 in progress)
+Progress: [███████████████████░] 90% (v1.0 + v1.1 complete, v1.2 in progress)
 
 ## Performance Metrics
 
@@ -54,6 +54,10 @@ Recent decisions affecting v1.2:
 - All block icons use semantic color defaults — Automatic theme support (19-03)
 - Task priority colors use semantic tokens (success/warning/destructive) — Theme-adaptive priorities (19-03)
 - Hero gradient presets preserved as artistic choices — Intentional brand colors (19-03)
+- All 63 screen icons use semantic color defaults — Dark mode support for highest-level templates (19-04)
+- Google logo brand colors preserved in login/signup — Brand compliance requirement (19-04)
+- Profile verified badge uses colors.primary — Theme consistency instead of hardcoded blue (19-04)
+- Badge text on destructive backgrounds uses colors.destructiveForeground — Semantic token for proper contrast (19-04)
 
 ### Pending Todos
 
@@ -71,11 +75,11 @@ From v1.1 audit:
 - 4 borderline console.log(chalk.red) instances in CLI (status output, not errors)
 
 **v1.2 Findings (from research):**
-- 250+ hardcoded values bypass token system (breaks theming/dark mode)
-- ~~50+ icon components use `#000` instead of `colors.foreground`~~ → FIXED in 19-01 (5 UI icons), 19-03 (50+ block icons)
+- ~~250+ hardcoded values bypass token system~~ → FIXED in 19-01/02/03/04 (all UI, blocks, screens migrated)
+- ~~50+ icon components use `#000` instead of `colors.foreground`~~ → FIXED in 19-01 (5 UI icons), 19-03 (50+ block icons), 19-04 (63 screen icons)
 - ~~6 shadow objects use hardcoded `#000`~~ → FIXED in 19-01 (migrated to platformShadow)
 - ~~20+ RGBA overlays need semantic token migration~~ → FIXED in 19-02 (8 UI components), 19-03 (7 blocks)
-- ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED in 19-02 (4 UI components), 19-03 (15 blocks)
+- ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED in 19-02 (4 UI components), 19-03 (15 blocks), 19-04 (18 screens)
 - ~~Task priority colors hardcoded (#10b981, #f59e0b, #ef4444)~~ → FIXED in 19-03 (semantic tokens)
 - 9 demo app files missing `-block` suffix
 - Avatar component uses 5-value size scale instead of standard 3-value
@@ -83,8 +87,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 19-03-PLAN.md (block components hardcoded colors)
+Stopped at: Completed 19-04-PLAN.md (screen components hardcoded colors)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after completing 19-03-PLAN.md*
+*Updated: 2026-01-28 after completing 19-04-PLAN.md*
