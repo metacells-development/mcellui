@@ -8,22 +8,23 @@ A modern, copy-paste UI component library for Expo/React Native — inspired by 
 
 Users own the component code. No npm dependency lock-in, full customization freedom, native-first styling.
 
-## Current Milestone: v1.2 Consistency Sweep
-
-**Goal:** Find and fix all inconsistencies across components, blocks, screens, and demos — component reuse, naming patterns, token usage, and API patterns.
-
-**Target areas:**
-- Component reuse: blocks/screens not using existing UI components
-- Naming patterns: inconsistent prop names, file names, export names
-- Token usage: hardcoded values instead of theme tokens
-- API patterns: inconsistent prop APIs (variant/type, size scales)
-- Demo app: demos should follow the same consistency standards
-
-**Approach:** Research codebase patterns → Define requirements → Audit → Fix everything found
-
-## Current State (v1.1)
+## Current State (v1.2)
 
 **Shipped:** 2026-01-28
+
+All inconsistencies fixed across the entire codebase:
+- 250+ hardcoded values migrated to semantic tokens
+- All icon colors use `colors.foreground` fallback for dark mode
+- All shadows use `platformShadow()` helper for cross-platform consistency
+- All overlays use `colors.overlay` / `colors.scrim` semantic tokens
+- Avatar API standardized to `sm|md|lg` size scale
+- Demo app follows same token and naming standards as library
+- 14 consistency requirements satisfied (100%)
+
+**Stats:** 329,405 LOC | 2,616 files | 21 phases complete (v1.0 + v1.1 + v1.2)
+
+<details>
+<summary>Previous: v1.1 (Shipped 2026-01-28)</summary>
 
 All tooling audited and production-ready:
 - Core package exports compiled JS (ESM-only with subpath exports)
@@ -33,6 +34,7 @@ All tooling audited and production-ready:
 - All core exports documented with JSDoc (144 blocks across 15 files)
 
 **Stats:** 33,870+ LOC TypeScript | 102 components | 18 phases complete (v1.0 + v1.1)
+</details>
 
 <details>
 <summary>Previous: v1.0 (Shipped 2026-01-26)</summary>
@@ -45,6 +47,10 @@ All 102 components refined to consistent quality:
 
 **Stats:** 33,870 LOC TypeScript | 102 components | 13 phases complete
 </details>
+
+## Next Milestone Goals
+
+To be defined with `/gsd:new-milestone`
 
 ## Requirements
 
@@ -79,16 +85,20 @@ All 102 components refined to consistent quality:
 - ✓ Core package audit — compiled exports, peer dependencies, package.json exports — v1.1
 - ✓ Registry structure audit — metadata, dependencies, naming consistency, validation — v1.1
 - ✓ Core exports audit — token documentation, utility types, orphan removal — v1.1
+- ✓ All blocks/screens reuse existing UI components (MediaCard on Home screen) — v1.2
+- ✓ Naming patterns consistent (16 demo blocks use `-block` suffix, `Block` exports) — v1.2
+- ✓ All styling uses semantic color tokens (250+ hardcoded values migrated) — v1.2
+- ✓ All styling uses spacing tokens (no raw number padding/margin) — v1.2
+- ✓ All styling uses radius tokens (borderRadius ≥2 use `radius.*`) — v1.2
+- ✓ All styling uses typography tokens (fontSize/fontWeight from theme) — v1.2
+- ✓ All shadows use platformShadow() helper — v1.2
+- ✓ All overlays use semantic tokens (overlay, scrim, backgroundElevated) — v1.2
+- ✓ Avatar API standardized to sm|md|lg size scale — v1.2
+- ✓ Demo app follows same token and naming standards — v1.2
 
 ### Active
 
-<!-- Current scope for v1.2 Consistency Sweep -->
-
-- [ ] All blocks/screens reuse existing UI components instead of reimplementing
-- [ ] Naming patterns consistent across all components, blocks, screens
-- [ ] All styling uses theme tokens (no hardcoded colors, spacing, radius, typography)
-- [ ] API patterns consistent (prop names, size scales, variant naming)
-- [ ] Demo app follows same consistency standards
+<!-- No active requirements — run /gsd:new-milestone to define next version -->
 
 ### Out of Scope
 

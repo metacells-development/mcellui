@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-28)
 
 **Core value:** Users own the component code — tooling must work reliably
-**Current focus:** v1.2 Consistency Sweep — COMPLETE
+**Current focus:** Between milestones — run /gsd:new-milestone to start next version
 
 ## Current Position
 
-Phase: 21 of 21 (Demo Consistency Validation) — COMPLETE
-Plan: 5 of 5 in current phase — ALL COMPLETE
-Status: v1.2 milestone shipped
-Last activity: 2026-01-28 — Completed 21-05-PLAN.md (App Screens + Dark Mode Verification)
+Phase: None active
+Plan: None active
+Status: v1.2 milestone archived
+Last activity: 2026-01-28 — Archived v1.2 Consistency Sweep milestone
 
-Progress: [█████████████████████] 100% (v1.0 + v1.1 + v1.2 complete)
+Progress: Ready for v1.3
 
 ## Performance Metrics
 
