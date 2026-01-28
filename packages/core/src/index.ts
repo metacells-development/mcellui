@@ -9,6 +9,7 @@ export {
   // Spacing
   spacing as themeSpacing,
   type SpacingKey as ThemeSpacingKey,
+  type SpacingValue,
   // Radius
   radius as themeRadius,
   componentRadius,
@@ -17,8 +18,11 @@ export {
   radiusPresetBase,
   defaultRadiusPreset,
   type RadiusKey as ThemeRadiusKey,
+  type RadiusValue,
   type RadiusPreset,
   type RadiusTokens,
+  type ComponentRadiusKey,
+  type ComponentRadiusTokens,
   // Fonts
   defaultFonts,
   systemFonts,
@@ -35,6 +39,8 @@ export {
   typography,
   type FontSizeKey,
   type FontWeightKey,
+  type LineHeightKey,
+  type LetterSpacingKey,
   type FontFamilyKey,
   type GeistFontFamilyKey,
   type TypographyKey,
