@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 19 of 21 (Critical Color & API Fixes)
-Plan: 6 of 6 in current phase
-Status: Phase complete
-Last activity: 2026-01-28 — Completed 19-06-PLAN.md (Gap closure: registry icon colors + shadows)
+Plan: 7 of 9 in current phase
+Status: Gap closure in progress
+Last activity: 2026-01-28 — Completed 19-07-PLAN.md (Gap closure: overlay/backdrop colors)
 
-Progress: [████████████████████] 95% (v1.0 + v1.1 complete, Phase 19 complete)
+Progress: [████████████████████] 95% (v1.0 + v1.1 complete, Phase 19 in progress)
 
 ## Performance Metrics
 
@@ -62,6 +62,8 @@ Recent decisions affecting v1.2:
 - Home screen featured items use MediaCard component — Component reuse over manual construction (19-05)
 - Registry icon colors use colors.foreground fallback — Gap closure for calendar, pagination, tag-input (19-06)
 - Tag-input suggestions shadow uses platformShadow() — Platform-aware shadow adaptation (19-06)
+- Modal/sheet overlays use colors.overlay semantic token — Theme-aware semi-transparent backdrops (19-07)
+- Fullscreen image viewer uses colors.scrim — Near-opaque dark overlay for photo viewing (19-07)
 
 ### Pending Todos
 
@@ -82,7 +84,7 @@ From v1.1 audit:
 - ~~250+ hardcoded values bypass token system~~ → FIXED in 19-01/02/03/04 (all UI, blocks, screens migrated)
 - ~~50+ icon components use `#000` instead of `colors.foreground`~~ → FIXED in 19-01 (5 UI icons), 19-03 (50+ block icons), 19-04 (63 screen icons), 19-06 (3 registry icons - gap closure)
 - ~~6 shadow objects use hardcoded `#000`~~ → FIXED in 19-01 (migrated to platformShadow), 19-06 (tag-input gap closure)
-- ~~20+ RGBA overlays need semantic token migration~~ → FIXED in 19-02 (8 UI components), 19-03 (7 blocks)
+- ~~20+ RGBA overlays need semantic token migration~~ → FIXED in 19-02 (8 UI components), 19-03 (7 blocks), 19-07 (3 UI components - gap closure)
 - ~~Hardcoded hex colors (#fff, #F59E0B) in UI components~~ → FIXED in 19-02 (4 UI components), 19-03 (15 blocks), 19-04 (18 screens)
 - ~~Task priority colors hardcoded (#10b981, #f59e0b, #ef4444)~~ → FIXED in 19-03 (semantic tokens)
 - ~~Avatar component uses 5-value size scale instead of standard 3-value~~ → FIXED in 19-05 (standardized to sm|md|lg)
@@ -92,8 +94,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 19-06-PLAN.md (Gap closure: registry icon colors + shadows) — Phase 19 complete
+Stopped at: Completed 19-07-PLAN.md (Gap closure: overlay/backdrop colors)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after completing 19-06-PLAN.md*
+*Updated: 2026-01-28 after completing 19-07-PLAN.md*
