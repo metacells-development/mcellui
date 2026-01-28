@@ -1,1017 +1,1810 @@
 {
   "$schema": "./registry.schema.json",
+  "schemaVersion": "1.0",
   "name": "mcellui",
   "version": "0.0.1",
   "components": [
     {
       "name": "button",
+      "displayName": "Button",
       "type": "ui",
       "description": "A pressable button component with multiple variants and sizes",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/button.tsx"],
+      "files": [
+        "ui/button.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "card",
+      "displayName": "Card",
       "type": "ui",
       "description": "A container component with rounded corners and shadow",
       "category": "Layout",
       "status": "beta",
-      "files": ["ui/card.tsx"],
+      "files": [
+        "ui/card.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "input",
+      "displayName": "Input",
       "type": "ui",
       "description": "Text input with label, password toggle, clear button, and character count",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/input.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/input.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "badge",
+      "displayName": "Badge",
       "type": "ui",
       "description": "Small status indicator for labels, counts, dots, and notifications",
       "category": "Data Display",
       "status": "beta",
-      "files": ["ui/badge.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/badge.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "avatar",
+      "displayName": "Avatar",
       "type": "ui",
       "description": "User profile picture with fallback initials",
       "category": "Data Display",
       "status": "beta",
-      "files": ["ui/avatar.tsx"],
+      "files": [
+        "ui/avatar.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "checkbox",
+      "displayName": "Checkbox",
       "type": "ui",
       "description": "Accessible checkbox with animated checkmark and indeterminate state",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/checkbox.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/checkbox.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "switch",
+      "displayName": "Switch",
       "type": "ui",
       "description": "iOS-style toggle switch with animated thumb",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/switch.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/switch.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "radio-group",
+      "displayName": "Radio Group",
       "type": "ui",
       "description": "Radio button group for single selection with animated indicator",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/radio-group.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/radio-group.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "label",
+      "displayName": "Label",
       "type": "ui",
       "description": "Form label with required indicator and size variants",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/label.tsx"],
+      "files": [
+        "ui/label.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "separator",
+      "displayName": "Separator",
       "type": "ui",
       "description": "Visual divider for horizontal or vertical content separation",
       "category": "Layout",
       "status": "beta",
-      "files": ["ui/separator.tsx"],
+      "files": [
+        "ui/separator.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "spinner",
+      "displayName": "Spinner",
       "type": "ui",
       "description": "Loading indicator with size and color variants",
       "category": "Feedback",
       "status": "beta",
-      "files": ["ui/spinner.tsx"],
+      "files": [
+        "ui/spinner.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "skeleton",
+      "displayName": "Skeleton",
       "type": "ui",
       "description": "Loading placeholder with shimmer animation",
       "category": "Feedback",
       "status": "beta",
-      "files": ["ui/skeleton.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/skeleton.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "progress",
+      "displayName": "Progress",
       "type": "ui",
       "description": "Progress bar with animated fill and indeterminate state",
       "category": "Feedback",
       "status": "beta",
-      "files": ["ui/progress.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/progress.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "sheet",
+      "displayName": "Sheet",
       "type": "ui",
       "description": "Bottom sheet with snap points and swipe gestures",
       "category": "Overlay",
       "status": "beta",
-      "files": ["ui/sheet.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
-      "registryDependencies": []
+      "files": [
+        "ui/sheet.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-gesture-handler"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "dialog",
+      "displayName": "Dialog",
       "type": "ui",
       "description": "Centered modal dialog with backdrop",
       "category": "Overlay",
       "status": "beta",
-      "files": ["ui/dialog.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/dialog.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "alert-dialog",
+      "displayName": "Alert Dialog",
       "type": "ui",
       "description": "Confirmation dialog for destructive actions",
       "category": "Overlay",
       "status": "beta",
-      "files": ["ui/alert-dialog.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/alert-dialog.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "toast",
+      "displayName": "Toast",
       "type": "ui",
       "description": "Notification system with variants and auto-dismiss",
       "category": "Feedback",
       "status": "beta",
-      "files": ["ui/toast.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-safe-area-context"],
-      "registryDependencies": []
+      "files": [
+        "ui/toast.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-safe-area-context"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "textarea",
+      "displayName": "Textarea",
       "type": "ui",
       "description": "Multiline text input with auto-grow and character count",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/textarea.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/textarea.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "select",
+      "displayName": "Select",
       "type": "ui",
       "description": "Bottom sheet picker for selection from options",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/select.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": ["sheet"]
+      "files": [
+        "ui/select.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [
+        "sheet"
+      ],
+      "expoGo": true
     },
     {
       "name": "slider",
+      "displayName": "Slider",
       "type": "ui",
       "description": "Value slider with gesture support and step increments",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/slider.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
-      "registryDependencies": []
+      "files": [
+        "ui/slider.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-gesture-handler"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "stepper",
+      "displayName": "Stepper",
       "type": "ui",
       "description": "Quantity input with increment/decrement buttons",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/stepper.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/stepper.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "tabs",
+      "displayName": "Tabs",
       "type": "ui",
       "description": "Tabbed navigation with animated indicator",
       "category": "Navigation",
       "status": "beta",
-      "files": ["ui/tabs.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/tabs.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "accordion",
+      "displayName": "Accordion",
       "type": "ui",
       "description": "Expandable content panels with single or multiple mode",
       "category": "Navigation",
       "status": "beta",
-      "files": ["ui/accordion.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/accordion.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "segmented-control",
+      "displayName": "Segmented Control",
       "type": "ui",
       "description": "iOS-style segmented control for switching views",
       "category": "Navigation",
       "status": "beta",
-      "files": ["ui/segmented-control.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/segmented-control.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "pull-to-refresh",
+      "displayName": "Pull To Refresh",
       "type": "ui",
       "description": "Pull-to-refresh wrapper with custom animated indicator",
       "category": "Mobile",
       "status": "beta",
-      "files": ["ui/pull-to-refresh.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/pull-to-refresh.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "swipeable-row",
+      "displayName": "Swipeable Row",
       "type": "ui",
       "description": "Swipeable list row with left and right actions",
       "category": "Mobile",
       "status": "beta",
-      "files": ["ui/swipeable-row.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
-      "registryDependencies": []
+      "files": [
+        "ui/swipeable-row.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-gesture-handler"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "form",
+      "displayName": "Form",
       "type": "ui",
       "description": "Form components with react-hook-form and Zod validation",
       "category": "Forms",
       "status": "beta",
-      "files": ["ui/form.tsx"],
-      "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
-      "registryDependencies": []
+      "files": [
+        "ui/form.tsx"
+      ],
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "login-block",
+      "displayName": "Login Block",
       "type": "block",
       "description": "Complete login screen with email/password form and social login",
       "category": "Authentication",
       "status": "beta",
-      "files": ["blocks/login-block.tsx"],
-      "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
-      "registryDependencies": ["button", "input", "form"]
+      "files": [
+        "blocks/login-block.tsx"
+      ],
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "form"
+      ],
+      "expoGo": true
     },
     {
       "name": "signup-block",
+      "displayName": "Signup Block",
       "type": "block",
       "description": "Complete signup screen with form validation and terms checkbox",
       "category": "Authentication",
       "status": "beta",
-      "files": ["blocks/signup-block.tsx"],
-      "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
-      "registryDependencies": ["button", "input", "checkbox", "form"]
+      "files": [
+        "blocks/signup-block.tsx"
+      ],
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "checkbox",
+        "form"
+      ],
+      "expoGo": true
     },
     {
       "name": "settings-list-block",
+      "displayName": "Settings List Block",
       "type": "block",
       "description": "Grouped settings list with switches and navigation items",
       "category": "Settings",
       "status": "beta",
-      "files": ["blocks/settings-list-block.tsx"],
+      "files": [
+        "blocks/settings-list-block.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": ["switch", "separator"]
+      "registryDependencies": [
+        "switch",
+        "separator"
+      ],
+      "expoGo": true
     },
     {
       "name": "profile-block",
+      "displayName": "Profile Block",
       "type": "block",
       "description": "User profile header with avatar, stats, and action buttons",
       "category": "Profile",
       "status": "beta",
-      "files": ["blocks/profile-block.tsx"],
+      "files": [
+        "blocks/profile-block.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": ["avatar", "button"]
+      "registryDependencies": [
+        "avatar",
+        "button"
+      ],
+      "expoGo": true
     },
     {
       "name": "empty-state-block",
+      "displayName": "Empty State Block",
       "type": "block",
       "description": "Empty state placeholder with icon, title, and CTA button",
       "category": "Feedback",
       "status": "beta",
-      "files": ["blocks/empty-state-block.tsx"],
+      "files": [
+        "blocks/empty-state-block.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": ["button"]
+      "registryDependencies": [
+        "button"
+      ],
+      "expoGo": true
     },
     {
       "name": "error-state-block",
+      "displayName": "Error State Block",
       "type": "block",
       "description": "Error state display with icon, message, and retry button",
       "category": "Feedback",
       "status": "beta",
-      "files": ["blocks/error-state-block.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["button"]
+      "files": [
+        "blocks/error-state-block.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "expoGo": true
     },
     {
       "name": "search-input",
+      "displayName": "Search Input",
       "type": "ui",
       "description": "Search input with icon, clear button, and loading state",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/search-input.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/search-input.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "icon-button",
+      "displayName": "Icon Button",
       "type": "ui",
       "description": "Square or circular icon-only button with multiple variants",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/icon-button.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/icon-button.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "list",
+      "displayName": "List",
       "type": "ui",
       "description": "List component with items, left/right slots, chevron, and dividers",
       "category": "Data Display",
       "status": "beta",
-      "files": ["ui/list.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/list.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "image",
+      "displayName": "Image",
       "type": "ui",
       "description": "Enhanced image with loading skeleton, error fallback, and fade-in",
       "category": "Media",
       "status": "beta",
-      "files": ["ui/image.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/image.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "horizontal-list",
+      "displayName": "Horizontal List",
       "type": "ui",
       "description": "Horizontal scrolling container with snap-to-item behavior",
       "category": "Layout",
       "status": "beta",
-      "files": ["ui/horizontal-list.tsx"],
+      "files": [
+        "ui/horizontal-list.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "section-header",
+      "displayName": "Section Header",
       "type": "ui",
       "description": "Section header with title, subtitle, and 'See All' action",
       "category": "Layout",
       "status": "beta",
-      "files": ["ui/section-header.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/section-header.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "chip",
+      "displayName": "Chip",
       "type": "ui",
       "description": "Selectable filter pills with dismissible support",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/chip.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/chip.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "fab",
+      "displayName": "Fab",
       "type": "ui",
       "description": "Floating action button for primary actions",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/fab.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/fab.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "action-sheet",
+      "displayName": "Action Sheet",
       "type": "ui",
       "description": "iOS-style bottom action menu for presenting choices",
       "category": "Overlay",
       "status": "beta",
-      "files": ["ui/action-sheet.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
-      "registryDependencies": []
+      "files": [
+        "ui/action-sheet.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-gesture-handler"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "avatar-stack",
+      "displayName": "Avatar Stack",
       "type": "ui",
       "description": "Overlapping avatar group for displaying multiple users",
       "category": "Data Display",
       "status": "beta",
-      "files": ["ui/avatar-stack.tsx"],
+      "files": [
+        "ui/avatar-stack.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "rating",
+      "displayName": "Rating",
       "type": "ui",
       "description": "Interactive star rating for reviews and feedback",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/rating.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/rating.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "carousel",
+      "displayName": "Carousel",
       "type": "ui",
       "description": "Auto-playing image/content slideshow with pagination indicators",
       "category": "Media",
       "status": "beta",
-      "files": ["ui/carousel.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/carousel.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "stories",
+      "displayName": "Stories",
       "type": "ui",
       "description": "Instagram-style story avatars with gradient ring and add button",
       "category": "Social",
       "status": "beta",
-      "files": ["ui/stories.tsx"],
-      "dependencies": ["react-native-reanimated", "expo-linear-gradient"],
-      "registryDependencies": []
+      "files": [
+        "ui/stories.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "expo-linear-gradient"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "datetime-picker",
+      "displayName": "Datetime Picker",
       "type": "ui",
       "description": "Date and time picker with native platform UI via bottom sheet",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/datetime-picker.tsx"],
-      "dependencies": ["react-native-reanimated", "@react-native-community/datetimepicker"],
-      "registryDependencies": []
+      "files": [
+        "ui/datetime-picker.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "@react-native-community/datetimepicker"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "tooltip",
+      "displayName": "Tooltip",
       "type": "ui",
       "description": "Long-press popup for showing contextual information",
       "category": "Overlay",
       "status": "beta",
-      "files": ["ui/tooltip.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/tooltip.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "image-gallery",
+      "displayName": "Image Gallery",
       "type": "ui",
       "description": "Grid gallery with fullscreen viewer, pinch-to-zoom, and swipe navigation",
       "category": "Media",
       "status": "beta",
-      "files": ["ui/image-gallery.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-gesture-handler"],
-      "registryDependencies": []
+      "files": [
+        "ui/image-gallery.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-gesture-handler"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "notification-item",
+      "displayName": "Notification Item",
       "type": "block",
       "description": "Notification list item with avatar, message, time, and unread indicator",
       "category": "Social",
       "status": "beta",
-      "files": ["blocks/notification-item.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": ["avatar"]
+      "files": [
+        "blocks/notification-item.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [
+        "avatar"
+      ],
+      "expoGo": true
     },
     {
       "name": "content-card",
+      "displayName": "Content Card",
       "type": "block",
       "description": "Large content card with image, title, subtitle, and action button",
       "category": "Content",
       "status": "beta",
-      "files": ["blocks/content-card.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": ["button"]
+      "files": [
+        "blocks/content-card.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "expoGo": true
     },
     {
       "name": "feature-card",
+      "displayName": "Feature Card",
       "type": "block",
       "description": "Feature highlight card with icon, title, and description",
       "category": "Marketing",
       "status": "beta",
-      "files": ["blocks/feature-card.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "blocks/feature-card.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "stats-card",
+      "displayName": "Stats Card",
       "type": "block",
       "description": "Metric display card with value, label, and trend indicator",
       "category": "Dashboard",
       "status": "beta",
-      "files": ["blocks/stats-card.tsx"],
+      "files": [
+        "blocks/stats-card.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "hero-block",
+      "displayName": "Hero Block",
       "type": "block",
       "description": "Full-width hero section with image/gradient, title, and CTA buttons",
       "category": "Marketing",
       "status": "beta",
-      "files": ["blocks/hero-block.tsx"],
-      "dependencies": ["expo-linear-gradient"],
-      "registryDependencies": ["button"]
+      "files": [
+        "blocks/hero-block.tsx"
+      ],
+      "dependencies": [
+        "expo-linear-gradient"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "expoGo": true
     },
     {
       "name": "social-proof-bar",
+      "displayName": "Social Proof Bar",
       "type": "block",
       "description": "Avatar stack with engagement text for social proof",
       "category": "Social",
       "status": "beta",
-      "files": ["blocks/social-proof-bar.tsx"],
+      "files": [
+        "blocks/social-proof-bar.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "search-header",
+      "displayName": "Search Header",
       "type": "block",
       "description": "Header with search input, filter button, and user avatar",
       "category": "Navigation",
       "status": "beta",
-      "files": ["blocks/search-header.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "blocks/search-header.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "onboarding-slide",
+      "displayName": "Onboarding Slide",
       "type": "block",
       "description": "Full-screen onboarding slide with illustration, title, and pagination",
       "category": "Onboarding",
       "status": "beta",
-      "files": ["blocks/onboarding-slide.tsx"],
-      "dependencies": ["react-native-safe-area-context"],
-      "registryDependencies": ["button"]
+      "files": [
+        "blocks/onboarding-slide.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "expoGo": true
     },
     {
       "name": "media-item",
+      "displayName": "Media Item",
       "type": "block",
       "description": "Thumbnail grid item for photos, videos, and files with selection support",
       "category": "Media",
       "status": "beta",
-      "files": ["blocks/media-item.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["badge"]
+      "files": [
+        "blocks/media-item.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "badge"
+      ],
+      "expoGo": true
     },
     {
       "name": "feed-post-card",
+      "displayName": "Feed Post Card",
       "type": "block",
       "description": "Social feed post card with avatar, content, image, and action buttons",
       "category": "Social",
       "status": "beta",
-      "files": ["blocks/feed-post-card.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["avatar", "icon-button", "separator"]
+      "files": [
+        "blocks/feed-post-card.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "icon-button",
+        "separator"
+      ],
+      "expoGo": true
     },
     {
       "name": "user-list-item",
+      "displayName": "User List Item",
       "type": "block",
       "description": "User row for follower lists, search results, and user selection",
       "category": "Social",
       "status": "beta",
-      "files": ["blocks/user-list-item.tsx"],
+      "files": [
+        "blocks/user-list-item.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": ["avatar", "button", "badge"]
+      "registryDependencies": [
+        "avatar",
+        "button",
+        "badge"
+      ],
+      "expoGo": true
     },
     {
       "name": "chat-bubble",
+      "displayName": "Chat Bubble",
       "type": "block",
       "description": "Chat message bubble with status indicators for messaging interfaces",
       "category": "Messaging",
       "status": "beta",
-      "files": ["blocks/chat-bubble.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["avatar"]
+      "files": [
+        "blocks/chat-bubble.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar"
+      ],
+      "expoGo": true
     },
     {
       "name": "comment-item",
+      "displayName": "Comment Item",
       "type": "block",
       "description": "Comment display for posts, products, or discussions",
       "category": "Social",
       "status": "beta",
-      "files": ["blocks/comment-item.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["avatar"]
+      "files": [
+        "blocks/comment-item.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar"
+      ],
+      "expoGo": true
     },
     {
       "name": "product-card",
+      "displayName": "Product Card",
       "type": "block",
       "description": "E-commerce product display card with image, price, rating, and actions",
       "category": "E-commerce",
       "status": "beta",
-      "files": ["blocks/product-card.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["badge", "button", "rating"]
+      "files": [
+        "blocks/product-card.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "rating"
+      ],
+      "expoGo": true
     },
     {
       "name": "cart-item",
+      "displayName": "Cart Item",
       "type": "block",
       "description": "Shopping cart line item with quantity controls and swipe actions",
       "category": "E-commerce",
       "status": "beta",
-      "files": ["blocks/cart-item.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["stepper", "swipeable-row"]
+      "files": [
+        "blocks/cart-item.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "stepper",
+        "swipeable-row"
+      ],
+      "expoGo": true
     },
     {
       "name": "banner-block",
+      "displayName": "Banner Block",
       "type": "block",
       "description": "Promotional or announcement banner with action button",
       "category": "Marketing",
       "status": "beta",
-      "files": ["blocks/banner-block.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["button", "icon-button"]
+      "files": [
+        "blocks/banner-block.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "icon-button"
+      ],
+      "expoGo": true
     },
     {
       "name": "login-screen",
+      "displayName": "Login Screen",
       "type": "screen",
       "description": "Complete login screen with email/password form, social login, and forgot password",
       "category": "Authentication",
       "status": "beta",
-      "files": ["screens/login-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["button", "input", "separator"]
+      "files": [
+        "screens/login-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "separator"
+      ],
+      "expoGo": true
     },
     {
       "name": "signup-screen",
+      "displayName": "Signup Screen",
       "type": "screen",
       "description": "Complete sign up screen with form validation, terms checkbox, and social signup",
       "category": "Authentication",
       "status": "beta",
-      "files": ["screens/signup-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["button", "input", "checkbox", "separator"]
+      "files": [
+        "screens/signup-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "checkbox",
+        "separator"
+      ],
+      "expoGo": true
     },
     {
       "name": "onboarding-screen",
+      "displayName": "Onboarding Screen",
       "type": "screen",
       "description": "Multi-slide onboarding flow with swipeable pages and animated pagination",
       "category": "Onboarding",
       "status": "beta",
-      "files": ["screens/onboarding-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-reanimated"],
-      "registryDependencies": ["button"]
+      "files": [
+        "screens/onboarding-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "expoGo": true
     },
     {
       "name": "profile-screen",
+      "displayName": "Profile Screen",
       "type": "screen",
       "description": "User profile screen with avatar, stats, action buttons, and content tabs",
       "category": "Profile",
       "status": "beta",
-      "files": ["screens/profile-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["avatar", "button", "icon-button", "badge", "tabs"]
+      "files": [
+        "screens/profile-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "button",
+        "icon-button",
+        "badge",
+        "tabs"
+      ],
+      "expoGo": true
     },
     {
       "name": "settings-screen",
+      "displayName": "Settings Screen",
       "type": "screen",
       "description": "Complete settings screen with grouped items, toggles, and navigation rows",
       "category": "Settings",
       "status": "beta",
-      "files": ["screens/settings-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["list", "switch", "icon-button"]
+      "files": [
+        "screens/settings-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "list",
+        "switch",
+        "icon-button"
+      ],
+      "expoGo": true
     },
     {
       "name": "search-screen",
+      "displayName": "Search Screen",
       "type": "screen",
       "description": "Complete search screen with filters, recent searches, trending, and categorized results",
       "category": "Navigation",
       "status": "beta",
-      "files": ["screens/search-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["search-input", "chip", "avatar", "badge", "icon-button"]
+      "files": [
+        "screens/search-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "search-input",
+        "chip",
+        "avatar",
+        "badge",
+        "icon-button"
+      ],
+      "expoGo": true
     },
     {
       "name": "chat-screen",
+      "displayName": "Chat Screen",
       "type": "screen",
       "description": "Complete chat/messaging screen with message bubbles, typing indicator, and input",
       "category": "Messaging",
       "status": "beta",
-      "files": ["screens/chat-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["avatar"]
+      "files": [
+        "screens/chat-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar"
+      ],
+      "expoGo": true
     },
     {
       "name": "notifications-screen",
+      "displayName": "Notifications Screen",
       "type": "screen",
       "description": "Notifications screen with swipe-to-delete, read/unread states, and pull-to-refresh",
       "category": "Social",
       "status": "beta",
-      "files": ["screens/notifications-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["separator", "swipeable-row", "notification-item"]
+      "files": [
+        "screens/notifications-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "separator",
+        "swipeable-row",
+        "notification-item"
+      ],
+      "expoGo": true
     },
     {
       "name": "feed-screen",
+      "displayName": "Feed Screen",
       "type": "screen",
       "description": "Social feed/timeline screen with posts, likes, comments, and pull-to-refresh",
       "category": "Social",
       "status": "beta",
-      "files": ["screens/feed-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["feed-post-card"]
+      "files": [
+        "screens/feed-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "feed-post-card"
+      ],
+      "expoGo": true
     },
     {
       "name": "row",
+      "displayName": "Row",
       "type": "ui",
       "description": "Horizontal flex container with gap, alignment, and padding props",
       "category": "Layout",
       "status": "beta",
-      "files": ["ui/row.tsx"],
+      "files": [
+        "ui/row.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "column",
+      "displayName": "Column",
       "type": "ui",
       "description": "Vertical flex container with gap, alignment, and padding props",
       "category": "Layout",
       "status": "beta",
-      "files": ["ui/column.tsx"],
+      "files": [
+        "ui/column.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "screen",
+      "displayName": "Screen",
       "type": "ui",
       "description": "Screen container with safe area, scroll support, and background variants",
       "category": "Layout",
       "status": "beta",
-      "files": ["ui/screen.tsx"],
-      "dependencies": ["react-native-safe-area-context"],
-      "registryDependencies": []
+      "files": [
+        "ui/screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "typography",
+      "displayName": "Typography",
       "type": "ui",
       "description": "Standardized text component with preset styles for consistent typography",
       "category": "Data Display",
       "status": "beta",
-      "files": ["ui/typography.tsx"],
+      "files": [
+        "ui/typography.tsx"
+      ],
       "dependencies": [],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "alert",
+      "displayName": "Alert",
       "type": "ui",
       "description": "Inline alert/banner for persistent messages with variant styles",
       "category": "Feedback",
       "status": "beta",
-      "files": ["ui/alert.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/alert.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "collapsible",
+      "displayName": "Collapsible",
       "type": "ui",
       "description": "Simple single-item expand/collapse with smooth animations",
       "category": "Data Display",
       "status": "beta",
-      "files": ["ui/collapsible.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/collapsible.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "product-detail-screen",
+      "displayName": "Product Detail Screen",
       "type": "screen",
       "description": "Complete product page with image gallery, variants, reviews, and add to cart",
       "category": "E-commerce",
       "status": "beta",
-      "files": ["screens/product-detail-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["button", "icon-button", "badge", "tabs", "rating", "separator", "avatar", "image-gallery"]
+      "files": [
+        "screens/product-detail-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "icon-button",
+        "badge",
+        "tabs",
+        "rating",
+        "separator",
+        "avatar",
+        "image-gallery"
+      ],
+      "expoGo": true
     },
     {
       "name": "cart-screen",
+      "displayName": "Cart Screen",
       "type": "screen",
       "description": "Shopping cart screen with items, order summary, and checkout action",
       "category": "E-commerce",
       "status": "beta",
-      "files": ["screens/cart-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["button", "icon-button", "separator", "cart-item", "empty-state-block"]
+      "files": [
+        "screens/cart-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "icon-button",
+        "separator",
+        "cart-item",
+        "empty-state-block"
+      ],
+      "expoGo": true
     },
     {
       "name": "followers-screen",
+      "displayName": "Followers Screen",
       "type": "screen",
       "description": "Follower/following list with search, tabs, and user management",
       "category": "Social",
       "status": "beta",
-      "files": ["screens/followers-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["icon-button", "search-input", "tabs", "spinner", "user-list-item", "empty-state-block"]
+      "files": [
+        "screens/followers-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "icon-button",
+        "search-input",
+        "tabs",
+        "spinner",
+        "user-list-item",
+        "empty-state-block"
+      ],
+      "expoGo": true
     },
     {
       "name": "comments-screen",
+      "displayName": "Comments Screen",
       "type": "screen",
       "description": "Full comments view with nested replies, input, and interactions",
       "category": "Social",
       "status": "beta",
-      "files": ["screens/comments-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["icon-button", "avatar", "spinner", "comment-item", "empty-state-block"]
+      "files": [
+        "screens/comments-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "icon-button",
+        "avatar",
+        "spinner",
+        "comment-item",
+        "empty-state-block"
+      ],
+      "expoGo": true
     },
     {
       "name": "toggle",
+      "displayName": "Toggle",
       "type": "ui",
       "description": "Button-style toggles with single and group selection modes",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/toggle.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/toggle.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "popover",
+      "displayName": "Popover",
       "type": "ui",
       "description": "Positioned popup with interactive content and backdrop",
       "category": "Overlay",
       "status": "beta",
-      "files": ["ui/popover.tsx"],
-      "dependencies": ["react-native-reanimated"],
-      "registryDependencies": []
+      "files": [
+        "ui/popover.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "pagination",
+      "displayName": "Pagination",
       "type": "ui",
       "description": "Page navigation with dots, numbers, and simple variants",
       "category": "Navigation",
       "status": "beta",
-      "files": ["ui/pagination.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/pagination.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "calendar",
+      "displayName": "Calendar",
       "type": "ui",
       "description": "Date grid with single, range, and multiple selection modes",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/calendar.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/calendar.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "circular-progress",
+      "displayName": "Circular Progress",
       "type": "ui",
       "description": "Ring/donut style progress indicator with animated fill",
       "category": "Feedback",
       "status": "beta",
-      "files": ["ui/circular-progress.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/circular-progress.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "tag-input",
+      "displayName": "Tag Input",
       "type": "ui",
       "description": "Input field for entering multiple tags with autocomplete",
       "category": "Inputs",
       "status": "beta",
-      "files": ["ui/tag-input.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": []
+      "files": [
+        "ui/tag-input.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [],
+      "expoGo": true
     },
     {
       "name": "order-item",
+      "displayName": "Order Item",
       "type": "block",
       "description": "Order history line item with status, products, and actions",
       "category": "E-commerce",
       "status": "beta",
-      "files": ["blocks/order-item.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["badge", "button"]
+      "files": [
+        "blocks/order-item.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button"
+      ],
+      "expoGo": true
     },
     {
       "name": "review-card",
+      "displayName": "Review Card",
       "type": "block",
       "description": "User review display with rating, images, and helpful votes",
       "category": "E-commerce",
       "status": "beta",
-      "files": ["blocks/review-card.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["avatar", "rating", "badge"]
+      "files": [
+        "blocks/review-card.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "rating",
+        "badge"
+      ],
+      "expoGo": true
     },
     {
       "name": "task-item",
+      "displayName": "Task Item",
       "type": "block",
       "description": "Todo/task item with checkbox, priority, and due date",
       "category": "Productivity",
       "status": "beta",
-      "files": ["blocks/task-item.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": ["checkbox", "badge", "swipeable-row"]
+      "files": [
+        "blocks/task-item.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "checkbox",
+        "badge",
+        "swipeable-row"
+      ],
+      "expoGo": true
     },
     {
       "name": "event-card",
+      "displayName": "Event Card",
       "type": "block",
       "description": "Calendar event display with date, time, location, and attendees",
       "category": "Productivity",
       "status": "beta",
-      "files": ["blocks/event-card.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["avatar", "avatar-stack", "badge", "card"]
+      "files": [
+        "blocks/event-card.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "avatar-stack",
+        "badge",
+        "card"
+      ],
+      "expoGo": true
     },
     {
       "name": "article-card",
+      "displayName": "Article Card",
       "type": "block",
       "description": "Blog/news article preview with image, author, and metadata",
       "category": "Content",
       "status": "beta",
-      "files": ["blocks/article-card.tsx"],
-      "dependencies": ["react-native-svg"],
-      "registryDependencies": ["avatar", "badge", "card"]
+      "files": [
+        "blocks/article-card.tsx"
+      ],
+      "dependencies": [
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "badge",
+        "card"
+      ],
+      "expoGo": true
     },
     {
       "name": "pricing-card",
+      "displayName": "Pricing Card",
       "type": "block",
       "description": "Subscription plan display with features, price, and CTA",
       "category": "Marketing",
       "status": "beta",
-      "files": ["blocks/pricing-card.tsx"],
-      "dependencies": ["react-native-reanimated", "react-native-svg"],
-      "registryDependencies": ["button", "badge"]
+      "files": [
+        "blocks/pricing-card.tsx"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "badge"
+      ],
+      "expoGo": true
     },
     {
       "name": "checkout-screen",
+      "displayName": "Checkout Screen",
       "type": "screen",
       "description": "Multi-step checkout flow with shipping, payment, and review",
       "category": "E-commerce",
       "status": "beta",
-      "files": ["screens/checkout-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["button", "icon-button", "input", "separator", "progress", "radio-group"]
+      "files": [
+        "screens/checkout-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "icon-button",
+        "input",
+        "separator",
+        "progress",
+        "radio-group"
+      ],
+      "expoGo": true
     },
     {
       "name": "order-history-screen",
+      "displayName": "Order History Screen",
       "type": "screen",
       "description": "Past orders list with filtering, tabs, and order actions",
       "category": "E-commerce",
       "status": "beta",
-      "files": ["screens/order-history-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["icon-button", "tabs", "spinner", "order-item", "empty-state-block"]
+      "files": [
+        "screens/order-history-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "icon-button",
+        "tabs",
+        "spinner",
+        "order-item",
+        "empty-state-block"
+      ],
+      "expoGo": true
     },
     {
       "name": "home-screen",
+      "displayName": "Home Screen",
       "type": "screen",
       "description": "Dashboard/landing screen with hero, stats, and featured content",
       "category": "Navigation",
       "status": "beta",
-      "files": ["screens/home-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["avatar", "icon-button", "search-input", "horizontal-list", "section-header", "stats-card", "hero-block", "content-card"]
+      "files": [
+        "screens/home-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "icon-button",
+        "search-input",
+        "horizontal-list",
+        "section-header",
+        "stats-card",
+        "hero-block",
+        "content-card"
+      ],
+      "expoGo": true
     },
     {
       "name": "account-screen",
+      "displayName": "Account Screen",
       "type": "screen",
       "description": "User account management with profile and settings navigation",
       "category": "Profile",
       "status": "beta",
-      "files": ["screens/account-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["avatar", "button", "icon-button", "list", "separator", "badge"]
+      "files": [
+        "screens/account-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "button",
+        "icon-button",
+        "list",
+        "separator",
+        "badge"
+      ],
+      "expoGo": true
     },
     {
       "name": "help-screen",
+      "displayName": "Help Screen",
       "type": "screen",
       "description": "FAQ and support screen with searchable topics and contact options",
       "category": "Support",
       "status": "beta",
-      "files": ["screens/help-screen.tsx"],
-      "dependencies": ["react-native-safe-area-context", "react-native-svg"],
-      "registryDependencies": ["icon-button", "search-input", "accordion", "separator", "card"]
+      "files": [
+        "screens/help-screen.tsx"
+      ],
+      "dependencies": [
+        "react-native-safe-area-context",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "icon-button",
+        "search-input",
+        "accordion",
+        "separator",
+        "card"
+      ],
+      "expoGo": true
     }
   ]
 }
