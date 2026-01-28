@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-01-26)
 
 ## Current Position
 
-Phase: 17 of 18 (Registry Structure & Metadata) — Complete
-Plan: 3/3 in current phase
-Status: Phase 17 verified, ready for Phase 18
-Last activity: 2026-01-28 — Phase 17 complete
+Phase: 18 of 18 (Core Package Exports)
+Plan: 1/2 in current phase
+Status: In progress — 18-01 complete
+Last activity: 2026-01-28 — Completed 18-01-PLAN.md
 
 Progress: [█████████░░░░░░░░░] 17/18 phases (94%)
 
@@ -60,6 +60,8 @@ Recent decisions affecting v1.1:
 - 17-02: Screen imports synchronized with renamed block files
 - 17-03: Ajv v8 + JSON Schema for registry validation (enforces quality standards)
 - 17-03: Validation script performs 5 checks: schema, duplicates, naming, dependencies, file existence
+- 18-01: Removed 3 orphaned exports (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS) from core package
+- 18-01: Added 6 missing type exports (SpacingValue, RadiusValue, ComponentRadiusKey, ComponentRadiusTokens, LineHeightKey, LetterSpacingKey)
 
 ### Resolved Blockers
 - CheckoutScreen StepIndicator scope bug — fixed in Phase 13
@@ -67,18 +69,16 @@ Recent decisions affecting v1.1:
 - ImageGallery missing loading states — fixed in Phase 8
 
 ### Open Blockers
-None. Phase 17 complete. Ready for Phase 18.
+None. Phase 18-01 complete. Ready for Phase 18-02.
 
 ### Technical Debt
-- 3 orphaned token exports in core (screenTokens, SCREEN_CONSTANTS, SKELETON_CONSTANTS)
-- Address in CORE-03 (orphaned/unused exports audit)
 - Pre-existing TypeScript errors in packages/mcp-server/src/tools/index.ts parseComponentDocs function (strict null checks)
 
 ## Session Continuity
 
-Last session: 2026-01-28T09:10:57Z
-Stopped at: Completed 17-03-PLAN.md (Phase 17 complete)
+Last session: 2026-01-28T09:45:24Z
+Stopped at: Completed 18-01-PLAN.md
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after Phase 17 completion*
+*Updated: 2026-01-28 after Phase 18-01 completion*
