@@ -35,6 +35,7 @@ import { IconButton } from '../ui/icon-button';
 import { SearchInput } from '../ui/search-input';
 import { HorizontalList } from '../ui/horizontal-list';
 import { SectionHeader } from '../ui/section-header';
+import { MediaCard } from '../ui/card';
 
 // Import blocks
 import { StatsCard } from '../blocks/stats-card-block';
@@ -327,54 +328,15 @@ export function HomeScreen({
             <View style={{ marginTop: spacing[2] }}>
               <HorizontalList contentInset={spacing[4]}>
                 {featuredItems.map((item) => (
-                  <Pressable
+                  <MediaCard
                     key={item.id}
+                    source={item.image ?? { uri: '' }}
+                    title={item.title}
+                    description={item.subtitle}
+                    height={90}
                     onPress={onFeaturedItemPress ? () => onFeaturedItemPress(item.id) : undefined}
-                  >
-                    <View
-                      style={{
-                        width: 140,
-                        backgroundColor: colors.card,
-                        borderRadius: radius.lg,
-                        borderWidth: 1,
-                        borderColor: colors.border,
-                      }}
-                    >
-                      <View
-                        style={{
-                          width: '100%',
-                          height: 90,
-                          backgroundColor: colors.secondary,
-                          borderTopLeftRadius: radius.lg,
-                          borderTopRightRadius: radius.lg,
-                        }}
-                      />
-                      <View style={{ padding: spacing[3] }}>
-                        <Text
-                          style={{
-                            color: colors.foreground,
-                            fontSize: fontSize.xs,
-                            fontWeight: fontWeight.semibold,
-                          }}
-                          numberOfLines={1}
-                        >
-                          {item.title}
-                        </Text>
-                        {item.subtitle && (
-                          <Text
-                            style={{
-                              color: colors.foregroundMuted,
-                              fontSize: fontSize['2xs'],
-                              marginTop: 2,
-                            }}
-                            numberOfLines={1}
-                          >
-                            {item.subtitle}
-                          </Text>
-                        )}
-                      </View>
-                    </View>
-                  </Pressable>
+                    style={{ width: 140 }}
+                  />
                 ))}
               </HorizontalList>
             </View>
