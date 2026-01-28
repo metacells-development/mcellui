@@ -26,7 +26,7 @@ import {
 } from 'react-native';
 import { useTheme } from '@metacells/mcellui-core';
 
-export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type AvatarSize = 'sm' | 'md' | 'lg';
 export type AvatarStatus = 'online' | 'offline' | 'busy' | 'away';
 
 export interface AvatarProps {
@@ -194,7 +194,7 @@ export function Avatar({
 
 const styles = StyleSheet.create({
   wrapper: {
-    alignSelf: 'flex-start',
+    // No alignSelf - let parent control alignment
   },
   container: {
     overflow: 'hidden',

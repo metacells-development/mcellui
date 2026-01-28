@@ -51,8 +51,8 @@ export function AvatarStackDemo() {
             <Text style={[typography.caption, { color: colors.foregroundMuted }]}>Large</Text>
           </View>
           <View style={{ alignItems: 'center', gap: spacing[2] }}>
-            <AvatarStack avatars={sampleUsers.slice(0, 3)} size="xl" />
-            <Text style={[typography.caption, { color: colors.foregroundMuted }]}>XL</Text>
+            <AvatarStack avatars={sampleUsers.slice(0, 3)} size="lg" />
+            <Text style={[typography.caption, { color: colors.foregroundMuted }]}>Large (max)</Text>
           </View>
         </View>
       </Section>

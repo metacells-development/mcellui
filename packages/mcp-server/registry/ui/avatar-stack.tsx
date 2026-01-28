@@ -44,7 +44,7 @@ import { useTheme } from '@metacells/mcellui-core';
 // Types
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type AvatarStackSize = 'sm' | 'md' | 'lg' | 'xl';
+export type AvatarStackSize = 'sm' | 'md' | 'lg';
 
 export interface AvatarItem {
   /** Image source */
