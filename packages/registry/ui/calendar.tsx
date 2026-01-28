@@ -50,17 +50,21 @@ import { haptic } from '@metacells/mcellui-core';
 // Icons
 // ============================================================================
 
-function ChevronLeftIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function ChevronLeftIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function ChevronRightIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function ChevronRightIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );

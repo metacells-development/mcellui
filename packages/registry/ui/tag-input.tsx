@@ -50,9 +50,11 @@ import { haptic } from '@metacells/mcellui-core';
 // Icons
 // ============================================================================
 
-function CloseIcon({ size = 14, color = '#000' }: { size?: number; color?: string }) {
+function CloseIcon({ size = 14, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
