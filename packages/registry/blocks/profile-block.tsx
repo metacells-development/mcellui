@@ -105,7 +105,7 @@ export function ProfileBlock({
       {/* Avatar and Name */}
       <View style={[styles.header, { marginBottom: spacing[4] }]}>
         <Avatar
-          size="xl"
+          size="lg"
           source={avatarUrl ? { uri: avatarUrl } : undefined}
           fallback={initials}
         />

@@ -223,7 +223,7 @@ export function ProfileScreen({
         <View style={[styles.profileInfo, { paddingHorizontal: spacing[6] }]}>
           {/* Avatar */}
           <Avatar
-            size="xl"
+            size="lg"
             source={user.avatarSource || (user.avatarUrl ? { uri: user.avatarUrl } : undefined)}
             fallback={user.name.substring(0, 2)}
           />

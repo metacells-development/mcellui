@@ -254,7 +254,7 @@ export function AccountScreen({
             <Avatar
               source={user.avatar}
               fallback={user.name.charAt(0)}
-              size="xl"
+              size="lg"
             />
             {onChangeAvatar && (
               <Pressable
