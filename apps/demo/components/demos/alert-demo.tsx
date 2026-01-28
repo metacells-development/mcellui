@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Alert } from '@/components/ui/alert';
 import { Section } from './section';
+import { useTheme } from '@metacells/mcellui-core';
 
 export function AlertDemo() {
+  const { colors, fontSize } = useTheme();
   const [dismissedAlerts, setDismissedAlerts] = useState<string[]>([]);
 
   const handleDismiss = (id: string) => {
@@ -78,7 +80,7 @@ export function AlertDemo() {
           </Alert>
         )}
         {!isVisible('dismiss-1') && !isVisible('dismiss-2') && (
-          <Text style={styles.dimmedText}>All alerts dismissed!</Text>
+          <Text style={{ color: colors.foregroundMuted, fontStyle: 'italic', textAlign: 'center', padding: 16 }}>All alerts dismissed!</Text>
         )}
       </Section>
 
@@ -105,10 +107,4 @@ export function AlertDemo() {
 
 const styles = StyleSheet.create({
   container: { gap: 24 },
-  dimmedText: {
-    color: '#888',
-    fontStyle: 'italic',
-    textAlign: 'center',
-    padding: 16,
-  },
 });

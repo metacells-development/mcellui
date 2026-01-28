@@ -9,14 +9,14 @@ function InfoIcon({ color }: { color?: string }) {
   return (
     <View style={styles.infoIcon}>
       <View style={[styles.infoCircle, { borderColor: color || '#666' }]}>
-        <Text style={[styles.infoText, { color: color || '#666' }]}>i</Text>
+        <Text style={{ fontSize: 12, fontWeight: '600', fontStyle: 'italic', color: color || '#666' }}>i</Text>
       </View>
     </View>
   );
 }
 
 export function TooltipDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [controlledOpen, setControlledOpen] = React.useState(false);
 
   return (
@@ -27,7 +27,7 @@ export function TooltipDemo() {
             <Button variant="outline">Long press me</Button>
           </Tooltip>
         </View>
-        <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 8, textAlign: 'center' }}>
           Long press the button to see the tooltip
         </Text>
       </Section>
@@ -55,7 +55,7 @@ export function TooltipDemo() {
             <Button variant="outline" size="sm">Slow (1s)</Button>
           </Tooltip>
         </View>
-        <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 8, textAlign: 'center' }}>
           Try long-pressing each button to feel the delay difference
         </Text>
       </Section>
@@ -113,7 +113,7 @@ export function TooltipDemo() {
               <Button variant="ghost" size="sm">Target Element</Button>
             </Tooltip>
           </View>
-          <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
+          <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 8, textAlign: 'center' }}>
             Tooltip is currently: {controlledOpen ? 'Open' : 'Closed'}
           </Text>
         </View>
@@ -125,7 +125,7 @@ export function TooltipDemo() {
             <Button variant="ghost">Tooltip Disabled</Button>
           </Tooltip>
         </View>
-        <Text style={[styles.hint, { color: colors.foregroundMuted }]}>
+        <Text style={{ color: colors.foregroundMuted, fontSize: fontSize.xs, marginTop: 8, textAlign: 'center' }}>
           This tooltip is disabled and won't appear
         </Text>
       </Section>
@@ -146,11 +146,6 @@ const styles = StyleSheet.create({
   centered: {
     alignItems: 'center',
   },
-  hint: {
-    fontSize: 12,
-    marginTop: 8,
-    textAlign: 'center',
-  },
   infoIcon: {
     padding: 4,
   },
@@ -161,10 +156,5 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  infoText: {
-    fontSize: 12,
-    fontWeight: '600',
-    fontStyle: 'italic',
   },
 });

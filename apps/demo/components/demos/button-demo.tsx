@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { Button } from '@/components/ui/button';
+import { Section } from './section';
 import { useTheme } from '@metacells/mcellui-core';
 
 // Demo Icons
@@ -66,20 +67,7 @@ export function ButtonDemo() {
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  const { colors } = useTheme();
-  return (
-    <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.foregroundMuted }]}>{title}</Text>
-      <View style={styles.sectionContent}>{children}</View>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: { gap: 24 },
-  section: { gap: 12 },
-  sectionTitle: { fontSize: 14, fontWeight: '600', textTransform: 'uppercase', letterSpacing: 0.5 },
-  sectionContent: { gap: 8 },
   row: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
 });

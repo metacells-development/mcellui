@@ -43,11 +43,11 @@ import { SearchHeaderBlock } from '@/components/blocks/search-header-block';
 // ============================================================================
 
 export function BlocksDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.intro, { color: colors.foregroundMuted, marginBottom: spacing[6] }]}>
+      <Text style={{ color: colors.foregroundMuted, marginBottom: spacing[6], fontSize: fontSize.sm, lineHeight: 20 }}>
         Screen Blocks are complete, copy-paste templates for common app screens.
         Each block uses our existing components.
       </Text>
@@ -1749,7 +1749,7 @@ function ArticleCardPreview() {
     <View style={{ gap: spacing[4] }}>
       {/* Default variant */}
       <View>
-        <Text style={[styles.sectionTitle, { marginBottom: spacing[3] }]}>DEFAULT</Text>
+        <Text style={{ fontSize: fontSize.sm, fontWeight: fontWeight.semibold, color: colors.foregroundMuted, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: spacing[3] }}>DEFAULT</Text>
         <ArticleCard
           article={articleData}
           onPress={() => Alert.alert('Read Article')}
@@ -1758,7 +1758,7 @@ function ArticleCardPreview() {
 
       {/* Horizontal variant */}
       <View>
-        <Text style={[styles.sectionTitle, { marginBottom: spacing[3] }]}>HORIZONTAL</Text>
+        <Text style={{ fontSize: fontSize.sm, fontWeight: fontWeight.semibold, color: colors.foregroundMuted, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: spacing[3] }}>HORIZONTAL</Text>
         <ArticleCard
           article={{
             ...articleData,
@@ -1773,7 +1773,7 @@ function ArticleCardPreview() {
 
       {/* Featured variant */}
       <View>
-        <Text style={[styles.sectionTitle, { marginBottom: spacing[3] }]}>FEATURED</Text>
+        <Text style={{ fontSize: fontSize.sm, fontWeight: fontWeight.semibold, color: colors.foregroundMuted, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: spacing[3] }}>FEATURED</Text>
         <ArticleCard
           article={{
             ...articleData,
@@ -1843,9 +1843,10 @@ function PricingCardPreview() {
 // ============================================================================
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  const { colors, fontSize, fontWeight } = useTheme();
   return (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{title}</Text>
+      <Text style={{ fontSize: fontSize.sm, fontWeight: fontWeight.semibold, color: colors.foregroundMuted, textTransform: 'uppercase', letterSpacing: 0.5 }}>{title}</Text>
       <View style={styles.sectionContent}>{children}</View>
     </View>
   );
@@ -1859,19 +1860,8 @@ const styles = StyleSheet.create({
   container: {
     gap: 32,
   },
-  intro: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
   section: {
     gap: 16,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#737373',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
   },
   sectionContent: {
     gap: 8,

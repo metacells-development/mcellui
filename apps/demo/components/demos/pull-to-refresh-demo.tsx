@@ -4,7 +4,7 @@ import { useTheme } from '@metacells/mcellui-core';
 import { PullToRefresh, RefreshIndicator } from '@/components/ui/pull-to-refresh';
 
 export function PullToRefreshDemo() {
-  const { colors, spacing, radius } = useTheme();
+  const { colors, spacing, radius, fontSize, fontWeight } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
   const [items, setItems] = useState([
     'Item 1',
@@ -25,7 +25,7 @@ export function PullToRefreshDemo() {
   return (
     <View style={styles.container}>
       {/* Main Demo */}
-      <Text style={[styles.label, { color: colors.foreground }]}>
+      <Text style={{ fontSize: fontSize.sm, fontWeight: fontWeight.medium, marginBottom: 8, color: colors.foreground }}>
         Pull down to refresh
       </Text>
       <View style={[styles.listContainer, { borderColor: colors.border }]}>
@@ -56,19 +56,19 @@ export function PullToRefreshDemo() {
       <View style={styles.indicatorRow}>
         <View style={styles.indicatorItem}>
           <RefreshIndicator animating={true} size={24} />
-          <Text style={[styles.indicatorLabel, { color: colors.foregroundMuted }]}>
+          <Text style={{ fontSize: fontSize.xs, marginTop: 8, color: colors.foregroundMuted }}>
             24px
           </Text>
         </View>
         <View style={styles.indicatorItem}>
           <RefreshIndicator animating={true} size={32} />
-          <Text style={[styles.indicatorLabel, { color: colors.foregroundMuted }]}>
+          <Text style={{ fontSize: fontSize.xs, marginTop: 8, color: colors.foregroundMuted }}>
             32px
           </Text>
         </View>
         <View style={styles.indicatorItem}>
           <RefreshIndicator animating={true} size={48} color={colors.primary} />
-          <Text style={[styles.indicatorLabel, { color: colors.foregroundMuted }]}>
+          <Text style={{ fontSize: fontSize.xs, marginTop: 8, color: colors.foregroundMuted }}>
             48px
           </Text>
         </View>
@@ -80,11 +80,6 @@ export function PullToRefreshDemo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
   },
   listContainer: {
     height: 250,
@@ -108,9 +103,5 @@ const styles = StyleSheet.create({
   indicatorItem: {
     alignItems: 'center',
     gap: 8,
-  },
-  indicatorLabel: {
-    fontSize: 12,
-    marginTop: 8,
   },
 });

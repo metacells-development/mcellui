@@ -6,7 +6,7 @@ import { useTheme } from '@metacells/mcellui-core';
 import { Section } from './section';
 
 export function ProgressDemo() {
-  const { colors } = useTheme();
+  const { colors, fontSize } = useTheme();
   const [progress, setProgress] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -31,15 +31,15 @@ export function ProgressDemo() {
       <Section title="Sizes">
         <View style={styles.sizes}>
           <View style={styles.sizeRow}>
-            <Text style={[styles.label, { color: colors.foregroundMuted }]}>sm</Text>
+            <Text style={{ width: 24, fontSize: fontSize.xs, color: colors.foregroundMuted }}>sm</Text>
             <Progress value={60} size="sm" />
           </View>
           <View style={styles.sizeRow}>
-            <Text style={[styles.label, { color: colors.foregroundMuted }]}>md</Text>
+            <Text style={{ width: 24, fontSize: fontSize.xs, color: colors.foregroundMuted }}>md</Text>
             <Progress value={60} size="md" />
           </View>
           <View style={styles.sizeRow}>
-            <Text style={[styles.label, { color: colors.foregroundMuted }]}>lg</Text>
+            <Text style={{ width: 24, fontSize: fontSize.xs, color: colors.foregroundMuted }}>lg</Text>
             <Progress value={60} size="lg" />
           </View>
         </View>
@@ -59,23 +59,23 @@ export function ProgressDemo() {
         <View style={styles.values}>
           <View style={styles.valueRow}>
             <Progress value={0} />
-            <Text style={[styles.valueLabel, { color: colors.foregroundMuted }]}>0%</Text>
+            <Text style={{ width: 40, fontSize: fontSize.xs, textAlign: 'right', color: colors.foregroundMuted }}>0%</Text>
           </View>
           <View style={styles.valueRow}>
             <Progress value={25} />
-            <Text style={[styles.valueLabel, { color: colors.foregroundMuted }]}>25%</Text>
+            <Text style={{ width: 40, fontSize: fontSize.xs, textAlign: 'right', color: colors.foregroundMuted }}>25%</Text>
           </View>
           <View style={styles.valueRow}>
             <Progress value={50} />
-            <Text style={[styles.valueLabel, { color: colors.foregroundMuted }]}>50%</Text>
+            <Text style={{ width: 40, fontSize: fontSize.xs, textAlign: 'right', color: colors.foregroundMuted }}>50%</Text>
           </View>
           <View style={styles.valueRow}>
             <Progress value={75} />
-            <Text style={[styles.valueLabel, { color: colors.foregroundMuted }]}>75%</Text>
+            <Text style={{ width: 40, fontSize: fontSize.xs, textAlign: 'right', color: colors.foregroundMuted }}>75%</Text>
           </View>
           <View style={styles.valueRow}>
             <Progress value={100} color="success" />
-            <Text style={[styles.valueLabel, { color: colors.foregroundMuted }]}>100%</Text>
+            <Text style={{ width: 40, fontSize: fontSize.xs, textAlign: 'right', color: colors.foregroundMuted }}>100%</Text>
           </View>
         </View>
       </Section>
@@ -83,15 +83,15 @@ export function ProgressDemo() {
       <Section title="Indeterminate Colors">
         <View style={styles.colors}>
           <View style={styles.colorRow}>
-            <Text style={[styles.colorLabel, { color: colors.foregroundMuted }]}>default</Text>
+            <Text style={{ width: 60, fontSize: fontSize.xs, color: colors.foregroundMuted }}>default</Text>
             <Progress indeterminate color="default" />
           </View>
           <View style={styles.colorRow}>
-            <Text style={[styles.colorLabel, { color: colors.foregroundMuted }]}>primary</Text>
+            <Text style={{ width: 60, fontSize: fontSize.xs, color: colors.foregroundMuted }}>primary</Text>
             <Progress indeterminate color="primary" />
           </View>
           <View style={styles.colorRow}>
-            <Text style={[styles.colorLabel, { color: colors.foregroundMuted }]}>success</Text>
+            <Text style={{ width: 60, fontSize: fontSize.xs, color: colors.foregroundMuted }}>success</Text>
             <Progress indeterminate color="success" />
           </View>
         </View>
@@ -101,7 +101,7 @@ export function ProgressDemo() {
         <View style={styles.interactive}>
           <View style={styles.valueRow}>
             <Progress value={progress} color={progress === 100 ? 'success' : 'primary'} />
-            <Text style={[styles.valueLabel, { color: colors.foregroundMuted }]}>{progress}%</Text>
+            <Text style={{ width: 40, fontSize: fontSize.xs, textAlign: 'right', color: colors.foregroundMuted }}>{progress}%</Text>
           </View>
           <Button
             onPress={handleStart}
@@ -124,10 +124,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
-  label: {
-    width: 24,
-    fontSize: 12,
-  },
   colors: { gap: 12 },
   values: { gap: 12 },
   valueRow: {
@@ -135,19 +131,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
-  valueLabel: {
-    width: 40,
-    fontSize: 12,
-    textAlign: 'right',
-  },
   interactive: { gap: 16 },
   colorRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-  },
-  colorLabel: {
-    width: 60,
-    fontSize: 12,
   },
 });

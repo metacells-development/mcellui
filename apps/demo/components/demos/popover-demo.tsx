@@ -30,7 +30,7 @@ function InfoIcon({ size = 16, color = '#000' }: { size?: number; color?: string
 }
 
 export function PopoverDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [basicOpen, setBasicOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [width, setWidth] = useState('100');
@@ -47,10 +47,10 @@ export function PopoverDemo() {
                   <Button variant="outline">Open Popover</Button>
                 </PopoverTrigger>
                 <PopoverContent>
-                  <Text style={[styles.popoverTitle, { color: colors.foreground }]}>
+                  <Text style={[{ fontSize: fontSize.md, fontWeight: fontWeight.semibold }, { color: colors.foreground }]}>
                     Popover Content
                   </Text>
-                  <Text style={[styles.popoverText, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                  <Text style={[{ fontSize: fontSize.sm, lineHeight: 20 }, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
                     This is a simple popover with some content. It can contain any React Native components.
                   </Text>
                 </PopoverContent>
@@ -76,10 +76,10 @@ export function PopoverDemo() {
                 <PopoverContent style={{ width: 280 }}>
                   <View style={{ gap: spacing[4] }}>
                     <View>
-                      <Text style={[styles.popoverTitle, { color: colors.foreground }]}>
+                      <Text style={[{ fontSize: fontSize.md, fontWeight: fontWeight.semibold }, { color: colors.foreground }]}>
                         Set Dimensions
                       </Text>
-                      <Text style={[styles.popoverText, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
+                      <Text style={[{ fontSize: fontSize.sm, lineHeight: 20 }, { color: colors.foregroundMuted, marginTop: spacing[1] }]}>
                         Configure the width and height.
                       </Text>
                     </View>
@@ -117,7 +117,7 @@ export function PopoverDemo() {
                 </PopoverContent>
               </Popover>
             </View>
-            <Text style={[styles.stateText, { color: colors.foregroundMuted, marginTop: spacing[3], textAlign: 'center' }]}>
+            <Text style={[{ fontSize: fontSize.xs }, { color: colors.foregroundMuted, marginTop: spacing[3], textAlign: 'center' }]}>
               Current: {width}x{height}
             </Text>
           </CardContent>
@@ -150,7 +150,7 @@ export function PopoverDemo() {
           <CardContent style={{ paddingTop: spacing[4] }}>
             <View style={{ gap: spacing[4] }}>
               <View>
-                <Text style={[styles.popoverText, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
+                <Text style={[{ fontSize: fontSize.sm, lineHeight: 20 }, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
                   Top position with different alignments:
                 </Text>
                 <View style={{ flexDirection: 'row', gap: spacing[2], justifyContent: 'center' }}>
@@ -170,7 +170,7 @@ export function PopoverDemo() {
               </View>
               <Separator />
               <View>
-                <Text style={[styles.popoverText, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
+                <Text style={[{ fontSize: fontSize.sm, lineHeight: 20 }, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
                   Right position with different alignments:
                 </Text>
                 <View style={{ flexDirection: 'row', gap: spacing[2], justifyContent: 'center' }}>
@@ -285,10 +285,10 @@ export function PopoverDemo() {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent style={{ width: 240 }}>
-                  <Text style={[styles.popoverTitle, { color: colors.foreground }]}>
+                  <Text style={[{ fontSize: fontSize.md, fontWeight: fontWeight.semibold }, { color: colors.foreground }]}>
                     About Plans
                   </Text>
-                  <Text style={[styles.popoverText, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
+                  <Text style={[{ fontSize: fontSize.sm, lineHeight: 20 }, { color: colors.foregroundMuted, marginTop: spacing[2] }]}>
                     Choose from Free, Pro, or Enterprise plans. Each tier includes additional features and support options.
                   </Text>
                 </PopoverContent>
@@ -304,16 +304,5 @@ export function PopoverDemo() {
 const styles = StyleSheet.create({
   container: {
     gap: 24,
-  },
-  popoverTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  popoverText: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  stateText: {
-    fontSize: 13,
   },
 });

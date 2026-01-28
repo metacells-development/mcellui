@@ -5,7 +5,7 @@ import { TagInput } from '@/components/ui/tag-input';
 import { Section } from './section';
 
 export function TagInputDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
   const [basicTags, setBasicTags] = useState<string[]>(['React', 'TypeScript']);
   const [maxTags, setMaxTags] = useState<string[]>(['One', 'Two', 'Three']);
   const [validatedTags, setValidatedTags] = useState<string[]>(['valid@email.com']);
@@ -33,7 +33,7 @@ export function TagInputDemo() {
     <View style={styles.container}>
       <Section title="Sizes">
         <View>
-          <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
+          <Text style={{ fontSize: fontSize.xs, fontWeight: fontWeight.medium, color: colors.foregroundMuted, marginBottom: spacing[2] }}>
             Small
           </Text>
           <TagInput
@@ -44,7 +44,7 @@ export function TagInputDemo() {
           />
         </View>
         <View>
-          <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
+          <Text style={{ fontSize: fontSize.xs, fontWeight: fontWeight.medium, color: colors.foregroundMuted, marginBottom: spacing[2] }}>
             Medium (default)
           </Text>
           <TagInput
@@ -55,7 +55,7 @@ export function TagInputDemo() {
           />
         </View>
         <View>
-          <Text style={[styles.sizeLabel, { color: colors.foregroundMuted, marginBottom: spacing[2] }]}>
+          <Text style={{ fontSize: fontSize.xs, fontWeight: fontWeight.medium, color: colors.foregroundMuted, marginBottom: spacing[2] }}>
             Large
           </Text>
           <TagInput
@@ -153,9 +153,5 @@ export function TagInputDemo() {
 const styles = StyleSheet.create({
   container: {
     gap: 24,
-  },
-  sizeLabel: {
-    fontSize: 12,
-    fontWeight: '500',
   },
 });

@@ -5,7 +5,7 @@ import { useTheme } from '@metacells/mcellui-core';
 import { Section } from './section';
 
 export function SpinnerDemo() {
-  const { colors, radius } = useTheme();
+  const { colors, radius, fontSize } = useTheme();
 
   return (
     <View style={styles.container}>
@@ -42,7 +42,7 @@ export function SpinnerDemo() {
               <Spinner size="sm" color="default" style={{ marginRight: 8 }} />
               <Text style={{ color: colors.primaryForeground, fontWeight: '500' }}>Loading...</Text>
             </View>
-            <Text style={[styles.useCaseLabel, { color: colors.foregroundMuted }]}>Button loading</Text>
+            <Text style={{ fontSize: fontSize.xs, color: colors.foregroundMuted }}>Button loading</Text>
           </View>
 
           {/* Inline loading */}
@@ -51,16 +51,16 @@ export function SpinnerDemo() {
               <Text style={{ color: colors.foreground }}>Saving changes</Text>
               <Spinner size="sm" color="primary" />
             </View>
-            <Text style={[styles.useCaseLabel, { color: colors.foregroundMuted }]}>Inline indicator</Text>
+            <Text style={{ fontSize: fontSize.xs, color: colors.foregroundMuted }}>Inline indicator</Text>
           </View>
 
           {/* Full screen loading placeholder */}
           <View style={styles.useCase}>
             <View style={[styles.loadingCard, { backgroundColor: colors.card, borderRadius: radius.lg }]}>
               <Spinner size="lg" color="muted" />
-              <Text style={[styles.loadingText, { color: colors.foregroundMuted }]}>Loading content...</Text>
+              <Text style={{ fontSize: fontSize.xs, color: colors.foregroundMuted }}>Loading content...</Text>
             </View>
-            <Text style={[styles.useCaseLabel, { color: colors.foregroundMuted }]}>Card loading</Text>
+            <Text style={{ fontSize: fontSize.xs, color: colors.foregroundMuted }}>Card loading</Text>
           </View>
         </View>
       </Section>
@@ -82,9 +82,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  useCaseLabel: {
-    fontSize: 12,
-  },
   loadingButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -101,8 +98,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     width: 160,
-  },
-  loadingText: {
-    fontSize: 13,
   },
 });

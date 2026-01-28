@@ -15,7 +15,7 @@ import { Section } from './section';
 import { useTheme } from '@metacells/mcellui-core';
 
 export function DialogDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize } = useTheme();
   const [basicOpen, setBasicOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [longContentOpen, setLongContentOpen] = useState(false);
@@ -82,7 +82,7 @@ export function DialogDemo() {
               </DialogDescription>
             </DialogHeader>
             <ScrollView style={styles.scrollContent}>
-              <Text style={[styles.contentText, { color: colors.foreground }]}>
+              <Text style={{ fontSize: fontSize.sm, lineHeight: 20, color: colors.foreground }}>
                 This is a dialog with scrollable content to test layout behavior
                 when content exceeds the available space.{'\n\n'}
                 1. You agree to use this service responsibly and in accordance
@@ -150,10 +150,6 @@ const styles = StyleSheet.create({
   scrollContent: {
     maxHeight: 300,
     marginTop: 16,
-  },
-  contentText: {
-    fontSize: 14,
-    lineHeight: 20,
   },
   multiInputForm: {
     gap: 12,
