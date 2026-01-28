@@ -474,7 +474,7 @@ export function DateTimePicker({
 // ─────────────────────────────────────────────────────────────────────────────
 
 function CalendarIcon({ color, tokens }: { color: string; tokens: any }) {
-  const { radius } = useTheme();
+  const { radius, spacing } = useTheme();
   return (
     <View style={[styles.calendarIcon, { width: tokens.icon.width, height: tokens.icon.height }]}>
       <View style={[
@@ -483,6 +483,7 @@ function CalendarIcon({ color, tokens }: { color: string; tokens: any }) {
           backgroundColor: color,
           width: tokens.icon.topWidth,
           height: tokens.icon.topHeight,
+          marginBottom: spacing[0.25],
         }
       ]} />
       <View style={[
@@ -578,7 +579,6 @@ const styles = StyleSheet.create({
   },
   calendarTop: {
     borderRadius: 1,
-    marginBottom: 1,
   },
   calendarBody: {
     borderWidth: 1.5,
