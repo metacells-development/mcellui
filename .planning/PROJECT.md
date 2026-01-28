@@ -8,23 +8,21 @@ A modern, copy-paste UI component library for Expo/React Native — inspired by 
 
 Users own the component code. No npm dependency lock-in, full customization freedom, native-first styling.
 
-## Current Milestone: v1.1 Project Audit
+## Current State (v1.1)
 
-**Goal:** Comprehensive audit of CLI, MCP Server, Core package, and Registry — document all findings, fix broken functionality.
+**Shipped:** 2026-01-28
 
-**Target areas:**
-- CLI (npx mcellui) — commands, error handling, output, UX
-- MCP Server — tool definitions, responses, integration quality
-- Core package — theme system, tokens, utilities, exports
-- Registry structure — component organization, dependencies, metadata
+All tooling audited and production-ready:
+- Core package exports compiled JS (ESM-only with subpath exports)
+- CLI has centralized error handling (stderr, exit codes, retry logic)
+- MCP server optimized for AI agent consumption (descriptions, flat schemas, recovery hints)
+- Registry has complete metadata (displayName, expoGo, schemaVersion, JSON Schema validation)
+- All core exports documented with JSDoc (144 blocks across 15 files)
 
-**Approach:** Audit → Report → Fix critical (broken functionality only)
+**Stats:** 33,870+ LOC TypeScript | 102 components | 18 phases complete (v1.0 + v1.1)
 
----
-
-## Current State (v1.0)
-
-**Shipped:** 2026-01-26
+<details>
+<summary>Previous: v1.0 (Shipped 2026-01-26)</summary>
 
 All 102 components refined to consistent quality:
 - Centralized theme token system (40+ token sets)
@@ -33,6 +31,7 @@ All 102 components refined to consistent quality:
 - Full demo coverage with all variants and states
 
 **Stats:** 33,870 LOC TypeScript | 102 components | 13 phases complete
+</details>
 
 ## Requirements
 
@@ -62,21 +61,22 @@ All 102 components refined to consistent quality:
 - ✓ All validatable components support error state — v1.0
 - ✓ All focusable components have focus rings — v1.0
 - ✓ Demo app shows all variants and states — v1.0
+- ✓ CLI audit — error handling, exit codes, flag consistency, help text, edge cases — v1.1
+- ✓ MCP Server audit — tool descriptions, responses, error recovery, flat schemas, resources — v1.1
+- ✓ Core package audit — compiled exports, peer dependencies, package.json exports — v1.1
+- ✓ Registry structure audit — metadata, dependencies, naming consistency, validation — v1.1
+- ✓ Core exports audit — token documentation, utility types, orphan removal — v1.1
 
 ### Active
 
-<!-- Current scope for next milestone -->
+<!-- Current scope for next milestone — to be defined by /gsd:new-milestone -->
 
-- [ ] CLI audit — commands, error handling, output, UX
-- [ ] MCP Server audit — tool definitions, responses, integration
-- [ ] Core package audit — theme system, tokens, utilities, exports
-- [ ] Registry structure audit — component organization, dependencies, metadata
-- [ ] Fix all broken functionality identified in audits
+_(No active milestone. Run `/gsd:new-milestone` to define next scope.)_
 
 ### Out of Scope
 
 - Performance optimization beyond current state — not a priority yet
-- Breaking API changes to published packages — maintain v1.0 compatibility
+- Breaking API changes to published packages — maintain v1.x compatibility
 
 ## Context
 
@@ -111,6 +111,12 @@ All 102 components refined to consistent quality:
 | Full state coverage (disabled, loading, error, focused) | Accessibility and UX completeness | ✓ Good — all 102 components compliant |
 | Update demos alongside components | Ensure showcase reflects true capabilities | ✓ Good — demos comprehensive |
 | Centralized token system | Single source of truth for styling | ✓ Good — 40+ token sets in use |
+| ESM-only core package output | Modern bundlers, no CommonJS needed | ✓ Good — clean subpath exports |
+| Optional peer dependencies | Users install only what they need | ✓ Good — animation libs optional |
+| Centralized CLI error handling | Consistent stderr output, exit codes | ✓ Good — all 8 commands unified |
+| MCP descriptions for AI agents | "{Action} {what}. Use this when {scenario}." | ✓ Good — agent tool selection improved |
+| JSON Schema registry validation | CI enforcement of component quality | ✓ Good — Ajv v8 validates all 101 entries |
+| JSDoc for all core exports | IDE intellisense for developers | ✓ Good — 144 doc blocks, full coverage |
 
 ---
-*Last updated: 2026-01-26 after v1.1 milestone start*
+*Last updated: 2026-01-28 after v1.1 milestone completion*
