@@ -8,18 +8,18 @@ import { Separator } from '@/components/ui/separator';
 import Svg, { Circle, Path } from 'react-native-svg';
 
 // Import blocks from registry
-import { UserListItem } from '@/components/blocks/user-list-item';
-import { ChatBubble } from '@/components/blocks/chat-bubble';
-import { CommentItem } from '@/components/blocks/comment-item';
-import { ProductCard } from '@/components/blocks/product-card';
-import { CartItem } from '@/components/blocks/cart-item';
+import { UserListItemBlock as UserListItem } from '@/components/blocks/user-list-item-block';
+import { ChatBubbleBlock as ChatBubble } from '@/components/blocks/chat-bubble-block';
+import { CommentItemBlock as CommentItem } from '@/components/blocks/comment-item-block';
+import { ProductCardBlock as ProductCard } from '@/components/blocks/product-card-block';
+import { CartItemBlock as CartItem } from '@/components/blocks/cart-item-block';
 import { BannerBlock } from '@/components/blocks/banner-block';
-import { OrderItem } from '@/components/blocks/order-item';
-import { ReviewCard } from '@/components/blocks/review-card';
-import { TaskItem } from '@/components/blocks/task-item';
-import { EventCard } from '@/components/blocks/event-card';
-import { ArticleCard } from '@/components/blocks/article-card';
-import { PricingCard } from '@/components/blocks/pricing-card';
+import { OrderItemBlock as OrderItem } from '@/components/blocks/order-item-block';
+import { ReviewCardBlock as ReviewCard } from '@/components/blocks/review-card-block';
+import { TaskItemBlock as TaskItem } from '@/components/blocks/task-item-block';
+import { EventCardBlock as EventCard } from '@/components/blocks/event-card-block';
+import { ArticleCardBlock as ArticleCard } from '@/components/blocks/article-card-block';
+import { PricingCardBlock as PricingCard } from '@/components/blocks/pricing-card-block';
 import { LoginBlock } from '@/components/blocks/login-block';
 import { SignupBlock } from '@/components/blocks/signup-block';
 import { SettingsListBlock } from '@/components/blocks/settings-list-block';
@@ -1729,7 +1729,7 @@ function EventCardPreview() {
 // ============================================================================
 
 function ArticleCardPreview() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   const articleData = {
     id: '1',
