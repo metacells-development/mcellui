@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 20 of 21 (Spacing, Typography & Naming)
-Plan: 1 of TBD in current phase
+Plan: 2 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-28 — Completed 20-01-PLAN.md (Spacing Token Migration)
+Last activity: 2026-01-28 — Completed 20-02-PLAN.md (Radius Token Migration)
 
 Progress: [████████████████████] 96% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 in progress)
 
@@ -72,6 +72,8 @@ Recent decisions affecting v1.2:
 - Dynamic spacing applied via inline styles — Theme-responsive spacing system (20-01)
 - Explicit 0 values preserved for intentional resets — Not all zeros should use tokens (20-01)
 - Negative margins use spacing tokens — Consistency in token application (20-01)
+- BorderRadius >= 2 uses radius tokens (xs|sm) — Global radius preset support (20-02)
+- Sub-token borderRadius (1, 1.5) preserved as intentional design details — Not all small values need tokens (20-02)
 
 ### Pending Todos
 
@@ -103,8 +105,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 20-01-PLAN.md (Spacing Token Migration)
+Stopped at: Completed 20-02-PLAN.md (Radius Token Migration)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 20-01 completion*
+*Updated: 2026-01-28 after 20-02 completion*
