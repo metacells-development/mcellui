@@ -84,7 +84,7 @@ Plans:
 - [x] 20-04-PLAN.md — Typography token migration batch 2 (navigation + display components)
 - [x] 20-05-PLAN.md — Demo block file renaming (9 files + imports)
 - [x] 20-06-PLAN.md — [GAP CLOSURE] Remaining spacing values (textarea, select, fab, datetime-picker)
-- [ ] 20-07-PLAN.md — [GAP CLOSURE] Spacing values (segmented-control, action-sheet, toggle)
+- [x] 20-07-PLAN.md — [GAP CLOSURE] Spacing values (segmented-control, action-sheet, toggle)
 
 #### Phase 21: Demo Consistency & Validation
 **Goal**: Demo app follows same token and naming standards as library — consistency is complete
@@ -110,8 +110,8 @@ Phases execute in numeric order: 19 → 20 → 21
 | 1-13. Quality Refinement | v1.0 | Complete | Complete | 2026-01-26 |
 | 14-18. Project Audit | v1.1 | Complete | Complete | 2026-01-28 |
 | 19. Critical Color & API Fixes | v1.2 | 9/9 | Complete | 2026-01-28 |
-| 20. Spacing, Typography & Naming | v1.2 | 6/7 | Gap closure | - |
+| 20. Spacing, Typography & Naming | v1.2 | 7/7 | Complete | 2026-01-28 |
 | 21. Demo Consistency & Validation | v1.2 | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-01-28 after Phase 20 planning*
+*Last updated: 2026-01-28 after Phase 20 complete*
