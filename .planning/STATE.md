@@ -116,13 +116,13 @@ From v1.1 audit:
 - ~~Avatar size="xl" usages in blocks/screens~~ → FIXED in 19-09 (changed to valid size="lg")
 - ~~Home screen manual card construction~~ → FIXED in 19-05 (uses MediaCard component)
 - ~~9 demo app files missing `-block` suffix~~ → FIXED in 20-05 (renamed to match registry pattern)
-- ~~Demo files using hardcoded fontSize~~ → FIXED in 21-03 (high-violation), 21-04 (remaining files)
+- ~~Demo files using hardcoded fontSize~~ → FIXED in 21-02 (blocks), 21-03 (high-violation), 21-04 (remaining files)
 
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 21-04-PLAN.md (Remaining Demo File Token Migration)
+Stopped at: Completed 21-02-PLAN.md (Block Typography Migration)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 21-04 completion (Phase 21 Plan 4 of 5 complete)*
+*Updated: 2026-01-28 after 21-02 completion (Phase 21 - 4 of 5 plans complete)*
