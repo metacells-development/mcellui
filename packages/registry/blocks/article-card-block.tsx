@@ -274,7 +274,7 @@ export function ArticleCard({
           <View style={[styles.featuredFooter, { marginTop: spacing[3] }]}>
             {article.author && (
               <View style={styles.authorRow}>
-                <Avatar source={article.author.avatar} fallback={article.author.name.charAt(0)} size="xs" />
+                <Avatar source={article.author.avatar} fallback={article.author.name.charAt(0)} size="sm" />
                 <Text style={[styles.featuredAuthor, { color: colors.primaryForeground }]}>{article.author.name}</Text>
               </View>
             )}
@@ -335,7 +335,7 @@ export function ArticleCard({
               style={styles.authorRow}
               disabled={!onAuthorPress}
             >
-              <Avatar source={article.author.avatar} fallback={article.author.name.charAt(0)} size="xs" />
+              <Avatar source={article.author.avatar} fallback={article.author.name.charAt(0)} size="sm" />
               <Text style={[styles.authorName, { color: colors.foreground, marginLeft: spacing[2] }]}>
                 {article.author.name}
               </Text>

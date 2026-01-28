@@ -8,7 +8,7 @@
  * ```tsx
  * <Avatar source={{ uri: 'https://example.com/avatar.jpg' }} fallback="JD" />
  * <Avatar fallback="AB" size="lg" />
- * <Avatar fallback="XY" size="xs" />
+ * <Avatar fallback="XY" size="sm" />
  * <Avatar fallback="JD" status="online" />
  * <Avatar fallback="JD" status="busy" />
  * <Avatar fallback="JD" badge={<Badge count={3} size="sm" />} />
@@ -26,7 +26,7 @@ import {
 } from 'react-native';
 import { useTheme } from '@metacells/mcellui-core';
 
-export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type AvatarSize = 'sm' | 'md' | 'lg';
 export type AvatarStatus = 'online' | 'offline' | 'busy' | 'away';
 
 export interface AvatarProps {
@@ -48,11 +48,9 @@ export interface AvatarProps {
 
 // Status dot sizes based on avatar size
 const statusSizes: Record<AvatarSize, number> = {
-  xs: 6,
   sm: 8,
   md: 10,
   lg: 12,
-  xl: 14,
 };
 
 // Status colors
@@ -87,7 +85,7 @@ export function Avatar({
 
   // Calculate status dot size and position
   const statusDotSize = statusSizes[size];
-  const statusDotOffset = size === 'xs' ? -1 : size === 'sm' ? 0 : 1;
+  const statusDotOffset = size === 'sm' ? 0 : 1;
 
   // Calculate badge/status positions
   const getPositionStyle = (position: string): ViewStyle => {

@@ -339,11 +339,6 @@ export const badgeTokens = {
 
 /** Avatar component size tokens */
 export const avatarTokens = {
-  xs: {
-    size: 24,
-    fontSize: fontSize['2xs'],
-    fontWeight: fontWeight.semibold,
-  },
   sm: {
     size: 32,
     fontSize: fontSize.xs,
@@ -357,11 +352,6 @@ export const avatarTokens = {
   lg: {
     size: 56,
     fontSize: fontSize.xl,
-    fontWeight: fontWeight.semibold,
-  },
-  xl: {
-    size: 80,
-    fontSize: fontSize['2xl'],
     fontWeight: fontWeight.semibold,
   },
 } as const;
