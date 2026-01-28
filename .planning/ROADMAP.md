@@ -140,10 +140,12 @@ Plans:
   2. All component dependencies are correctly declared in registry
   3. Component naming is consistent across entire registry
   4. Registry structure supports future component additions without refactoring
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 17-01: TBD (will be planned)
+- [ ] 17-01-PLAN.md — Schema version, displayName, expoGo metadata for all 101 components + CLI type updates
+- [ ] 17-02-PLAN.md — Rename 20 blocks to add -block suffix (files, registry entries, screen imports, MCP sync)
+- [ ] 17-03-PLAN.md — JSON Schema definition + Ajv validation script for CI enforcement
 
 ### Phase 18: Core Package Exports
 **Goal**: Theme tokens, utilities, and exports are complete and well-documented
@@ -182,7 +184,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 14. Critical Fixes | v1.1 | 2/2 | Complete | 2026-01-26 |
 | 15. CLI Audit | v1.1 | 4/4 | Complete | 2026-01-27 |
 | 16. MCP Audit | v1.1 | 3/3 | Complete | 2026-01-27 |
-| 17. Registry Audit | v1.1 | 0/1 | Not started | - |
+| 17. Registry Audit | v1.1 | 0/3 | Not started | - |
 | 18. Core Audit | v1.1 | 0/1 | Not started | - |
 
 ---
