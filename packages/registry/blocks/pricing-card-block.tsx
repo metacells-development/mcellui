@@ -49,17 +49,21 @@ import { Badge } from '../ui/badge';
 // Icons
 // ============================================================================
 
-function CheckIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function CheckIcon({ size = 16, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={3}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={3}>
       <Path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function XIcon({ size = 16, color = '#000' }: { size?: number; color?: string }) {
+function XIcon({ size = 16, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );

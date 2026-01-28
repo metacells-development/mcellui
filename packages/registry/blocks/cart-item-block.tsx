@@ -43,9 +43,11 @@ import { SwipeableRow, SwipeAction } from '../ui/swipeable-row';
 // Icons
 // ============================================================================
 
-function TrashIcon({ size = 20, color = '#fff' }: { size?: number; color?: string }) {
+function TrashIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path
         d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"
         strokeLinecap="round"
@@ -55,9 +57,11 @@ function TrashIcon({ size = 20, color = '#fff' }: { size?: number; color?: strin
   );
 }
 
-function HeartIcon({ size = 20, color = '#fff' }: { size?: number; color?: string }) {
+function HeartIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path
         d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
         strokeLinecap="round"
@@ -67,9 +71,11 @@ function HeartIcon({ size = 20, color = '#fff' }: { size?: number; color?: strin
   );
 }
 
-function ImagePlaceholderIcon({ size = 32, color = '#000' }: { size?: number; color?: string }) {
+function ImagePlaceholderIcon({ size = 32, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
       <Circle cx="8.5" cy="8.5" r="1.5" />
       <Path d="M21 15l-5-5L5 21" />

@@ -46,33 +46,41 @@ import { SwipeableRow, SwipeAction } from '../ui/swipeable-row';
 // Icons
 // ============================================================================
 
-function CalendarIcon({ size = 14, color = '#000' }: { size?: number; color?: string }) {
+function CalendarIcon({ size = 14, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M19 4H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zM16 2v4M8 2v4M3 10h18" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function TrashIcon({ size = 20, color = '#fff' }: { size?: number; color?: string }) {
+function TrashIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function EditIcon({ size = 20, color = '#fff' }: { size?: number; color?: string }) {
+function EditIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 
-function FlagIcon({ size = 12, color = '#000' }: { size?: number; color?: string }) {
+function FlagIcon({ size = 12, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill={color} stroke={color} strokeWidth={1}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={finalColor} stroke={finalColor} strokeWidth={1}>
       <Path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
@@ -119,12 +127,13 @@ export interface TaskItemProps {
 // Priority Config
 // ============================================================================
 
-const PRIORITY_CONFIG: Record<TaskPriority, { color: string; label: string }> = {
-  low: { color: '#10b981', label: 'Low' },
-  medium: { color: '#f59e0b', label: 'Medium' },
-  high: { color: '#f97316', label: 'High' },
-  urgent: { color: '#ef4444', label: 'Urgent' },
-};
+// Priority colors use semantic tokens - defined in component to access theme
+const getPriorityConfig = (colors: any): Record<TaskPriority, { color: string; label: string }> => ({
+  low: { color: colors.success, label: 'Low' },
+  medium: { color: colors.warning, label: 'Medium' },
+  high: { color: colors.warning, label: 'High' },
+  urgent: { color: colors.destructive, label: 'Urgent' },
+});
 
 // ============================================================================
 // Component
@@ -181,6 +190,7 @@ export function TaskItem({
   };
 
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
+  const PRIORITY_CONFIG = getPriorityConfig(colors);
   const priorityConfig = task.priority ? PRIORITY_CONFIG[task.priority] : null;
 
   // Swipe actions

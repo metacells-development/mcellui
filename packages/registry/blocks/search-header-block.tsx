@@ -32,12 +32,14 @@ import { Badge } from '../ui/badge';
 // Icons
 // ============================================================================
 
-function FilterIcon({ size = 20, color = '#000' }: { size?: number; color?: string }) {
+function FilterIcon({ size = 20, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M4 6h16M6 12h12M8 18h8"
-        stroke={color}
+        stroke={finalColor}
         strokeWidth="2"
         strokeLinecap="round"
       />

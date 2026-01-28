@@ -36,7 +36,7 @@ import { Separator } from '../ui/separator';
 
 function HeartIcon({
   size = 24,
-  color = '#000',
+  color,
   filled = false,
   activeColor,
 }: {
@@ -46,8 +46,10 @@ function HeartIcon({
   /** Color to use when filled (overrides color from IconButton) */
   activeColor?: string;
 }) {
+  const { colors } = useTheme();
+  const defaultColor = color ?? colors.foreground;
   // When filled and activeColor is provided, use activeColor for both fill and stroke
-  const effectiveColor = filled && activeColor ? activeColor : color;
+  const effectiveColor = filled && activeColor ? activeColor : defaultColor;
 
   return (
     <Svg
@@ -67,9 +69,11 @@ function HeartIcon({
   );
 }
 
-function CommentIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function CommentIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path
         d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
         strokeLinecap="round"
@@ -79,9 +83,11 @@ function CommentIcon({ size = 24, color = '#000' }: { size?: number; color?: str
   );
 }
 
-function ShareIcon({ size = 24, color = '#000' }: { size?: number; color?: string }) {
+function ShareIcon({ size = 24, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={2}>
       <Path
         d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"
         strokeLinecap="round"
@@ -91,9 +97,11 @@ function ShareIcon({ size = 24, color = '#000' }: { size?: number; color?: strin
   );
 }
 
-function ImagePlaceholderIcon({ size = 48, color = '#000' }: { size?: number; color?: string }) {
+function ImagePlaceholderIcon({ size = 48, color }: { size?: number; color?: string }) {
+  const { colors } = useTheme();
+  const finalColor = color ?? colors.foreground;
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.5}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={finalColor} strokeWidth={1.5}>
       <Rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
       <Circle cx="8.5" cy="8.5" r="1.5" />
       <Path d="M21 15l-5-5L5 21" />
