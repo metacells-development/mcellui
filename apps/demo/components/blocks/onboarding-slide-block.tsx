@@ -1,12 +1,12 @@
 /**
- * OnboardingSlide
+ * OnboardingSlideBlock
  *
  * Full-screen onboarding slide with illustration, title, and description.
  * Perfect for app onboarding flows and feature tours.
  *
  * @example
  * ```tsx
- * <OnboardingSlide
+ * <OnboardingSlideBlock
  *   image={require('./assets/onboarding-1.png')}
  *   title="Welcome to MyApp"
  *   description="Discover amazing features that will change how you work"
@@ -40,7 +40,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 // Types
 // ============================================================================
 
-export interface OnboardingSlideProps {
+export interface OnboardingSlideBlockProps {
   /** Image source (require or uri) */
   image?: ImageSourcePropType;
   /** Custom illustration component (alternative to image) */
@@ -73,7 +73,7 @@ export interface OnboardingSlideProps {
 // Component
 // ============================================================================
 
-export function OnboardingSlide({
+export function OnboardingSlideBlock({
   image,
   illustration,
   title,
@@ -87,7 +87,7 @@ export function OnboardingSlide({
   hidePagination = false,
   hideSecondary = false,
   style,
-}: OnboardingSlideProps) {
+}: OnboardingSlideBlockProps) {
   const { colors, spacing, radius } = useTheme();
   const insets = useSafeAreaInsets();
 

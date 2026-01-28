@@ -1,12 +1,12 @@
 /**
- * StatsCard
+ * StatsCardBlock
  *
  * A card displaying a metric with label and optional trend indicator.
  * Perfect for dashboards, analytics, and key metrics displays.
  *
  * @example
  * ```tsx
- * <StatsCard
+ * <StatsCardBlock
  *   value="$12,450"
  *   label="Revenue"
  *   trend={12.5}
@@ -26,7 +26,7 @@ import { Card, CardContent } from '@/components/ui/card';
 // Types
 // ============================================================================
 
-export interface StatsCardProps {
+export interface StatsCardBlockProps {
   /** The main value/number to display */
   value: string | number;
   /** Label describing the metric */
@@ -47,7 +47,7 @@ export interface StatsCardProps {
 // Component
 // ============================================================================
 
-export function StatsCard({
+export function StatsCardBlock({
   value,
   label,
   trend,
@@ -55,7 +55,7 @@ export function StatsCard({
   icon,
   onPress,
   style,
-}: StatsCardProps) {
+}: StatsCardBlockProps) {
   const { colors, spacing, radius } = useTheme();
 
   const isPositive = trend !== undefined && trend >= 0;

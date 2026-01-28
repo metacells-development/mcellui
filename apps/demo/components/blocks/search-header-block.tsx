@@ -1,12 +1,12 @@
 /**
- * SearchHeader
+ * SearchHeaderBlock
  *
  * Header with search input, filter button, and user avatar.
  * Perfect for search screens, product listings, and discovery pages.
  *
  * @example
  * ```tsx
- * <SearchHeader
+ * <SearchHeaderBlock
  *   placeholder="Search products..."
  *   onSearch={(query) => setSearchQuery(query)}
  *   avatarUrl="https://example.com/avatar.jpg"
@@ -49,7 +49,7 @@ function FilterIcon({ size = 20, color = '#000' }: { size?: number; color?: stri
 // Types
 // ============================================================================
 
-export interface SearchHeaderProps {
+export interface SearchHeaderBlockProps {
   /** Placeholder text for search input */
   placeholder?: string;
   /** Initial search value */
@@ -84,7 +84,7 @@ export interface SearchHeaderProps {
 // Component
 // ============================================================================
 
-export function SearchHeader({
+export function SearchHeaderBlock({
   placeholder = 'Search...',
   value: controlledValue,
   onSearch,
@@ -99,7 +99,7 @@ export function SearchHeader({
   autoFocus = false,
   loading = false,
   style,
-}: SearchHeaderProps) {
+}: SearchHeaderBlockProps) {
   const { colors, spacing } = useTheme();
   const [internalValue, setInternalValue] = useState('');
   const value = controlledValue ?? internalValue;

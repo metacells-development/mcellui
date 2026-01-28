@@ -26,17 +26,17 @@ import { SettingsListBlock } from '@/components/blocks/settings-list-block';
 import { EmptyStateBlock } from '@/components/blocks/empty-state-block';
 import { ErrorStateBlock } from '@/components/blocks/error-state-block';
 import { ProfileBlock } from '@/components/blocks/profile-block';
-import { FeedPostCard } from '@/components/blocks/feed-post-card';
+import { FeedPostCardBlock } from '@/components/blocks/feed-post-card-block';
 // Phase 11 e-commerce and info blocks
 import { HeroBlock } from '@/components/blocks/hero-block';
-import { StatsCard } from '@/components/blocks/stats-card';
-import { FeatureCard } from '@/components/blocks/feature-card';
-import { ContentCard } from '@/components/blocks/content-card';
-import { OnboardingSlide } from '@/components/blocks/onboarding-slide';
-import { SocialProofBar } from '@/components/blocks/social-proof-bar';
-import { NotificationItem as NotificationItemBlock } from '@/components/blocks/notification-item';
-import { MediaItem as MediaItemBlock } from '@/components/blocks/media-item';
-import { SearchHeader } from '@/components/blocks/search-header';
+import { StatsCardBlock } from '@/components/blocks/stats-card-block';
+import { FeatureCardBlock } from '@/components/blocks/feature-card-block';
+import { ContentCardBlock } from '@/components/blocks/content-card-block';
+import { OnboardingSlideBlock } from '@/components/blocks/onboarding-slide-block';
+import { SocialProofBarBlock } from '@/components/blocks/social-proof-bar-block';
+import { NotificationItemBlock } from '@/components/blocks/notification-item-block';
+import { MediaItemBlock } from '@/components/blocks/media-item-block';
+import { SearchHeaderBlock } from '@/components/blocks/search-header-block';
 
 // ============================================================================
 // Demo Component
@@ -73,15 +73,15 @@ export function BlocksDemo() {
       </Section>
 
       <Section title="Content Card">
-        <ContentCardPreview />
+        <ContentCardBlockPreview />
       </Section>
 
       <Section title="Feature Card">
-        <FeatureCardPreview />
+        <FeatureCardBlockPreview />
       </Section>
 
       <Section title="Stats Card">
-        <StatsCardPreview />
+        <StatsCardBlockPreview />
       </Section>
 
       <Section title="Hero Block">
@@ -89,15 +89,15 @@ export function BlocksDemo() {
       </Section>
 
       <Section title="Social Proof Bar">
-        <SocialProofBarPreview />
+        <SocialProofBarBlockPreview />
       </Section>
 
       <Section title="Search Header">
-        <SearchHeaderPreview />
+        <SearchHeaderBlockPreview />
       </Section>
 
       <Section title="Onboarding Slide">
-        <OnboardingSlidePreview />
+        <OnboardingSlideBlockPreview />
       </Section>
 
       <Section title="Media Item">
@@ -105,7 +105,7 @@ export function BlocksDemo() {
       </Section>
 
       <Section title="Feed Post Card">
-        <FeedPostCardPreview />
+        <FeedPostCardBlockPreview />
       </Section>
 
       <Section title="Login Block">
@@ -447,7 +447,7 @@ function ContentCardPreview() {
   return (
     <View style={{ gap: spacing[4] }}>
       {/* Default with action button */}
-      <ContentCard
+      <ContentCardBlock
         imageUrl="https://picsum.photos/400/225?random=1"
         title="Discover Amazing Places"
         subtitle="Explore the world's most beautiful destinations with our curated travel guides."
@@ -456,7 +456,7 @@ function ContentCardPreview() {
       />
 
       {/* Tappable card without action button */}
-      <ContentCard
+      <ContentCardBlock
         imageUrl="https://picsum.photos/400/300?random=2"
         title="Quick Article"
         subtitle="A brief overview of the latest trends in mobile app development."
@@ -465,7 +465,7 @@ function ContentCardPreview() {
       />
 
       {/* Wide aspect ratio */}
-      <ContentCard
+      <ContentCardBlock
         imageUrl="https://picsum.photos/400/180?random=3"
         title="Panoramic View"
         subtitle="Showcasing the beautiful landscape."
@@ -515,7 +515,7 @@ function FeatureCardPreview() {
         </CardHeader>
         <CardContent>
           <View style={{ gap: spacing[3] }}>
-            <FeatureCard
+            <FeatureCardBlock
               icon={<ShieldIcon />}
               title="Secure Payments"
               description="Your data is encrypted with bank-level security."
@@ -533,14 +533,14 @@ function FeatureCardPreview() {
         </CardHeader>
         <CardContent>
           <View style={{ gap: spacing[3] }}>
-            <FeatureCard
+            <FeatureCardBlock
               icon={<ZapIcon />}
               title="Lightning Fast"
               description="Optimized for speed and performance."
               horizontal
               onPress={() => Alert.alert('Feature', 'Lightning Fast')}
             />
-            <FeatureCard
+            <FeatureCardBlock
               icon={<PaletteIcon />}
               title="Beautiful Design"
               description="Stunning UI that users love."
@@ -585,7 +585,7 @@ function StatsCardPreview() {
         <CardContent>
           <View style={{ flexDirection: 'row', gap: spacing[3] }}>
             <View style={{ flex: 1 }}>
-              <StatsCard
+              <StatsCardBlock
                 value="$12,450"
                 label="Revenue"
                 trend={12.5}
@@ -594,7 +594,7 @@ function StatsCardPreview() {
               />
             </View>
             <View style={{ flex: 1 }}>
-              <StatsCard
+              <StatsCardBlock
                 value="1,234"
                 label="Users"
                 trend={-3.2}
@@ -607,7 +607,7 @@ function StatsCardPreview() {
       </Card>
 
       {/* Single full-width card with interaction */}
-      <StatsCard
+      <StatsCardBlock
         value="89%"
         label="Satisfaction Rate"
         trend={5.0}
@@ -616,7 +616,7 @@ function StatsCardPreview() {
       />
 
       {/* No trend (static stat) */}
-      <StatsCard
+      <StatsCardBlock
         value="24/7"
         label="Support Available"
         onPress={() => Alert.alert('Stats', 'Contact support')}
@@ -699,7 +699,7 @@ function SocialProofBarPreview() {
           <CardDescription>Small avatars with engagement text</CardDescription>
         </CardHeader>
         <CardContent>
-          <SocialProofBar
+          <SocialProofBarBlock
             avatars={[
               'https://i.pravatar.cc/100?img=10',
               'https://i.pravatar.cc/100?img=11',
@@ -718,7 +718,7 @@ function SocialProofBarPreview() {
           <CardDescription>Larger avatar stack for prominent display</CardDescription>
         </CardHeader>
         <CardContent>
-          <SocialProofBar
+          <SocialProofBarBlock
             avatars={[
               'https://i.pravatar.cc/100?img=4',
               'https://i.pravatar.cc/100?img=5',
@@ -740,7 +740,7 @@ function SocialProofBarPreview() {
           <CardDescription>Smaller avatars for tight spaces</CardDescription>
         </CardHeader>
         <CardContent>
-          <SocialProofBar
+          <SocialProofBarBlock
             avatars={[
               'https://i.pravatar.cc/100?img=15',
               'https://i.pravatar.cc/100?img=16',
@@ -783,7 +783,7 @@ function SearchHeaderPreview() {
           <CardDescription>Search input, filter button with badge, avatar</CardDescription>
         </CardHeader>
         <CardContent>
-          <SearchHeader
+          <SearchHeaderBlock
             placeholder="Search products..."
             value={searchValue}
             onSearch={handleSearch}
@@ -804,7 +804,7 @@ function SearchHeaderPreview() {
           <CardDescription>Just search and filter</CardDescription>
         </CardHeader>
         <CardContent>
-          <SearchHeader
+          <SearchHeaderBlock
             placeholder="Search articles..."
             onSearch={(q) => console.log('Search:', q)}
             onSubmit={(q) => Alert.alert('Search', q)}
@@ -821,7 +821,7 @@ function SearchHeaderPreview() {
           <CardDescription>Minimal variant without filter and avatar</CardDescription>
         </CardHeader>
         <CardContent>
-          <SearchHeader
+          <SearchHeaderBlock
             placeholder="Search..."
             onSearch={(q) => console.log('Search:', q)}
             onSubmit={(q) => Alert.alert('Search', q)}
@@ -888,7 +888,7 @@ function OnboardingSlidePreview() {
       <CardContent>
         {/* Constrained height preview of the actual OnboardingSlide */}
         <View style={{ height: 480, marginHorizontal: -16, marginBottom: -16 }}>
-          <OnboardingSlide
+          <OnboardingSlideBlock
             illustration={<CustomIllustration />}
             title={current.title}
             description={current.description}
@@ -1085,7 +1085,7 @@ function FeedPostCardPreview() {
         <CardDescription>Try interacting to see loading indicators</CardDescription>
       </CardHeader>
       <CardContent>
-        <FeedPostCard
+        <FeedPostCardBlock
           user={{
             name: 'John Doe',
             avatarUrl: 'https://i.pravatar.cc/100?img=12',

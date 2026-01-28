@@ -1,12 +1,12 @@
 /**
- * SocialProofBar
+ * SocialProofBarBlock
  *
  * Avatar stack with engagement text for social proof.
  * Perfect for showing activity, reviews, or user participation.
  *
  * @example
  * ```tsx
- * <SocialProofBar
+ * <SocialProofBarBlock
  *   avatars={[
  *     'https://example.com/avatar1.jpg',
  *     'https://example.com/avatar2.jpg',
@@ -29,7 +29,7 @@ import { Avatar } from '@/components/ui/avatar';
 // Types
 // ============================================================================
 
-export interface SocialProofBarProps {
+export interface SocialProofBarBlockProps {
   /** Array of avatar URLs to display */
   avatars: string[];
   /** Engagement text */
@@ -48,14 +48,14 @@ export interface SocialProofBarProps {
 // Component
 // ============================================================================
 
-export function SocialProofBar({
+export function SocialProofBarBlock({
   avatars,
   text,
   maxAvatars = 3,
   avatarSize = 'sm',
   onPress,
   style,
-}: SocialProofBarProps) {
+}: SocialProofBarBlockProps) {
   const { colors, spacing } = useTheme();
 
   const displayAvatars = avatars.slice(0, maxAvatars);
