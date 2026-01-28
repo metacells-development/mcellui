@@ -25,9 +25,11 @@ function ThemeSelector({
   currentRadius: RadiusPreset;
   onRadiusChange: (radius: RadiusPreset) => void;
 }) {
+  const { colors } = useTheme();
   const themes: ThemePreset[] = ['zinc', 'slate', 'stone', 'blue', 'green', 'rose', 'orange', 'violet'];
   const radiusOptions: RadiusPreset[] = ['none', 'sm', 'md', 'lg', 'full'];
 
+  // Theme preview swatches - intentionally hardcoded brand colors
   const themeColors: Record<ThemePreset, string> = {
     zinc: '#71717a',
     slate: '#64748b',
@@ -46,23 +48,24 @@ function ThemeSelector({
       presentationStyle="pageSheet"
       onRequestClose={onClose}
     >
-      <SafeAreaView style={selectorStyles.container}>
-        <View style={selectorStyles.header}>
-          <Text style={selectorStyles.title}>Theme Settings</Text>
+      <SafeAreaView style={[selectorStyles.container, { backgroundColor: colors.background }]}>
+        <View style={[selectorStyles.header, { borderBottomColor: colors.border }]}>
+          <Text style={[selectorStyles.title, { color: colors.foreground }]}>Theme Settings</Text>
           <Pressable onPress={onClose} style={selectorStyles.closeButton}>
-            <Text style={selectorStyles.closeText}>Done</Text>
+            <Text style={[selectorStyles.closeText, { color: colors.primary }]}>Done</Text>
           </Pressable>
         </View>
 
         <ScrollView contentContainerStyle={selectorStyles.content}>
-          <Text style={selectorStyles.sectionTitle}>Color Theme</Text>
+          <Text style={[selectorStyles.sectionTitle, { color: colors.foregroundMuted }]}>Color Theme</Text>
           <View style={selectorStyles.grid}>
             {themes.map((theme) => (
               <Pressable
                 key={theme}
                 style={[
                   selectorStyles.themeOption,
-                  currentTheme === theme && selectorStyles.themeOptionSelected,
+                  { backgroundColor: colors.secondary },
+                  currentTheme === theme && [selectorStyles.themeOptionSelected, { borderColor: colors.primary, backgroundColor: colors.primaryMuted }],
                 ]}
                 onPress={() => onThemeChange(theme)}
               >
@@ -74,7 +77,8 @@ function ThemeSelector({
                 />
                 <Text style={[
                   selectorStyles.themeLabel,
-                  currentTheme === theme && selectorStyles.themeLabelSelected,
+                  { color: colors.foregroundMuted },
+                  currentTheme === theme && { color: colors.primary },
                 ]}>
                   {theme.charAt(0).toUpperCase() + theme.slice(1)}
                 </Text>
@@ -82,20 +86,22 @@ function ThemeSelector({
             ))}
           </View>
 
-          <Text style={[selectorStyles.sectionTitle, { marginTop: 24 }]}>Border Radius</Text>
+          <Text style={[selectorStyles.sectionTitle, { marginTop: 24, color: colors.foregroundMuted }]}>Border Radius</Text>
           <View style={selectorStyles.radiusGrid}>
             {radiusOptions.map((radius) => (
               <Pressable
                 key={radius}
                 style={[
                   selectorStyles.radiusOption,
-                  currentRadius === radius && selectorStyles.radiusOptionSelected,
+                  { backgroundColor: colors.secondary },
+                  currentRadius === radius && [selectorStyles.radiusOptionSelected, { borderColor: colors.primary, backgroundColor: colors.primaryMuted }],
                 ]}
                 onPress={() => onRadiusChange(radius)}
               >
                 <Text style={[
                   selectorStyles.radiusLabel,
-                  currentRadius === radius && selectorStyles.radiusLabelSelected,
+                  { color: colors.foregroundMuted },
+                  currentRadius === radius && { color: colors.primary },
                 ]}>
                   {radius.toUpperCase()}
                 </Text>
@@ -222,7 +228,6 @@ const headerStyles = StyleSheet.create({
 const selectorStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
   },
   header: {
     flexDirection: 'row',
@@ -231,12 +236,10 @@ const selectorStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e5e5',
   },
   title: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#171717',
   },
   closeButton: {
     padding: 8,
@@ -244,7 +247,6 @@ const selectorStyles = StyleSheet.create({
   closeText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#3b82f6',
   },
   content: {
     padding: 16,
@@ -252,7 +254,6 @@ const selectorStyles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#737373',
     marginBottom: 12,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -270,11 +271,9 @@ const selectorStyles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 2,
     borderColor: 'transparent',
-    backgroundColor: '#f5f5f5',
   },
   themeOptionSelected: {
-    borderColor: '#3b82f6',
-    backgroundColor: '#eff6ff',
+    // Colors applied inline via theme tokens
   },
   themeColor: {
     width: 32,
@@ -285,11 +284,6 @@ const selectorStyles = StyleSheet.create({
   themeLabel: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#525252',
-  },
-  themeLabelSelected: {
-    color: '#3b82f6',
-    fontWeight: '600',
   },
   radiusGrid: {
     flexDirection: 'row',
@@ -302,19 +296,12 @@ const selectorStyles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 2,
     borderColor: 'transparent',
-    backgroundColor: '#f5f5f5',
   },
   radiusOptionSelected: {
-    borderColor: '#3b82f6',
-    backgroundColor: '#eff6ff',
+    // Colors applied inline via theme tokens
   },
   radiusLabel: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#525252',
-  },
-  radiusLabelSelected: {
-    color: '#3b82f6',
-    fontWeight: '600',
   },
 });
