@@ -19,20 +19,20 @@ const SAMPLE_IMAGE_2 = 'https://images.unsplash.com/photo-1469474968028-56623f02
 const SAMPLE_IMAGE_3 = 'https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=800&q=80';
 
 export function CardDemo() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, fontSize, fontWeight } = useTheme();
 
   return (
     <View style={[styles.container, { gap: spacing[6] }]}>
       {/* Section: Basic Card */}
       <View style={[styles.section, { gap: spacing[3] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Basic Card</Text>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>Basic Card</Text>
         <Card>
           <CardHeader>
             <CardTitle>Card Title</CardTitle>
             <CardDescription>This is a description of the card content.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Text style={{ fontSize: 14, color: colors.foregroundMuted, lineHeight: 20 }}>
+            <Text style={{ fontSize: fontSize.sm, color: colors.foregroundMuted, lineHeight: 20 }}>
               Cards are used to group and display content in a clear, organized way.
               They support headers, content areas, and footers.
             </Text>
@@ -50,14 +50,14 @@ export function CardDemo() {
 
       {/* Section: Pressable Card */}
       <View style={[styles.section, { gap: spacing[3] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Pressable Card</Text>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>Pressable Card</Text>
         <Card onPress={() => Alert.alert('Card pressed!')}>
           <CardHeader>
             <CardTitle>Tap Me</CardTitle>
             <CardDescription>This card has a press animation</CardDescription>
           </CardHeader>
           <CardContent>
-            <Text style={{ fontSize: 14, color: colors.foregroundMuted }}>
+            <Text style={{ fontSize: fontSize.sm, color: colors.foregroundMuted }}>
               Interactive cards scale down on press with haptic feedback.
             </Text>
           </CardContent>
@@ -66,7 +66,7 @@ export function CardDemo() {
 
       {/* Section: Card with Image */}
       <View style={[styles.section, { gap: spacing[3] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Card with Image</Text>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>Card with Image</Text>
         <Card>
           <CardImage source={{ uri: SAMPLE_IMAGE }} height={160} />
           <CardHeader>
@@ -74,7 +74,7 @@ export function CardDemo() {
             <CardDescription>Scenic mountain landscape</CardDescription>
           </CardHeader>
           <CardContent>
-            <Text style={{ fontSize: 14, color: colors.foregroundMuted }}>
+            <Text style={{ fontSize: fontSize.sm, color: colors.foregroundMuted }}>
               CardImage supports height, aspectRatio, and overlay props.
             </Text>
           </CardContent>
@@ -83,8 +83,8 @@ export function CardDemo() {
 
       {/* Section: ImageCard */}
       <View style={[styles.section, { gap: spacing[3] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>ImageCard</Text>
-        <Text style={{ fontSize: 13, color: colors.foregroundMuted, marginBottom: spacing[2] }}>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>ImageCard</Text>
+        <Text style={{ fontSize: fontSize.sm, color: colors.foregroundMuted, marginBottom: spacing[2] }}>
           Full-bleed image with text overlay
         </Text>
         <ImageCard
@@ -98,7 +98,7 @@ export function CardDemo() {
 
       {/* Section: ImageCard Text Position */}
       <View style={[styles.section, { gap: spacing[3] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>ImageCard - Text Top</Text>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>ImageCard - Text Top</Text>
         <ImageCard
           source={{ uri: SAMPLE_IMAGE_3 }}
           title="Featured Story"
@@ -110,8 +110,8 @@ export function CardDemo() {
 
       {/* Section: MediaCard */}
       <View style={[styles.section, { gap: spacing[3] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>MediaCard</Text>
-        <Text style={{ fontSize: 13, color: colors.foregroundMuted, marginBottom: spacing[2] }}>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>MediaCard</Text>
+        <Text style={{ fontSize: fontSize.sm, color: colors.foregroundMuted, marginBottom: spacing[2] }}>
           Image with text below (blog/news style)
         </Text>
         <MediaCard
@@ -126,7 +126,7 @@ export function CardDemo() {
 
       {/* Section: MediaCard Grid */}
       <View style={[styles.section, { gap: spacing[3] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>MediaCard Grid</Text>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>MediaCard Grid</Text>
         <View style={[styles.mediaGrid, { gap: spacing[3] }]}>
           <View style={styles.mediaGridItem}>
             <MediaCard
@@ -151,9 +151,9 @@ export function CardDemo() {
 
       {/* Section: Simple Card */}
       <View style={[styles.section, { gap: spacing[3] }]}>
-        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Simple Card</Text>
+        <Text style={{ color: colors.foreground, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>Simple Card</Text>
         <Card style={{ padding: spacing[4] }}>
-          <Text style={{ fontSize: 14, color: colors.foreground }}>
+          <Text style={{ fontSize: fontSize.sm, color: colors.foreground }}>
             A simple card without header/footer components.
           </Text>
         </Card>
@@ -165,10 +165,6 @@ export function CardDemo() {
 const styles = StyleSheet.create({
   container: {},
   section: {},
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
   mediaGrid: {
     flexDirection: 'row',
   },

@@ -8,7 +8,7 @@ import { Section } from './section';
 import { useTheme } from '@metacells/mcellui-core';
 
 // Demo Icons
-function UserIcon({ color = '#000', width = 24, height = 24 }) {
+function UserIcon({ color, width = 24, height = 24 }: { color?: string; width?: number; height?: number }) {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke={color} strokeWidth="2" strokeLinecap="round" />
@@ -17,7 +17,7 @@ function UserIcon({ color = '#000', width = 24, height = 24 }) {
   );
 }
 
-function BellIcon({ color = '#000', width = 24, height = 24 }) {
+function BellIcon({ color, width = 24, height = 24 }: { color?: string; width?: number; height?: number }) {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -25,7 +25,7 @@ function BellIcon({ color = '#000', width = 24, height = 24 }) {
   );
 }
 
-function LockIcon({ color = '#000', width = 24, height = 24 }) {
+function LockIcon({ color, width = 24, height = 24 }: { color?: string; width?: number; height?: number }) {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path d="M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2zM7 11V7a5 5 0 0 1 10 0v4" stroke={color} strokeWidth="2" strokeLinecap="round" />
@@ -33,7 +33,7 @@ function LockIcon({ color = '#000', width = 24, height = 24 }) {
   );
 }
 
-function HelpIcon({ color = '#000', width = 24, height = 24 }) {
+function HelpIcon({ color, width = 24, height = 24 }: { color?: string; width?: number; height?: number }) {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" />
@@ -42,7 +42,7 @@ function HelpIcon({ color = '#000', width = 24, height = 24 }) {
   );
 }
 
-function ClockIcon({ color = '#000', width = 24, height = 24 }) {
+function ClockIcon({ color, width = 24, height = 24 }: { color?: string; width?: number; height?: number }) {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" />
@@ -51,7 +51,7 @@ function ClockIcon({ color = '#000', width = 24, height = 24 }) {
   );
 }
 
-function StarIcon({ color = '#000', width = 24, height = 24 }) {
+function StarIcon({ color, width = 24, height = 24 }: { color?: string; width?: number; height?: number }) {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -59,7 +59,7 @@ function StarIcon({ color = '#000', width = 24, height = 24 }) {
   );
 }
 
-function FireIcon({ color = '#000', width = 24, height = 24 }) {
+function FireIcon({ color, width = 24, height = 24 }: { color?: string; width?: number; height?: number }) {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path d="M12 22c-4.97 0-9-4.03-9-9 0-3.59 2.89-7.52 5.78-10.26.4-.38 1.05-.08 1.05.49v2.54c0 1.12.9 2.03 2.02 2.05A2 2 0 0014 5.82V3.23c0-.57.65-.87 1.05-.49C17.95 5.48 21 9.41 21 13c0 4.97-4.03 9-9 9z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
