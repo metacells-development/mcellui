@@ -343,6 +343,7 @@ export function DateTimePicker({
                     backgroundColor: colors.border,
                     width: tokens.sheet.handleWidth,
                     height: tokens.sheet.handleHeight,
+                    borderRadius: radius.xs,
                   }
                 ]} />
               </View>
@@ -473,6 +474,7 @@ export function DateTimePicker({
 // ─────────────────────────────────────────────────────────────────────────────
 
 function CalendarIcon({ color, tokens }: { color: string; tokens: any }) {
+  const { radius } = useTheme();
   return (
     <View style={[styles.calendarIcon, { width: tokens.icon.width, height: tokens.icon.height }]}>
       <View style={[
@@ -489,6 +491,7 @@ function CalendarIcon({ color, tokens }: { color: string; tokens: any }) {
           borderColor: color,
           width: tokens.icon.bodyWidth,
           height: tokens.icon.bodyHeight,
+          borderRadius: radius.xs,
         }
       ]}>
         <View style={[styles.calendarDots, { gap: tokens.icon.dotGap }]}>
@@ -543,7 +546,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   handle: {
-    borderRadius: 2,
+    // Dynamic borderRadius applied inline via radius tokens
   },
   header: {
     flexDirection: 'row',
@@ -579,9 +582,9 @@ const styles = StyleSheet.create({
   },
   calendarBody: {
     borderWidth: 1.5,
-    borderRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    // Dynamic borderRadius applied inline via radius tokens
   },
   calendarDots: {
     flexDirection: 'row',

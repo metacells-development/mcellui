@@ -276,7 +276,10 @@ function DayCell({
           <View
             style={[
               styles.dot,
-              { backgroundColor: marked.dotColor },
+              {
+                backgroundColor: marked.dotColor,
+                borderRadius: radius.xs,
+              },
             ]}
           />
         )}
@@ -548,6 +551,6 @@ const styles = StyleSheet.create({
     bottom: 4,
     width: 4,
     height: 4,
-    borderRadius: 2,
+    // Dynamic borderRadius applied inline via radius tokens
   },
 });
