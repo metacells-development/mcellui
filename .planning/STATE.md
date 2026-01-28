@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 20 of 21 (Spacing, Typography & Naming)
-Plan: 5 of 5 in current phase
-Status: In progress
-Last activity: 2026-01-28 — Completed 20-05-PLAN.md (Demo Block Naming Consistency)
+Plan: 6 of 6 in current phase
+Status: Phase complete
+Last activity: 2026-01-28 — Completed 20-06-PLAN.md (TOK-06 Gap Closure - Spacing)
 
-Progress: [████████████████████] 98% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 nearly complete)
+Progress: [█████████████████████] 99% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 complete)
 
 ## Performance Metrics
 
@@ -77,6 +77,9 @@ Recent decisions affecting v1.2:
 - fontSize 10 and 13 round up to nearest token (xs=12, sm=14) — No sub-xs tokens in scale (20-03)
 - All fontSize and fontWeight values use typography tokens — Eliminates hardcoded numeric font values (20-03)
 - Demo app blocks use -block suffix in filename and exports — Matches registry naming pattern (20-05)
+- spacing[0.25] used for 1px micro-spacing — Maintains precision while enabling theme customization (20-06)
+- spacing[2] for 8px standard gaps — Consistent token usage across components (20-06)
+- All padding/margin values use spacing tokens — TOK-06 requirement complete (20-06)
 
 ### Pending Todos
 
@@ -108,8 +111,8 @@ From v1.1 audit:
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 20-05-PLAN.md (Demo Block Naming Consistency)
+Stopped at: Completed 20-06-PLAN.md (TOK-06 Gap Closure - Spacing)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 20-05 completion*
+*Updated: 2026-01-28 after 20-06 completion (Phase 20 complete)*
