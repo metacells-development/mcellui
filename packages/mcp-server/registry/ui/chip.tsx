@@ -128,7 +128,7 @@ export function Chip({
   style,
   labelStyle,
 }: ChipProps) {
-  const { colors, fontWeight, components, componentRadius, spacing } = useTheme();
+  const { colors, fontWeight, components, componentRadius, spacing, radius } = useTheme();
   const tokens = components.chip[size];
 
   const scale = useSharedValue(1);
@@ -249,6 +249,7 @@ export function Chip({
             {
               marginLeft: spacing[1],
               padding: spacing[0.5],
+              borderRadius: radius.sm,
               opacity: pressed ? 0.7 : 1,
             },
           ]}
@@ -296,8 +297,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   closeButton: {
-    // Dynamic padding applied inline via spacing tokens
-    borderRadius: 4,
+    // Dynamic padding and borderRadius applied inline via tokens
   },
   group: {
     flexDirection: 'row',

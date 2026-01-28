@@ -206,6 +206,7 @@ export function Alert({
               padding: spacing[1],
               marginTop: -spacing[1],
               marginRight: -spacing[1],
+              borderRadius: radius.sm,
             },
             pressed && styles.closeButtonPressed,
           ]}
@@ -301,8 +302,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     flexShrink: 0,
-    // Dynamic padding/margin applied inline via spacing tokens
-    borderRadius: 4,
+    // Dynamic padding/margin/borderRadius applied inline via tokens
   },
   closeButtonPressed: {
     opacity: 0.7,

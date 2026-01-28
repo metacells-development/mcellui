@@ -140,7 +140,7 @@ export const Input = forwardRef<TextInput, InputProps>(
     },
     ref
   ) => {
-    const { colors, components, componentRadius, timing, spacing } = useTheme();
+    const { colors, components, componentRadius, timing, spacing, radius } = useTheme();
     const tokens = components.input[size];
     const focusProgress = useSharedValue(0);
 
@@ -216,6 +216,7 @@ export const Input = forwardRef<TextInput, InputProps>(
               {
                 marginRight: tokens.paddingHorizontal - spacing[1],
                 padding: spacing[1],
+                borderRadius: radius.sm,
               },
             ]}
             accessibilityRole="button"
@@ -241,6 +242,7 @@ export const Input = forwardRef<TextInput, InputProps>(
               {
                 marginRight: tokens.paddingHorizontal - spacing[1],
                 padding: spacing[1],
+                borderRadius: radius.sm,
               },
             ]}
             accessibilityRole="button"
@@ -403,8 +405,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   iconButton: {
-    // Dynamic padding applied inline via spacing tokens
-    borderRadius: 4,
+    // Dynamic padding and borderRadius applied inline via tokens
   },
   bottomRow: {
     flexDirection: 'row',

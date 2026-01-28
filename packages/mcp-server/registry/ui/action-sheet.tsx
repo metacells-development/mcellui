@@ -101,7 +101,7 @@ export function ActionSheet({
   children,
   cancelLabel = 'Cancel',
 }: ActionSheetProps) {
-  const { colors, spacing, components, componentRadius } = useTheme();
+  const { colors, spacing, components, componentRadius, radius } = useTheme();
   const tokens = components.actionSheet;
 
   const translateY = useSharedValue(SCREEN_HEIGHT);
@@ -193,7 +193,10 @@ export function ActionSheet({
               <View
                 style={[
                   styles.handle,
-                  { backgroundColor: colors.border },
+                  {
+                    backgroundColor: colors.border,
+                    borderRadius: radius.xs,
+                  },
                 ]}
               />
             </View>
@@ -373,7 +376,7 @@ const styles = StyleSheet.create({
   handle: {
     width: 36,
     height: 4,
-    borderRadius: 2,
+    // Dynamic borderRadius applied inline via radius tokens
   },
   header: {
     alignItems: 'center',
