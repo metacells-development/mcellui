@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 21 of 21 (Demo Consistency Validation)
-Plan: 3 of 3 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-28 — Completed 21-03-PLAN.md (High-Violation Demo Migration)
+Last activity: 2026-01-28 — Completed 21-04-PLAN.md (Remaining Demo File Token Migration)
 
 Progress: [█████████████████████] 99% (v1.0 + v1.1 complete, Phase 19 complete, Phase 20 complete, Phase 21 in progress)
 
@@ -87,6 +87,8 @@ Recent decisions affecting v1.2:
 - Demo icon color defaults removed — Callers pass colors.foreground from theme (21-03)
 - Showcase colors preserved in demos — Intentional examples of component capabilities (21-03)
 - fontSize 13 rounds up to fontSize.sm — No sub-token values in typography scale (21-03)
+- Showcase element sizes preserved (InfoIcon:12px, emoji:48px) — Design sizes not UI chrome (21-04)
+- Shared Section component preferred over local duplicates — Code deduplication (21-04)
 
 ### Pending Todos
 
@@ -114,12 +116,13 @@ From v1.1 audit:
 - ~~Avatar size="xl" usages in blocks/screens~~ → FIXED in 19-09 (changed to valid size="lg")
 - ~~Home screen manual card construction~~ → FIXED in 19-05 (uses MediaCard component)
 - ~~9 demo app files missing `-block` suffix~~ → FIXED in 20-05 (renamed to match registry pattern)
+- ~~Demo files using hardcoded fontSize~~ → FIXED in 21-03 (high-violation), 21-04 (remaining files)
 
 ## Session Continuity
 
 Last session: 2026-01-28
-Stopped at: Completed 21-03-PLAN.md (High-Violation Demo Migration)
+Stopped at: Completed 21-04-PLAN.md (Remaining Demo File Token Migration)
 Resume file: None
 
 ---
-*Updated: 2026-01-28 after 21-03 completion (Phase 21 Plan 3 complete)*
+*Updated: 2026-01-28 after 21-04 completion (Phase 21 Plan 4 of 5 complete)*
