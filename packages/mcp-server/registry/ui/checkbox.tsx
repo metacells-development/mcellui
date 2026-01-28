@@ -31,7 +31,7 @@ import Animated, {
   Extrapolation,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, areAnimationsDisabled, fontSize, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
@@ -247,9 +247,9 @@ const styles = StyleSheet.create({
     // Dynamic gap applied inline via spacing tokens
   },
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   description: {
-    fontSize: 13,
+    fontSize: fontSize.sm,
   },
 });

@@ -31,7 +31,7 @@ import Animated, {
   interpolateColor,
   Easing,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   input: {},
   footer: {

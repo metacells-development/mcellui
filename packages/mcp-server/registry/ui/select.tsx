@@ -39,7 +39,7 @@ import Animated, {
   interpolateColor,
   Easing,
 } from 'react-native-reanimated';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, fontSize, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 import {
@@ -263,7 +263,7 @@ export function Select({
                         option.value === value
                           ? colors.primary
                           : colors.foreground,
-                      fontWeight: option.value === value ? '600' : '400',
+                      fontWeight: option.value === value ? fontWeight.semibold : fontWeight.normal,
                     },
                   ]}
                 >
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   trigger: {
     flexDirection: 'row',
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chevron: {
-    fontSize: 10,
+    fontSize: fontSize.xs,
     marginLeft: 8,
   },
   helperText: {},
@@ -313,10 +313,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   optionText: {
-    fontSize: 16,
+    fontSize: fontSize.base,
   },
   checkmark: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: fontSize.base,
+    fontWeight: fontWeight.semibold,
   },
 });

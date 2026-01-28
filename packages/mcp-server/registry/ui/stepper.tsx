@@ -28,7 +28,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { useTheme, areAnimationsDisabled } from '@metacells/mcellui-core';
+import { useTheme, areAnimationsDisabled, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -290,7 +290,7 @@ export function Stepper({
 const styles = StyleSheet.create({
   wrapper: {},
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   container: {
     flexDirection: 'row',
@@ -302,10 +302,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   value: {
-    fontWeight: '600',
+    fontWeight: fontWeight.semibold,
     fontVariant: ['tabular-nums'],
   },
   icon: {
-    fontWeight: '400',
+    fontWeight: fontWeight.normal,
   },
 });

@@ -32,7 +32,7 @@ import Animated, {
   interpolateColor,
 } from 'react-native-reanimated';
 import Svg, { Path, Circle } from 'react-native-svg';
-import { useTheme } from '@metacells/mcellui-core';
+import { useTheme, fontWeight } from '@metacells/mcellui-core';
 import { haptic } from '@metacells/mcellui-core';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    fontWeight: '500',
+    fontWeight: fontWeight.medium,
   },
   input: {
     // Dynamic styles applied inline
