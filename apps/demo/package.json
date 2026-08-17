@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
-    "@hookform/resolvers": "^3.9.0",
+    "@hookform/resolvers": "^5.8.0",
     "@metacells/mcellui-cli": "^0.1.4",
     "@metacells/mcellui-core": "*",
     "@metacells/mcellui-metro-plugin": "*",
